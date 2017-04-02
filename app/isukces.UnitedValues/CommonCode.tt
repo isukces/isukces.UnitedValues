@@ -1,0 +1,290 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#
+var data = @"
+Weight,WeightUnit,+,WeightUnitDefinition.Kg
+Length,LengthUnit,+,LengthUnitDefinition.Meter
+";
+var infos = data.Split('\n','\r').Select(Info.Parse).Where(a=>a!=null).ToArray();
+#>
+using System;
+using System.Globalization;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace isukces.UnitedValues
+{
+<#foreach(var i in infos) { #>
+	[JsonConverter(typeof(<#= i.Name #>JsonConverter))]
+	public partial struct <#= i.Name #> : <#= string.Join(", ", i.Interfaces) #> {
+
+		public <#= i.Name #>(decimal value, <#= i.Unit #> unit)
+        {
+            Value = value;
+            Unit = unit;
+        }	
+
+		public bool Equals(IUnitedValue<<#= i.Unit #>> other)
+	    {
+	        if (other == null) return false;
+			return Value == other.Value && Unit.Equals(other.Unit);
+	    }
+
+		public <#= i.Name #> ConvertTo(<#= i.Unit #> newUnit)
+        {
+            if (Unit.Equals(newUnit))
+                return this;
+            var basic = GetBaseUnitValue();
+            if (<#= i.Unit #>.KnownUnits.TryGetValue(newUnit, out decimal mult))
+                return new <#= i.Name #>(basic / mult, newUnit);
+            throw new Exception("Unable to find multiplication for unit " + newUnit);
+        }
+
+		// Equality
+
+		public bool Equals(<#= i.Name #> other)
+        {
+            return Value == other.Value && Unit.Equals(other.Unit);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is <#= i.Name #> && Equals((<#= i.Name #>)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
+            }
+        }
+
+		// Algebra
+
+		public static <#= i.Name #> operator +(<#= i.Name #> left, <#= i.Name #> right)
+        {
+            right = right.ConvertTo(left.Unit);
+            return new <#= i.Name #>(right.Value + left.Value, left.Unit);
+        }
+        public static <#= i.Name #> operator -(<#= i.Name #> left, <#= i.Name #> right)
+        {
+            right = right.ConvertTo(left.Unit);
+            return new <#= i.Name #>(left.Value - right.Value, left.Unit);
+        }
+        public static <#= i.Name #> operator -(<#= i.Name #> value) => new <#= i.Name #>(-value.Value, value.Unit);
+
+        public static <#= i.Name #> operator *(<#= i.Name #> value, decimal number) => new <#= i.Name #>(value.Value * number, value.Unit);
+        public static <#= i.Name #> operator *(decimal number, <#= i.Name #> value) => new <#= i.Name #>(value.Value * number, value.Unit);
+
+		public static <#= i.Name #> operator /(<#= i.Name #> value, decimal number) => new <#= i.Name #>(value.Value / number, value.Unit);
+        public static decimal operator /(<#= i.Name #> left, <#= i.Name #> right)
+        {
+            right = right.ConvertTo(left.Unit);
+            return right.Value / left.Value;
+        }
+
+<#if (i.IsComparable)  {#>
+		// IComparable
+
+	    public int CompareTo(<#= i.Name #> other)
+        {
+			return UnitedValuesUtils.Compare<<#= i.Name #>,<#= i.Unit #>>(this, other);
+        }
+        public static bool operator !=(<#= i.Name #> left, <#= i.Name #> right) => left.CompareTo(right) != 0;
+        public static bool operator ==(<#= i.Name #> left, <#= i.Name #> right) => left.CompareTo(right) == 0;
+        public static bool operator >(<#= i.Name #> left, <#= i.Name #> right) => left.CompareTo(right) > 0;
+        public static bool operator >=(<#= i.Name #> left, <#= i.Name #> right) => left.CompareTo(right) >= 0;
+        public static bool operator <(<#= i.Name #> left, <#= i.Name #> right) => left.CompareTo(right) < 0;
+        public static bool operator <=(<#= i.Name #> left, <#= i.Name #> right) => left.CompareTo(right) <= 0;
+<# } #>
+
+		// other
+
+		public static <#= i.Name #> Parse(string value)
+        {
+            var parseResult = CommonParse.Parse(value, typeof(<#= i.Name #>));
+            return new <#= i.Name #>(parseResult.Value, new <#= i.Unit #>(parseResult.UnitName));
+        }
+
+		public decimal GetBaseUnitValue()
+        {
+            if (Unit.Equals(BaseUnit))
+                return Value;
+            if (<#= i.Unit #>.KnownUnits.TryGetValue(Unit, out decimal mult))
+                return Value * mult;
+            throw new Exception("Unable to find multiplication for unit " + Unit);
+        }
+
+		public override string ToString()
+        {
+            return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
+        }
+
+		// properties
+
+        public decimal Value { get; }
+        public <#= i.Unit #> Unit { get; }
+
+		public static <#= i.Unit #> BaseUnit = <#= i.BaseUnit #>;
+		public static <#= i.Name #> Zero => new <#= i.Name #>(0m, BaseUnit);
+	}
+
+<# } #>
+// ========================== UNIT DEF
+<#foreach(var i in infos.Select(a=>a.Name).Distinct()) { #>
+    public static partial class <#= i #>Extensions
+    {
+        /// <summary>
+        ///     Sumuje wagi
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static <#= i #> Sum(this IEnumerable<<#= i #>> items)
+        {
+            if (items == null)
+                return <#= i #>.Zero;
+            var c = items.ToArray();
+            if (c.Length == 0)
+                return <#= i #>.Zero;
+            var unit = c[0].Unit;
+            var value = c.Aggregate(0m, (x, y) => x + y.ConvertTo(unit).Value);
+            return new <#= i #>(value, unit);
+        }
+
+        /// <summary>
+        ///     Sumuje wagi, nulle traktuje jako 0
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static <#= i #> Sum(this IEnumerable<<#= i #>?> items)
+        {
+            if (items==null)
+                return <#= i #>.Zero;            
+            return items.Where(a => a != null).Select(a => a.Value).Sum();
+        }
+
+        /// <summary>
+        ///     Sumuje wagi
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static <#= i #> Sum<T>(this IEnumerable<T> items, Func<T, <#= i #>> map)
+        {
+            return items.Select(map).Sum();
+        }
+    }
+<# } #>
+
+// ========================== UNIT DEF
+<#foreach(var i in infos.Select(a=>a.Unit).Distinct()) { #>
+
+
+	public partial struct <#= i #> : IEquatable<<#= i #>>
+    {
+
+        private static void AddDefinition(<#= i #>Definition definition)
+        {
+            KnownUnits[definition] = definition.Multiplication;
+			if (definition.Aliases!=null && definition.Aliases.Length>0)
+				foreach(var i in definition.Aliases)
+					KnownUnits[new <#= i #>(i)] = definition.Multiplication;
+        }
+
+
+        public <#= i #>(string unitName)
+        {
+            UnitName = unitName;
+        }
+
+        public static bool operator ==(<#= i #> left, <#= i #> right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(<#= i #> left, <#= i #> right)
+        {
+            return !left.Equals(right);
+        }
+
+        public bool Equals(<#= i #> other)
+        {
+            return String.Equals(UnitName, other.UnitName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is <#= i #> && Equals((<#= i #>)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return UnitName?.GetHashCode() ?? 0;
+        }
+
+        public override string ToString() => UnitName;
+
+        bool IEquatable<<#= i #>>.Equals(<#= i #> other) => Equals(other);
+
+        public string UnitName { get; }
+        public static Dictionary<<#= i #>, decimal> KnownUnits { get; }
+    }
+
+    public partial struct <#= i #>Definition
+    {
+        public <#= i #>Definition(string unitName, decimal multiplication, params string[] aliases)
+        {
+            UnitName = unitName;
+            Multiplication = multiplication;
+            Aliases = aliases ?? new string[0];
+        }
+
+
+        public static implicit operator <#= i #>(<#= i #>Definition x)
+            => new <#= i #>(x.UnitName);
+
+        public string UnitName { get; }
+        public decimal Multiplication { get; }
+        public string[] Aliases { get; }
+      
+    }
+<# } #>
+}
+
+<#+
+class Info {
+	public static Info Parse (string x){
+		if (string.IsNullOrEmpty(x))
+			return null;
+		var a = x.Split(',');
+		if (a.Length<4) return null;
+		return new Info{
+			Name = a[0].Trim(),
+			Unit= a[1].Trim(),
+			IsComparable = a[2].Trim()=="+",
+			BaseUnit= a[3].Trim()
+		};
+	}
+	public string Name { get;set; }
+	public string Unit { get;set; }
+	public bool IsComparable {get; set;}
+	public string BaseUnit {get;set;}
+
+	public IEnumerable<string> Interfaces {
+		get {
+		    yield return $"IUnitedValue<{Unit}>";
+			yield return $"IEquatable<{Name}>";
+			if (IsComparable)
+				yield return $"IComparable<{Name}>";
+				
+		}
+	}
+}
+#>
