@@ -8,6 +8,8 @@
 var data = @"
 Weight,WeightUnit,+,WeightUnitDefinition.Kg
 Length,LengthUnit,+,LengthUnitDefinition.Meter
+Area,AreaUnit,-,AreaUnitDefinition.SquareMeter
+Volume,VolumeUnit,-,VolumeUnitDefinition.QubicMeter
 ";
 var infos = data.Split('\n','\r').Select(Info.Parse).Where(a=>a!=null).ToArray();
 #>
@@ -137,7 +139,9 @@ namespace isukces.UnitedValues
 	}
 
 <# } #>
-// ========================== UNIT DEF
+
+// ========================== EXTENSIONS
+
 <#foreach(var i in infos.Select(a=>a.Name).Distinct()) { #>
     public static partial class <#= i #>Extensions
     {
@@ -182,11 +186,29 @@ namespace isukces.UnitedValues
     }
 <# } #>
 
-// ========================== UNIT DEF
+// ========================== JSON
+
+<#foreach(var i in infos.Select(a=>a.Name).Distinct()) { #>
+    public class <#= i #>JsonConverter : AbstractUnitJsonConverter<<#= i #>, <#= i #>Unit>
+    {
+        protected override <#= i #> Make(decimal value, string unit)
+        {
+            unit = unit?.Trim();
+            return new <#= i #>(value, string.IsNullOrEmpty(unit) ? <#= i #>.BaseUnit : new <#= i #>Unit(unit));
+        }
+
+        protected override <#= i #> Parse(string txt)
+        {
+            return <#= i #>.Parse(txt);
+        }
+    }
+<# } #>
+
+// ========================== UNITS
 <#foreach(var i in infos.Select(a=>a.Unit).Distinct()) { #>
 
 
-	public partial struct <#= i #> : IEquatable<<#= i #>>
+	public partial struct <#= i #> : IUnit, IEquatable<<#= i #>>
     {
 
         private static void AddDefinition(<#= i #>Definition definition)

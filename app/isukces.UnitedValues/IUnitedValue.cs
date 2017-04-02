@@ -4,11 +4,18 @@ namespace isukces.UnitedValues
 {
     public interface IUnitedValue<TUnit>
         : IEquatable<IUnitedValue<TUnit>>
-        where TUnit : IEquatable<TUnit>
+        where TUnit : IUnit, IEquatable<TUnit>
     {
         decimal Value { get; }
         TUnit Unit { get; }
 
         decimal GetBaseUnitValue();
     }
+
+    public interface IUnit
+    {
+        string UnitName { get; }
+    }
+
+   
 }

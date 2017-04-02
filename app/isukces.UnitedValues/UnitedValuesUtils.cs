@@ -10,7 +10,7 @@ namespace isukces.UnitedValues
     {
         public static int Compare<T, TUnit>(T a, T b)
             where T : struct, IUnitedValue<TUnit>
-            where TUnit : IEquatable<TUnit>
+            where TUnit : IEquatable<TUnit>, IUnit
         {
             if (a.Equals(b)) return 0;
             if (a.Unit.Equals(b.Unit))

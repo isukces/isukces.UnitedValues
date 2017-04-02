@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace isukces.UnitedValues
@@ -22,5 +23,22 @@ namespace isukces.UnitedValues
             return FromKg(Math.Round(w.Value, decimalPlaces));
         }
          
+    }
+    public partial struct WeightUnit
+    {
+        static WeightUnit()
+        {
+            KnownUnits = new Dictionary<WeightUnit, decimal>();
+            AddDefinition(WeightUnitDefinition.Kg);
+            AddDefinition(WeightUnitDefinition.Tone);
+            AddDefinition(WeightUnitDefinition.Gram);
+        }
+    }
+    public partial struct WeightUnitDefinition
+    {
+
+        public static readonly WeightUnitDefinition Kg = new WeightUnitDefinition("kg", 1);
+        public static readonly WeightUnitDefinition Gram = new WeightUnitDefinition("g", 0.001m);
+        public static readonly WeightUnitDefinition Tone = new WeightUnitDefinition("t", 1000, "ton", "tons");
     }
 }

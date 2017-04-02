@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Area.cs" />
+    <Compile Include="Volume.cs" />
     <Compile Include="CommonCode.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -51,17 +53,10 @@
     <Compile Include="CommonParse.cs" />
     <Compile Include="IUnitedValue.cs" />
     <Compile Include="UnitedValuesUtils.cs" />
-    <Compile Include="_length\Length.cs" />
-    <Compile Include="_length\LengthExtensions.cs" />
-    <Compile Include="_length\LengthJsonConverter.cs" />
-    <Compile Include="_length\LengthUnit.cs" />
-    <Compile Include="_length\LengthUnitDefinition.cs" />
-    <Compile Include="_weight\WeightJsonConverter.cs" />
+    <Compile Include="AbstractUnitJsonConverter.cs" />
+    <Compile Include="Length.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_weight\Weight.cs" />
-    <Compile Include="_weight\WeightExtensions.cs" />
-    <Compile Include="_weight\WeightUnit.cs" />
-    <Compile Include="_weight\WeightUnitDefinition.cs" />
+    <Compile Include="Weight.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

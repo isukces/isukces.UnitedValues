@@ -234,7 +234,213 @@ namespace isukces.UnitedValues
 		public static Length Zero => new Length(0m, BaseUnit);
 	}
 
-// ========================== UNIT DEF
+	[JsonConverter(typeof(AreaJsonConverter))]
+	public partial struct Area : IUnitedValue<AreaUnit>, IEquatable<Area> {
+
+		public Area(decimal value, AreaUnit unit)
+        {
+            Value = value;
+            Unit = unit;
+        }	
+
+		public bool Equals(IUnitedValue<AreaUnit> other)
+	    {
+	        if (other == null) return false;
+			return Value == other.Value && Unit.Equals(other.Unit);
+	    }
+
+		public Area ConvertTo(AreaUnit newUnit)
+        {
+            if (Unit.Equals(newUnit))
+                return this;
+            var basic = GetBaseUnitValue();
+            if (AreaUnit.KnownUnits.TryGetValue(newUnit, out decimal mult))
+                return new Area(basic / mult, newUnit);
+            throw new Exception("Unable to find multiplication for unit " + newUnit);
+        }
+
+		// Equality
+
+		public bool Equals(Area other)
+        {
+            return Value == other.Value && Unit.Equals(other.Unit);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is Area && Equals((Area)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
+            }
+        }
+
+		// Algebra
+
+		public static Area operator +(Area left, Area right)
+        {
+            right = right.ConvertTo(left.Unit);
+            return new Area(right.Value + left.Value, left.Unit);
+        }
+        public static Area operator -(Area left, Area right)
+        {
+            right = right.ConvertTo(left.Unit);
+            return new Area(left.Value - right.Value, left.Unit);
+        }
+        public static Area operator -(Area value) => new Area(-value.Value, value.Unit);
+
+        public static Area operator *(Area value, decimal number) => new Area(value.Value * number, value.Unit);
+        public static Area operator *(decimal number, Area value) => new Area(value.Value * number, value.Unit);
+
+		public static Area operator /(Area value, decimal number) => new Area(value.Value / number, value.Unit);
+        public static decimal operator /(Area left, Area right)
+        {
+            right = right.ConvertTo(left.Unit);
+            return right.Value / left.Value;
+        }
+
+
+		// other
+
+		public static Area Parse(string value)
+        {
+            var parseResult = CommonParse.Parse(value, typeof(Area));
+            return new Area(parseResult.Value, new AreaUnit(parseResult.UnitName));
+        }
+
+		public decimal GetBaseUnitValue()
+        {
+            if (Unit.Equals(BaseUnit))
+                return Value;
+            if (AreaUnit.KnownUnits.TryGetValue(Unit, out decimal mult))
+                return Value * mult;
+            throw new Exception("Unable to find multiplication for unit " + Unit);
+        }
+
+		public override string ToString()
+        {
+            return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
+        }
+
+		// properties
+
+        public decimal Value { get; }
+        public AreaUnit Unit { get; }
+
+		public static AreaUnit BaseUnit = AreaUnitDefinition.SquareMeter;
+		public static Area Zero => new Area(0m, BaseUnit);
+	}
+
+	[JsonConverter(typeof(VolumeJsonConverter))]
+	public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume> {
+
+		public Volume(decimal value, VolumeUnit unit)
+        {
+            Value = value;
+            Unit = unit;
+        }	
+
+		public bool Equals(IUnitedValue<VolumeUnit> other)
+	    {
+	        if (other == null) return false;
+			return Value == other.Value && Unit.Equals(other.Unit);
+	    }
+
+		public Volume ConvertTo(VolumeUnit newUnit)
+        {
+            if (Unit.Equals(newUnit))
+                return this;
+            var basic = GetBaseUnitValue();
+            if (VolumeUnit.KnownUnits.TryGetValue(newUnit, out decimal mult))
+                return new Volume(basic / mult, newUnit);
+            throw new Exception("Unable to find multiplication for unit " + newUnit);
+        }
+
+		// Equality
+
+		public bool Equals(Volume other)
+        {
+            return Value == other.Value && Unit.Equals(other.Unit);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is Volume && Equals((Volume)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
+            }
+        }
+
+		// Algebra
+
+		public static Volume operator +(Volume left, Volume right)
+        {
+            right = right.ConvertTo(left.Unit);
+            return new Volume(right.Value + left.Value, left.Unit);
+        }
+        public static Volume operator -(Volume left, Volume right)
+        {
+            right = right.ConvertTo(left.Unit);
+            return new Volume(left.Value - right.Value, left.Unit);
+        }
+        public static Volume operator -(Volume value) => new Volume(-value.Value, value.Unit);
+
+        public static Volume operator *(Volume value, decimal number) => new Volume(value.Value * number, value.Unit);
+        public static Volume operator *(decimal number, Volume value) => new Volume(value.Value * number, value.Unit);
+
+		public static Volume operator /(Volume value, decimal number) => new Volume(value.Value / number, value.Unit);
+        public static decimal operator /(Volume left, Volume right)
+        {
+            right = right.ConvertTo(left.Unit);
+            return right.Value / left.Value;
+        }
+
+
+		// other
+
+		public static Volume Parse(string value)
+        {
+            var parseResult = CommonParse.Parse(value, typeof(Volume));
+            return new Volume(parseResult.Value, new VolumeUnit(parseResult.UnitName));
+        }
+
+		public decimal GetBaseUnitValue()
+        {
+            if (Unit.Equals(BaseUnit))
+                return Value;
+            if (VolumeUnit.KnownUnits.TryGetValue(Unit, out decimal mult))
+                return Value * mult;
+            throw new Exception("Unable to find multiplication for unit " + Unit);
+        }
+
+		public override string ToString()
+        {
+            return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
+        }
+
+		// properties
+
+        public decimal Value { get; }
+        public VolumeUnit Unit { get; }
+
+		public static VolumeUnit BaseUnit = VolumeUnitDefinition.QubicMeter;
+		public static Volume Zero => new Volume(0m, BaseUnit);
+	}
+
+
+// ========================== EXTENSIONS
+
     public static partial class WeightExtensions
     {
         /// <summary>
@@ -317,11 +523,148 @@ namespace isukces.UnitedValues
             return items.Select(map).Sum();
         }
     }
+    public static partial class AreaExtensions
+    {
+        /// <summary>
+        ///     Sumuje wagi
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static Area Sum(this IEnumerable<Area> items)
+        {
+            if (items == null)
+                return Area.Zero;
+            var c = items.ToArray();
+            if (c.Length == 0)
+                return Area.Zero;
+            var unit = c[0].Unit;
+            var value = c.Aggregate(0m, (x, y) => x + y.ConvertTo(unit).Value);
+            return new Area(value, unit);
+        }
 
-// ========================== UNIT DEF
+        /// <summary>
+        ///     Sumuje wagi, nulle traktuje jako 0
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static Area Sum(this IEnumerable<Area?> items)
+        {
+            if (items==null)
+                return Area.Zero;            
+            return items.Where(a => a != null).Select(a => a.Value).Sum();
+        }
+
+        /// <summary>
+        ///     Sumuje wagi
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static Area Sum<T>(this IEnumerable<T> items, Func<T, Area> map)
+        {
+            return items.Select(map).Sum();
+        }
+    }
+    public static partial class VolumeExtensions
+    {
+        /// <summary>
+        ///     Sumuje wagi
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static Volume Sum(this IEnumerable<Volume> items)
+        {
+            if (items == null)
+                return Volume.Zero;
+            var c = items.ToArray();
+            if (c.Length == 0)
+                return Volume.Zero;
+            var unit = c[0].Unit;
+            var value = c.Aggregate(0m, (x, y) => x + y.ConvertTo(unit).Value);
+            return new Volume(value, unit);
+        }
+
+        /// <summary>
+        ///     Sumuje wagi, nulle traktuje jako 0
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static Volume Sum(this IEnumerable<Volume?> items)
+        {
+            if (items==null)
+                return Volume.Zero;            
+            return items.Where(a => a != null).Select(a => a.Value).Sum();
+        }
+
+        /// <summary>
+        ///     Sumuje wagi
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public static Volume Sum<T>(this IEnumerable<T> items, Func<T, Volume> map)
+        {
+            return items.Select(map).Sum();
+        }
+    }
+
+// ========================== JSON
+
+    public class WeightJsonConverter : AbstractUnitJsonConverter<Weight, WeightUnit>
+    {
+        protected override Weight Make(decimal value, string unit)
+        {
+            unit = unit?.Trim();
+            return new Weight(value, string.IsNullOrEmpty(unit) ? Weight.BaseUnit : new WeightUnit(unit));
+        }
+
+        protected override Weight Parse(string txt)
+        {
+            return Weight.Parse(txt);
+        }
+    }
+    public class LengthJsonConverter : AbstractUnitJsonConverter<Length, LengthUnit>
+    {
+        protected override Length Make(decimal value, string unit)
+        {
+            unit = unit?.Trim();
+            return new Length(value, string.IsNullOrEmpty(unit) ? Length.BaseUnit : new LengthUnit(unit));
+        }
+
+        protected override Length Parse(string txt)
+        {
+            return Length.Parse(txt);
+        }
+    }
+    public class AreaJsonConverter : AbstractUnitJsonConverter<Area, AreaUnit>
+    {
+        protected override Area Make(decimal value, string unit)
+        {
+            unit = unit?.Trim();
+            return new Area(value, string.IsNullOrEmpty(unit) ? Area.BaseUnit : new AreaUnit(unit));
+        }
+
+        protected override Area Parse(string txt)
+        {
+            return Area.Parse(txt);
+        }
+    }
+    public class VolumeJsonConverter : AbstractUnitJsonConverter<Volume, VolumeUnit>
+    {
+        protected override Volume Make(decimal value, string unit)
+        {
+            unit = unit?.Trim();
+            return new Volume(value, string.IsNullOrEmpty(unit) ? Volume.BaseUnit : new VolumeUnit(unit));
+        }
+
+        protected override Volume Parse(string txt)
+        {
+            return Volume.Parse(txt);
+        }
+    }
+
+// ========================== UNITS
 
 
-	public partial struct WeightUnit : IEquatable<WeightUnit>
+	public partial struct WeightUnit : IUnit, IEquatable<WeightUnit>
     {
 
         private static void AddDefinition(WeightUnitDefinition definition)
@@ -392,7 +735,7 @@ namespace isukces.UnitedValues
     }
 
 
-	public partial struct LengthUnit : IEquatable<LengthUnit>
+	public partial struct LengthUnit : IUnit, IEquatable<LengthUnit>
     {
 
         private static void AddDefinition(LengthUnitDefinition definition)
@@ -455,6 +798,148 @@ namespace isukces.UnitedValues
 
         public static implicit operator LengthUnit(LengthUnitDefinition x)
             => new LengthUnit(x.UnitName);
+
+        public string UnitName { get; }
+        public decimal Multiplication { get; }
+        public string[] Aliases { get; }
+      
+    }
+
+
+	public partial struct AreaUnit : IUnit, IEquatable<AreaUnit>
+    {
+
+        private static void AddDefinition(AreaUnitDefinition definition)
+        {
+            KnownUnits[definition] = definition.Multiplication;
+			if (definition.Aliases!=null && definition.Aliases.Length>0)
+				foreach(var i in definition.Aliases)
+					KnownUnits[new AreaUnit(i)] = definition.Multiplication;
+        }
+
+
+        public AreaUnit(string unitName)
+        {
+            UnitName = unitName;
+        }
+
+        public static bool operator ==(AreaUnit left, AreaUnit right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(AreaUnit left, AreaUnit right)
+        {
+            return !left.Equals(right);
+        }
+
+        public bool Equals(AreaUnit other)
+        {
+            return String.Equals(UnitName, other.UnitName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is AreaUnit && Equals((AreaUnit)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return UnitName?.GetHashCode() ?? 0;
+        }
+
+        public override string ToString() => UnitName;
+
+        bool IEquatable<AreaUnit>.Equals(AreaUnit other) => Equals(other);
+
+        public string UnitName { get; }
+        public static Dictionary<AreaUnit, decimal> KnownUnits { get; }
+    }
+
+    public partial struct AreaUnitDefinition
+    {
+        public AreaUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
+        {
+            UnitName = unitName;
+            Multiplication = multiplication;
+            Aliases = aliases ?? new string[0];
+        }
+
+
+        public static implicit operator AreaUnit(AreaUnitDefinition x)
+            => new AreaUnit(x.UnitName);
+
+        public string UnitName { get; }
+        public decimal Multiplication { get; }
+        public string[] Aliases { get; }
+      
+    }
+
+
+	public partial struct VolumeUnit : IUnit, IEquatable<VolumeUnit>
+    {
+
+        private static void AddDefinition(VolumeUnitDefinition definition)
+        {
+            KnownUnits[definition] = definition.Multiplication;
+			if (definition.Aliases!=null && definition.Aliases.Length>0)
+				foreach(var i in definition.Aliases)
+					KnownUnits[new VolumeUnit(i)] = definition.Multiplication;
+        }
+
+
+        public VolumeUnit(string unitName)
+        {
+            UnitName = unitName;
+        }
+
+        public static bool operator ==(VolumeUnit left, VolumeUnit right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(VolumeUnit left, VolumeUnit right)
+        {
+            return !left.Equals(right);
+        }
+
+        public bool Equals(VolumeUnit other)
+        {
+            return String.Equals(UnitName, other.UnitName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            return obj is VolumeUnit && Equals((VolumeUnit)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return UnitName?.GetHashCode() ?? 0;
+        }
+
+        public override string ToString() => UnitName;
+
+        bool IEquatable<VolumeUnit>.Equals(VolumeUnit other) => Equals(other);
+
+        public string UnitName { get; }
+        public static Dictionary<VolumeUnit, decimal> KnownUnits { get; }
+    }
+
+    public partial struct VolumeUnitDefinition
+    {
+        public VolumeUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
+        {
+            UnitName = unitName;
+            Multiplication = multiplication;
+            Aliases = aliases ?? new string[0];
+        }
+
+
+        public static implicit operator VolumeUnit(VolumeUnitDefinition x)
+            => new VolumeUnit(x.UnitName);
 
         public string UnitName { get; }
         public decimal Multiplication { get; }
