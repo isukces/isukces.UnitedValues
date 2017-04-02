@@ -64,8 +64,8 @@ namespace isukces.UnitedValues
 
 		internal static void Register(UnitRelationsDictionary dict) {
 <# foreach(var i in a) { #>
-				dict.AddRelated((AreaUnit)Square<#= i.PropName #>, LengthUnitDefinition.<#= i.PropName #>);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.<#= i.PropName #>, Square<#= i.PropName #>);
+				dict.AddRelated((AreaUnit)Square<#= i.PropName #>, (LengthUnit)LengthUnitDefinition.<#= i.PropName #>);
+				dict.AddRelated((LengthUnit)LengthUnitDefinition.<#= i.PropName #>, (AreaUnit)Square<#= i.PropName #>);
 <# }#>		
 		}
 
@@ -87,10 +87,10 @@ namespace isukces.UnitedValues
 
 		internal static void Register(UnitRelationsDictionary dict) {
 <# foreach(var i in a) { #>
-				dict.AddRelated((VolumeUnit)Qubic<#= i.PropName #>, LengthUnitDefinition.<#= i.PropName #>);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.<#= i.PropName #>, Qubic<#= i.PropName #>);
-				dict.AddRelated((VolumeUnit)Qubic<#= i.PropName #>, AreaUnitDefinition.Square<#= i.PropName #>);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.Square<#= i.PropName #>, Qubic<#= i.PropName #>);
+				dict.AddRelated((VolumeUnit)Qubic<#= i.PropName #>, (LengthUnit)LengthUnitDefinition.<#= i.PropName #>);
+				dict.AddRelated((LengthUnit)LengthUnitDefinition.<#= i.PropName #>, (VolumeUnit)Qubic<#= i.PropName #>);
+				dict.AddRelated((VolumeUnit)Qubic<#= i.PropName #>, (AreaUnit)AreaUnitDefinition.Square<#= i.PropName #>);
+				dict.AddRelated((AreaUnit)AreaUnitDefinition.Square<#= i.PropName #>, (VolumeUnit)Qubic<#= i.PropName #>);
 <# }#>		
 		}
     }

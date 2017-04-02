@@ -8,18 +8,20 @@ namespace isukces.UnitedValues
     {
         decimal Value { get; }
         TUnit Unit { get; }
-
-        decimal GetBaseUnitValue();
+        decimal GetBaseUnitValue();      
     }
 
-    public interface IUnit
+    public interface IUnitNameContainer
     {
         string UnitName { get; }
     }
 
-    public interface IUnitDefinition
+    public interface IUnit: IUnitNameContainer
+    {     
+    }
+
+    public interface IUnitDefinition: IUnitNameContainer
     {
-        string UnitName { get; }
         decimal Multiplication { get; }
     }
 

@@ -15,63 +15,36 @@ namespace isukces.UnitedValues
         public static Length FromMeter(double m) => new Length((decimal)m, LengthUnitDefinition.Meter);
 
 
-        public static Length operator /(Area a, Length b)
+        public static Length operator /(Area left, Length right)
         {
-            var resultUnit = ToLengthUnit(a.Unit);
-            b = b.ConvertTo(resultUnit);
-            return new Length(a.Value / b.Value, resultUnit);
+            return UnitedValuesUtils
+                 .Divide<Area, AreaUnit, Length, LengthUnit, Length, LengthUnit>(
+                     left, right,
+                     (length, unit) => length.ConvertTo(unit), (value, unit) => new Length(value, unit));
         }
 
-        public static Area operator *(Length a, Length b)
+        public static Area operator *(Length left, Length right)
         {
-            var resultUnit = ToAreaUnit(a.Unit);
-            b = b.ConvertTo(a.Unit);
-            return new Area(a.Value * b.Value, resultUnit);
+            return UnitedValuesUtils
+                .Multiply<Length, LengthUnit, Length, LengthUnit, Area, AreaUnit>(
+                    left, right,
+                    (length, unit) => length.ConvertTo(unit), (value, unit) => new Area(value, unit));
         }
 
-        public static Volume operator *(Length a, Area b)
+        public static Volume operator *(Length left, Area right)
         {
-            var areaUnit = ToAreaUnit(a.Unit);
-            b = b.ConvertTo(areaUnit);
-            var volumeUnit = ToVolumeUnit(a.Unit);
-            return new Volume(a.Value * b.Value, volumeUnit);
+            return UnitedValuesUtils
+               .Multiply<Length, LengthUnit, Area, AreaUnit, Volume, VolumeUnit>(
+                   left, right,
+                   (area, unit) => area.ConvertTo(unit), (value, unit) => new Volume(value, unit));
         }
 
-        public static Volume operator *(Area a, Length b)
+        public static Volume operator *(Area left, Length right)
         {
-            var lengthUnit = ToLengthUnit(a.Unit);
-            b = b.ConvertTo(lengthUnit);
-            var volumeUnit = ToVolumeUnit(a.Unit);
-            return new Volume(a.Value * b.Value, volumeUnit);
-        }
-
- 
-        private static AreaUnitDefinition ToAreaUnit(LengthUnit u)
-        {
-            var a = GlobalUnitRegistry.Relations.Get<LengthUnit, AreaUnitDefinition>(u);
-            if (a == null)
-                throw new Exception($"Unable to convert {u} into AreaUnit");
-            return a.Item1;
-        }
-
-        private static LengthUnit ToLengthUnit(AreaUnit u)
-        {
-            if (u.Equals(AreaUnitDefinition.SquareMeter))
-                return LengthUnitDefinition.Meter;
-            throw new Exception($"Unable to convert {u} into LengthUnit");
-        }
-
-        private static VolumeUnitDefinition ToVolumeUnit(LengthUnit unit)
-        {
-            var a = GlobalUnitRegistry.Relations.Get<LengthUnit, VolumeUnitDefinition>(unit);
-            if (a == null)
-                throw new Exception($"Unable to convert {unit} into VolumeUnit");
-            return a.Item1;
-        }
-
-        private static VolumeUnit ToVolumeUnit(AreaUnit u)
-        {
-            throw new NotImplementedException();
+            return UnitedValuesUtils
+                .Multiply<Area, AreaUnit, Length, LengthUnit, Volume, VolumeUnit>(
+                    left, right,
+                    (length, unit) => length.ConvertTo(unit), (value, unit) => new Volume(value, unit));
         }
 
 
@@ -80,11 +53,6 @@ namespace isukces.UnitedValues
             return ConvertTo(LengthUnitDefinition.Meter);
         }
 
-
-        public Length RoundKg(Length w, int decimalPlaces)
-        {
-            return FromMeter(Math.Round(w.Value, decimalPlaces));
-        }
     }
 
     public partial struct LengthUnit
