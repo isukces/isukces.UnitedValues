@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="_density\Density.cs" />
     <Compile Include="_relations\GlobalUnitRegistry.cs" />
     <Compile Include="_length\Area.cs" />
     <Compile Include="KnownLenghtUnits.cs">

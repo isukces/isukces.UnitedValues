@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace isukces.UnitedValues
 {
@@ -15,6 +14,12 @@ namespace isukces.UnitedValues
         public static Weight FromTons(long tons) => new Weight(tons, WeightUnitDefinition.Tone);
 
 
+        public static Density operator /(Weight w, Volume v)
+        {
+            return new Density(w.Value / v.Value, w.Unit, v.Unit);
+        }
+
+
         public Weight ConvertToKg() => ConvertTo(WeightUnitDefinition.Kg);
 
 
@@ -22,8 +27,8 @@ namespace isukces.UnitedValues
         {
             return FromKg(Math.Round(w.Value, decimalPlaces));
         }
-         
     }
+
     public partial struct WeightUnit
     {
         static WeightUnit()
@@ -34,9 +39,9 @@ namespace isukces.UnitedValues
             AddDefinition(WeightUnitDefinition.Gram);
         }
     }
+
     public partial struct WeightUnitDefinition
     {
-
         public static readonly WeightUnitDefinition Kg = new WeightUnitDefinition("kg", 1);
         public static readonly WeightUnitDefinition Gram = new WeightUnitDefinition("g", 0.001m);
         public static readonly WeightUnitDefinition Tone = new WeightUnitDefinition("t", 1000, "ton", "tons");

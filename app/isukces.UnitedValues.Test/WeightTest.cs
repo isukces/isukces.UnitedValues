@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -149,6 +149,17 @@ namespace isukces.UnitedValues.Test
         {
             Assert.True(Weight.FromKg(1001) > Weight.FromTons(1));
             Assert.True(Weight.FromKg(1000) == Weight.FromTons(1));
+        }
+
+
+        [Fact]
+        public void T06_ShouldComputeDensity()
+        {
+            var w = Weight.FromKg(8000);
+            var volume = new Volume(1, VolumeUnitDefinition.QubicMeter);
+            var density = w / volume;
+            Assert.Equal(8000m, density.Value);
+            Assert.Equal("kg/m³", density.Unit.UnitName);
         }
 
 
