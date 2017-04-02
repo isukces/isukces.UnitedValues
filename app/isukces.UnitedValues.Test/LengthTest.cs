@@ -4,41 +4,41 @@ using Xunit;
 
 namespace isukces.UnitedValues.Test
 {
-    public class WeightTest
+    public class LengthTest
     {
         [Fact]
         public void T01_ShoulEqual()
         {
-            var a = Weight.FromKg(123);
-            var b = Weight.FromKg(123);
-            var c = Weight.FromKg(121);
+            var a = Length.FromMeter(123);
+            var b = Length.FromMeter(123);
+            var c = Length.FromMeter(121);
             Assert.Equal(a, a);
             Assert.Equal(a, b);
             Assert.NotEqual(a, c);
-            Assert.Equal(Weight.Zero, Weight.FromKg(0));
+            Assert.Equal(Length.Zero, Length.FromMeter(0));
         }
 
         [Fact]
         public void T02_ShoulSerializeToJson()
         {
-            var a = Weight.FromKg(123);
+            var a = Length.FromMeter(123);
             var s = JsonConvert.SerializeObject(-a);
-            Assert.Equal("\"-123kg\"", s);
+            Assert.Equal("\"-123m\"", s);
             s = JsonConvert.SerializeObject(a);
-            Assert.Equal("\"123kg\"", s);
+            Assert.Equal("\"123m\"", s);
 
-            var d = JsonConvert.DeserializeObject<Weight>(s);
+            var d = JsonConvert.DeserializeObject<Length>(s);
             Assert.Equal(a, d);
 
-            var possibilities = "123kg;123 kg; 123.00kg; 123.000 kg ;0.12300 ton; 123000g";
+            var possibilities = "123m;123 m; 123.00m; 123.000 m ;0.12300 km; 123000mm";
 
             foreach (var prefix in ";+;  ; + ".Split(';'))
             {
                 foreach (var i in possibilities.Split(';'))
                 {
                     var json = "\"" + prefix + i + "\"";
-                    d = JsonConvert.DeserializeObject<Weight>(json);
-                    var dd = d.ConvertToKg();
+                    d = JsonConvert.DeserializeObject<Length>(json);
+                    var dd = d.ConvertToMeter();
                     Assert.Equal(a, dd);
                 }
             }
@@ -47,15 +47,15 @@ namespace isukces.UnitedValues.Test
                 foreach (var i in possibilities.Split(';'))
                 {
                     var json = "\"" + prefix + i + "\"";
-                    d = JsonConvert.DeserializeObject<Weight>(json);
-                    var dd = d.ConvertToKg();
+                    d = JsonConvert.DeserializeObject<Length>(json);
+                    var dd = d.ConvertToMeter();
                     Assert.Equal(-a, dd);
                 }
             }
 
-            d = JsonConvert.DeserializeObject<Weight>("123");
+            d = JsonConvert.DeserializeObject<Length>("123");
             Assert.Equal(a, d);
-            d = JsonConvert.DeserializeObject<Weight>("123.0");
+            d = JsonConvert.DeserializeObject<Length>("123.0");
             Assert.Equal(a, d);
         }
 
@@ -65,12 +65,12 @@ namespace isukces.UnitedValues.Test
             var c = new Complex
             {
                 Name = "A",
-                W1 = Weight.FromKg(123),
+                W1 = Length.FromMeter(123),
                 W2 = null
             };
             {
                 var json = JsonConvert.SerializeObject(c);
-                var expected = @"{""Name"":""A"",""W1"":""123kg"",""W2"":null}";
+                var expected = @"{""Name"":""A"",""W1"":""123m"",""W2"":null}";
                 Assert.Equal(expected, json);
                 var cc = JsonConvert.DeserializeObject<Complex>(json);
                 Assert.Equal(c.W1, cc.W1);
@@ -79,7 +79,7 @@ namespace isukces.UnitedValues.Test
             c.W2 = c.W1;
             {
                 var json = JsonConvert.SerializeObject(c);
-                var expected = @"{""Name"":""A"",""W1"":""123kg"",""W2"":""123kg""}";
+                var expected = @"{""Name"":""A"",""W1"":""123m"",""W2"":""123m""}";
                 Assert.Equal(expected, json);
                 var cc = JsonConvert.DeserializeObject<Complex>(json);
                 Assert.Equal(c.W1, cc.W1);
@@ -88,58 +88,59 @@ namespace isukces.UnitedValues.Test
             }
         }
 
+
         [Fact]
         public void T04_ShouldSupportAlgebra()
         {
-            var a = Weight.FromKg(5);
-            var b = Weight.FromKg(2);
-            Assert.Equal(Weight.FromKg(7), a + b);
-            Assert.Equal(Weight.FromKg(3), a - b);
-            Assert.Equal(Weight.FromKg(10), a * 2);
-            Assert.Equal(Weight.FromKg(10), 2 * a);
-            Assert.Equal(Weight.FromKg(2.5m), a / 2);
-            Assert.Equal(Weight.FromKg(-5), -a);
+            var a = Length.FromMeter(5);
+            var b = Length.FromMeter(2);
+            Assert.Equal(Length.FromMeter(7), a + b);
+            Assert.Equal(Length.FromMeter(3), a - b);
+            Assert.Equal(Length.FromMeter(10), a * 2);
+            Assert.Equal(Length.FromMeter(10), 2 * a);
+            Assert.Equal(Length.FromMeter(2.5m), a / 2);
+            Assert.Equal(Length.FromMeter(-5), -a);
         }
 
         [Fact]
         public void T05_ShouldCalculateSums()
         {
-            var a = Weight.FromKg(5);
-            var b = Weight.FromKg(2);
+            var a = Length.FromMeter(5);
+            var b = Length.FromMeter(2);
             {
-                IEnumerable<Weight> items = null;
+                IEnumerable<Length> items = null;
                 var sum = items.Sum();
-                Assert.Equal(Weight.Zero, sum);
-                items = new Weight[0];
+                Assert.Equal(Length.Zero, sum);
+                items = new Length[0];
                 sum = items.Sum();
-                Assert.Equal(Weight.Zero, sum);
+                Assert.Equal(Length.Zero, sum);
 
-                sum = new[] {a}.Sum();
+                sum = new[] { a }.Sum();
                 Assert.Equal(a, sum);
 
-                sum = new[] {a, b}.Sum();
-                Assert.Equal(Weight.FromKg(7), sum);
+                sum = new[] { a, b }.Sum();
+                Assert.Equal(Length.FromMeter(7), sum);
             }
             {
-                IEnumerable<Weight?> items = null;
+                IEnumerable<Length?> items = null;
                 var sum = items.Sum();
-                Assert.Equal(Weight.Zero, sum);
+                Assert.Equal(Length.Zero, sum);
 
-                items = new Weight?[0];
+                items = new Length?[0];
                 sum = items.Sum();
-                Assert.Equal(Weight.Zero, sum);
+                Assert.Equal(Length.Zero, sum);
 
-                items = new[] {(Weight?)a};
-                sum = items.Sum();
-                Assert.Equal(a, sum);
-
-                items = new[] {(Weight?)a, Weight.Zero, null};
+                items = new[] { (Length?)a };
                 sum = items.Sum();
                 Assert.Equal(a, sum);
 
-                items = new[] {(Weight?)a, Weight.Zero, null, b};
+                items = new[] { (Length?)a, Length.Zero, null };
                 sum = items.Sum();
-                Assert.Equal(Weight.FromKg(7), sum);
+                Assert.Equal(a, sum);
+
+                items = new[] { (Length?)a, Length.Zero, null, b };
+                sum = items.Sum();
+                Assert.Equal(Length.FromMeter(7), sum);
             }
         }
 
@@ -147,15 +148,39 @@ namespace isukces.UnitedValues.Test
         [Fact]
         public void T06_ShouldCompare()
         {
-            Assert.True(Weight.FromKg(1001) > Weight.FromTons(1));
-            Assert.True(Weight.FromKg(1000) == Weight.FromTons(1));
+            Assert.True(Length.FromMeter(1001) > Length.FromKm(1));
+            Assert.True(Length.FromMeter(1000) == Length.FromKm(1));
+        }
+
+        [Fact]
+        public void T07_ShouldConvert()
+        {
+            var a = new Length(10, LengthUnitDefinition.Yard);
+            var b = a.ConvertTo(LengthUnitDefinition.Inch);
+            Assert.Equal(360, b.Value);
+        }
+
+        [Fact]
+        public void T08_ShouldCalculateAreaAndVolume()
+        {
+            var a = new Length(10, LengthUnitDefinition.Yard);
+            var b = a * a;
+            Assert.Equal(100, b.Value);
+            Assert.Equal(AreaUnitDefinition.SquareYard, b.Unit);
+            var bMeters = b.ConvertTo(AreaUnitDefinition.SquareMeter);
+            Assert.Equal(100 * (36 * 0.0254m) * (36 * 0.0254m), bMeters.Value);
+
+            var vol = a * b;
+            Assert.Equal(1000, vol.Value);
+            Assert.Equal(VolumeUnitDefinition.QubicYard, vol.Unit);
+
         }
 
         private class Complex
         {
             public string Name { get; set; }
-            public Weight W1 { get; set; }
-            public Weight? W2 { get; set; }
+            public Length W1 { get; set; }
+            public Length? W2 { get; set; }
         }
     }
 }

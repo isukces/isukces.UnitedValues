@@ -259,7 +259,7 @@ namespace isukces.UnitedValues
         public static Dictionary<<#= i #>, decimal> KnownUnits { get; }
     }
 
-    public partial struct <#= i #>Definition
+    public partial struct <#= i #>Definition: IUnitDefinition
     {
         public <#= i #>Definition(string unitName, decimal multiplication, params string[] aliases)
         {

@@ -61,7 +61,17 @@ namespace isukces.UnitedValues
 <# }#>
 			}
 		}
+
+		internal static void Register(UnitRelationsDictionary dict) {
+<# foreach(var i in a) { #>
+				dict.AddRelated((AreaUnit)Square<#= i.PropName #>, LengthUnitDefinition.<#= i.PropName #>);
+				dict.AddRelated((LengthUnit)LengthUnitDefinition.<#= i.PropName #>, Square<#= i.PropName #>);
+<# }#>		
+		}
+
     }
+
+
     public partial struct VolumeUnitDefinition
     {
 <# foreach(var i in a) { #>
@@ -73,6 +83,15 @@ namespace isukces.UnitedValues
 				yield return Qubic<#= i.PropName #>;
 <# }#>
 			}
+		}
+
+		internal static void Register(UnitRelationsDictionary dict) {
+<# foreach(var i in a) { #>
+				dict.AddRelated((VolumeUnit)Qubic<#= i.PropName #>, LengthUnitDefinition.<#= i.PropName #>);
+				dict.AddRelated((LengthUnit)LengthUnitDefinition.<#= i.PropName #>, Qubic<#= i.PropName #>);
+				dict.AddRelated((VolumeUnit)Qubic<#= i.PropName #>, AreaUnitDefinition.Square<#= i.PropName #>);
+				dict.AddRelated((AreaUnit)AreaUnitDefinition.Square<#= i.PropName #>, Qubic<#= i.PropName #>);
+<# }#>		
 		}
     }
 }

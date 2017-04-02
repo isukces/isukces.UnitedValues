@@ -715,7 +715,7 @@ namespace isukces.UnitedValues
         public static Dictionary<WeightUnit, decimal> KnownUnits { get; }
     }
 
-    public partial struct WeightUnitDefinition
+    public partial struct WeightUnitDefinition: IUnitDefinition
     {
         public WeightUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
         {
@@ -786,7 +786,7 @@ namespace isukces.UnitedValues
         public static Dictionary<LengthUnit, decimal> KnownUnits { get; }
     }
 
-    public partial struct LengthUnitDefinition
+    public partial struct LengthUnitDefinition: IUnitDefinition
     {
         public LengthUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
         {
@@ -857,7 +857,7 @@ namespace isukces.UnitedValues
         public static Dictionary<AreaUnit, decimal> KnownUnits { get; }
     }
 
-    public partial struct AreaUnitDefinition
+    public partial struct AreaUnitDefinition: IUnitDefinition
     {
         public AreaUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
         {
@@ -928,7 +928,7 @@ namespace isukces.UnitedValues
         public static Dictionary<VolumeUnit, decimal> KnownUnits { get; }
     }
 
-    public partial struct VolumeUnitDefinition
+    public partial struct VolumeUnitDefinition: IUnitDefinition
     {
         public VolumeUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
         {

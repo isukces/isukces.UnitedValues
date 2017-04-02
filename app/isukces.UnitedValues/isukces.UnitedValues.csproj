@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="_relations\GlobalUnitRegistry.cs" />
     <Compile Include="_length\Area.cs" />
     <Compile Include="KnownLenghtUnits.cs">
       <AutoGen>True</AutoGen>
@@ -62,6 +63,8 @@
     <Compile Include="_length\Length.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Weight.cs" />
+    <Compile Include="_quotient\Quotient.cs" />
+    <Compile Include="_relations\UnitRelationsDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

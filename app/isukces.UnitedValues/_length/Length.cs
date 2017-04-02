@@ -14,6 +14,14 @@ namespace isukces.UnitedValues
         public static Length FromMeter(long m) => new Length(m, LengthUnitDefinition.Meter);
         public static Length FromMeter(double m) => new Length((decimal)m, LengthUnitDefinition.Meter);
 
+
+        public static Length operator /(Area a, Length b)
+        {
+            var resultUnit = ToLengthUnit(a.Unit);
+            b = b.ConvertTo(resultUnit);
+            return new Length(a.Value / b.Value, resultUnit);
+        }
+
         public static Area operator *(Length a, Length b)
         {
             var resultUnit = ToAreaUnit(a.Unit);
@@ -21,11 +29,29 @@ namespace isukces.UnitedValues
             return new Area(a.Value * b.Value, resultUnit);
         }
 
-        public static Length operator /(Area a, Length b)
+        public static Volume operator *(Length a, Area b)
         {
-            var resultUnit = ToLengthUnit(a.Unit);
-            b = b.ConvertTo(resultUnit);
-            return new Length(a.Value / b.Value, resultUnit);
+            var areaUnit = ToAreaUnit(a.Unit);
+            b = b.ConvertTo(areaUnit);
+            var volumeUnit = ToVolumeUnit(a.Unit);
+            return new Volume(a.Value * b.Value, volumeUnit);
+        }
+
+        public static Volume operator *(Area a, Length b)
+        {
+            var lengthUnit = ToLengthUnit(a.Unit);
+            b = b.ConvertTo(lengthUnit);
+            var volumeUnit = ToVolumeUnit(a.Unit);
+            return new Volume(a.Value * b.Value, volumeUnit);
+        }
+
+ 
+        private static AreaUnitDefinition ToAreaUnit(LengthUnit u)
+        {
+            var a = GlobalUnitRegistry.Relations.Get<LengthUnit, AreaUnitDefinition>(u);
+            if (a == null)
+                throw new Exception($"Unable to convert {u} into AreaUnit");
+            return a.Item1;
         }
 
         private static LengthUnit ToLengthUnit(AreaUnit u)
@@ -35,25 +61,17 @@ namespace isukces.UnitedValues
             throw new Exception($"Unable to convert {u} into LengthUnit");
         }
 
-
-        public static Volume operator *(Area a, Length b)
+        private static VolumeUnitDefinition ToVolumeUnit(LengthUnit unit)
         {
-            var resultUnit = ToVolumeUnit(a.Unit);
-            b = b.ConvertTo(ToLengthUnit(a.Unit));
-            return new Volume(a.Value * b.Value, resultUnit);
+            var a = GlobalUnitRegistry.Relations.Get<LengthUnit, VolumeUnitDefinition>(unit);
+            if (a == null)
+                throw new Exception($"Unable to convert {unit} into VolumeUnit");
+            return a.Item1;
         }
 
         private static VolumeUnit ToVolumeUnit(AreaUnit u)
         {
             throw new NotImplementedException();
-        }
-
-        private static AreaUnit ToAreaUnit(LengthUnit u)
-        {
-            if (u.Equals(LengthUnitDefinition.Meter))
-                return AreaUnitDefinition.SquareMeter;
-
-            throw new Exception($"Unable to convert {u} into AreaUnit");
         }
 
 
@@ -78,5 +96,4 @@ namespace isukces.UnitedValues
                 AddDefinition(i);
         }
     }
- 
 }

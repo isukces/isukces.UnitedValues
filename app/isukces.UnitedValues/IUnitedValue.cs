@@ -17,5 +17,10 @@ namespace isukces.UnitedValues
         string UnitName { get; }
     }
 
-   
+    public interface IUnitDefinition
+    {
+        string UnitName { get; }
+        decimal Multiplication { get; }
+    }
+
 }
