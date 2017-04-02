@@ -1,0 +1,101 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using System.Collections.Generic;
+
+<# 
+
+var inch = 0.0254m;
+var ft = inch * 12;
+var yd = 3 * ft;
+var furlong = 220 * yd;
+
+
+var a = new []
+{
+	new UnitDef("Meter", "m", 1),
+	new UnitDef("Km", "km", 1000),
+	new UnitDef("Dm", "dm", 0.1m),
+	new UnitDef("Cm", "cm", 0.01m),
+	new UnitDef("Mm", "mm", 0.001m),
+
+
+	new UnitDef("Inch", "inch", inch),
+	new UnitDef("Foot", "ft", ft),
+	new UnitDef("Yard", "yd", yd),
+	new UnitDef("Furlong", "fg", furlong),
+	new UnitDef("Fathom", "fh", 2 * yd),
+
+	new UnitDef("Mile", "mil", 1609.344m),
+	new UnitDef("NauticalMile", "nm", 1852m)
+};
+
+#>
+namespace isukces.UnitedValues
+{
+    public partial struct LengthUnitDefinition
+    {
+<# foreach(var i in a) { #>
+        public static readonly LengthUnitDefinition <#= i.PropName #> = new LengthUnitDefinition("<#= i.UnitName #>", <#= i.MultS #>);
+<# }#>
+		public static IEnumerable<LengthUnitDefinition> All {
+			get {
+<# foreach(var i in a) { #>
+				yield return <#= i.PropName #>;
+<# }#>
+			}
+		}
+    }
+    public partial struct AreaUnitDefinition
+    {
+<# foreach(var i in a) { #>
+        public static readonly AreaUnitDefinition Square<#= i.PropName #> = new AreaUnitDefinition("<#= i.UnitName #>²", <#= i.MultS2 #>, "<#= i.UnitName #>2");
+<# }#>
+		public static IEnumerable<AreaUnitDefinition> All {
+			get {
+<# foreach(var i in a) { #>
+				yield return Square<#= i.PropName #>;
+<# }#>
+			}
+		}
+    }
+    public partial struct VolumeUnitDefinition
+    {
+<# foreach(var i in a) { #>
+        public static readonly VolumeUnitDefinition Qubic<#= i.PropName #> = new VolumeUnitDefinition("<#= i.UnitName #>³", <#= i.MultS3 #>, "<#= i.UnitName #>3");
+<# }#>
+		public static IEnumerable<VolumeUnitDefinition> All {
+			get {
+<# foreach(var i in a) { #>
+				yield return Qubic<#= i.PropName #>;
+<# }#>
+			}
+		}
+    }
+}
+
+
+
+<#+
+class UnitDef
+{
+    public UnitDef(string propName, string unitName, decimal mult)
+    {
+        PropName = propName;
+        UnitName = unitName;
+        Mult = mult;
+    }
+
+    public string PropName { get; set; }
+    public string UnitName { get; set; }
+    public decimal Mult { get; set; }
+    public string MultS => Mult.ToString(System.Globalization.CultureInfo.InvariantCulture) + "m";
+    public string MultS2 => $"{MultS} * {MultS}";
+    public string MultS3 => $"{MultS} * {MultS} * {MultS}";
+
+}
+
+#>
