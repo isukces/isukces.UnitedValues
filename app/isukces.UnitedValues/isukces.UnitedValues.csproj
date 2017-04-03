@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UnitDefinition.cs" />
+    <Compile Include="_density\LinearDensity.cs" />
+    <Compile Include="_density\PlaneDensity.cs" />
     <Compile Include="_density\Density.cs" />
     <Compile Include="_global\GlobalUnitRegistry.cs" />
     <Compile Include="_global\UnitExchangeFactors.cs" />
