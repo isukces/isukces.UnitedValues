@@ -6,6 +6,10 @@ namespace isukces.UnitedValues
         public static Length FromKm(long m) => new Length(m, LengthUnits.Km);
         public static Length FromKm(double m) => new Length((decimal)m, LengthUnits.Km);
 
+        public static Length FromMm(decimal m) => new Length(m, LengthUnits.Mm);
+        public static Length FromMm(long m) => new Length(m, LengthUnits.Mm);
+        public static Length FromMm(double m) => new Length((decimal)m, LengthUnits.Mm);
+
 
         public static Length FromMeter(decimal m) => new Length(m, LengthUnits.Meter);
         public static Length FromMeter(long m) => new Length(m, LengthUnits.Meter);

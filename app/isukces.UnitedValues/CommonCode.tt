@@ -218,7 +218,13 @@ namespace isukces.UnitedValues
 
         public <#= i #>(string unitName)
         {
-            UnitName = unitName;
+<#if (i=="AreaUnit")  {#>
+			UnitName = unitName?.Replace("2", "²");
+<# } else if (i=="VolumeUnit") { #>
+			UnitName = unitName?.Replace("3", "³");
+<# } else { #>
+			UnitName = unitName;
+<# } #>
         }
 
         public static bool operator ==(<#= i #> left, <#= i #> right)

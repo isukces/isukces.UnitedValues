@@ -680,7 +680,7 @@ namespace isukces.UnitedValues
 
         public WeightUnit(string unitName)
         {
-            UnitName = unitName;
+			UnitName = unitName;
         }
 
         public static bool operator ==(WeightUnit left, WeightUnit right)
@@ -746,7 +746,7 @@ namespace isukces.UnitedValues
 
         public LengthUnit(string unitName)
         {
-            UnitName = unitName;
+			UnitName = unitName;
         }
 
         public static bool operator ==(LengthUnit left, LengthUnit right)
@@ -812,7 +812,7 @@ namespace isukces.UnitedValues
 
         public AreaUnit(string unitName)
         {
-            UnitName = unitName;
+			UnitName = unitName?.Replace("2", "²");
         }
 
         public static bool operator ==(AreaUnit left, AreaUnit right)
@@ -878,7 +878,7 @@ namespace isukces.UnitedValues
 
         public VolumeUnit(string unitName)
         {
-            UnitName = unitName;
+			UnitName = unitName?.Replace("3", "³");
         }
 
         public static bool operator ==(VolumeUnit left, VolumeUnit right)

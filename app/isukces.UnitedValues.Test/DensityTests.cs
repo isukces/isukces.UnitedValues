@@ -85,9 +85,27 @@ namespace isukces.UnitedValues.Test
             Assert.Equal("24000kg/m", linearDensity.ToString());
         }
 
+        [Fact]
+        public void T04_ShouldConvertDensityAndLinearDensity()
+        {
+            var density = new Density(8000, WeightUnits.Kg, VolumeUnits.QubicMeter);
+            Assert.Equal("8000kg/m³", density.ToString());
+            var area = Length.FromMm(50) * Length.FromMm(5);
+            Assert.Equal("250mm²", area.ToString());
+
+            var linearDensity = density * area;
+            Assert.Equal(2m, linearDensity.Value);
+            Assert.Equal("kg/m", linearDensity.Unit.ToString());
+
+            linearDensity = area * density;
+            Assert.Equal(0.002m, linearDensity.Value);
+            Assert.Equal("kg/mm", linearDensity.Unit.ToString());
+
+        }
+
 
         [Fact]
-        public void T04_ShouldSerializeToJson()
+        public void T05_ShouldSerializeToJson()
         {
             var density = new Density(8000, WeightUnits.Kg, VolumeUnits.QubicMeter);
             var json = JsonConvert.SerializeObject(density);
@@ -100,7 +118,7 @@ namespace isukces.UnitedValues.Test
             Assert.Equal("\"8000kg/m\"", json);
         }
         [Fact]
-        public void T05_ShouldDeserializeFromJson()
+        public void T06_ShouldDeserializeFromJson()
         {
             var testValues = "8000kg/m³,8000 kg / m³, 8000  kg / m3";
             foreach (var xx in testValues.Split(','))

@@ -24,4 +24,6 @@ namespace isukces.UnitedValues
     {
         decimal Multiplication { get; }
     }
+
+    
 }
