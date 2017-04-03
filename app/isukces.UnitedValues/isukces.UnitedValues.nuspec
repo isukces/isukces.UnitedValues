@@ -13,8 +13,8 @@
     <tags>Math</tags>
   </metadata>
  <files>
-    <file src="bin\Release\isukces.UnitedValues.pdb" target="lib\net461" />
-    <file src="bin\Release\isukces.UnitedValues.xml" target="lib\net461" />
+    <file src="bin\Release\isukces.UnitedValues.pdb" target="lib\net45" />
+    <file src="bin\Release\isukces.UnitedValues.xml" target="lib\net45" />
   </files>
 
 </package>
