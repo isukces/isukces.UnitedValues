@@ -6,7 +6,7 @@ namespace isukces.UnitedValues
 {
     [JsonConverter(typeof(DensityJsonConverter))]
     [Serializable]
-    public partial struct PlanarDensity : IUnitedValue<PlaneDensityUnit>, IEquatable<PlanarDensity>
+    public partial struct PlanarDensity : IUnitedValue<PlaneDensityUnit>, IEquatable<PlanarDensity>, IFormattable
     {
         public PlanarDensity(decimal value, PlaneDensityUnit unit)
         {
@@ -42,7 +42,6 @@ namespace isukces.UnitedValues
             var denominatorUnit = new AreaUnit(units[1].Trim());
             return new PlanarDensity(r.Value, counterUnit, denominatorUnit);
         }
-
 
         public PlanarDensity ConvertTo(PlaneDensityUnit newUnit)
         {
@@ -83,6 +82,9 @@ namespace isukces.UnitedValues
                 return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
+
+        public string ToString(string format, IFormatProvider provider)
+            => this.ToStringFormat(format, provider);
 
         public override string ToString() => Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
 

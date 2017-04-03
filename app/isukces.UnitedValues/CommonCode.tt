@@ -138,6 +138,10 @@ namespace isukces.UnitedValues
             return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
         }
 
+		public string ToString(string format, IFormatProvider provider = null) 
+            => this.ToStringFormat(format, provider);
+
+
 		// properties
 
         public decimal Value { get; }
@@ -296,6 +300,7 @@ class Info {
 			yield return $"IEquatable<{Name}>";
 			if (IsComparable)
 				yield return $"IComparable<{Name}>";
+			yield return $"IFormattable";
 				
 		}
 	}

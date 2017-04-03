@@ -6,7 +6,7 @@ namespace isukces.UnitedValues
 {
     [JsonConverter(typeof(DensityJsonConverter))]
     [Serializable]
-    public partial struct LinearDensity : IUnitedValue<LinearDensityUnit>, IEquatable<LinearDensity>
+    public partial struct LinearDensity : IUnitedValue<LinearDensityUnit>, IEquatable<LinearDensity>, IFormattable
     {
         public LinearDensity(decimal value, LinearDensityUnit unit)
         {
@@ -85,6 +85,9 @@ namespace isukces.UnitedValues
         }
 
         public override string ToString() => Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
+
+        public string ToString(string format, IFormatProvider provider)
+            => this.ToStringFormat(format, provider);
 
         public decimal Value { get; }
 

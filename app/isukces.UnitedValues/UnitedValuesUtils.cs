@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace isukces.UnitedValues
 {
@@ -71,6 +72,23 @@ namespace isukces.UnitedValues
 
             var value = b.Value * a.Value;
             return result(value, resultUnit.Item1);
+        }
+
+        public static string ToStringFormat<T>(this IUnitedValue<T> value, string format, IFormatProvider provider)
+            where T : IUnit, IEquatable<T>
+        {
+            if (string.IsNullOrEmpty(format)) format = "G";
+            if (provider == null) provider = CultureInfo.CurrentCulture;
+
+            format = format.ToUpperInvariant().Trim();
+            if (format.StartsWith("F"))
+            {
+                var tmp = format.Substring(1);
+                int value1;
+                if (int.TryParse(tmp, out value1))
+                    return value.Value.ToString(format, provider) + " " + value.Unit;
+            }
+            return value.Value.ToString("F2", provider) + " " + value.Unit;
         }
     }
 }

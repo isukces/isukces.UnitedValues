@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -151,8 +153,19 @@ namespace isukces.UnitedValues.Test
             Assert.True(Weight.FromKg(1000) == Weight.FromTons(1));
         }
 
+        [Fact]
+        public void T07_ShouldConvertToString()
+        {
+            var w = Weight.FromKg(1234.56789);
+            var txt = w.ToString("F3", CultureInfo.InvariantCulture);
+            Assert.Equal("1234.568 kg", txt);
 
-     
+            FormattableString formattableString = $"{w:F1}";
+            txt = formattableString.ToString(CultureInfo.InvariantCulture);
+            Assert.Equal("1234.6 kg", txt);
+        }
+
+
 
 
         private class Complex

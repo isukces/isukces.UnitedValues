@@ -6,7 +6,7 @@ namespace isukces.UnitedValues
 {
     [JsonConverter(typeof(DensityJsonConverter))]
     [Serializable]
-    public partial struct Density : IUnitedValue<DensityUnit>, IEquatable<Density>
+    public partial struct Density : IUnitedValue<DensityUnit>, IEquatable<Density>, IFormattable
     {
         public Density(decimal value, DensityUnit unit)
         {
@@ -102,6 +102,9 @@ namespace isukces.UnitedValues
         public decimal Value { get; }
 
         public DensityUnit Unit { get; }
+
+        public string ToString(string format, IFormatProvider provider) 
+            => this.ToStringFormat(format, provider);
     }
 
     public struct DensityUnit : IUnit, IEquatable<DensityUnit>

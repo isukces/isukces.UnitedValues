@@ -8,7 +8,7 @@ namespace isukces.UnitedValues
 {
 	[JsonConverter(typeof(WeightJsonConverter))]
 	[Serializable]
-	public partial struct Weight : IUnitedValue<WeightUnit>, IEquatable<Weight>, IComparable<Weight> {
+	public partial struct Weight : IUnitedValue<WeightUnit>, IEquatable<Weight>, IComparable<Weight>, IFormattable {
 
 		public Weight(decimal value, WeightUnit unit)
         {
@@ -120,6 +120,10 @@ namespace isukces.UnitedValues
             return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
         }
 
+		public string ToString(string format, IFormatProvider provider = null) 
+            => this.ToStringFormat(format, provider);
+
+
 		// properties
 
         public decimal Value { get; }
@@ -131,7 +135,7 @@ namespace isukces.UnitedValues
 
 	[JsonConverter(typeof(LengthJsonConverter))]
 	[Serializable]
-	public partial struct Length : IUnitedValue<LengthUnit>, IEquatable<Length>, IComparable<Length> {
+	public partial struct Length : IUnitedValue<LengthUnit>, IEquatable<Length>, IComparable<Length>, IFormattable {
 
 		public Length(decimal value, LengthUnit unit)
         {
@@ -243,6 +247,10 @@ namespace isukces.UnitedValues
             return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
         }
 
+		public string ToString(string format, IFormatProvider provider = null) 
+            => this.ToStringFormat(format, provider);
+
+
 		// properties
 
         public decimal Value { get; }
@@ -254,7 +262,7 @@ namespace isukces.UnitedValues
 
 	[JsonConverter(typeof(AreaJsonConverter))]
 	[Serializable]
-	public partial struct Area : IUnitedValue<AreaUnit>, IEquatable<Area> {
+	public partial struct Area : IUnitedValue<AreaUnit>, IEquatable<Area>, IFormattable {
 
 		public Area(decimal value, AreaUnit unit)
         {
@@ -354,6 +362,10 @@ namespace isukces.UnitedValues
             return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
         }
 
+		public string ToString(string format, IFormatProvider provider = null) 
+            => this.ToStringFormat(format, provider);
+
+
 		// properties
 
         public decimal Value { get; }
@@ -365,7 +377,7 @@ namespace isukces.UnitedValues
 
 	[JsonConverter(typeof(VolumeJsonConverter))]
 	[Serializable]
-	public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume> {
+	public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume>, IFormattable {
 
 		public Volume(decimal value, VolumeUnit unit)
         {
@@ -464,6 +476,10 @@ namespace isukces.UnitedValues
         {
             return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
         }
+
+		public string ToString(string format, IFormatProvider provider = null) 
+            => this.ToStringFormat(format, provider);
+
 
 		// properties
 
