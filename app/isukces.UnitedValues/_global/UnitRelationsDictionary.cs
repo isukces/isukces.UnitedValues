@@ -29,6 +29,16 @@ namespace isukces.UnitedValues
             return rd.TryGetValue(key, out value) ? Tuple.Create((T2)value) : null;
         }
 
+        public T2 GetT<T1, T2>(T1 a)
+            where T1 : IUnit
+            where T2 : IUnit
+        {
+            var resultUnit = GlobalUnitRegistry.Relations.Get<T1, T2>(a);
+            if (resultUnit == null)
+                throw new Exception($"Unable to convert {a} into {typeof(T2)}");
+            return resultUnit.Item1;
+        }
+
         private readonly Dictionary<Key, object> rd = new Dictionary<Key, object>();
 
         private struct Key : IEquatable<Key>

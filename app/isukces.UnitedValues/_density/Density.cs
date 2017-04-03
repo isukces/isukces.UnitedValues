@@ -3,7 +3,8 @@ using System.Globalization;
 
 namespace isukces.UnitedValues
 {
-    public struct Density : IUnitedValue<DensityUnit>, IEquatable<Density>
+    
+    public partial struct Density : IUnitedValue<DensityUnit>, IEquatable<Density>
     {
         public override string ToString() => this.Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
 

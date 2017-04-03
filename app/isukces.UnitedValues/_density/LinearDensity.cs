@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace isukces.UnitedValues
 {
-    public struct LinearDensity : IUnitedValue<LinearDensityUnit>, IEquatable<LinearDensity>
+    public partial struct LinearDensity : IUnitedValue<LinearDensityUnit>, IEquatable<LinearDensity>
     {
         public override string ToString() => Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
 
@@ -62,18 +62,7 @@ namespace isukces.UnitedValues
 
         public LinearDensityUnit Unit { get; }
 
-
-        public static Weight operator *(LinearDensity d,  Length v)
-        {
-            v = v.ConvertTo(d.Unit.DenominatorUnit);
-            return new Weight(d.Value * v.Value, d.Unit.CounterUnit);
-        }
-
-        public static Weight operator *(Length v, LinearDensity d)
-        {
-            v = v.ConvertTo(d.Unit.DenominatorUnit);
-            return new Weight(d.Value * v.Value, d.Unit.CounterUnit);
-        }
+ 
 
 
         public LinearDensity ConvertTo(LinearDensityUnit newUnit)
