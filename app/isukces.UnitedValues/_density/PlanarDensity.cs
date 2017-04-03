@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 namespace isukces.UnitedValues
 {
     [JsonConverter(typeof(DensityJsonConverter))]
+    [Serializable]
     public partial struct PlanarDensity : IUnitedValue<PlaneDensityUnit>, IEquatable<PlanarDensity>
     {
         public PlanarDensity(decimal value, PlaneDensityUnit unit)

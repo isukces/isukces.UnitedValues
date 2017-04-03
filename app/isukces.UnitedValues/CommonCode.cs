@@ -7,6 +7,7 @@ using System.Linq;
 namespace isukces.UnitedValues
 {
 	[JsonConverter(typeof(WeightJsonConverter))]
+	[Serializable]
 	public partial struct Weight : IUnitedValue<WeightUnit>, IEquatable<Weight>, IComparable<Weight> {
 
 		public Weight(decimal value, WeightUnit unit)
@@ -129,6 +130,7 @@ namespace isukces.UnitedValues
 	}
 
 	[JsonConverter(typeof(LengthJsonConverter))]
+	[Serializable]
 	public partial struct Length : IUnitedValue<LengthUnit>, IEquatable<Length>, IComparable<Length> {
 
 		public Length(decimal value, LengthUnit unit)
@@ -251,6 +253,7 @@ namespace isukces.UnitedValues
 	}
 
 	[JsonConverter(typeof(AreaJsonConverter))]
+	[Serializable]
 	public partial struct Area : IUnitedValue<AreaUnit>, IEquatable<Area> {
 
 		public Area(decimal value, AreaUnit unit)
@@ -361,6 +364,7 @@ namespace isukces.UnitedValues
 	}
 
 	[JsonConverter(typeof(VolumeJsonConverter))]
+	[Serializable]
 	public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume> {
 
 		public Volume(decimal value, VolumeUnit unit)
@@ -695,7 +699,7 @@ namespace isukces.UnitedValues
 
 // ========================== UNITS
 
-
+	[Serializable]
 	public partial struct WeightUnit : IUnit, IEquatable<WeightUnit>
     {
 
@@ -740,28 +744,9 @@ namespace isukces.UnitedValues
         public string UnitName { get; }
     }
 
-	/*
-    public partial struct WeightUnitDefinition: IUnitDefinition
-    {
-        public WeightUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
-        {
-            UnitName = unitName;
-            Multiplication = multiplication;
-            Aliases = aliases ?? new string[0];
-        }
+ 
 
-
-        public static implicit operator WeightUnit(WeightUnitDefinition x)
-            => new WeightUnit(x.UnitName);
-
-        public string UnitName { get; }
-        public decimal Multiplication { get; }
-        public string[] Aliases { get; }
-      
-    }
-	*/
-
-
+	[Serializable]
 	public partial struct LengthUnit : IUnit, IEquatable<LengthUnit>
     {
 
@@ -806,28 +791,9 @@ namespace isukces.UnitedValues
         public string UnitName { get; }
     }
 
-	/*
-    public partial struct LengthUnitDefinition: IUnitDefinition
-    {
-        public LengthUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
-        {
-            UnitName = unitName;
-            Multiplication = multiplication;
-            Aliases = aliases ?? new string[0];
-        }
+ 
 
-
-        public static implicit operator LengthUnit(LengthUnitDefinition x)
-            => new LengthUnit(x.UnitName);
-
-        public string UnitName { get; }
-        public decimal Multiplication { get; }
-        public string[] Aliases { get; }
-      
-    }
-	*/
-
-
+	[Serializable]
 	public partial struct AreaUnit : IUnit, IEquatable<AreaUnit>
     {
 
@@ -872,28 +838,9 @@ namespace isukces.UnitedValues
         public string UnitName { get; }
     }
 
-	/*
-    public partial struct AreaUnitDefinition: IUnitDefinition
-    {
-        public AreaUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
-        {
-            UnitName = unitName;
-            Multiplication = multiplication;
-            Aliases = aliases ?? new string[0];
-        }
+ 
 
-
-        public static implicit operator AreaUnit(AreaUnitDefinition x)
-            => new AreaUnit(x.UnitName);
-
-        public string UnitName { get; }
-        public decimal Multiplication { get; }
-        public string[] Aliases { get; }
-      
-    }
-	*/
-
-
+	[Serializable]
 	public partial struct VolumeUnit : IUnit, IEquatable<VolumeUnit>
     {
 
@@ -938,25 +885,6 @@ namespace isukces.UnitedValues
         public string UnitName { get; }
     }
 
-	/*
-    public partial struct VolumeUnitDefinition: IUnitDefinition
-    {
-        public VolumeUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
-        {
-            UnitName = unitName;
-            Multiplication = multiplication;
-            Aliases = aliases ?? new string[0];
-        }
-
-
-        public static implicit operator VolumeUnit(VolumeUnitDefinition x)
-            => new VolumeUnit(x.UnitName);
-
-        public string UnitName { get; }
-        public decimal Multiplication { get; }
-        public string[] Aliases { get; }
-      
-    }
-	*/
+ 
 }
 
