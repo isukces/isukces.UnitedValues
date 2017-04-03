@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnitDefinition.cs" />
     <Compile Include="_density\Density.cs" />
-    <Compile Include="_relations\GlobalUnitRegistry.cs" />
+    <Compile Include="_global\GlobalUnitRegistry.cs" />
+    <Compile Include="_global\UnitExchangeFactors.cs" />
     <Compile Include="_length\Area.cs" />
     <Compile Include="KnownLenghtUnits.cs">
       <AutoGen>True</AutoGen>
@@ -63,9 +65,9 @@
     <Compile Include="AbstractUnitJsonConverter.cs" />
     <Compile Include="_length\Length.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Weight.cs" />
+    <Compile Include="_weight\Weight.cs" />
     <Compile Include="_quotient\Quotient.cs" />
-    <Compile Include="_relations\UnitRelationsDictionary.cs" />
+    <Compile Include="_global\UnitRelationsDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

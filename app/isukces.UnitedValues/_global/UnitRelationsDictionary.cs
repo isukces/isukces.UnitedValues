@@ -6,7 +6,7 @@ namespace isukces.UnitedValues
     public class UnitRelationsDictionary
     {
         public void AddRelated<T1, T2>(T1 a, T2 b)
-            where T1 : IUnit 
+            where T1 : IUnit
             where T2 : IUnit
         {
             var t1 = typeof(T1);
@@ -16,13 +16,14 @@ namespace isukces.UnitedValues
 
 
         public Tuple<T2> Get<T1, T2>(T1 a)
-            where T1 : IUnit 
+            where T1 : IUnit
             where T2 : IUnit
         {
             var t1 = typeof(T1);
             var t2 = typeof(T2);
             if (t1 == t2)
-                return Tuple.Create((T2)(object)a);
+                //throw new NotSupportedException();
+                return Tuple.Create((T2)(object)a); //new UnitDefinition<T2>(a.UnitName, 1));
             var key = new Key(t1, t2, a.UnitName);
             object value;
             return rd.TryGetValue(key, out value) ? Tuple.Create((T2)value) : null;

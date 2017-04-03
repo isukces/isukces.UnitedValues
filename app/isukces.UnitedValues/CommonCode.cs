@@ -26,8 +26,9 @@ namespace isukces.UnitedValues
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
-            if (WeightUnit.KnownUnits.TryGetValue(newUnit, out decimal mult))
-                return new Weight(basic / mult, newUnit);
+			var factor = GlobalUnitRegistry.Factors.Get(newUnit);
+            if (factor != null)
+                return new Weight(basic / factor.Value, newUnit);
             throw new Exception("Unable to find multiplication for unit " + newUnit);
         }
 
@@ -101,8 +102,9 @@ namespace isukces.UnitedValues
         {
             if (Unit.Equals(BaseUnit))
                 return Value;
-            if (WeightUnit.KnownUnits.TryGetValue(Unit, out decimal mult))
-                return Value * mult;
+			var factor = GlobalUnitRegistry.Factors.Get(Unit);
+            if (factor != null)
+                return Value * factor.Value;
             throw new Exception("Unable to find multiplication for unit " + Unit);
         }
 
@@ -116,7 +118,7 @@ namespace isukces.UnitedValues
         public decimal Value { get; }
         public WeightUnit Unit { get; }
 
-		public static WeightUnit BaseUnit = WeightUnitDefinition.Kg;
+		public static WeightUnit BaseUnit = WeightUnits.Kg;
 		public static Weight Zero => new Weight(0m, BaseUnit);
 	}
 
@@ -140,8 +142,9 @@ namespace isukces.UnitedValues
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
-            if (LengthUnit.KnownUnits.TryGetValue(newUnit, out decimal mult))
-                return new Length(basic / mult, newUnit);
+			var factor = GlobalUnitRegistry.Factors.Get(newUnit);
+            if (factor != null)
+                return new Length(basic / factor.Value, newUnit);
             throw new Exception("Unable to find multiplication for unit " + newUnit);
         }
 
@@ -215,8 +218,9 @@ namespace isukces.UnitedValues
         {
             if (Unit.Equals(BaseUnit))
                 return Value;
-            if (LengthUnit.KnownUnits.TryGetValue(Unit, out decimal mult))
-                return Value * mult;
+			var factor = GlobalUnitRegistry.Factors.Get(Unit);
+            if (factor != null)
+                return Value * factor.Value;
             throw new Exception("Unable to find multiplication for unit " + Unit);
         }
 
@@ -230,7 +234,7 @@ namespace isukces.UnitedValues
         public decimal Value { get; }
         public LengthUnit Unit { get; }
 
-		public static LengthUnit BaseUnit = LengthUnitDefinition.Meter;
+		public static LengthUnit BaseUnit = LengthUnits.Meter;
 		public static Length Zero => new Length(0m, BaseUnit);
 	}
 
@@ -254,8 +258,9 @@ namespace isukces.UnitedValues
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
-            if (AreaUnit.KnownUnits.TryGetValue(newUnit, out decimal mult))
-                return new Area(basic / mult, newUnit);
+			var factor = GlobalUnitRegistry.Factors.Get(newUnit);
+            if (factor != null)
+                return new Area(basic / factor.Value, newUnit);
             throw new Exception("Unable to find multiplication for unit " + newUnit);
         }
 
@@ -317,8 +322,9 @@ namespace isukces.UnitedValues
         {
             if (Unit.Equals(BaseUnit))
                 return Value;
-            if (AreaUnit.KnownUnits.TryGetValue(Unit, out decimal mult))
-                return Value * mult;
+			var factor = GlobalUnitRegistry.Factors.Get(Unit);
+            if (factor != null)
+                return Value * factor.Value;
             throw new Exception("Unable to find multiplication for unit " + Unit);
         }
 
@@ -332,7 +338,7 @@ namespace isukces.UnitedValues
         public decimal Value { get; }
         public AreaUnit Unit { get; }
 
-		public static AreaUnit BaseUnit = AreaUnitDefinition.SquareMeter;
+		public static AreaUnit BaseUnit = AreaUnits.SquareMeter;
 		public static Area Zero => new Area(0m, BaseUnit);
 	}
 
@@ -356,8 +362,9 @@ namespace isukces.UnitedValues
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
-            if (VolumeUnit.KnownUnits.TryGetValue(newUnit, out decimal mult))
-                return new Volume(basic / mult, newUnit);
+			var factor = GlobalUnitRegistry.Factors.Get(newUnit);
+            if (factor != null)
+                return new Volume(basic / factor.Value, newUnit);
             throw new Exception("Unable to find multiplication for unit " + newUnit);
         }
 
@@ -419,8 +426,9 @@ namespace isukces.UnitedValues
         {
             if (Unit.Equals(BaseUnit))
                 return Value;
-            if (VolumeUnit.KnownUnits.TryGetValue(Unit, out decimal mult))
-                return Value * mult;
+			var factor = GlobalUnitRegistry.Factors.Get(Unit);
+            if (factor != null)
+                return Value * factor.Value;
             throw new Exception("Unable to find multiplication for unit " + Unit);
         }
 
@@ -434,7 +442,7 @@ namespace isukces.UnitedValues
         public decimal Value { get; }
         public VolumeUnit Unit { get; }
 
-		public static VolumeUnit BaseUnit = VolumeUnitDefinition.QubicMeter;
+		public static VolumeUnit BaseUnit = VolumeUnits.QubicMeter;
 		public static Volume Zero => new Volume(0m, BaseUnit);
 	}
 
@@ -667,14 +675,8 @@ namespace isukces.UnitedValues
 	public partial struct WeightUnit : IUnit, IEquatable<WeightUnit>
     {
 
-        private static void AddDefinition(WeightUnitDefinition definition)
-        {
-            KnownUnits[definition] = definition.Multiplication;
-			if (definition.Aliases!=null && definition.Aliases.Length>0)
-				foreach(var i in definition.Aliases)
-					KnownUnits[new WeightUnit(i)] = definition.Multiplication;
-        }
-
+		public static implicit operator WeightUnit(UnitDefinition<WeightUnit> src) 
+			=> new WeightUnit(src.UnitName);
 
         public WeightUnit(string unitName)
         {
@@ -712,9 +714,9 @@ namespace isukces.UnitedValues
         bool IEquatable<WeightUnit>.Equals(WeightUnit other) => Equals(other);
 
         public string UnitName { get; }
-        public static Dictionary<WeightUnit, decimal> KnownUnits { get; }
     }
 
+	/*
     public partial struct WeightUnitDefinition: IUnitDefinition
     {
         public WeightUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
@@ -733,19 +735,14 @@ namespace isukces.UnitedValues
         public string[] Aliases { get; }
       
     }
+	*/
 
 
 	public partial struct LengthUnit : IUnit, IEquatable<LengthUnit>
     {
 
-        private static void AddDefinition(LengthUnitDefinition definition)
-        {
-            KnownUnits[definition] = definition.Multiplication;
-			if (definition.Aliases!=null && definition.Aliases.Length>0)
-				foreach(var i in definition.Aliases)
-					KnownUnits[new LengthUnit(i)] = definition.Multiplication;
-        }
-
+		public static implicit operator LengthUnit(UnitDefinition<LengthUnit> src) 
+			=> new LengthUnit(src.UnitName);
 
         public LengthUnit(string unitName)
         {
@@ -783,9 +780,9 @@ namespace isukces.UnitedValues
         bool IEquatable<LengthUnit>.Equals(LengthUnit other) => Equals(other);
 
         public string UnitName { get; }
-        public static Dictionary<LengthUnit, decimal> KnownUnits { get; }
     }
 
+	/*
     public partial struct LengthUnitDefinition: IUnitDefinition
     {
         public LengthUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
@@ -804,19 +801,14 @@ namespace isukces.UnitedValues
         public string[] Aliases { get; }
       
     }
+	*/
 
 
 	public partial struct AreaUnit : IUnit, IEquatable<AreaUnit>
     {
 
-        private static void AddDefinition(AreaUnitDefinition definition)
-        {
-            KnownUnits[definition] = definition.Multiplication;
-			if (definition.Aliases!=null && definition.Aliases.Length>0)
-				foreach(var i in definition.Aliases)
-					KnownUnits[new AreaUnit(i)] = definition.Multiplication;
-        }
-
+		public static implicit operator AreaUnit(UnitDefinition<AreaUnit> src) 
+			=> new AreaUnit(src.UnitName);
 
         public AreaUnit(string unitName)
         {
@@ -854,9 +846,9 @@ namespace isukces.UnitedValues
         bool IEquatable<AreaUnit>.Equals(AreaUnit other) => Equals(other);
 
         public string UnitName { get; }
-        public static Dictionary<AreaUnit, decimal> KnownUnits { get; }
     }
 
+	/*
     public partial struct AreaUnitDefinition: IUnitDefinition
     {
         public AreaUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
@@ -875,19 +867,14 @@ namespace isukces.UnitedValues
         public string[] Aliases { get; }
       
     }
+	*/
 
 
 	public partial struct VolumeUnit : IUnit, IEquatable<VolumeUnit>
     {
 
-        private static void AddDefinition(VolumeUnitDefinition definition)
-        {
-            KnownUnits[definition] = definition.Multiplication;
-			if (definition.Aliases!=null && definition.Aliases.Length>0)
-				foreach(var i in definition.Aliases)
-					KnownUnits[new VolumeUnit(i)] = definition.Multiplication;
-        }
-
+		public static implicit operator VolumeUnit(UnitDefinition<VolumeUnit> src) 
+			=> new VolumeUnit(src.UnitName);
 
         public VolumeUnit(string unitName)
         {
@@ -925,9 +912,9 @@ namespace isukces.UnitedValues
         bool IEquatable<VolumeUnit>.Equals(VolumeUnit other) => Equals(other);
 
         public string UnitName { get; }
-        public static Dictionary<VolumeUnit, decimal> KnownUnits { get; }
     }
 
+	/*
     public partial struct VolumeUnitDefinition: IUnitDefinition
     {
         public VolumeUnitDefinition(string unitName, decimal multiplication, params string[] aliases)
@@ -946,5 +933,6 @@ namespace isukces.UnitedValues
         public string[] Aliases { get; }
       
     }
+	*/
 }
 

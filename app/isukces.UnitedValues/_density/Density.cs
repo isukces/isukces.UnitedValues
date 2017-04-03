@@ -76,6 +76,16 @@ namespace isukces.UnitedValues
         }
 
 
+        public Density ConvertTo(DensityUnit newUnit)
+        {
+            if (Unit.Equals(newUnit))
+                return this;
+            var a = new Weight(Value, Unit.CounterUnit);
+            var b = new Volume(1, Unit.DenominatorUnit);
+            a = a.ConvertTo(newUnit.CounterUnit);
+            b = b.ConvertTo(newUnit.DenominatorUnit);
+            return new Density(a.Value / b.Value, newUnit);
+        }
     }
 
     public struct DensityUnit : IUnit, IEquatable<DensityUnit>

@@ -5,7 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 using System.Collections.Generic;
-
+using isukces.UnitedValues;
 <# 
 
 var inch = 0.0254m;
@@ -36,12 +36,13 @@ var a = new []
 #>
 namespace isukces.UnitedValues
 {
-    public partial struct LengthUnitDefinition
+
+	public static partial class LengthUnits
     {
 <# foreach(var i in a) { #>
-        public static readonly LengthUnitDefinition <#= i.PropName #> = new LengthUnitDefinition("<#= i.UnitName #>", <#= i.MultS #>);
+        public static readonly UnitDefinition<LengthUnit> <#= i.PropName #> = new UnitDefinition<LengthUnit>("<#= i.UnitName #>", <#= i.MultS #>);
 <# }#>
-		public static IEnumerable<LengthUnitDefinition> All {
+		public static IEnumerable<UnitDefinition<LengthUnit>> All {
 			get {
 <# foreach(var i in a) { #>
 				yield return <#= i.PropName #>;
@@ -49,12 +50,13 @@ namespace isukces.UnitedValues
 			}
 		}
     }
-    public partial struct AreaUnitDefinition
+
+    public static partial class AreaUnits
     {
 <# foreach(var i in a) { #>
-        public static readonly AreaUnitDefinition Square<#= i.PropName #> = new AreaUnitDefinition("<#= i.UnitName #>²", <#= i.MultS2 #>, "<#= i.UnitName #>2");
+        public static readonly UnitDefinition<AreaUnit> Square<#= i.PropName #> = new UnitDefinition<AreaUnit>("<#= i.UnitName #>²", <#= i.MultS2 #>, "<#= i.UnitName #>2");
 <# }#>
-		public static IEnumerable<AreaUnitDefinition> All {
+		public static IEnumerable<UnitDefinition<AreaUnit>> All {
 			get {
 <# foreach(var i in a) { #>
 				yield return Square<#= i.PropName #>;
@@ -64,20 +66,20 @@ namespace isukces.UnitedValues
 
 		internal static void Register(UnitRelationsDictionary dict) {
 <# foreach(var i in a) { #>
-				dict.AddRelated((AreaUnit)Square<#= i.PropName #>, (LengthUnit)LengthUnitDefinition.<#= i.PropName #>);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.<#= i.PropName #>, (AreaUnit)Square<#= i.PropName #>);
+			dict.AddRelated<AreaUnit,LengthUnit>(Square<#= i.PropName #>, LengthUnits.<#= i.PropName #>);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.<#= i.PropName #>, Square<#= i.PropName #>);
 <# }#>		
 		}
 
     }
 
 
-    public partial struct VolumeUnitDefinition
+    public static partial class VolumeUnits
     {
 <# foreach(var i in a) { #>
-        public static readonly VolumeUnitDefinition Qubic<#= i.PropName #> = new VolumeUnitDefinition("<#= i.UnitName #>³", <#= i.MultS3 #>, "<#= i.UnitName #>3");
+        public static readonly UnitDefinition<VolumeUnit> Qubic<#= i.PropName #> = new UnitDefinition<VolumeUnit>("<#= i.UnitName #>³", <#= i.MultS3 #>, "<#= i.UnitName #>3");
 <# }#>
-		public static IEnumerable<VolumeUnitDefinition> All {
+		public static IEnumerable<UnitDefinition<VolumeUnit>> All {
 			get {
 <# foreach(var i in a) { #>
 				yield return Qubic<#= i.PropName #>;
@@ -87,10 +89,10 @@ namespace isukces.UnitedValues
 
 		internal static void Register(UnitRelationsDictionary dict) {
 <# foreach(var i in a) { #>
-				dict.AddRelated((VolumeUnit)Qubic<#= i.PropName #>, (LengthUnit)LengthUnitDefinition.<#= i.PropName #>);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.<#= i.PropName #>, (VolumeUnit)Qubic<#= i.PropName #>);
-				dict.AddRelated((VolumeUnit)Qubic<#= i.PropName #>, (AreaUnit)AreaUnitDefinition.Square<#= i.PropName #>);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.Square<#= i.PropName #>, (VolumeUnit)Qubic<#= i.PropName #>);
+				dict.AddRelated<VolumeUnit,LengthUnit>(Qubic<#= i.PropName #>, LengthUnits.<#= i.PropName #>);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.<#= i.PropName #>, Qubic<#= i.PropName #>);
+				dict.AddRelated<VolumeUnit,AreaUnit>(Qubic<#= i.PropName #>, AreaUnits.Square<#= i.PropName #>);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.Square<#= i.PropName #>, Qubic<#= i.PropName #>);
 <# }#>		
 		}
     }

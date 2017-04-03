@@ -155,24 +155,24 @@ namespace isukces.UnitedValues.Test
         [Fact]
         public void T07_ShouldConvert()
         {
-            var a = new Length(10, LengthUnitDefinition.Yard);
-            var b = a.ConvertTo(LengthUnitDefinition.Inch);
+            var a = new Length(10, LengthUnits.Yard);
+            var b = a.ConvertTo(LengthUnits.Inch);
             Assert.Equal(360, b.Value);
         }
 
         [Fact]
         public void T08_ShouldCalculateAreaAndVolume()
         {
-            var a = new Length(10, LengthUnitDefinition.Yard);
+            var a = new Length(10, LengthUnits.Yard);
             var b = a * a;
             Assert.Equal(100, b.Value);
-            Assert.Equal(AreaUnitDefinition.SquareYard, b.Unit);
-            var bMeters = b.ConvertTo(AreaUnitDefinition.SquareMeter);
+            Assert.Equal(AreaUnits.SquareYard, b.Unit);
+            var bMeters = b.ConvertTo(AreaUnits.SquareMeter);
             Assert.Equal(100 * (36 * 0.0254m) * (36 * 0.0254m), bMeters.Value);
 
             var vol = a * b;
             Assert.Equal(1000, vol.Value);
-            Assert.Equal(VolumeUnitDefinition.QubicYard, vol.Unit);
+            Assert.Equal(VolumeUnits.QubicYard, vol.Unit);
 
         }
 

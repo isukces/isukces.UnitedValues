@@ -6,10 +6,10 @@
 <#@ output extension=".cs" #>
 <#
 var data = @"
-Weight,WeightUnit,+,WeightUnitDefinition.Kg
-Length,LengthUnit,+,LengthUnitDefinition.Meter
-Area,AreaUnit,-,AreaUnitDefinition.SquareMeter
-Volume,VolumeUnit,-,VolumeUnitDefinition.QubicMeter
+Weight,WeightUnit,+,WeightUnit.Kg
+Length,LengthUnit,+,LengthUnits.Meter
+Area,AreaUnit,-,AreaUnits.SquareMeter
+Volume,VolumeUnit,-,VolumeUnits.QubicMeter
 ";
 var infos = data.Split('\n','\r').Select(Info.Parse).Where(a=>a!=null).ToArray();
 #>
@@ -42,8 +42,9 @@ namespace isukces.UnitedValues
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
-            if (<#= i.Unit #>.KnownUnits.TryGetValue(newUnit, out decimal mult))
-                return new <#= i.Name #>(basic / mult, newUnit);
+			var factor = GlobalUnitRegistry.Factors.Get(newUnit);
+            if (factor != null)
+                return new <#= i.Name #>(basic / factor.Value, newUnit);
             throw new Exception("Unable to find multiplication for unit " + newUnit);
         }
 
@@ -119,8 +120,9 @@ namespace isukces.UnitedValues
         {
             if (Unit.Equals(BaseUnit))
                 return Value;
-            if (<#= i.Unit #>.KnownUnits.TryGetValue(Unit, out decimal mult))
-                return Value * mult;
+			var factor = GlobalUnitRegistry.Factors.Get(Unit);
+            if (factor != null)
+                return Value * factor.Value;
             throw new Exception("Unable to find multiplication for unit " + Unit);
         }
 
@@ -211,14 +213,8 @@ namespace isukces.UnitedValues
 	public partial struct <#= i #> : IUnit, IEquatable<<#= i #>>
     {
 
-        private static void AddDefinition(<#= i #>Definition definition)
-        {
-            KnownUnits[definition] = definition.Multiplication;
-			if (definition.Aliases!=null && definition.Aliases.Length>0)
-				foreach(var i in definition.Aliases)
-					KnownUnits[new <#= i #>(i)] = definition.Multiplication;
-        }
-
+		public static implicit operator <#= i #>(UnitDefinition<<#= i #>> src) 
+			=> new <#= i #>(src.UnitName);
 
         public <#= i #>(string unitName)
         {
@@ -256,9 +252,9 @@ namespace isukces.UnitedValues
         bool IEquatable<<#= i #>>.Equals(<#= i #> other) => Equals(other);
 
         public string UnitName { get; }
-        public static Dictionary<<#= i #>, decimal> KnownUnits { get; }
     }
 
+	/*
     public partial struct <#= i #>Definition: IUnitDefinition
     {
         public <#= i #>Definition(string unitName, decimal multiplication, params string[] aliases)
@@ -277,6 +273,7 @@ namespace isukces.UnitedValues
         public string[] Aliases { get; }
       
     }
+	*/
 <# } #>
 }
 

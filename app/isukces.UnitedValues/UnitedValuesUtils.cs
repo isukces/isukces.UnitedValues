@@ -20,7 +20,9 @@ namespace isukces.UnitedValues
         public static TResult Divide<
             TLeft, TLeftUnit,
             TRight, TRightUnit,
-            TResult, TResultUnit>(TLeft a, TRight b, Func<TRight, TRightUnit, TRight> leftConvert, Func<decimal, TResultUnit, TResult> result)
+            TResult, TResultUnit>(TLeft a, TRight b, 
+            Func<TRight, TRightUnit, TRight> leftConvert, 
+            Func<decimal, TResultUnit, TResult> result)
             where TLeft : IUnitedValue<TLeftUnit>
             where TRight : IUnitedValue<TRightUnit>
             where TResult : IUnitedValue<TResultUnit>

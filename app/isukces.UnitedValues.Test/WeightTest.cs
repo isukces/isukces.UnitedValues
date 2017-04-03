@@ -153,13 +153,16 @@ namespace isukces.UnitedValues.Test
 
 
         [Fact]
-        public void T06_ShouldComputeDensity()
+        public void T07_ShouldComputeDensity()
         {
             var w = Weight.FromKg(8000);
-            var volume = new Volume(1, VolumeUnitDefinition.QubicMeter);
+            var volume = new Volume(1, VolumeUnits.QubicMeter);
             var density = w / volume;
             Assert.Equal(8000m, density.Value);
             Assert.Equal("kg/m³", density.Unit.UnitName);
+
+            var d2 = density.ConvertTo(new DensityUnit(WeightUnits.Kg, VolumeUnits.QubicDm));
+
         }
 
 

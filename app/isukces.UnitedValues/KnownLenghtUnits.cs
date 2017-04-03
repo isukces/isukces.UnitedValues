@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
-
+using isukces.UnitedValues;
 namespace isukces.UnitedValues
 {
-    public partial struct LengthUnitDefinition
+
+	public static partial class LengthUnits
     {
-        public static readonly LengthUnitDefinition Meter = new LengthUnitDefinition("m", 1m);
-        public static readonly LengthUnitDefinition Km = new LengthUnitDefinition("km", 1000m);
-        public static readonly LengthUnitDefinition Dm = new LengthUnitDefinition("dm", 0.1m);
-        public static readonly LengthUnitDefinition Cm = new LengthUnitDefinition("cm", 0.01m);
-        public static readonly LengthUnitDefinition Mm = new LengthUnitDefinition("mm", 0.001m);
-        public static readonly LengthUnitDefinition Inch = new LengthUnitDefinition("inch", 0.0254m);
-        public static readonly LengthUnitDefinition Foot = new LengthUnitDefinition("ft", 0.3048m);
-        public static readonly LengthUnitDefinition Yard = new LengthUnitDefinition("yd", 0.9144m);
-        public static readonly LengthUnitDefinition Furlong = new LengthUnitDefinition("fg", 201.1680m);
-        public static readonly LengthUnitDefinition Fathom = new LengthUnitDefinition("fh", 1.8288m);
-        public static readonly LengthUnitDefinition Mile = new LengthUnitDefinition("mil", 1609.344m);
-        public static readonly LengthUnitDefinition NauticalMile = new LengthUnitDefinition("nm", 1852m);
-		public static IEnumerable<LengthUnitDefinition> All {
+        public static readonly UnitDefinition<LengthUnit> Meter = new UnitDefinition<LengthUnit>("m", 1m);
+        public static readonly UnitDefinition<LengthUnit> Km = new UnitDefinition<LengthUnit>("km", 1000m);
+        public static readonly UnitDefinition<LengthUnit> Dm = new UnitDefinition<LengthUnit>("dm", 0.1m);
+        public static readonly UnitDefinition<LengthUnit> Cm = new UnitDefinition<LengthUnit>("cm", 0.01m);
+        public static readonly UnitDefinition<LengthUnit> Mm = new UnitDefinition<LengthUnit>("mm", 0.001m);
+        public static readonly UnitDefinition<LengthUnit> Inch = new UnitDefinition<LengthUnit>("inch", 0.0254m);
+        public static readonly UnitDefinition<LengthUnit> Foot = new UnitDefinition<LengthUnit>("ft", 0.3048m);
+        public static readonly UnitDefinition<LengthUnit> Yard = new UnitDefinition<LengthUnit>("yd", 0.9144m);
+        public static readonly UnitDefinition<LengthUnit> Furlong = new UnitDefinition<LengthUnit>("fg", 201.1680m);
+        public static readonly UnitDefinition<LengthUnit> Fathom = new UnitDefinition<LengthUnit>("fh", 1.8288m);
+        public static readonly UnitDefinition<LengthUnit> Mile = new UnitDefinition<LengthUnit>("mil", 1609.344m);
+        public static readonly UnitDefinition<LengthUnit> NauticalMile = new UnitDefinition<LengthUnit>("nm", 1852m);
+		public static IEnumerable<UnitDefinition<LengthUnit>> All {
 			get {
 				yield return Meter;
 				yield return Km;
@@ -33,21 +34,22 @@ namespace isukces.UnitedValues
 			}
 		}
     }
-    public partial struct AreaUnitDefinition
+
+    public static partial class AreaUnits
     {
-        public static readonly AreaUnitDefinition SquareMeter = new AreaUnitDefinition("m²", 1m * 1m, "m2");
-        public static readonly AreaUnitDefinition SquareKm = new AreaUnitDefinition("km²", 1000m * 1000m, "km2");
-        public static readonly AreaUnitDefinition SquareDm = new AreaUnitDefinition("dm²", 0.1m * 0.1m, "dm2");
-        public static readonly AreaUnitDefinition SquareCm = new AreaUnitDefinition("cm²", 0.01m * 0.01m, "cm2");
-        public static readonly AreaUnitDefinition SquareMm = new AreaUnitDefinition("mm²", 0.001m * 0.001m, "mm2");
-        public static readonly AreaUnitDefinition SquareInch = new AreaUnitDefinition("inch²", 0.0254m * 0.0254m, "inch2");
-        public static readonly AreaUnitDefinition SquareFoot = new AreaUnitDefinition("ft²", 0.3048m * 0.3048m, "ft2");
-        public static readonly AreaUnitDefinition SquareYard = new AreaUnitDefinition("yd²", 0.9144m * 0.9144m, "yd2");
-        public static readonly AreaUnitDefinition SquareFurlong = new AreaUnitDefinition("fg²", 201.1680m * 201.1680m, "fg2");
-        public static readonly AreaUnitDefinition SquareFathom = new AreaUnitDefinition("fh²", 1.8288m * 1.8288m, "fh2");
-        public static readonly AreaUnitDefinition SquareMile = new AreaUnitDefinition("mil²", 1609.344m * 1609.344m, "mil2");
-        public static readonly AreaUnitDefinition SquareNauticalMile = new AreaUnitDefinition("nm²", 1852m * 1852m, "nm2");
-		public static IEnumerable<AreaUnitDefinition> All {
+        public static readonly UnitDefinition<AreaUnit> SquareMeter = new UnitDefinition<AreaUnit>("m²", 1m * 1m, "m2");
+        public static readonly UnitDefinition<AreaUnit> SquareKm = new UnitDefinition<AreaUnit>("km²", 1000m * 1000m, "km2");
+        public static readonly UnitDefinition<AreaUnit> SquareDm = new UnitDefinition<AreaUnit>("dm²", 0.1m * 0.1m, "dm2");
+        public static readonly UnitDefinition<AreaUnit> SquareCm = new UnitDefinition<AreaUnit>("cm²", 0.01m * 0.01m, "cm2");
+        public static readonly UnitDefinition<AreaUnit> SquareMm = new UnitDefinition<AreaUnit>("mm²", 0.001m * 0.001m, "mm2");
+        public static readonly UnitDefinition<AreaUnit> SquareInch = new UnitDefinition<AreaUnit>("inch²", 0.0254m * 0.0254m, "inch2");
+        public static readonly UnitDefinition<AreaUnit> SquareFoot = new UnitDefinition<AreaUnit>("ft²", 0.3048m * 0.3048m, "ft2");
+        public static readonly UnitDefinition<AreaUnit> SquareYard = new UnitDefinition<AreaUnit>("yd²", 0.9144m * 0.9144m, "yd2");
+        public static readonly UnitDefinition<AreaUnit> SquareFurlong = new UnitDefinition<AreaUnit>("fg²", 201.1680m * 201.1680m, "fg2");
+        public static readonly UnitDefinition<AreaUnit> SquareFathom = new UnitDefinition<AreaUnit>("fh²", 1.8288m * 1.8288m, "fh2");
+        public static readonly UnitDefinition<AreaUnit> SquareMile = new UnitDefinition<AreaUnit>("mil²", 1609.344m * 1609.344m, "mil2");
+        public static readonly UnitDefinition<AreaUnit> SquareNauticalMile = new UnitDefinition<AreaUnit>("nm²", 1852m * 1852m, "nm2");
+		public static IEnumerable<UnitDefinition<AreaUnit>> All {
 			get {
 				yield return SquareMeter;
 				yield return SquareKm;
@@ -65,51 +67,51 @@ namespace isukces.UnitedValues
 		}
 
 		internal static void Register(UnitRelationsDictionary dict) {
-				dict.AddRelated((AreaUnit)SquareMeter, (LengthUnit)LengthUnitDefinition.Meter);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Meter, (AreaUnit)SquareMeter);
-				dict.AddRelated((AreaUnit)SquareKm, (LengthUnit)LengthUnitDefinition.Km);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Km, (AreaUnit)SquareKm);
-				dict.AddRelated((AreaUnit)SquareDm, (LengthUnit)LengthUnitDefinition.Dm);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Dm, (AreaUnit)SquareDm);
-				dict.AddRelated((AreaUnit)SquareCm, (LengthUnit)LengthUnitDefinition.Cm);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Cm, (AreaUnit)SquareCm);
-				dict.AddRelated((AreaUnit)SquareMm, (LengthUnit)LengthUnitDefinition.Mm);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Mm, (AreaUnit)SquareMm);
-				dict.AddRelated((AreaUnit)SquareInch, (LengthUnit)LengthUnitDefinition.Inch);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Inch, (AreaUnit)SquareInch);
-				dict.AddRelated((AreaUnit)SquareFoot, (LengthUnit)LengthUnitDefinition.Foot);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Foot, (AreaUnit)SquareFoot);
-				dict.AddRelated((AreaUnit)SquareYard, (LengthUnit)LengthUnitDefinition.Yard);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Yard, (AreaUnit)SquareYard);
-				dict.AddRelated((AreaUnit)SquareFurlong, (LengthUnit)LengthUnitDefinition.Furlong);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Furlong, (AreaUnit)SquareFurlong);
-				dict.AddRelated((AreaUnit)SquareFathom, (LengthUnit)LengthUnitDefinition.Fathom);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Fathom, (AreaUnit)SquareFathom);
-				dict.AddRelated((AreaUnit)SquareMile, (LengthUnit)LengthUnitDefinition.Mile);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Mile, (AreaUnit)SquareMile);
-				dict.AddRelated((AreaUnit)SquareNauticalMile, (LengthUnit)LengthUnitDefinition.NauticalMile);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.NauticalMile, (AreaUnit)SquareNauticalMile);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareMeter, LengthUnits.Meter);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Meter, SquareMeter);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareKm, LengthUnits.Km);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Km, SquareKm);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareDm, LengthUnits.Dm);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Dm, SquareDm);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareCm, LengthUnits.Cm);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Cm, SquareCm);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareMm, LengthUnits.Mm);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Mm, SquareMm);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareInch, LengthUnits.Inch);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Inch, SquareInch);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareFoot, LengthUnits.Foot);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Foot, SquareFoot);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareYard, LengthUnits.Yard);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Yard, SquareYard);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareFurlong, LengthUnits.Furlong);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Furlong, SquareFurlong);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareFathom, LengthUnits.Fathom);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Fathom, SquareFathom);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareMile, LengthUnits.Mile);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Mile, SquareMile);
+			dict.AddRelated<AreaUnit,LengthUnit>(SquareNauticalMile, LengthUnits.NauticalMile);
+			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.NauticalMile, SquareNauticalMile);
 		
 		}
 
     }
 
 
-    public partial struct VolumeUnitDefinition
+    public static partial class VolumeUnits
     {
-        public static readonly VolumeUnitDefinition QubicMeter = new VolumeUnitDefinition("m³", 1m * 1m * 1m, "m3");
-        public static readonly VolumeUnitDefinition QubicKm = new VolumeUnitDefinition("km³", 1000m * 1000m * 1000m, "km3");
-        public static readonly VolumeUnitDefinition QubicDm = new VolumeUnitDefinition("dm³", 0.1m * 0.1m * 0.1m, "dm3");
-        public static readonly VolumeUnitDefinition QubicCm = new VolumeUnitDefinition("cm³", 0.01m * 0.01m * 0.01m, "cm3");
-        public static readonly VolumeUnitDefinition QubicMm = new VolumeUnitDefinition("mm³", 0.001m * 0.001m * 0.001m, "mm3");
-        public static readonly VolumeUnitDefinition QubicInch = new VolumeUnitDefinition("inch³", 0.0254m * 0.0254m * 0.0254m, "inch3");
-        public static readonly VolumeUnitDefinition QubicFoot = new VolumeUnitDefinition("ft³", 0.3048m * 0.3048m * 0.3048m, "ft3");
-        public static readonly VolumeUnitDefinition QubicYard = new VolumeUnitDefinition("yd³", 0.9144m * 0.9144m * 0.9144m, "yd3");
-        public static readonly VolumeUnitDefinition QubicFurlong = new VolumeUnitDefinition("fg³", 201.1680m * 201.1680m * 201.1680m, "fg3");
-        public static readonly VolumeUnitDefinition QubicFathom = new VolumeUnitDefinition("fh³", 1.8288m * 1.8288m * 1.8288m, "fh3");
-        public static readonly VolumeUnitDefinition QubicMile = new VolumeUnitDefinition("mil³", 1609.344m * 1609.344m * 1609.344m, "mil3");
-        public static readonly VolumeUnitDefinition QubicNauticalMile = new VolumeUnitDefinition("nm³", 1852m * 1852m * 1852m, "nm3");
-		public static IEnumerable<VolumeUnitDefinition> All {
+        public static readonly UnitDefinition<VolumeUnit> QubicMeter = new UnitDefinition<VolumeUnit>("m³", 1m * 1m * 1m, "m3");
+        public static readonly UnitDefinition<VolumeUnit> QubicKm = new UnitDefinition<VolumeUnit>("km³", 1000m * 1000m * 1000m, "km3");
+        public static readonly UnitDefinition<VolumeUnit> QubicDm = new UnitDefinition<VolumeUnit>("dm³", 0.1m * 0.1m * 0.1m, "dm3");
+        public static readonly UnitDefinition<VolumeUnit> QubicCm = new UnitDefinition<VolumeUnit>("cm³", 0.01m * 0.01m * 0.01m, "cm3");
+        public static readonly UnitDefinition<VolumeUnit> QubicMm = new UnitDefinition<VolumeUnit>("mm³", 0.001m * 0.001m * 0.001m, "mm3");
+        public static readonly UnitDefinition<VolumeUnit> QubicInch = new UnitDefinition<VolumeUnit>("inch³", 0.0254m * 0.0254m * 0.0254m, "inch3");
+        public static readonly UnitDefinition<VolumeUnit> QubicFoot = new UnitDefinition<VolumeUnit>("ft³", 0.3048m * 0.3048m * 0.3048m, "ft3");
+        public static readonly UnitDefinition<VolumeUnit> QubicYard = new UnitDefinition<VolumeUnit>("yd³", 0.9144m * 0.9144m * 0.9144m, "yd3");
+        public static readonly UnitDefinition<VolumeUnit> QubicFurlong = new UnitDefinition<VolumeUnit>("fg³", 201.1680m * 201.1680m * 201.1680m, "fg3");
+        public static readonly UnitDefinition<VolumeUnit> QubicFathom = new UnitDefinition<VolumeUnit>("fh³", 1.8288m * 1.8288m * 1.8288m, "fh3");
+        public static readonly UnitDefinition<VolumeUnit> QubicMile = new UnitDefinition<VolumeUnit>("mil³", 1609.344m * 1609.344m * 1609.344m, "mil3");
+        public static readonly UnitDefinition<VolumeUnit> QubicNauticalMile = new UnitDefinition<VolumeUnit>("nm³", 1852m * 1852m * 1852m, "nm3");
+		public static IEnumerable<UnitDefinition<VolumeUnit>> All {
 			get {
 				yield return QubicMeter;
 				yield return QubicKm;
@@ -127,54 +129,54 @@ namespace isukces.UnitedValues
 		}
 
 		internal static void Register(UnitRelationsDictionary dict) {
-				dict.AddRelated((VolumeUnit)QubicMeter, (LengthUnit)LengthUnitDefinition.Meter);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Meter, (VolumeUnit)QubicMeter);
-				dict.AddRelated((VolumeUnit)QubicMeter, (AreaUnit)AreaUnitDefinition.SquareMeter);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareMeter, (VolumeUnit)QubicMeter);
-				dict.AddRelated((VolumeUnit)QubicKm, (LengthUnit)LengthUnitDefinition.Km);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Km, (VolumeUnit)QubicKm);
-				dict.AddRelated((VolumeUnit)QubicKm, (AreaUnit)AreaUnitDefinition.SquareKm);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareKm, (VolumeUnit)QubicKm);
-				dict.AddRelated((VolumeUnit)QubicDm, (LengthUnit)LengthUnitDefinition.Dm);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Dm, (VolumeUnit)QubicDm);
-				dict.AddRelated((VolumeUnit)QubicDm, (AreaUnit)AreaUnitDefinition.SquareDm);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareDm, (VolumeUnit)QubicDm);
-				dict.AddRelated((VolumeUnit)QubicCm, (LengthUnit)LengthUnitDefinition.Cm);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Cm, (VolumeUnit)QubicCm);
-				dict.AddRelated((VolumeUnit)QubicCm, (AreaUnit)AreaUnitDefinition.SquareCm);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareCm, (VolumeUnit)QubicCm);
-				dict.AddRelated((VolumeUnit)QubicMm, (LengthUnit)LengthUnitDefinition.Mm);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Mm, (VolumeUnit)QubicMm);
-				dict.AddRelated((VolumeUnit)QubicMm, (AreaUnit)AreaUnitDefinition.SquareMm);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareMm, (VolumeUnit)QubicMm);
-				dict.AddRelated((VolumeUnit)QubicInch, (LengthUnit)LengthUnitDefinition.Inch);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Inch, (VolumeUnit)QubicInch);
-				dict.AddRelated((VolumeUnit)QubicInch, (AreaUnit)AreaUnitDefinition.SquareInch);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareInch, (VolumeUnit)QubicInch);
-				dict.AddRelated((VolumeUnit)QubicFoot, (LengthUnit)LengthUnitDefinition.Foot);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Foot, (VolumeUnit)QubicFoot);
-				dict.AddRelated((VolumeUnit)QubicFoot, (AreaUnit)AreaUnitDefinition.SquareFoot);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareFoot, (VolumeUnit)QubicFoot);
-				dict.AddRelated((VolumeUnit)QubicYard, (LengthUnit)LengthUnitDefinition.Yard);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Yard, (VolumeUnit)QubicYard);
-				dict.AddRelated((VolumeUnit)QubicYard, (AreaUnit)AreaUnitDefinition.SquareYard);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareYard, (VolumeUnit)QubicYard);
-				dict.AddRelated((VolumeUnit)QubicFurlong, (LengthUnit)LengthUnitDefinition.Furlong);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Furlong, (VolumeUnit)QubicFurlong);
-				dict.AddRelated((VolumeUnit)QubicFurlong, (AreaUnit)AreaUnitDefinition.SquareFurlong);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareFurlong, (VolumeUnit)QubicFurlong);
-				dict.AddRelated((VolumeUnit)QubicFathom, (LengthUnit)LengthUnitDefinition.Fathom);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Fathom, (VolumeUnit)QubicFathom);
-				dict.AddRelated((VolumeUnit)QubicFathom, (AreaUnit)AreaUnitDefinition.SquareFathom);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareFathom, (VolumeUnit)QubicFathom);
-				dict.AddRelated((VolumeUnit)QubicMile, (LengthUnit)LengthUnitDefinition.Mile);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.Mile, (VolumeUnit)QubicMile);
-				dict.AddRelated((VolumeUnit)QubicMile, (AreaUnit)AreaUnitDefinition.SquareMile);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareMile, (VolumeUnit)QubicMile);
-				dict.AddRelated((VolumeUnit)QubicNauticalMile, (LengthUnit)LengthUnitDefinition.NauticalMile);
-				dict.AddRelated((LengthUnit)LengthUnitDefinition.NauticalMile, (VolumeUnit)QubicNauticalMile);
-				dict.AddRelated((VolumeUnit)QubicNauticalMile, (AreaUnit)AreaUnitDefinition.SquareNauticalMile);
-				dict.AddRelated((AreaUnit)AreaUnitDefinition.SquareNauticalMile, (VolumeUnit)QubicNauticalMile);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicMeter, LengthUnits.Meter);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Meter, QubicMeter);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicMeter, AreaUnits.SquareMeter);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareMeter, QubicMeter);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicKm, LengthUnits.Km);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Km, QubicKm);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicKm, AreaUnits.SquareKm);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareKm, QubicKm);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicDm, LengthUnits.Dm);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Dm, QubicDm);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicDm, AreaUnits.SquareDm);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareDm, QubicDm);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicCm, LengthUnits.Cm);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Cm, QubicCm);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicCm, AreaUnits.SquareCm);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareCm, QubicCm);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicMm, LengthUnits.Mm);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Mm, QubicMm);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicMm, AreaUnits.SquareMm);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareMm, QubicMm);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicInch, LengthUnits.Inch);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Inch, QubicInch);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicInch, AreaUnits.SquareInch);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareInch, QubicInch);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicFoot, LengthUnits.Foot);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Foot, QubicFoot);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicFoot, AreaUnits.SquareFoot);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareFoot, QubicFoot);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicYard, LengthUnits.Yard);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Yard, QubicYard);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicYard, AreaUnits.SquareYard);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareYard, QubicYard);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicFurlong, LengthUnits.Furlong);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Furlong, QubicFurlong);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicFurlong, AreaUnits.SquareFurlong);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareFurlong, QubicFurlong);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicFathom, LengthUnits.Fathom);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Fathom, QubicFathom);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicFathom, AreaUnits.SquareFathom);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareFathom, QubicFathom);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicMile, LengthUnits.Mile);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.Mile, QubicMile);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicMile, AreaUnits.SquareMile);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareMile, QubicMile);
+				dict.AddRelated<VolumeUnit,LengthUnit>(QubicNauticalMile, LengthUnits.NauticalMile);
+				dict.AddRelated<LengthUnit,VolumeUnit>(LengthUnits.NauticalMile, QubicNauticalMile);
+				dict.AddRelated<VolumeUnit,AreaUnit>(QubicNauticalMile, AreaUnits.SquareNauticalMile);
+				dict.AddRelated<AreaUnit,VolumeUnit>(AreaUnits.SquareNauticalMile, QubicNauticalMile);
 		
 		}
     }
