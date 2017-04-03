@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="UnitDefinition.cs" />
     <Compile Include="_density\+Algebra.cs" />
+    <Compile Include="_density\DensityJsonConverter.cs" />
     <Compile Include="_density\LinearDensity.cs" />
     <Compile Include="_density\PlanarDensity.cs" />
     <Compile Include="_density\Density.cs" />

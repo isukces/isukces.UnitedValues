@@ -99,8 +99,6 @@
         }
 
 
-
-
         /// <summary>
         ///     Multiplication operator
         /// </summary>

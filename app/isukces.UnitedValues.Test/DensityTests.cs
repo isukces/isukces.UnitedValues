@@ -5,7 +5,7 @@ using Xunit;
 
 namespace isukces.UnitedValues.Test
 {
-  
+
     public class DensityTests
     {
         [Fact]
@@ -87,12 +87,52 @@ namespace isukces.UnitedValues.Test
 
 
         [Fact]
-        public void T04_ShouldConvertToJson()
+        public void T04_ShouldSerializeToJson()
         {
             var density = new Density(8000, WeightUnits.Kg, VolumeUnits.QubicMeter);
             var json = JsonConvert.SerializeObject(density);
-            Assert.Equal("", json);
+            Assert.Equal("\"8000kg/m³\"", json);
+            var planarDensity = new PlanarDensity(8000, WeightUnits.Kg, AreaUnits.SquareMeter);
+            json = JsonConvert.SerializeObject(planarDensity);
+            Assert.Equal("\"8000kg/m²\"", json);
+            var linearDensity = new LinearDensity(8000, WeightUnits.Kg, LengthUnits.Meter);
+            json = JsonConvert.SerializeObject(linearDensity);
+            Assert.Equal("\"8000kg/m\"", json);
         }
+        [Fact]
+        public void T05_ShouldDeserializeFromJson()
+        {
+            var testValues = "8000kg/m³,8000 kg / m³, 8000  kg / m3";
+            foreach (var xx in testValues.Split(','))
+            {
+                var tmp = JsonConvert.DeserializeObject<Density>("\"" + xx + "\"");
+                Assert.Equal(8000, tmp.Value);
+                Assert.Equal(WeightUnits.Kg, tmp.Unit.CounterUnit);
+                Assert.Equal(VolumeUnits.QubicMeter, tmp.Unit.DenominatorUnit);
 
+            }
+
+
+            testValues = "8000kg/m²,8000 kg / m², 8000  kg / m2";
+            foreach (var xx in testValues.Split(','))
+            {
+                var tmp = JsonConvert.DeserializeObject<PlanarDensity>("\"" + xx + "\"");
+                Assert.Equal(8000, tmp.Value);
+                Assert.Equal(WeightUnits.Kg, tmp.Unit.CounterUnit);
+                Assert.Equal(AreaUnits.SquareMeter, tmp.Unit.DenominatorUnit);
+
+            }
+
+            testValues = "8000kg/m,8000 kg / m, 8000  kg / m";
+            foreach (var xx in testValues.Split(','))
+            {
+                var tmp = JsonConvert.DeserializeObject<LinearDensity>("\"" + xx + "\"");
+                Assert.Equal(8000, tmp.Value);
+                Assert.Equal(WeightUnits.Kg, tmp.Unit.CounterUnit);
+                Assert.Equal(LengthUnits.Meter, tmp.Unit.DenominatorUnit);
+
+            }
+
+        }
     }
 }

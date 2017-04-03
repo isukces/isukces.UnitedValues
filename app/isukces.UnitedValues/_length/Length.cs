@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace isukces.UnitedValues
 {
     public partial struct Length
@@ -18,9 +15,9 @@ namespace isukces.UnitedValues
         public static Length operator /(Area left, Length right)
         {
             return UnitedValuesUtils
-                 .Divide<Area, AreaUnit, Length, LengthUnit, Length, LengthUnit>(
-                     left, right,
-                     (length, unit) => length.ConvertTo(unit), (value, unit) => new Length(value, unit));
+                .Divide<Area, AreaUnit, Length, LengthUnit, Length, LengthUnit>(
+                    left, right,
+                    (length, unit) => length.ConvertTo(unit), (value, unit) => new Length(value, unit));
         }
 
         public static Area operator *(Length left, Length right)
@@ -34,9 +31,9 @@ namespace isukces.UnitedValues
         public static Volume operator *(Length left, Area right)
         {
             return UnitedValuesUtils
-               .Multiply<Length, LengthUnit, Area, AreaUnit, Volume, VolumeUnit>(
-                   left, right,
-                   (area, unit) => area.ConvertTo(unit), (value, unit) => new Volume(value, unit));
+                .Multiply<Length, LengthUnit, Area, AreaUnit, Volume, VolumeUnit>(
+                    left, right,
+                    (area, unit) => area.ConvertTo(unit), (value, unit) => new Volume(value, unit));
         }
 
         public static Volume operator *(Area left, Length right)
@@ -52,7 +49,5 @@ namespace isukces.UnitedValues
         {
             return ConvertTo(LengthUnits.Meter);
         }
-
     }
- 
 }

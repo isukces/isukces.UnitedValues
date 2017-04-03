@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace isukces.UnitedValues
 {
-    
+    [JsonConverter(typeof(DensityJsonConverter))]
     public partial struct Density : IUnitedValue<DensityUnit>, IEquatable<Density>
     {
-        public override string ToString() => this.Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
-
         public Density(decimal value, DensityUnit unit)
         {
             Value = value;
@@ -28,6 +27,44 @@ namespace isukces.UnitedValues
         public static bool operator !=(Density left, Density right)
         {
             return !left.Equals(right);
+        }
+
+
+        public static Weight operator *(Density d, Volume v)
+        {
+            v = v.ConvertTo(d.Unit.DenominatorUnit);
+            return new Weight(d.Value * v.Value, d.Unit.CounterUnit);
+        }
+
+        public static Weight operator *(Volume v, Density d)
+        {
+            v = v.ConvertTo(d.Unit.DenominatorUnit);
+            return new Weight(d.Value * v.Value, d.Unit.CounterUnit);
+        }
+
+        public static Density Parse(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
+            var r = CommonParse.Parse(value, typeof(Density));
+            var units = r.UnitName.Split('/');
+            if (units.Length != 2)
+                throw new Exception($"{r.UnitName} is not valid density unit");
+            var counterUnit = new WeightUnit(units[0].Trim());
+            var denominatorUnit = new VolumeUnit(units[1].Trim());
+            return new Density(r.Value, counterUnit, denominatorUnit);
+        }
+
+
+        public Density ConvertTo(DensityUnit newUnit)
+        {
+            if (Unit.Equals(newUnit))
+                return this;
+            var a = new Weight(Value, Unit.CounterUnit);
+            var b = new Volume(1, Unit.DenominatorUnit);
+            a = a.ConvertTo(newUnit.CounterUnit);
+            b = b.ConvertTo(newUnit.DenominatorUnit);
+            return new Density(a.Value / b.Value, newUnit);
         }
 
         public bool Equals(Density other)
@@ -59,40 +96,15 @@ namespace isukces.UnitedValues
             }
         }
 
+        public override string ToString() => Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
+
         public decimal Value { get; }
 
         public DensityUnit Unit { get; }
-
-
-        public static Weight operator *(Density d, Volume v)
-        {
-            v = v.ConvertTo(d.Unit.DenominatorUnit);
-            return new Weight(d.Value * v.Value, d.Unit.CounterUnit);
-        }
-
-        public static Weight operator *(Volume v, Density d)
-        {
-            v = v.ConvertTo(d.Unit.DenominatorUnit);
-            return new Weight(d.Value * v.Value, d.Unit.CounterUnit);
-        }
-
-
-        public Density ConvertTo(DensityUnit newUnit)
-        {
-            if (Unit.Equals(newUnit))
-                return this;
-            var a = new Weight(Value, Unit.CounterUnit);
-            var b = new Volume(1, Unit.DenominatorUnit);
-            a = a.ConvertTo(newUnit.CounterUnit);
-            b = b.ConvertTo(newUnit.DenominatorUnit);
-            return new Density(a.Value / b.Value, newUnit);
-        }
     }
 
     public struct DensityUnit : IUnit, IEquatable<DensityUnit>
     {
-        public override string ToString() => UnitName;
-
         public DensityUnit(WeightUnit counterUnit, VolumeUnit denominatorUnit)
         {
             CounterUnit = counterUnit;
@@ -127,6 +139,8 @@ namespace isukces.UnitedValues
                 return (CounterUnit.GetHashCode() * 397) ^ DenominatorUnit.GetHashCode();
             }
         }
+
+        public override string ToString() => UnitName;
 
         public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
         public WeightUnit CounterUnit { get; }

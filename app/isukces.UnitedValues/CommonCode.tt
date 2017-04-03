@@ -6,7 +6,7 @@
 <#@ output extension=".cs" #>
 <#
 var data = @"
-Weight,WeightUnit,+,WeightUnit.Kg
+Weight,WeightUnit,+,WeightUnits.Kg
 Length,LengthUnit,+,LengthUnits.Meter
 Area,AreaUnit,-,AreaUnits.SquareMeter
 Volume,VolumeUnit,-,VolumeUnits.QubicMeter

@@ -6,9 +6,9 @@ namespace isukces.UnitedValues
         : IEquatable<IUnitedValue<TUnit>>
         where TUnit : IUnit, IEquatable<TUnit>
     {
+        decimal GetBaseUnitValue();
         decimal Value { get; }
         TUnit Unit { get; }
-        decimal GetBaseUnitValue();      
     }
 
     public interface IUnitNameContainer
@@ -16,13 +16,12 @@ namespace isukces.UnitedValues
         string UnitName { get; }
     }
 
-    public interface IUnit: IUnitNameContainer
-    {     
+    public interface IUnit : IUnitNameContainer
+    {
     }
 
-    public interface IUnitDefinition: IUnitNameContainer
+    public interface IUnitDefinition : IUnitNameContainer
     {
         decimal Multiplication { get; }
     }
-
 }

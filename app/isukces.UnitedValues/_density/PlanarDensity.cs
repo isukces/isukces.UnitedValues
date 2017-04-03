@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace isukces.UnitedValues
 {
+    [JsonConverter(typeof(DensityJsonConverter))]
     public partial struct PlanarDensity : IUnitedValue<PlaneDensityUnit>, IEquatable<PlanarDensity>
     {
         public PlanarDensity(decimal value, PlaneDensityUnit unit)
@@ -25,6 +27,19 @@ namespace isukces.UnitedValues
         public static bool operator !=(PlanarDensity left, PlanarDensity right)
         {
             return !left.Equals(right);
+        }
+
+        public static PlanarDensity Parse(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
+            var r = CommonParse.Parse(value, typeof(Density));
+            var units = r.UnitName.Split('/');
+            if (units.Length != 2)
+                throw new Exception($"{r.UnitName} is not valid density unit");
+            var counterUnit = new WeightUnit(units[0].Trim());
+            var denominatorUnit = new AreaUnit(units[1].Trim());
+            return new PlanarDensity(r.Value, counterUnit, denominatorUnit);
         }
 
 
