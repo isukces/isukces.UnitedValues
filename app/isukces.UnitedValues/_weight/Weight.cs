@@ -13,18 +13,40 @@ namespace isukces.UnitedValues
         public static Weight FromTons(double tons) => new Weight((decimal)tons, WeightUnits.Tone);
         public static Weight FromTons(long tons) => new Weight(tons, WeightUnits.Tone);
 
-
-        public static Density operator /(Weight w, Volume v)
+        /// <summary>
+        ///     Div
+        /// </summary>
+        /// <returns></returns>
+        public static LinearDensity operator /(Weight weight, Length length)
         {
-            return new Density(w.Value / v.Value, w.Unit, v.Unit);
+            return new LinearDensity(weight.Value / length.Value, weight.Unit, length.Unit);
+        }
+
+        /// <summary>
+        ///     Div
+        /// </summary>
+        /// <returns></returns>
+        public static PlanarDensity operator /(Weight weight, Area area)
+        {
+            return new PlanarDensity(weight.Value / area.Value, weight.Unit, area.Unit);
+        }
+
+        /// <summary>
+        ///     Div
+        /// </summary>
+        /// <returns></returns>
+        public static Density operator /(Weight weight, Volume volume)
+        {
+            return new Density(weight.Value / volume.Value, weight.Unit, volume.Unit);
         }
 
 
         public Weight ConvertToKg() => ConvertTo(WeightUnits.Kg);
 
 
-        public Weight RoundKg(Weight w, int decimalPlaces)
+        public Weight RoundKg(int decimalPlaces)
         {
+            var w = ConvertToKg();
             return FromKg(Math.Round(w.Value, decimalPlaces));
         }
     }

@@ -150,5 +150,6 @@
             density = density.ConvertTo(new LinearDensityUnit(density.Unit.CounterUnit, length.Unit));
             return new Weight(density.Value * length.Value, density.Unit.CounterUnit);
         }
+
     }
 }

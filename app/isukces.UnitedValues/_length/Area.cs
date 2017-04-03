@@ -20,10 +20,11 @@ namespace isukces.UnitedValues
         }
 
 
-        public Area RoundKg(Area w, int decimalPlaces)
+        public Area RoundSquareMeter(int decimalPlaces)
         {
-            return FromMeter(Math.Round(w.Value, decimalPlaces));
+            return ConvertToMeter().Round(decimalPlaces);
         }
+       
     }
 
     partial class AreaUnits

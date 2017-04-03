@@ -93,6 +93,12 @@ namespace isukces.UnitedValues
             return right.Value / left.Value;
         }
 
+
+		public <#= i.Name #> Round(int decimalPlaces)
+        {
+            return new <#= i.Name #>(Math.Round(Value, decimalPlaces), Unit);
+        }
+
 <#if (i.IsComparable)  {#>
 		// IComparable
 

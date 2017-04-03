@@ -50,6 +50,21 @@ namespace isukces.UnitedValues.Test
             Assert.Equal(8m, d2.Value);
             Assert.Equal("kg/dm³", d2.Unit.UnitName);
             Assert.Equal("8kg/dm³", d2.ToString());
+
+            var area = new Area(10 * 100, AreaUnits.SquareDm);
+            PlanarDensity pd = w / area;
+            var pdExpected = PlanarDensity.Parse("8kg/dm2");
+            Assert.Equal(8m, pd.Value);
+            Assert.Equal(pdExpected.Unit, pd.Unit);
+
+
+            pdExpected = PlanarDensity.Parse("800kg/m2");
+            pd = pd.ConvertTo(new PlaneDensityUnit(w.Unit, AreaUnits.SquareMeter));
+            Assert.Equal(800m, pd.Value);
+            Assert.Equal(pdExpected.Unit, pd.Unit);
+
+            Assert.Equal(10, area.ConvertToMeter().Value);
+
         }
 
         [Fact]

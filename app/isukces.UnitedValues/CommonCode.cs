@@ -77,6 +77,12 @@ namespace isukces.UnitedValues
             return right.Value / left.Value;
         }
 
+
+		public Weight Round(int decimalPlaces)
+        {
+            return new Weight(Math.Round(Value, decimalPlaces), Unit);
+        }
+
 		// IComparable
 
 	    public int CompareTo(Weight other)
@@ -191,6 +197,12 @@ namespace isukces.UnitedValues
         {
             right = right.ConvertTo(left.Unit);
             return right.Value / left.Value;
+        }
+
+
+		public Length Round(int decimalPlaces)
+        {
+            return new Length(Math.Round(Value, decimalPlaces), Unit);
         }
 
 		// IComparable
@@ -310,6 +322,12 @@ namespace isukces.UnitedValues
         }
 
 
+		public Area Round(int decimalPlaces)
+        {
+            return new Area(Math.Round(Value, decimalPlaces), Unit);
+        }
+
+
 		// other
 
 		public static Area Parse(string value)
@@ -411,6 +429,12 @@ namespace isukces.UnitedValues
         {
             right = right.ConvertTo(left.Unit);
             return right.Value / left.Value;
+        }
+
+
+		public Volume Round(int decimalPlaces)
+        {
+            return new Volume(Math.Round(Value, decimalPlaces), Unit);
         }
 
 
