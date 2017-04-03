@@ -1,0 +1,18 @@
+var builder = new ProjectBuilder(){
+	SolutionDir = ConfigDir,
+	VisualStudioExe = GlobalVar["VisualStudio 2017"],
+	NugetExe = GlobalVar["Nuget"],
+	NugetRepositoryDir =  GlobalVar["Private Nuget Repository"],
+	SolutionName = "isukces.UnitedValues",
+	ProjectName = "isukces.UnitedValues"
+};
+
+builder.NugetPackParameters += "  -Exclude **/*.tt";
+
+builder.UpdateVersion();
+builder.Build();
+builder.MakeNuget();
+
+Console.WriteLine("--FINISHED--");
+
+ 
