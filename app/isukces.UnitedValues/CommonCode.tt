@@ -87,11 +87,13 @@ namespace isukces.UnitedValues
         public static <#= i.Name #> operator *(<#= i.Name #> value, decimal number) => new <#= i.Name #>(value.Value * number, value.Unit);
         public static <#= i.Name #> operator *(decimal number, <#= i.Name #> value) => new <#= i.Name #>(value.Value * number, value.Unit);
 
-		public static <#= i.Name #> operator /(<#= i.Name #> value, decimal number) => new <#= i.Name #>(value.Value / number, value.Unit);
+		public static <#= i.Name #> operator /(<#= i.Name #> value, decimal number) 
+			=> new <#= i.Name #>(value.Value / number, value.Unit);
+
         public static decimal operator /(<#= i.Name #> left, <#= i.Name #> right)
         {
             right = right.ConvertTo(left.Unit);
-            return right.Value / left.Value;
+            return left.Value / right.Value;
         }
 
 

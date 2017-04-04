@@ -71,11 +71,13 @@ namespace isukces.UnitedValues
         public static Weight operator *(Weight value, decimal number) => new Weight(value.Value * number, value.Unit);
         public static Weight operator *(decimal number, Weight value) => new Weight(value.Value * number, value.Unit);
 
-		public static Weight operator /(Weight value, decimal number) => new Weight(value.Value / number, value.Unit);
+		public static Weight operator /(Weight value, decimal number) 
+			=> new Weight(value.Value / number, value.Unit);
+
         public static decimal operator /(Weight left, Weight right)
         {
             right = right.ConvertTo(left.Unit);
-            return right.Value / left.Value;
+            return left.Value / right.Value;
         }
 
 
@@ -198,11 +200,13 @@ namespace isukces.UnitedValues
         public static Length operator *(Length value, decimal number) => new Length(value.Value * number, value.Unit);
         public static Length operator *(decimal number, Length value) => new Length(value.Value * number, value.Unit);
 
-		public static Length operator /(Length value, decimal number) => new Length(value.Value / number, value.Unit);
+		public static Length operator /(Length value, decimal number) 
+			=> new Length(value.Value / number, value.Unit);
+
         public static decimal operator /(Length left, Length right)
         {
             right = right.ConvertTo(left.Unit);
-            return right.Value / left.Value;
+            return left.Value / right.Value;
         }
 
 
@@ -325,11 +329,13 @@ namespace isukces.UnitedValues
         public static Area operator *(Area value, decimal number) => new Area(value.Value * number, value.Unit);
         public static Area operator *(decimal number, Area value) => new Area(value.Value * number, value.Unit);
 
-		public static Area operator /(Area value, decimal number) => new Area(value.Value / number, value.Unit);
+		public static Area operator /(Area value, decimal number) 
+			=> new Area(value.Value / number, value.Unit);
+
         public static decimal operator /(Area left, Area right)
         {
             right = right.ConvertTo(left.Unit);
-            return right.Value / left.Value;
+            return left.Value / right.Value;
         }
 
 
@@ -440,11 +446,13 @@ namespace isukces.UnitedValues
         public static Volume operator *(Volume value, decimal number) => new Volume(value.Value * number, value.Unit);
         public static Volume operator *(decimal number, Volume value) => new Volume(value.Value * number, value.Unit);
 
-		public static Volume operator /(Volume value, decimal number) => new Volume(value.Value / number, value.Unit);
+		public static Volume operator /(Volume value, decimal number) 
+			=> new Volume(value.Value / number, value.Unit);
+
         public static decimal operator /(Volume left, Volume right)
         {
             right = right.ConvertTo(left.Unit);
-            return right.Value / left.Value;
+            return left.Value / right.Value;
         }
 
 
