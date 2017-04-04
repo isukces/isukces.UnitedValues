@@ -11,7 +11,7 @@ namespace isukces.UnitedValues
         {
             if (a.Equals(b)) return 0;
             if (a.Unit.Equals(b.Unit))
-                return a.Value.CompareTo(a.Value);
+                return a.Value.CompareTo(b.Value);
 
             var val1 = a.GetBaseUnitValue();
             var val2 = b.GetBaseUnitValue();
