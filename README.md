@@ -23,7 +23,7 @@ Console.WriteLine(lengthInMeters + lengthInMm); // PROPER RESULT 10,01 m
 
 While adding or subtracting values with different units result has always unit derived from first argument.
 
-## Passing arguments in different units into methods
+## Passing arguments with different units into methods
 
 
 ```
@@ -42,7 +42,7 @@ Can be transformed into
 ```
 static bool IsLongerThan2Meters(Length length)
 {
-	return length > new Length(2, LengthUnits.Meter);
+    return length > new Length(2, LengthUnits.Meter);
 }
 ...
 Length lengthInMm = new Length(10, LengthUnits.Mm);

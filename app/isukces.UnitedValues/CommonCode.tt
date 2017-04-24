@@ -74,11 +74,19 @@ namespace isukces.UnitedValues
 
 		public static <#= i.Name #> operator +(<#= i.Name #> left, <#= i.Name #> right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new <#= i.Name #>(right.Value + left.Value, left.Unit);
         }
         public static <#= i.Name #> operator -(<#= i.Name #> left, <#= i.Name #> right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return -right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new <#= i.Name #>(left.Value - right.Value, left.Unit);
         }

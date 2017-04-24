@@ -116,10 +116,10 @@ namespace isukces.UnitedValues.Test
                 sum = items.Sum();
                 Assert.Equal(Weight.Zero, sum);
 
-                sum = new[] {a}.Sum();
+                sum = new[] { a }.Sum();
                 Assert.Equal(a, sum);
 
-                sum = new[] {a, b}.Sum();
+                sum = new[] { a, b }.Sum();
                 Assert.Equal(Weight.FromKg(7), sum);
             }
             {
@@ -131,15 +131,15 @@ namespace isukces.UnitedValues.Test
                 sum = items.Sum();
                 Assert.Equal(Weight.Zero, sum);
 
-                items = new[] {(Weight?)a};
+                items = new[] { (Weight?)a };
                 sum = items.Sum();
                 Assert.Equal(a, sum);
 
-                items = new[] {(Weight?)a, Weight.Zero, null};
+                items = new[] { (Weight?)a, Weight.Zero, null };
                 sum = items.Sum();
                 Assert.Equal(a, sum);
 
-                items = new[] {(Weight?)a, Weight.Zero, null, b};
+                items = new[] { (Weight?)a, Weight.Zero, null, b };
                 sum = items.Sum();
                 Assert.Equal(Weight.FromKg(7), sum);
             }
@@ -163,6 +163,30 @@ namespace isukces.UnitedValues.Test
             FormattableString formattableString = $"{w:F1}";
             txt = formattableString.ToString(CultureInfo.InvariantCulture);
             Assert.Equal("1234.6 kg", txt);
+        }
+
+
+        [Fact]
+        public void T08_ShouldAddToEmptyValue()
+        {
+            var nullValue = new Weight();
+            var w = Weight.FromKg(1234.56789);
+
+            var sum = nullValue + w;
+            Assert.Equal(w, sum);
+            sum = w + nullValue;
+            Assert.Equal(w, sum);
+        }
+
+        [Fact]
+        public void T09_ShouldSubstractFromEmptyValue()
+        {
+            var nullValue = new Weight();
+            var w = Weight.FromKg(1234.56789);
+            var difference = nullValue - w;
+            Assert.Equal(-w, difference);
+            difference = w - nullValue;
+            Assert.Equal(w, difference);
         }
 
 

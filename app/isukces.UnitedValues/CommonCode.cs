@@ -58,11 +58,19 @@ namespace isukces.UnitedValues
 
 		public static Weight operator +(Weight left, Weight right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new Weight(right.Value + left.Value, left.Unit);
         }
         public static Weight operator -(Weight left, Weight right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return -right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new Weight(left.Value - right.Value, left.Unit);
         }
@@ -187,11 +195,19 @@ namespace isukces.UnitedValues
 
 		public static Length operator +(Length left, Length right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new Length(right.Value + left.Value, left.Unit);
         }
         public static Length operator -(Length left, Length right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return -right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new Length(left.Value - right.Value, left.Unit);
         }
@@ -316,11 +332,19 @@ namespace isukces.UnitedValues
 
 		public static Area operator +(Area left, Area right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new Area(right.Value + left.Value, left.Unit);
         }
         public static Area operator -(Area left, Area right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return -right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new Area(left.Value - right.Value, left.Unit);
         }
@@ -433,11 +457,19 @@ namespace isukces.UnitedValues
 
 		public static Volume operator +(Volume left, Volume right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new Volume(right.Value + left.Value, left.Unit);
         }
         public static Volume operator -(Volume left, Volume right)
         {
+			if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+		        return -right;
+			if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+		        return left;
             right = right.ConvertTo(left.Unit);
             return new Volume(left.Value - right.Value, left.Unit);
         }
