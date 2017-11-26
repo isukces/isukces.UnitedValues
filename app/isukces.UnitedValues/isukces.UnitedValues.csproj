@@ -4,7 +4,7 @@
     <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Copyright>Copyright by Internet Sukces Piotr Stęclik 2017</Copyright>
-    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6;netstandard2.0;net45</TargetFrameworks>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -14,9 +14,9 @@
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.17299.10</AssemblyVersion>
-    <Version>1.0.17299.10</Version>
-    <FileVersion>1.0.17299.10</FileVersion>
+    <AssemblyVersion>1.0.17330.11</AssemblyVersion>
+    <Version>1.0.17330.11</Version>
+    <FileVersion>1.0.17330.11</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
