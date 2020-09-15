@@ -1,38 +1,35 @@
 // using System.IO;
-var builder = new ProjectBuilder(){
-	VisualStudioExe = GlobalVar["VisualStudio 2017"],
-	NugetExe = GlobalVar["Nuget"],
-	NugetRepositoryDir =  GlobalVar["Private Nuget Repository"],
+var builder = new ProjectBuilder()
+{
+    VisualStudioExe = GlobalVar["MsBuild 2019"],
+    Nuget =
+    {
+        Exe           = GlobalVar["Nuget"],
+        RepositoryDir = GlobalVar["Private Nuget Repository"]
+    },
 
-	SolutionName = "isukces.UnitedValues",
-	ProjectName = "isukces.UnitedValues",
-	SolutionDir = ConfigDir
+    SolutionName = "iSukces.UnitedValues",
+    ProjectName  = "iSukces.UnitedValues",
+    SolutionDir  = ConfigDir
 };
+WorkingDir = builder.SolutionDir;
 
-builder.NugetPackParameters += "  -Exclude **/*.tt";
-
-
+// Execute( builder.VisualStudioExe, sln, "/clean");
 // task: Clean
-DeleteDir(builder.ProjectDir+"\\bin", builder.ProjectDir+"\\obj");
+DeleteDir(builder.ProjectDir + "\\bin", builder.ProjectDir + "\\obj");
 
 // task: Nuget restore
-Execute(builder.NugetExe , "restore "+builder.SolutionName +".sln");
-
+Execute(builder.Nuget.Exe, "restore " + builder.SolutionName + ".sln");
 
 // task: Update version
 var version = builder.UpdateVersionCore();
 
 // task: Build
-builder.Build("deploy");
-
-var nugetPackageFileName = string.Format(@"{0}\{1}.{2}.symbols.nupkg", 
-	builder.ProjectDir+@"\bin\Release", 
-	builder.GetNugetName(), 
-	version);
+builder.MsBuild();
 
 // task: Copy nuget
-var nugetOut = builder.NugetRepositoryDir + "\\" + builder.GetNugetName() + "." + version + ".nupkg";
-
+var nugetPackageFileName = builder.Nuget.GetNugetPackageFile(version, true);
+var nugetOut = CombinePath(builder.Nuget.RepositoryDir, builder.Nuget.GetNugetPackageShortFile(version));
 Console.WriteLine("Copy {0} to {1}", nugetPackageFileName, nugetOut);
 File.Copy(nugetPackageFileName, nugetOut, true);
 
