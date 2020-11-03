@@ -544,7 +544,7 @@ namespace isukces.UnitedValues
         {
             if (items == null)
                 return Weight.Zero;
-            var c = items.ToArray();
+            var c = items.Where(a=>a.Value != decimal.Zero).ToArray();
             if (c.Length == 0)
                 return Weight.Zero;
             var unit = c[0].Unit;
