@@ -5,13 +5,35 @@ namespace iSukces.UnitedValues
 {
     public partial struct Weight
     {
-        public static Weight FromKg(decimal kg) => new Weight(kg, WeightUnits.Kg);
-        public static Weight FromKg(long kg) => new Weight(kg, WeightUnits.Kg);
-        public static Weight FromKg(double kg) => new Weight((decimal)kg, WeightUnits.Kg);
+        public static Weight FromKg(decimal kg)
+        {
+            return new Weight(kg, WeightUnits.Kg);
+        }
 
-        public static Weight FromTons(decimal tons) => new Weight(tons, WeightUnits.Tone);
-        public static Weight FromTons(double tons) => new Weight((decimal)tons, WeightUnits.Tone);
-        public static Weight FromTons(long tons) => new Weight(tons, WeightUnits.Tone);
+        public static Weight FromKg(long kg)
+        {
+            return new Weight(kg, WeightUnits.Kg);
+        }
+
+        public static Weight FromKg(double kg)
+        {
+            return new Weight((decimal)kg, WeightUnits.Kg);
+        }
+
+        public static Weight FromTons(decimal tons)
+        {
+            return new Weight(tons, WeightUnits.Tone);
+        }
+
+        public static Weight FromTons(double tons)
+        {
+            return new Weight((decimal)tons, WeightUnits.Tone);
+        }
+
+        public static Weight FromTons(long tons)
+        {
+            return new Weight(tons, WeightUnits.Tone);
+        }
 
         /// <summary>
         ///     Div
@@ -41,7 +63,10 @@ namespace iSukces.UnitedValues
         }
 
 
-        public Weight ConvertToKg() => ConvertTo(WeightUnits.Kg);
+        public Weight ConvertToKg()
+        {
+            return ConvertTo(WeightUnits.Kg);
+        }
 
 
         public Weight RoundKg(int decimalPlaces)
@@ -66,6 +91,8 @@ namespace iSukces.UnitedValues
 
         public static readonly UnitDefinition<WeightUnit> Kg = new UnitDefinition<WeightUnit>("kg", 1);
         public static readonly UnitDefinition<WeightUnit> Gram = new UnitDefinition<WeightUnit>("g", 0.001m);
-        public static readonly UnitDefinition<WeightUnit> Tone = new UnitDefinition<WeightUnit>("t", 1000, "ton", "tons");
+
+        public static readonly UnitDefinition<WeightUnit> Tone =
+            new UnitDefinition<WeightUnit>("t", 1000, "ton", "tons");
     }
 }

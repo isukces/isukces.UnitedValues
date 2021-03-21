@@ -24,7 +24,7 @@ namespace iSukces.UnitedValues
             if (t1 == t2)
                 //throw new NotSupportedException();
                 return Tuple.Create((T2)(object)a); //new UnitDefinition<T2>(a.UnitName, 1));
-            var key = new Key(t1, t2, a.UnitName);
+            var    key = new Key(t1, t2, a.UnitName);
             object value;
             return rd.TryGetValue(key, out value) ? Tuple.Create((T2)value) : null;
         }
@@ -48,9 +48,9 @@ namespace iSukces.UnitedValues
                 if (type1 == null) throw new ArgumentNullException(nameof(type1));
                 if (type2 == null) throw new ArgumentNullException(nameof(type2));
                 if (name == null) throw new ArgumentNullException(nameof(name));
-                _type1 = type1;
-                _type2 = type2;
-                _name = name;
+                _type1    = type1;
+                _type2    = type2;
+                _name     = name;
                 _hashCode = (type1.GetHashCode() * 397) ^ type2.GetHashCode();
                 _hashCode = (_hashCode * 397) ^ _name.GetHashCode();
             }
@@ -78,7 +78,10 @@ namespace iSukces.UnitedValues
             }
 
 
-            public override int GetHashCode() => _hashCode;
+            public override int GetHashCode()
+            {
+                return _hashCode;
+            }
 
             private readonly Type _type1;
             private readonly Type _type2;

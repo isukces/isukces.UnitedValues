@@ -16,19 +16,21 @@ namespace iSukces.UnitedValues
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)
         {
-            if (reader.Value is string)
-                return Parse((string)reader.Value);
-            if (reader.Value is long)
-                return Make((long)reader.Value, null);
-            if (reader.Value is double)
-                return Make((decimal)(double)reader.Value, null);
-            if (reader.Value == null)
+            switch (reader.Value)
             {
-                if (objectType == typeof(T?))
+                case string value:
+                    return Parse(value);
+                case long value:
+                    return Make(value, null);
+                case double value:
+                    return Make((decimal)value, null);
+                case null when objectType == typeof(T?):
                     return null;
-                throw new Exception("Unable to convert NULL into Length");
+                case null:
+                    throw new Exception("Unable to convert NULL into Length");
+                default:
+                    throw new NotImplementedException();
             }
-            throw new NotImplementedException();
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

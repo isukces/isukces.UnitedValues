@@ -10,14 +10,14 @@ namespace iSukces.UnitedValues
             where TUnit : IUnit
         {
             var key = new Key(typeof(TUnit), unitName);
-            return _dict.TryGetValue(key, out decimal value) ? (decimal?)value : null;
+            return _dict.TryGetValue(key, out var value) ? (decimal?)value : null;
         }
 
         public decimal? Get<TUnit>(TUnit unit)
             where TUnit : IUnit
         {
             var key = new Key(typeof(TUnit), unit.UnitName);
-            return _dict.TryGetValue(key, out decimal value) ? (decimal?)value : null;
+            return _dict.TryGetValue(key, out var value) ? (decimal?)value : null;
         }
 
         public void Register<TUnit>(UnitDefinition<TUnit> item)
@@ -28,7 +28,7 @@ namespace iSukces.UnitedValues
             if (item.Aliases == null || !item.Aliases.Any()) return;
             foreach (var alias in item.Aliases)
             {
-                key = new Key(typeof(TUnit), alias);
+                key        = new Key(typeof(TUnit), alias);
                 _dict[key] = item.Multiplication;
             }
         }

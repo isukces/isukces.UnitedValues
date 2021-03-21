@@ -42,7 +42,7 @@
         public static LinearDensity operator *(Density density, Area length)
         {
             var lengthUnit = GlobalUnitRegistry.Relations.GetT<VolumeUnit, LengthUnit>(density.Unit.DenominatorUnit);
-            var areaUnit = GlobalUnitRegistry.Relations.GetT<LengthUnit, AreaUnit>(lengthUnit);
+            var areaUnit   = GlobalUnitRegistry.Relations.GetT<LengthUnit, AreaUnit>(lengthUnit);
             length = length.ConvertTo(areaUnit);
             return new LinearDensity(density.Value * length.Value, density.Unit.CounterUnit, lengthUnit);
         }
@@ -150,6 +150,5 @@
             density = density.ConvertTo(new LinearDensityUnit(density.Unit.CounterUnit, length.Unit));
             return new Weight(density.Value * length.Value, density.Unit.CounterUnit);
         }
-
     }
 }

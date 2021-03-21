@@ -11,13 +11,13 @@ namespace iSukces.UnitedValues
         public Density(decimal value, DensityUnit unit)
         {
             Value = value;
-            Unit = unit;
+            Unit  = unit;
         }
 
         public Density(decimal value, WeightUnit counterUnit, VolumeUnit denominatorUnit)
         {
             Value = value;
-            Unit = new DensityUnit(counterUnit, denominatorUnit);
+            Unit  = new DensityUnit(counterUnit, denominatorUnit);
         }
 
         public static bool operator ==(Density left, Density right)
@@ -47,11 +47,11 @@ namespace iSukces.UnitedValues
         {
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(value));
-            var r = CommonParse.Parse(value, typeof(Density));
+            var r     = CommonParse.Parse(value, typeof(Density));
             var units = r.UnitName.Split('/');
             if (units.Length != 2)
                 throw new Exception($"{r.UnitName} is not valid density unit");
-            var counterUnit = new WeightUnit(units[0].Trim());
+            var counterUnit     = new WeightUnit(units[0].Trim());
             var denominatorUnit = new VolumeUnit(units[1].Trim());
             return new Density(r.Value, counterUnit, denominatorUnit);
         }
@@ -97,21 +97,26 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public override string ToString() => Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
+        public override string ToString()
+        {
+            return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
+        }
+
+        public string ToString(string format, IFormatProvider provider)
+        {
+            return this.ToStringFormat(format, provider);
+        }
 
         public decimal Value { get; }
 
         public DensityUnit Unit { get; }
-
-        public string ToString(string format, IFormatProvider provider) 
-            => this.ToStringFormat(format, provider);
     }
 
     public struct DensityUnit : IUnit, IEquatable<DensityUnit>
     {
         public DensityUnit(WeightUnit counterUnit, VolumeUnit denominatorUnit)
         {
-            CounterUnit = counterUnit;
+            CounterUnit     = counterUnit;
             DenominatorUnit = denominatorUnit;
         }
 
@@ -144,10 +149,13 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public override string ToString() => UnitName;
+        public override string ToString()
+        {
+            return UnitName;
+        }
 
-        public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
-        public WeightUnit CounterUnit { get; }
+        public string     UnitName        => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
+        public WeightUnit CounterUnit     { get; }
         public VolumeUnit DenominatorUnit { get; }
     }
 }

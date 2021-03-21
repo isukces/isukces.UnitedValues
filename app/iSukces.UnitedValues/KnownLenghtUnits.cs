@@ -67,19 +67,19 @@ namespace iSukces.UnitedValues
 		}
 
 		internal static void Register(UnitRelationsDictionary dict) {
-			dict.AddRelated<AreaUnit,LengthUnit>(SquareMeter, LengthUnits.Meter);
+			dict.AddRelated<AreaUnit, LengthUnit>(SquareMeter, LengthUnits.Meter);
 			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Meter, SquareMeter);
-			dict.AddRelated<AreaUnit,LengthUnit>(SquareKm, LengthUnits.Km);
+			dict.AddRelated<AreaUnit, LengthUnit>(SquareKm, LengthUnits.Km);
 			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Km, SquareKm);
-			dict.AddRelated<AreaUnit,LengthUnit>(SquareDm, LengthUnits.Dm);
+			dict.AddRelated<AreaUnit, LengthUnit>(SquareDm, LengthUnits.Dm);
 			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Dm, SquareDm);
-			dict.AddRelated<AreaUnit,LengthUnit>(SquareCm, LengthUnits.Cm);
+			dict.AddRelated<AreaUnit, LengthUnit>(SquareCm, LengthUnits.Cm);
 			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Cm, SquareCm);
-			dict.AddRelated<AreaUnit,LengthUnit>(SquareMm, LengthUnits.Mm);
+			dict.AddRelated<AreaUnit, LengthUnit>(SquareMm, LengthUnits.Mm);
 			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Mm, SquareMm);
-			dict.AddRelated<AreaUnit,LengthUnit>(SquareInch, LengthUnits.Inch);
+			dict.AddRelated<AreaUnit, LengthUnit>(SquareInch, LengthUnits.Inch);
 			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Inch, SquareInch);
-			dict.AddRelated<AreaUnit,LengthUnit>(SquareFoot, LengthUnits.Foot);
+			dict.AddRelated<AreaUnit, LengthUnit>(SquareFoot, LengthUnits.Foot);
 			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Foot, SquareFoot);
 			dict.AddRelated<AreaUnit,LengthUnit>(SquareYard, LengthUnits.Yard);
 			dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Yard, SquareYard);

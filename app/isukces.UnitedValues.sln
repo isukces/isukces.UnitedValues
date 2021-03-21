@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.UnitedValues.Test",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.UnitedValues", "iSukces.UnitedValues\iSukces.UnitedValues.csproj", "{B87C2CFA-134A-44F6-AF13-ED7A9DACC2D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitGenerator", "UnitGenerator\UnitGenerator.csproj", "{745EE234-712B-4178-834A-C0608840A99B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B87C2CFA-134A-44F6-AF13-ED7A9DACC2D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B87C2CFA-134A-44F6-AF13-ED7A9DACC2D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B87C2CFA-134A-44F6-AF13-ED7A9DACC2D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{745EE234-712B-4178-834A-C0608840A99B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{745EE234-712B-4178-834A-C0608840A99B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{745EE234-712B-4178-834A-C0608840A99B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{745EE234-712B-4178-834A-C0608840A99B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

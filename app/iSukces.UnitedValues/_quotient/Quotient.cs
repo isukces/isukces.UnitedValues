@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace iSukces.UnitedValues._quotient
+namespace iSukces.UnitedValues
 {
     public struct Quotient<TCounter, TDenominator> : IUnitedValue<QuotientUnit<TCounter, TDenominator>>
         where TCounter : IUnit
