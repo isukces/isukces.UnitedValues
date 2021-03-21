@@ -128,18 +128,7 @@ Volume,VolumeUnit,-,VolumeUnits.QubicMeter
                 jsonConverter.Generate(q);
             }
             {
-                var arr = new[]
-                {
-                    new DerivedUnitInfo(nameof(Weight))
-                        .WithUnit("kg", null, 1)
-                        .WithUnit("t", "Tone", 1000, "ton")
-                        .WithUnit("g", "Gram", 0.001m),
-                    new DerivedUnitInfo(nameof(Length)).WithLengths(1),
-                    new DerivedUnitInfo(nameof(Area)).WithLengths(2),
-                    new DerivedUnitInfo(nameof(Volume)).WithLengths(3)
-                };
-                var ano = new AnotherGenerator(Path.Combine(path1, "+units4"), nameSpace);
-                ano.Generate(arr);
+                DerivedUnitGeneratorRunner.Run(path1, nameSpace);
             }
         }
     }

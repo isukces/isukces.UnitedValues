@@ -6,9 +6,9 @@ using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
-    public class AnotherGenerator : BaseGenerator<DerivedUnitInfo>
+    public class DerivedUnitGenerator : BaseGenerator<DerivedUnitInfo>
     {
-        public AnotherGenerator(string output, string nameSpace) : base(output, nameSpace)
+        public DerivedUnitGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
         }
 
