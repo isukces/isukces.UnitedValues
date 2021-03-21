@@ -56,9 +56,9 @@ namespace UnitGenerator
             mm.AddParam("map", "Func<T, " + Cfg.Name + ">");
         }
 
-        protected override string GetTypename(UnitInfo unit)
+        protected override string GetTypename(UnitInfo cfg)
         {
-            return unit.Name + "Extensions";
+            return cfg.Name + "Extensions";
         }
 
         protected override void PrepareFile(CsFile file)

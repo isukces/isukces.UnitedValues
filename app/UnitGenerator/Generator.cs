@@ -105,9 +105,9 @@ namespace UnitGenerator
             MakeToString(cl, $@"$""{{Value}} {Cfg.Unit}""");
         }
 
-        protected override string GetTypename(UnitDefinition unit)
+        protected override string GetTypename(UnitDefinition cfg)
         {
-            return unit.ClassName;
+            return cfg.ClassName;
         }
 
 

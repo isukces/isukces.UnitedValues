@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace UnitGenerator
 {
-    public class UnitJsonConverterGenerator : BaseGenerator<UnitInfo>
+    public class UnitJsonConverterGenerator : BaseGenerator<IUnitConfig>
     {
         public UnitJsonConverterGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
@@ -44,9 +44,9 @@ namespace UnitGenerator
             }
         }
 
-        protected override string GetTypename(UnitInfo unit)
+        protected override string GetTypename(IUnitConfig cfg)
         {
-            return unit.Name + "JsonConverter";
+            return cfg.Name + "JsonConverter";
         }
 
         protected override void PrepareFile(CsFile file)

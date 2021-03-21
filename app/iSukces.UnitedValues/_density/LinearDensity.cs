@@ -94,47 +94,5 @@ namespace iSukces.UnitedValues
         public LinearDensityUnit Unit { get; }
     }
 
-    public struct LinearDensityUnit : IUnit, IEquatable<LinearDensityUnit>
-    {
-        public LinearDensityUnit(WeightUnit counterUnit, LengthUnit denominatorUnit)
-        {
-            CounterUnit = counterUnit;
-            DenominatorUnit = denominatorUnit;
-        }
-
-        public static bool operator ==(LinearDensityUnit left, LinearDensityUnit right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(LinearDensityUnit left, LinearDensityUnit right)
-        {
-            return !left.Equals(right);
-        }
-
-        public bool Equals(LinearDensityUnit other)
-        {
-            return CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            return obj is LinearDensityUnit && Equals((LinearDensityUnit)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (CounterUnit.GetHashCode() * 397) ^ DenominatorUnit.GetHashCode();
-            }
-        }
-
-        public override string ToString() => UnitName;
-
-        public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
-        public WeightUnit CounterUnit { get; }
-        public LengthUnit DenominatorUnit { get; }
-    }
+ 
 }

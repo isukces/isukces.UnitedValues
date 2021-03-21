@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace UnitGenerator
 {
-    public class UnitInfo
+    public class UnitInfo : IUnitConfig
     {
         public static UnitInfo Parse(string x)
         {

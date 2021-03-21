@@ -1,6 +1,5 @@
 using System;
 using iSukces.Code;
-using iSukces.Code.Ammy;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
@@ -37,9 +36,9 @@ namespace UnitGenerator
             Add_ConvertTo();
         }
 
-        protected override string GetTypename(UnitInfo unit)
+        protected override string GetTypename(UnitInfo cfg)
         {
-            return unit.Name;
+            return cfg.Name;
         }
 
         protected override void PrepareFile(CsFile file)
@@ -76,7 +75,7 @@ namespace UnitGenerator
                     .WithBody(cw);
             }*/
 
-            foreach(var i in "+,-".Split(',')) 
+            foreach (var i in "+,-".Split(','))
             {
                 var cw = new CsCodeWriter();
                 cw.SingleLineIf(
@@ -87,7 +86,7 @@ namespace UnitGenerator
                     ReturnValue("left"));
 
                 cw.WriteLine("right = right.ConvertTo(left.Unit);");
-                cw.WriteLine(ReturnValue("new " + Cfg.Name + "(right.Value "+i+" left.Value, left.Unit)"));
+                cw.WriteLine(ReturnValue("new " + Cfg.Name + "(right.Value " + i + " left.Value, left.Unit)"));
 
                 cl.AddMethod(i, Cfg.Name)
                     .WithLeftRightArguments(cl.Name, cl.Name)
@@ -133,31 +132,17 @@ namespace UnitGenerator
 
         private void Add_Equals()
         {
-            Add_EqualsUniversal(cl.Name, false, OverridingType.None);
+            var compareCode =
+                $"{ValuePropName} == other.{ValuePropName} && {UnitPropName}.Equals(other.{UnitPropName})";
+            Add_EqualsUniversal(cl.Name, false, OverridingType.None, compareCode);
 
             var compareType = MakeGenericType<IUnitedValue<LengthUnit>>(cl, Cfg.Unit);
-            Add_EqualsUniversal(compareType, true, OverridingType.None);
+            Add_EqualsUniversal(compareType, true, OverridingType.None, compareCode);
 
             Add_EqualsUniversal("object", false, OverridingType.Override,
                 "other is " + compareType + " unitedValue ? Equals(unitedValue) : false");
         }
 
-
-        private void Add_EqualsUniversal(string compareType, bool nullable, OverridingType overridingType,
-            string compareCode = null)
-        {
-            if (string.IsNullOrEmpty(compareCode))
-                compareCode =
-                    $"{ValuePropName} == other.{ValuePropName} && {UnitPropName}.Equals(other.{UnitPropName})";
-            var cw = new CsCodeWriter();
-            if (nullable)
-                cw.SingleLineIf("other is null", ReturnValue("false"));
-            cw.WriteLine(ReturnValue(compareCode));
-            var m = cl.AddMethod("Equals", "bool")
-                .WithBody(cw);
-            m.Overriding = overridingType;
-            m.AddParam("other", compareType);
-        }
 
         private void Add_GetBaseUnitValue()
         {
@@ -174,14 +159,9 @@ namespace UnitGenerator
         {
             var expression = $"({ValuePropName}.GetHashCode() * 397) ^ {UnitPropName}.GetHashCode()";
 
-            CodeWriter cw = new AmmyCodeWriter();
-            cw.Open("unchecked");
-            cw.WriteLine(ReturnValue(expression));
-            cw.Close();
-            cl.AddMethod("GetHashCode", "int")
-                .WithOverride()
-                .WithBody(cw);
+            Add_GetHashCode(expression);
         }
+
 
         private void Add_Parse()
         {

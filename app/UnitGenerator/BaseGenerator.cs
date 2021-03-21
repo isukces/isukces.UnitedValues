@@ -21,6 +21,7 @@ namespace UnitGenerator
             return parts[0] + "<" + arg + ">";
         }
 
+
         protected static void MakeToString(CsClass cl, string returnValue)
         {
             var m = cl.AddMethod("ToString", "string").WithBody($"return {returnValue};");
@@ -57,6 +58,44 @@ namespace UnitGenerator
         }
 
 
+        protected void Add_EqualityOperators()
+        {
+            for (var i = 0; i < 2; i++)
+            {
+                var eq = i == 0;
+                var m = cl.AddMethod(eq ? "==" : "!=", "bool", eq ? "Equality operator" : "Inequality operator")
+                    .WithBody($"return {(eq ? "" : "!")}left.Equals(right);");
+
+                m.AddParam("left", cl.Name, "first value to compare");
+                m.AddParam("right", cl.Name, "second value to compare");
+            }
+        }
+
+        protected void Add_EqualsUniversal(string compareType, bool nullable, OverridingType overridingType,
+            string compareCode)
+        {
+            var cw = new CsCodeWriter();
+            if (nullable)
+                cw.SingleLineIf("other is null", ReturnValue("false"));
+            cw.WriteLine(ReturnValue(compareCode));
+            var m = cl.AddMethod("Equals", "bool")
+                .WithBody(cw);
+            m.Overriding = overridingType;
+            m.AddParam("other", compareType);
+        }
+
+        protected void Add_GetHashCode(string expression)
+        {
+            CodeWriter cw = new CsCodeWriter();
+            cw.Open("unchecked");
+            cw.WriteLine(ReturnValue(expression));
+            cw.Close();
+            cl.AddMethod("GetHashCode", "int")
+                .WithOverride()
+                .WithBody(cw);
+        }
+
+
         protected void Add_Properties(params ConstructorParameterInfo[] items)
         {
             foreach (var i in items) Add_Property(i.PropertyName, i.PropertyType, i.Description);
@@ -71,8 +110,15 @@ namespace UnitGenerator
                 .WithIsPropertyReadOnly();
         }
 
+        protected void Add_ToString(string expression)
+        {
+            cl.AddMethod("ToString", "string", "Returns unit name")
+                .WithOverride()
+                .WithBody("return " + expression + ";");
+        }
+
         protected abstract void GenerateOne();
-        protected abstract string GetTypename(TDef unit);
+        protected abstract string GetTypename(TDef cfg);
 
         protected virtual void PrepareFile(CsFile file)
         {

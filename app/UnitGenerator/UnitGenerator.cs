@@ -23,7 +23,7 @@ namespace UnitGenerator
             Add_Equals();
             Add_EqualsOverride();
             Add_GetHashCode();
-            Add_ToString();
+            Add_ToString(PropertyName);
             Add_IEquatableEquals();
             Add_Property();
 
@@ -34,9 +34,9 @@ namespace UnitGenerator
         }
 
 
-        protected override string GetTypename(string unit)
+        protected override string GetTypename(string cfg)
         {
-            return unit;
+            return cfg;
         }
 
         private void Add_Constructor()
@@ -44,18 +44,6 @@ namespace UnitGenerator
             Add_Constructor(GetConstructorProperties());
         }
 
-        private void Add_EqualityOperators()
-        {
-            for (var i = 0; i < 2; i++)
-            {
-                var eq = i == 0;
-                var m = cl.AddMethod(eq ? "==" : "!=", "bool", eq ? "Equality operator" : "Inequality operator")
-                    .WithBody($"return {(eq ? "" : "!")}left.Equals(right);");
-
-                m.AddParam("left", Cfg, "first value to compare");
-                m.AddParam("right", Cfg, "second value to compare");
-            }
-        }
 
         private void Add_Equals()
         {
@@ -106,13 +94,6 @@ namespace UnitGenerator
             Add_Properties(GetConstructorProperties());
         }
 
-
-        private void Add_ToString()
-        {
-            cl.AddMethod("ToString", "string", "Returns unit name")
-                .WithOverride()
-                .WithBody("return " + PropertyName + ";");
-        }
 
         private ConstructorParameterInfo[] GetConstructorProperties()
         {

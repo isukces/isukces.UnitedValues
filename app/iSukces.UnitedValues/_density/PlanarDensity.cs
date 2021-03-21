@@ -92,48 +92,5 @@ namespace iSukces.UnitedValues
 
         public PlaneDensityUnit Unit { get; }
     }
-
-    public struct PlaneDensityUnit : IUnit, IEquatable<PlaneDensityUnit>
-    {
-        public PlaneDensityUnit(WeightUnit counterUnit, AreaUnit denominatorUnit)
-        {
-            CounterUnit = counterUnit;
-            DenominatorUnit = denominatorUnit;
-        }
-
-        public static bool operator ==(PlaneDensityUnit left, PlaneDensityUnit right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(PlaneDensityUnit left, PlaneDensityUnit right)
-        {
-            return !left.Equals(right);
-        }
-
-        public bool Equals(PlaneDensityUnit other)
-        {
-            return CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            return obj is PlaneDensityUnit && Equals((PlaneDensityUnit)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (CounterUnit.GetHashCode() * 397) ^ DenominatorUnit.GetHashCode();
-            }
-        }
-
-        public override string ToString() => UnitName;
-
-        public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
-        public WeightUnit CounterUnit { get; }
-        public AreaUnit DenominatorUnit { get; }
-    }
+    
 }

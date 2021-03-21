@@ -98,19 +98,28 @@ Volume,VolumeUnit,-,VolumeUnits.QubicMeter
                 var infos = data.Split('\n', '\r')
                     .Select(UnitInfo.Parse).Where(a => a != null)
                     .ToArray();
-                var gen2 = new UnitGenerator(Path.Combine(path1, "+IUnits"), nameSpace);
-                gen2.Generate(infos.Select(a => a.Unit).Distinct());
+                var unitGenerator = new UnitGenerator(Path.Combine(path1, "+IUnits"), nameSpace);
+                unitGenerator.Generate(infos.Select(a => a.Unit).Distinct());
 
-                // var infos2 = infos.Take(1).ToArray();
+                var unitedValues = new UnitedValuesGenerator(Path.Combine(path1, "+IUnitedValue"), nameSpace);
+                unitedValues.Generate(infos);
 
-                var gen3 = new UnitedValuesGenerator(Path.Combine(path1, "+IUnitedValue"), nameSpace);
-                gen3.Generate(infos);
+                var jsonConverter = new UnitJsonConverterGenerator(Path.Combine(path1, "+jsonConverters"), nameSpace);
+                jsonConverter.Generate(infos);
 
-                var gen4 = new UnitJsonConverterGenerator(Path.Combine(path1, "+jsonConverters"), nameSpace);
-                gen4.Generate(infos);
-
-                var gen5 = new UnitExtensionsGenerator(Path.Combine(path1, "+extensions"), nameSpace);
-                gen5.Generate(infos);
+                var ext = new UnitExtensionsGenerator(Path.Combine(path1, "+extensions"), nameSpace);
+                ext.Generate(infos);
+            }
+            {
+                // public LinearDensityUnit(WeightUnit counterUnit, LengthUnit denominatorUnit)
+                var q = new[]
+                {
+                    new FractionUnitInfo("LinearDensity", "LinearDensityUnit", "WeightUnit", "LengthUnit"),
+                    new FractionUnitInfo("Density", "DensityUnit", "WeightUnit", "VolumeUnit"),
+                    new FractionUnitInfo("PlaneDensity", "PlaneDensityUnit", "WeightUnit", "AreaUnit")
+                };
+                var gen1 = new FractionUnitGenerator(Path.Combine(path1, "+fractionUnits"), nameSpace);
+                gen1.Generate(q);
             }
         }
     }
