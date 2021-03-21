@@ -14,7 +14,7 @@ namespace UnitGenerator
         {
             cl.Kind = CsNamespaceMemberKind.Struct;
             cl.ImplementedInterfaces.Add("IUnit");
-            cl.ImplementedInterfaces.Add("IEquatable<" + Cfg.Unit + ">");
+            cl.ImplementedInterfaces.Add("IEquatable<" + Cfg.UnitTypeName + ">");
 
             var pi = new[]
             {
@@ -38,7 +38,7 @@ namespace UnitGenerator
 
         protected override string GetTypename(FractionUnitInfo cfg)
         {
-            return Cfg.Unit;
+            return Cfg.UnitTypeName;
         }
 
         private void Add_Equals()

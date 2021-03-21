@@ -58,7 +58,7 @@ namespace iSukces.UnitedValues.Test
 
 
             pdExpected = PlanarDensity.Parse("800kg/m2");
-            pd = pd.ConvertTo(new PlaneDensityUnit(w.Unit, AreaUnits.SquareMeter));
+            pd = pd.ConvertTo(new PlanarDensityUnit(w.Unit, AreaUnits.SquareMeter));
             Assert.Equal(800m, pd.Value);
             Assert.Equal(pdExpected.Unit, pd.Unit);
 

@@ -24,14 +24,14 @@ namespace UnitGenerator
             }
             else
             {
-                cl.BaseClass = "AbstractUnitJsonConverter<" + Cfg.Name + ", " + Cfg.Unit + ">";
+                cl.BaseClass = "AbstractUnitJsonConverter<" + Cfg.ValueTypeName + ", " + Cfg.UnitTypeName + ">";
                 {
                     var cw = new CsCodeWriter();
                     cw.WriteLine("unit = unit?.Trim();");
                     cw.WriteLine(
-                        $"return new {Cfg.Name}(value, string.IsNullOrEmpty(unit) ? {Cfg.Name}.BaseUnit : new {Cfg.Unit}(unit));");
+                        $"return new {Cfg.ValueTypeName}(value, string.IsNullOrEmpty(unit) ? {Cfg.ValueTypeName}.BaseUnit : new {Cfg.UnitTypeName}(unit));");
 
-                    var m = cl.AddMethod("Make", Cfg.Name)
+                    var m = cl.AddMethod("Make", Cfg.ValueTypeName)
                         .WithOverride()
                         .WithVisibility(Visibilities.Protected)
                         .WithBody(cw);
@@ -39,10 +39,10 @@ namespace UnitGenerator
                     m.AddParam("unit", "string");
                 }
                 {
-                    var m = cl.AddMethod("Parse", Cfg.Name)
+                    var m = cl.AddMethod("Parse", Cfg.ValueTypeName)
                         .WithOverride()
                         .WithVisibility(Visibilities.Protected)
-                        .WithBodyFromExpression(Cfg.Name + ".Parse(txt)");
+                        .WithBodyFromExpression(Cfg.ValueTypeName + ".Parse(txt)");
                     m.AddParam("txt", "string");
                 }
             }
@@ -50,7 +50,7 @@ namespace UnitGenerator
 
         protected override string GetTypename(IUnitConfig cfg)
         {
-            return cfg.Name + "JsonConverter";
+            return cfg.ValueTypeName + "JsonConverter";
         }
 
         protected override void PrepareFile(CsFile file)
@@ -63,7 +63,7 @@ namespace UnitGenerator
         {
             cl.AddMethod("CanConvert", "bool")
                 .WithOverride()
-                .WithBodyFromExpression($"objectType == typeof({Cfg.Unit})")
+                .WithBodyFromExpression($"objectType == typeof({Cfg.UnitTypeName})")
                 .AddParam("objectType", "Type");
         }
 
@@ -71,8 +71,8 @@ namespace UnitGenerator
         {
             var cw = new CsCodeWriter();
             cw.Open("if (reader.ValueType == typeof(string))");
-            cw.SingleLineIf($"objectType == typeof({Cfg.Name})",
-                ReturnValue($"{Cfg.Name}.Parse((string)reader.Value)"));
+            cw.SingleLineIf($"objectType == typeof({Cfg.ValueTypeName})",
+                ReturnValue($"{Cfg.ValueTypeName}.Parse((string)reader.Value)"));
             cw.Close();
             cw.WriteLine("throw new NotImplementedException();");
 

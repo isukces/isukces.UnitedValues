@@ -14,7 +14,7 @@
             length = length.ConvertTo(lengthUnit);
             var areaUnit = GlobalUnitRegistry.Relations.GetT<LengthUnit, AreaUnit>(lengthUnit);
             return new PlanarDensity(density.Value * length.Value,
-                new PlaneDensityUnit(density.Unit.CounterUnit, areaUnit));
+                new PlanarDensityUnit(density.Unit.CounterUnit, areaUnit));
         }
 
         /// <summary>
@@ -29,7 +29,7 @@
             density = density.ConvertTo(new DensityUnit(density.Unit.CounterUnit, volumeUnit));
             var areaUnit = GlobalUnitRegistry.Relations.GetT<LengthUnit, AreaUnit>(length.Unit);
             return new PlanarDensity(density.Value * length.Value,
-                new PlaneDensityUnit(density.Unit.CounterUnit, areaUnit));
+                new PlanarDensityUnit(density.Unit.CounterUnit, areaUnit));
         }
 
 
@@ -91,7 +91,7 @@
         {
             var areaUnit = GlobalUnitRegistry.Relations.GetT<LengthUnit, AreaUnit>(length.Unit);
 
-            density = density.ConvertTo(new PlaneDensityUnit(density.Unit.CounterUnit, areaUnit));
+            density = density.ConvertTo(new PlanarDensityUnit(density.Unit.CounterUnit, areaUnit));
             return new LinearDensity(
                 density.Value * length.Value,
                 density.Unit.CounterUnit,
@@ -119,7 +119,7 @@
         /// <returns></returns>
         public static Weight operator *(Area length, PlanarDensity density)
         {
-            density = density.ConvertTo(new PlaneDensityUnit(density.Unit.CounterUnit, length.Unit));
+            density = density.ConvertTo(new PlanarDensityUnit(density.Unit.CounterUnit, length.Unit));
             return new Weight(density.Value * length.Value, density.Unit.CounterUnit);
         }
     }

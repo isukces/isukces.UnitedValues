@@ -84,52 +84,14 @@ namespace UnitGenerator
                 angle
             };
             var projectRoot = FindProjectRootDirectory();
-            var path1       = Path.Combine(projectRoot.FullName, "app", "iSukces.UnitedValues");
+            var basePath       = Path.Combine(projectRoot.FullName, "app", "iSukces.UnitedValues");
             var nameSpace   = "iSukces.UnitedValues";
-            var gen         = new Generator(Path.Combine(path1, "+units"), nameSpace);
+            var gen         = new Generator(Path.Combine(basePath, "+units"), nameSpace);
 
             // gen.Generate(all);
-            {
-                var data = @"
-Force,ForceUnit,+,ForceUnit.Newton
-Weight,WeightUnit,+,WeightUnits.Kg
-Length,LengthUnit,+,LengthUnits.Meter
-Area,AreaUnit,-,AreaUnits.SquareMeter
-Volume,VolumeUnit,-,VolumeUnits.QubicMeter
-";
-                var infos = data.Split('\n', '\r')
-                    .Select(UnitInfo.Parse).Where(a => a != null)
-                    .ToArray();
-                var unitGenerator = new UnitGenerator(Path.Combine(path1, "+IUnits"), nameSpace);
-                unitGenerator.Generate(infos.Select(a => a.Unit).Distinct());
-
-                var unitedValues = new UnitedValuesGenerator(Path.Combine(path1, "+IUnitedValue"), nameSpace);
-                unitedValues.Generate(infos);
-
-                var jsonConverter = new UnitJsonConverterGenerator(Path.Combine(path1, "+jsonConverters"), nameSpace);
-                jsonConverter.Generate(infos);
-
-                var ext = new UnitExtensionsGenerator(Path.Combine(path1, "+extensions"), nameSpace);
-                ext.Generate(infos);
-            }
-            {
-                // public LinearDensityUnit(WeightUnit counterUnit, LengthUnit denominatorUnit)
-                var q = new[]
-                {
-                    new FractionUnitInfo("LinearDensity", "LinearDensityUnit", "WeightUnit", "LengthUnit"),
-                    new FractionUnitInfo("Density", "DensityUnit", "WeightUnit", "VolumeUnit"),
-                    new FractionUnitInfo("PlanarDensity", "PlaneDensityUnit", "WeightUnit", "AreaUnit")
-                };
-                var gen1 = new FractionUnitGenerator(Path.Combine(path1, "+fractionUnits"), nameSpace);
-                gen1.Generate(q);
-
-                var jsonConverter = new UnitJsonConverterGenerator(Path.Combine(path1, "+jsonConverters"), nameSpace);
-                jsonConverter.ClassicImpl = true;
-                jsonConverter.Generate(q);
-            }
-            {
-                DerivedUnitGeneratorRunner.Run(path1, nameSpace);
-            }
+            BasicUnitsRunner.Run(basePath, nameSpace);
+            FractionUnitGeneratorRunner.Run(basePath, nameSpace);
+            DerivedUnitGeneratorRunner.Run(basePath, nameSpace);
         }
     }
 

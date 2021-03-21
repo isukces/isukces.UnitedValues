@@ -205,7 +205,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         public ForceUnit Unit { get; }
 
-        public static readonly ForceUnit BaseUnit = ForceUnit.Newton;
+        public static readonly ForceUnit BaseUnit = ForceUnits.Newton;
 
         public static readonly Force Zero = new Force(0, BaseUnit);
 

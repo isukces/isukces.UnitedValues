@@ -6,9 +6,9 @@ namespace iSukces.UnitedValues
 {
     [JsonConverter(typeof(PlanarDensityJsonConverter))]
     [Serializable]
-    public partial struct PlanarDensity : IUnitedValue<PlaneDensityUnit>, IEquatable<PlanarDensity>, IFormattable
+    public partial struct PlanarDensity : IUnitedValue<PlanarDensityUnit>, IEquatable<PlanarDensity>, IFormattable
     {
-        public PlanarDensity(decimal value, PlaneDensityUnit unit)
+        public PlanarDensity(decimal value, PlanarDensityUnit unit)
         {
             Value = value;
             Unit = unit;
@@ -17,7 +17,7 @@ namespace iSukces.UnitedValues
         public PlanarDensity(decimal value, WeightUnit counterUnit, AreaUnit denominatorUnit)
         {
             Value = value;
-            Unit = new PlaneDensityUnit(counterUnit, denominatorUnit);
+            Unit = new PlanarDensityUnit(counterUnit, denominatorUnit);
         }
 
         public static bool operator ==(PlanarDensity left, PlanarDensity right)
@@ -43,7 +43,7 @@ namespace iSukces.UnitedValues
             return new PlanarDensity(r.Value, counterUnit, denominatorUnit);
         }
 
-        public PlanarDensity ConvertTo(PlaneDensityUnit newUnit)
+        public PlanarDensity ConvertTo(PlanarDensityUnit newUnit)
         {
             if (Unit.Equals(newUnit))
                 return this;
@@ -65,7 +65,7 @@ namespace iSukces.UnitedValues
             return obj is PlanarDensity && Equals((PlanarDensity)obj);
         }
 
-        public bool Equals(IUnitedValue<PlaneDensityUnit> other)
+        public bool Equals(IUnitedValue<PlanarDensityUnit> other)
         {
             throw new NotImplementedException();
         }
@@ -90,7 +90,7 @@ namespace iSukces.UnitedValues
 
         public decimal Value { get; }
 
-        public PlaneDensityUnit Unit { get; }
+        public PlanarDensityUnit Unit { get; }
     }
     
 }

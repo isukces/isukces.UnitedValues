@@ -9,7 +9,7 @@ namespace iSukces.UnitedValues
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(PlaneDensityUnit);
+            return objectType == typeof(PlanarDensityUnit);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

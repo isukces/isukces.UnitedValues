@@ -20,27 +20,27 @@ namespace UnitGenerator
             {
                 var cw = new CsCodeWriter();
                 cw.WriteLine();
-                cw.SingleLineIf("items is null", ReturnValue(Cfg.Name + ".Zero"));
+                cw.SingleLineIf("items is null", ReturnValue(Cfg.ValueTypeName + ".Zero"));
 
                 actions(cw);
-                var m = cl.AddMethod("Sum", Cfg.Name)
+                var m = cl.AddMethod("Sum", Cfg.ValueTypeName)
                     .WithStatic()
                     .WithBody(cw);
                 m.AddParam("items", MakeGenericType<IEnumerable<int>>(cl, itemType)).UseThis = true;
                 return m;
             }
 
-            Add1(Cfg.Name, cw =>
+            Add1(Cfg.ValueTypeName, cw =>
             {
                 cw.WriteLine("var c = items.ToArray();");
-                cw.SingleLineIf("c.Length == 0", ReturnValue(Cfg.Name + ".Zero"));
+                cw.SingleLineIf("c.Length == 0", ReturnValue(Cfg.ValueTypeName + ".Zero"));
                 cw.SingleLineIf("c.Length == 1", ReturnValue("c[0]"));
                 cw.WriteLine("var unit  = c[0].Unit;");
                 cw.WriteLine("var value = c.Aggregate(0m, (x, y) => x + y.ConvertTo(unit).Value);");
-                cw.WriteLine(ReturnValue($"new {Cfg.Name}(value, unit)"));
+                cw.WriteLine(ReturnValue($"new {Cfg.ValueTypeName}(value, unit)"));
             });
 
-            Add1(Cfg.Name + "?", cw =>
+            Add1(Cfg.ValueTypeName + "?", cw =>
             {
                 var c = "items.Where(a => a != null).Select(a => a.Value).Sum()";
                 cw.WriteLine(ReturnValue(c));
@@ -53,12 +53,12 @@ namespace UnitGenerator
             });
 
             mm.GenericArguments = new CsGenericArguments("T");
-            mm.AddParam("map", "Func<T, " + Cfg.Name + ">");
+            mm.AddParam("map", "Func<T, " + Cfg.ValueTypeName + ">");
         }
 
         protected override string GetTypename(UnitInfo cfg)
         {
-            return cfg.Name + "Extensions";
+            return cfg.ValueTypeName + "Extensions";
         }
 
         protected override void PrepareFile(CsFile file)

@@ -21,7 +21,7 @@ namespace UnitGenerator
 
             cl.Attributes.Add(new CsAttribute("Serializable"));
             cl.Attributes.Add(
-                new CsAttribute("JsonConverter").WithArgumentCode("typeof(" + Cfg.Name + "JsonConverter)"));
+                new CsAttribute("JsonConverter").WithArgumentCode("typeof(" + Cfg.ValueTypeName + "JsonConverter)"));
 
             Add_Properties();
             Add_ToString();
@@ -38,7 +38,7 @@ namespace UnitGenerator
 
         protected override string GetTypename(UnitInfo cfg)
         {
-            return cfg.Name;
+            return cfg.ValueTypeName;
         }
 
         protected override void PrepareFile(CsFile file)
@@ -86,9 +86,9 @@ namespace UnitGenerator
                     ReturnValue("left"));
 
                 cw.WriteLine("right = right.ConvertTo(left.Unit);");
-                cw.WriteLine(ReturnValue("new " + Cfg.Name + "(right.Value " + i + " left.Value, left.Unit)"));
+                cw.WriteLine(ReturnValue("new " + Cfg.ValueTypeName + "(right.Value " + i + " left.Value, left.Unit)"));
 
-                cl.AddMethod(i, Cfg.Name)
+                cl.AddMethod(i, Cfg.ValueTypeName)
                     .WithLeftRightArguments(cl.Name, cl.Name)
                     .WithBody(cw);
             }
@@ -99,7 +99,7 @@ namespace UnitGenerator
             if (!Cfg.IsComparable) return;
             cl.AddMethod("CompareTo", "int")
                 .WithBodyFromExpression(
-                    "UnitedValuesUtils.Compare<" + Cfg.Name + ", " + Cfg.Unit + ">(this, other)")
+                    "UnitedValuesUtils.Compare<" + Cfg.ValueTypeName + ", " + Cfg.UnitTypeName + ">(this, other)")
                 .AddParam("other", cl.Name);
 
             var operators = "!=,==,>,<,>=,<=";
@@ -126,7 +126,7 @@ namespace UnitGenerator
 
             cl.AddMethod("ConvertTo", cl.Name)
                 .WithBody(cw)
-                .AddParam("newUnit", Cfg.Unit);
+                .AddParam("newUnit", Cfg.UnitTypeName);
         }
 
 
@@ -136,7 +136,7 @@ namespace UnitGenerator
                 $"{ValuePropName} == other.{ValuePropName} && {UnitPropName}.Equals(other.{UnitPropName})";
             Add_EqualsUniversal(cl.Name, false, OverridingType.None, compareCode);
 
-            var compareType = MakeGenericType<IUnitedValue<LengthUnit>>(cl, Cfg.Unit);
+            var compareType = MakeGenericType<IUnitedValue<LengthUnit>>(cl, Cfg.UnitTypeName);
             Add_EqualsUniversal(compareType, true, OverridingType.None, compareCode);
 
             Add_EqualsUniversal("object", false, OverridingType.Override,
@@ -166,9 +166,9 @@ namespace UnitGenerator
         private void Add_Parse()
         {
             var cs = new CsCodeWriter();
-            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.Name}));");
-            cs.WriteLine($"return new {Cfg.Name}(parseResult.Value, new {Cfg.Unit}(parseResult.UnitName));");
-            cl.AddMethod("Parse", Cfg.Name)
+            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.ValueTypeName}));");
+            cs.WriteLine($"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");
+            cl.AddMethod("Parse", Cfg.ValueTypeName)
                 .WithBody(cs)
                 .WithStatic()
                 .AddParam<string>("value", cl);
@@ -178,11 +178,11 @@ namespace UnitGenerator
         {
             Add_Properties(GetConstructorProperties());
 
-            cl.AddField("BaseUnit", Cfg.Unit)
+            cl.AddField("BaseUnit", Cfg.UnitTypeName)
                 .WithStatic()
                 .WithIsReadOnly()
                 .WithConstValue(Cfg.BaseUnit);
-            cl.AddField("Zero", Cfg.Name)
+            cl.AddField("Zero", Cfg.ValueTypeName)
                 .WithStatic()
                 .WithIsReadOnly()
                 .WithConstValue($"new {cl.Name}(0, BaseUnit)");
@@ -191,10 +191,10 @@ namespace UnitGenerator
         private void Add_Round()
         {
             var cs = new CsCodeWriter();
-            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.Name}));");
-            cs.WriteLine($"return new {Cfg.Name}(parseResult.Value, new {Cfg.Unit}(parseResult.UnitName));");
-            cl.AddMethod("Round", Cfg.Name)
-                .WithBodyFromExpression("new " + Cfg.Name + "(Math.Round(Value, decimalPlaces), Unit)")
+            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.ValueTypeName}));");
+            cs.WriteLine($"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");
+            cl.AddMethod("Round", Cfg.ValueTypeName)
+                .WithBodyFromExpression("new " + Cfg.ValueTypeName + "(Math.Round(Value, decimalPlaces), Unit)")
                 .AddParam<int>("decimalPlaces", cl);
         }
 
@@ -220,7 +220,7 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.Unit, null, "unit")
+                    Cfg.UnitTypeName, null, "unit")
             };
         }
 
