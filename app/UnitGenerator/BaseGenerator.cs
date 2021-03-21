@@ -21,7 +21,6 @@ namespace UnitGenerator
             return parts[0] + "<" + arg + ">";
         }
 
-
         protected static void MakeToString(CsClass cl, string returnValue)
         {
             var m = cl.AddMethod("ToString", "string").WithBody($"return {returnValue};");
@@ -115,6 +114,14 @@ namespace UnitGenerator
             cl.AddMethod("ToString", "string", "Returns unit name")
                 .WithOverride()
                 .WithBody("return " + expression + ";");
+        }
+
+        protected void Add_ImplicitOperator(string source, string target, string expr)
+        {
+            var description = $"Converts {source} into {target} implicitly.";
+            var m = cl.AddMethod(CsMethod.Implicit, target, description)
+                .WithBodyFromExpression(expr);
+            m.AddParam("src", source);
         }
 
         protected abstract void GenerateOne();

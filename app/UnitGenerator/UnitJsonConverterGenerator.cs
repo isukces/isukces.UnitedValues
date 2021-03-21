@@ -12,13 +12,10 @@ namespace UnitGenerator
         {
         }
 
-        public bool ClassicImpl { get; set; }
-
         protected override void GenerateOne()
         {
             if (ClassicImpl)
             {
-
                 cl.BaseClass = "JsonConverter";
 
                 Add_CanConvert();
@@ -27,7 +24,6 @@ namespace UnitGenerator
             }
             else
             {
-
                 cl.BaseClass = "AbstractUnitJsonConverter<" + Cfg.Name + ", " + Cfg.Unit + ">";
                 {
                     var cw = new CsCodeWriter();
@@ -104,5 +100,7 @@ namespace UnitGenerator
             m.AddParam<object>("value", cl);
             m.AddParam<JsonSerializer>("serializer", cl);
         }
+
+        public bool ClassicImpl { get; set; }
     }
 }

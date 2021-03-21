@@ -65,6 +65,10 @@ namespace iSukces.UnitedValues
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Converts UnitDefinition&lt;VolumeUnit&gt; into VolumeUnit implicitly.
+        /// </summary>
+        /// <param name="src"></param>
         public static implicit operator VolumeUnit(UnitDefinition<VolumeUnit> src)
         {
             return new VolumeUnit(src.UnitName);

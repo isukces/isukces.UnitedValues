@@ -65,6 +65,10 @@ namespace iSukces.UnitedValues
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Converts UnitDefinition&lt;WeightUnit&gt; into WeightUnit implicitly.
+        /// </summary>
+        /// <param name="src"></param>
         public static implicit operator WeightUnit(UnitDefinition<WeightUnit> src)
         {
             return new WeightUnit(src.UnitName);

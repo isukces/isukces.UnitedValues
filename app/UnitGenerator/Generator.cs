@@ -46,9 +46,12 @@ namespace UnitGenerator
                 c.AddParam("value", "double");
             }
             {
-                var m = cl.AddMethod(CsMethod.Implicit, "double")
+                Add_ImplicitOperator("double", Cfg.ClassName, "src.Value");
+                /*
+                var m = cl.AddMethod(CsMethod.Implicit, "double", "implicit converts double into " + Cfg.ClassName)
                     .WithBody("return src.Value;");
                 m.AddParam("src", Cfg.ClassName);
+            */
             }
             {
                 // operatory mnożenia przez liczbę

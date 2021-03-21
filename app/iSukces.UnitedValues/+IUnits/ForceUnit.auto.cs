@@ -65,6 +65,10 @@ namespace iSukces.UnitedValues
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Converts UnitDefinition&lt;ForceUnit&gt; into ForceUnit implicitly.
+        /// </summary>
+        /// <param name="src"></param>
         public static implicit operator ForceUnit(UnitDefinition<ForceUnit> src)
         {
             return new ForceUnit(src.UnitName);

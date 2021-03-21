@@ -82,11 +82,8 @@ namespace UnitGenerator
 
         private void Add_ImplicitOperator()
         {
-            // implicit
-            var m = cl.AddMethod(CsMethod.Implicit, cl.Name)
-                .WithBody($"return new {Cfg}(src." + PropertyName + ");");
             var pa = MakeGenericType<UnitDefinition<IUnit>>(cl, Cfg);
-            m.AddParam("src", pa);
+            Add_ImplicitOperator(pa, cl.Name, $"new {Cfg}(src.{PropertyName})");
         }
 
         private void Add_Property()

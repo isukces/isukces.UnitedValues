@@ -65,6 +65,10 @@ namespace iSukces.UnitedValues
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Converts UnitDefinition&lt;LengthUnit&gt; into LengthUnit implicitly.
+        /// </summary>
+        /// <param name="src"></param>
         public static implicit operator LengthUnit(UnitDefinition<LengthUnit> src)
         {
             return new LengthUnit(src.UnitName);

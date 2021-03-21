@@ -65,6 +65,10 @@ namespace iSukces.UnitedValues
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Converts UnitDefinition&lt;AreaUnit&gt; into AreaUnit implicitly.
+        /// </summary>
+        /// <param name="src"></param>
         public static implicit operator AreaUnit(UnitDefinition<AreaUnit> src)
         {
             return new AreaUnit(src.UnitName);

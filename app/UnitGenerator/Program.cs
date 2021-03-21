@@ -120,11 +120,10 @@ Volume,VolumeUnit,-,VolumeUnits.QubicMeter
                 };
                 var gen1 = new FractionUnitGenerator(Path.Combine(path1, "+fractionUnits"), nameSpace);
                 gen1.Generate(q);
-                
+
                 var jsonConverter = new UnitJsonConverterGenerator(Path.Combine(path1, "+jsonConverters"), nameSpace);
                 jsonConverter.ClassicImpl = true;
                 jsonConverter.Generate(q);
-
             }
         }
     }
