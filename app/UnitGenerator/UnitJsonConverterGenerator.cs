@@ -12,35 +12,43 @@ namespace UnitGenerator
         {
         }
 
+        public bool ClassicImpl { get; set; }
+
         protected override void GenerateOne()
         {
-            /*
-            cl.BaseClass = "JsonConverter";
-            
-            Add_CanConvert();
-            Add_ReadJson();
-            Add_WriteJson();
-            */
-            cl.BaseClass = "AbstractUnitJsonConverter<" + Cfg.Name + ", " + Cfg.Unit + ">";
+            if (ClassicImpl)
             {
-                var cw = new CsCodeWriter();
-                cw.WriteLine("unit = unit?.Trim();");
-                cw.WriteLine(
-                    $"return new {Cfg.Name}(value, string.IsNullOrEmpty(unit) ? {Cfg.Name}.BaseUnit : new {Cfg.Unit}(unit));");
 
-                var m = cl.AddMethod("Make", Cfg.Name)
-                    .WithOverride()
-                    .WithVisibility(Visibilities.Protected)
-                    .WithBody(cw);
-                m.AddParam("value", UnitedValuesGenerator.ValuePropertyType);
-                m.AddParam("unit", "string");
+                cl.BaseClass = "JsonConverter";
+
+                Add_CanConvert();
+                Add_ReadJson();
+                Add_WriteJson();
             }
+            else
             {
-                var m = cl.AddMethod("Parse", Cfg.Name)
-                    .WithOverride()
-                    .WithVisibility(Visibilities.Protected)
-                    .WithBodyFromExpression(Cfg.Name + ".Parse(txt)");
-                m.AddParam("txt", "string");
+
+                cl.BaseClass = "AbstractUnitJsonConverter<" + Cfg.Name + ", " + Cfg.Unit + ">";
+                {
+                    var cw = new CsCodeWriter();
+                    cw.WriteLine("unit = unit?.Trim();");
+                    cw.WriteLine(
+                        $"return new {Cfg.Name}(value, string.IsNullOrEmpty(unit) ? {Cfg.Name}.BaseUnit : new {Cfg.Unit}(unit));");
+
+                    var m = cl.AddMethod("Make", Cfg.Name)
+                        .WithOverride()
+                        .WithVisibility(Visibilities.Protected)
+                        .WithBody(cw);
+                    m.AddParam("value", UnitedValuesGenerator.ValuePropertyType);
+                    m.AddParam("unit", "string");
+                }
+                {
+                    var m = cl.AddMethod("Parse", Cfg.Name)
+                        .WithOverride()
+                        .WithVisibility(Visibilities.Protected)
+                        .WithBodyFromExpression(Cfg.Name + ".Parse(txt)");
+                    m.AddParam("txt", "string");
+                }
             }
         }
 

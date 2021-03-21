@@ -45,12 +45,6 @@ namespace UnitGenerator
         {
             var compareCode = "CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit)";
             Add_EqualsUniversal(cl.Name, false, OverridingType.None, compareCode);
-
-            // var compareType = MakeGenericType<IUnitedValue<LengthUnit>>(cl, Cfg.Unit);
-            /*
-            Add_EqualsUniversal(compareType, true, OverridingType.None, compareCode);
-            */
-
             Add_EqualsUniversal("object", false, OverridingType.Override,
                 "other is " + cl.Name + " unitedValue ? Equals(unitedValue) : false");
         }

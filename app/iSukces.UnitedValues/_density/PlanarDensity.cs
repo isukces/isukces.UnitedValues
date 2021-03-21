@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues
 {
-    [JsonConverter(typeof(DensityJsonConverter))]
+    [JsonConverter(typeof(PlanarDensityJsonConverter))]
     [Serializable]
     public partial struct PlanarDensity : IUnitedValue<PlaneDensityUnit>, IEquatable<PlanarDensity>, IFormattable
     {

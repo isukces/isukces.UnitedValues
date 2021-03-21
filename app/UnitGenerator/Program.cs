@@ -116,10 +116,15 @@ Volume,VolumeUnit,-,VolumeUnits.QubicMeter
                 {
                     new FractionUnitInfo("LinearDensity", "LinearDensityUnit", "WeightUnit", "LengthUnit"),
                     new FractionUnitInfo("Density", "DensityUnit", "WeightUnit", "VolumeUnit"),
-                    new FractionUnitInfo("PlaneDensity", "PlaneDensityUnit", "WeightUnit", "AreaUnit")
+                    new FractionUnitInfo("PlanarDensity", "PlaneDensityUnit", "WeightUnit", "AreaUnit")
                 };
                 var gen1 = new FractionUnitGenerator(Path.Combine(path1, "+fractionUnits"), nameSpace);
                 gen1.Generate(q);
+                
+                var jsonConverter = new UnitJsonConverterGenerator(Path.Combine(path1, "+jsonConverters"), nameSpace);
+                jsonConverter.ClassicImpl = true;
+                jsonConverter.Generate(q);
+
             }
         }
     }
