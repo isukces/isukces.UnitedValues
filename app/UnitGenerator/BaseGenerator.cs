@@ -94,6 +94,14 @@ namespace UnitGenerator
                 .WithBody(cw);
         }
 
+        protected void Add_ImplicitOperator(string source, string target, string expr)
+        {
+            var description = $"Converts {source} into {target} implicitly.";
+            var m = cl.AddMethod(CsMethod.Implicit, target, description)
+                .WithBodyFromExpression(expr);
+            m.AddParam("src", source);
+        }
+
 
         protected void Add_Properties(params ConstructorParameterInfo[] items)
         {
@@ -114,14 +122,6 @@ namespace UnitGenerator
             cl.AddMethod("ToString", "string", "Returns unit name")
                 .WithOverride()
                 .WithBody("return " + expression + ";");
-        }
-
-        protected void Add_ImplicitOperator(string source, string target, string expr)
-        {
-            var description = $"Converts {source} into {target} implicitly.";
-            var m = cl.AddMethod(CsMethod.Implicit, target, description)
-                .WithBodyFromExpression(expr);
-            m.AddParam("src", source);
         }
 
         protected abstract void GenerateOne();

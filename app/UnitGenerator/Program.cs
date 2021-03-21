@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
+using iSukces.Code;
+using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
@@ -125,6 +127,53 @@ Volume,VolumeUnit,-,VolumeUnits.QubicMeter
                 jsonConverter.ClassicImpl = true;
                 jsonConverter.Generate(q);
             }
+            {
+                var arr = new[]
+                {
+                    new DerivedUnitInfo(nameof(Weight))
+                        .WithUnit("kg", null, 1)
+                        .WithUnit("t", "Tone", 1000, "ton")
+                        .WithUnit("g", "Gram", 0.001m),
+                    new DerivedUnitInfo(nameof(Length)).WithLengths(1),
+                    new DerivedUnitInfo(nameof(Area)).WithLengths(2),
+                    new DerivedUnitInfo(nameof(Volume)).WithLengths(3)
+                };
+                var ano = new AnotherGenerator(Path.Combine(path1, "+units4"), nameSpace);
+                ano.Generate(arr);
+            }
         }
+    }
+
+    public class UnitDefinition2
+    {
+        public UnitDefinition2(string unitShortName, string multiplicator, string nameSingular, string namePlural,
+            string propertyName)
+        {
+            if (string.IsNullOrEmpty(namePlural) && !string.IsNullOrEmpty(nameSingular))
+                namePlural = nameSingular + "s";
+            UnitShortName = unitShortName;
+            Multiplicator = multiplicator;
+            NameSingular  = nameSingular;
+            NamePlural    = namePlural;
+
+            if (string.IsNullOrEmpty(propertyName))
+                propertyName = UnitShortName;
+            PropertyName = propertyName.FirstUpper();
+        }
+
+        public override string ToString()
+        {
+            return
+                $"UnitShortName={UnitShortName}, Multiplicator={Multiplicator}, NameSingular={NameSingular}, NamePlural={NamePlural}";
+        }
+
+        public string UnitShortName { get; }
+
+        public string Multiplicator { get; }
+
+        public string NameSingular { get; }
+
+        public string NamePlural   { get; }
+        public string PropertyName { get; }
     }
 }

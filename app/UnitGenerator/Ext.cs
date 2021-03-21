@@ -1,3 +1,4 @@
+using System.Globalization;
 using iSukces.Code;
 
 namespace UnitGenerator
@@ -9,6 +10,11 @@ namespace UnitGenerator
             var arg = string.Join(", ", args);
             return cl.AddMethod(operatorName, cl.Name, "implements " + operatorName + " operator")
                 .WithBodyFromExpression($"new {cl.Name}({arg})");
+        }
+
+        public static string CsEncode(decimal multiplicator)
+        {
+            return multiplicator.ToString(CultureInfo.InvariantCulture) + "m";
         }
 
         public static CsMethod WithBodyFromAssignment(this CsMethod method, string variable, string code)

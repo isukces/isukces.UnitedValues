@@ -76,23 +76,5 @@ namespace iSukces.UnitedValues
         }
     }
 
-
-    public static class WeightUnits
-    {
-        public static IEnumerable<UnitDefinition<WeightUnit>> All
-        {
-            get
-            {
-                yield return Kg;
-                yield return Gram;
-                yield return Tone;
-            }
-        }
-
-        public static readonly UnitDefinition<WeightUnit> Kg = new UnitDefinition<WeightUnit>("kg", 1);
-        public static readonly UnitDefinition<WeightUnit> Gram = new UnitDefinition<WeightUnit>("g", 0.001m);
-
-        public static readonly UnitDefinition<WeightUnit> Tone =
-            new UnitDefinition<WeightUnit>("t", 1000, "ton", "tons");
-    }
+ 
 }
