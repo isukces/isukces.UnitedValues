@@ -23,6 +23,7 @@ namespace iSukces.UnitedValues
 
         public Area ConvertTo(AreaUnit newUnit)
         {
+            // generator : UnitedValuesGenerator.Add_ConvertTo:119
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
@@ -51,6 +52,7 @@ namespace iSukces.UnitedValues
 
         public decimal GetBaseUnitValue()
         {
+            // generator : UnitedValuesGenerator.Add_GetBaseUnitValue:134
             if (Unit.Equals(BaseUnit))
                 return Value;
             var factor = GlobalUnitRegistry.Factors.Get(Unit);
@@ -101,12 +103,13 @@ namespace iSukces.UnitedValues
 
         public static Area operator -(Area left, Area right)
         {
+            // generator : UnitedValuesGenerator.Add_Algebra:83
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
-                return right;
+                return -right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
-            return new Area(right.Value - left.Value, left.Unit);
+            return new Area(left.Value - right.Value, left.Unit);
         }
 
         /// <summary>
@@ -141,22 +144,25 @@ namespace iSukces.UnitedValues
 
         public static decimal operator /(Area left, Area right)
         {
+            // generator : UnitedValuesGenerator.Add_Algebra:73
             right = right.ConvertTo(left.Unit);
             return left.Value / right.Value;
         }
 
         public static Area operator +(Area left, Area right)
         {
+            // generator : UnitedValuesGenerator.Add_Algebra:83
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
-            return new Area(right.Value + left.Value, left.Unit);
+            return new Area(left.Value + right.Value, left.Unit);
         }
 
         public static Area Parse(string value)
         {
+            // generator : UnitedValuesGenerator.Add_Parse:145
             var parseResult = CommonParse.Parse(value, typeof(Area));
             return new Area(parseResult.Value, new AreaUnit(parseResult.UnitName));
         }

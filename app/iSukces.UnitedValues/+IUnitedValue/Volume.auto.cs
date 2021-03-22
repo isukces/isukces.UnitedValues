@@ -23,6 +23,7 @@ namespace iSukces.UnitedValues
 
         public Volume ConvertTo(VolumeUnit newUnit)
         {
+            // generator : UnitedValuesGenerator.Add_ConvertTo:119
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
@@ -51,6 +52,7 @@ namespace iSukces.UnitedValues
 
         public decimal GetBaseUnitValue()
         {
+            // generator : UnitedValuesGenerator.Add_GetBaseUnitValue:134
             if (Unit.Equals(BaseUnit))
                 return Value;
             var factor = GlobalUnitRegistry.Factors.Get(Unit);
@@ -101,12 +103,13 @@ namespace iSukces.UnitedValues
 
         public static Volume operator -(Volume left, Volume right)
         {
+            // generator : UnitedValuesGenerator.Add_Algebra:83
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
-                return right;
+                return -right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
-            return new Volume(right.Value - left.Value, left.Unit);
+            return new Volume(left.Value - right.Value, left.Unit);
         }
 
         /// <summary>
@@ -141,22 +144,25 @@ namespace iSukces.UnitedValues
 
         public static decimal operator /(Volume left, Volume right)
         {
+            // generator : UnitedValuesGenerator.Add_Algebra:73
             right = right.ConvertTo(left.Unit);
             return left.Value / right.Value;
         }
 
         public static Volume operator +(Volume left, Volume right)
         {
+            // generator : UnitedValuesGenerator.Add_Algebra:83
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
-            return new Volume(right.Value + left.Value, left.Unit);
+            return new Volume(left.Value + right.Value, left.Unit);
         }
 
         public static Volume Parse(string value)
         {
+            // generator : UnitedValuesGenerator.Add_Parse:145
             var parseResult = CommonParse.Parse(value, typeof(Volume));
             return new Volume(parseResult.Value, new VolumeUnit(parseResult.UnitName));
         }

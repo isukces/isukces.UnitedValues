@@ -29,7 +29,7 @@ namespace iSukces.UnitedValues
             return rd.TryGetValue(key, out value) ? Tuple.Create((T2)value) : null;
         }
 
-        public T2 GetT<T1, T2>(T1 a)
+        public static T2 GetT<T1, T2>(T1 a)
             where T1 : IUnit
             where T2 : IUnit
         {

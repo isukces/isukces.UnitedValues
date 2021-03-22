@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Newtonsoft.Json;
 using Xunit;
+using iSukces.UnitedValues;
 
 <#
 var tests = @"
@@ -16,6 +17,7 @@ Weight,WeightUnits.Kg
 Length,LengthUnits.Meter
 Area,AreaUnits.SquareMeter
 Volume,VolumeUnits.QubicMeter
+Force,ForceUnits.Newton
 ";
 var tests2 = tests.Split('\r','\n').Select(a=>a.Trim().Split(',')).Where(a=>a.Length>1);
 #>
@@ -35,6 +37,27 @@ foreach(var i in tests2) {
 			var b = new <#= i[0] #>(5m, <#= i[1] #>);
 			var c = a / b;
 			Assert.Equal(2, c);
+        }
+
+
+        [Fact]
+        public void ShoulAdd<#= i[0] #>()
+        {
+			var a = new <#= i[0] #>(10m, <#= i[1] #>);
+			var b = new <#= i[0] #>(5m, <#= i[1] #>);
+            var expected = new <#= i[0] #>(15m, <#= i[1] #>);            
+			var c = a + b;
+			Assert.Equal(expected, c);
+        }
+
+        [Fact]
+        public void ShoulSubstract<#= i[0] #>()
+        {
+			var a = new <#= i[0] #>(10m, <#= i[1] #>);
+			var b = new <#= i[0] #>(6m, <#= i[1] #>);
+            var expected = new <#= i[0] #>(4m, <#= i[1] #>);            
+			var c = a - b;
+			Assert.Equal(expected, c);
         }
 <# } #>
 	}

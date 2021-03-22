@@ -28,6 +28,7 @@ namespace iSukces.UnitedValues
 
         public Force ConvertTo(ForceUnit newUnit)
         {
+            // generator : UnitedValuesGenerator.Add_ConvertTo:119
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
@@ -56,6 +57,7 @@ namespace iSukces.UnitedValues
 
         public decimal GetBaseUnitValue()
         {
+            // generator : UnitedValuesGenerator.Add_GetBaseUnitValue:134
             if (Unit.Equals(BaseUnit))
                 return Value;
             var factor = GlobalUnitRegistry.Factors.Get(Unit);
@@ -106,12 +108,13 @@ namespace iSukces.UnitedValues
 
         public static Force operator -(Force left, Force right)
         {
+            // generator : UnitedValuesGenerator.Add_Algebra:83
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
-                return right;
+                return -right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
-            return new Force(right.Value - left.Value, left.Unit);
+            return new Force(left.Value - right.Value, left.Unit);
         }
 
         public static bool operator !=(Force left, Force right)
@@ -151,18 +154,20 @@ namespace iSukces.UnitedValues
 
         public static decimal operator /(Force left, Force right)
         {
+            // generator : UnitedValuesGenerator.Add_Algebra:73
             right = right.ConvertTo(left.Unit);
             return left.Value / right.Value;
         }
 
         public static Force operator +(Force left, Force right)
         {
+            // generator : UnitedValuesGenerator.Add_Algebra:83
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
-            return new Force(right.Value + left.Value, left.Unit);
+            return new Force(left.Value + right.Value, left.Unit);
         }
 
         public static bool operator <(Force left, Force right)
@@ -192,6 +197,7 @@ namespace iSukces.UnitedValues
 
         public static Force Parse(string value)
         {
+            // generator : UnitedValuesGenerator.Add_Parse:145
             var parseResult = CommonParse.Parse(value, typeof(Force));
             return new Force(parseResult.Value, new ForceUnit(parseResult.UnitName));
         }

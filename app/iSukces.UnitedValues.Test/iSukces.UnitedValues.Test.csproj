@@ -28,4 +28,15 @@
   <ItemGroup>
     <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="_autoTests\AutoTests.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AutoTests.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="_autoTests\AutoTests.cs">
+      <DependentUpon>AutoTests.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

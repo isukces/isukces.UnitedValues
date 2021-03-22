@@ -1,8 +1,7 @@
-using System;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
-using iSukces.UnitedValues;
+using Self = UnitGenerator.UnitedValuesGenerator;
 
 namespace UnitGenerator
 {
@@ -22,7 +21,7 @@ namespace UnitGenerator
             Target.Attributes.Add(new CsAttribute("Serializable"));
             Target.Attributes.Add(
                 new CsAttribute("JsonConverter").WithArgumentCode("typeof(" + Cfg.ValueTypeName + "JsonConverter)"));
-            
+
             AddCommonValues_PropertiesAndConstructor(Cfg.UnitTypeName);
 
             Add_Properties();
@@ -32,6 +31,20 @@ namespace UnitGenerator
             Add_Comparable();
             Add_Algebra();
             Add_ConvertTo();
+        }
+
+
+        protected override ConstructorParameterInfo[] GetConstructorProperties()
+        {
+            return new[]
+            {
+                new ConstructorParameterInfo(ValuePropName,
+                    ValuePropertyType,
+                    null,
+                    "value"),
+                new ConstructorParameterInfo(UnitPropName,
+                    Cfg.UnitTypeName, null, "unit")
+            };
         }
 
         protected override string GetTypename(UnitInfo cfg)
@@ -57,34 +70,27 @@ namespace UnitGenerator
                 .AddParam("value", Target.Name);
 
             {
-                var cw = new CsCodeWriter();
+                var cw = CsCodeWriter.Create<Self>();
                 cw.WriteLine("right = right.ConvertTo(left.Unit);");
                 cw.WriteLine(ReturnValue("left.Value / right.Value"));
                 Target.AddMethod("/", ValuePropertyType)
                     .WithLeftRightArguments(Target.Name, Target.Name)
                     .WithBody(cw);
             }
-            /*{
-                var cw = new CsCodeWriter();
-                cw.WriteLine("right = right.ConvertTo(left.Unit);");
-                cw.WriteLine(ReturnValue("new " + Cfg.Name + "(right.Value "+i+" left.Value, left.Unit)"));
-                cl.AddMethod("/", cl.Name)
-                    .WithLeftRightArguments(cl.Name, ValuePropertyType)
-                    .WithBody(cw);
-            }*/
 
             foreach (var i in "+,-".Split(','))
             {
-                var cw = new CsCodeWriter();
+                var cw    = CsCodeWriter.Create<Self>();
+                var minusIfNecessary = i == "-" ? "-" : "";
                 cw.SingleLineIf(
                     "left.Value.Equals(" + ValuePropertyType + ".Zero) && string.IsNullOrEmpty(left.Unit.UnitName)",
-                    ReturnValue("right"));
+                    ReturnValue(minusIfNecessary + "right"));
                 cw.SingleLineIf(
                     "right.Value.Equals(" + ValuePropertyType + ".Zero) && string.IsNullOrEmpty(right.Unit.UnitName)",
                     ReturnValue("left"));
 
                 cw.WriteLine("right = right.ConvertTo(left.Unit);");
-                cw.WriteLine(ReturnValue("new " + Cfg.ValueTypeName + "(right.Value " + i + " left.Value, left.Unit)"));
+                cw.WriteLine(ReturnValue("new " + Cfg.ValueTypeName + "(left.Value " + i + " right.Value, left.Unit)"));
 
                 Target.AddMethod(i, Cfg.ValueTypeName)
                     .WithLeftRightArguments(Target.Name, Target.Name)
@@ -107,11 +113,10 @@ namespace UnitGenerator
                     .WithLeftRightArguments(Target.Name, Target.Name);
         }
 
-  
 
         private void Add_ConvertTo()
         {
-            var cw = new CsCodeWriter();
+            var cw = CsCodeWriter.Create<Self>();
             cw.SingleLineIf("Unit.Equals(newUnit)", ReturnValue("this"));
             cw.WriteLine("var basic = GetBaseUnitValue();");
             cw.WriteLine("var factor = GlobalUnitRegistry.Factors.Get(newUnit);");
@@ -124,13 +129,9 @@ namespace UnitGenerator
                 .AddParam("newUnit", Cfg.UnitTypeName);
         }
 
-
-  
-
-
         private void Add_GetBaseUnitValue()
         {
-            var cs = new CsCodeWriter();
+            var cs = CsCodeWriter.Create<Self>();
             cs.SingleLineIf("Unit.Equals(BaseUnit)", ReturnValue("Value"));
             cs.WriteLine("var factor = GlobalUnitRegistry.Factors.Get(Unit);");
             cs.SingleLineIf("!(factor is null)", ReturnValue("Value * factor.Value"));
@@ -139,13 +140,12 @@ namespace UnitGenerator
                 .WithBody(cs);
         }
 
-
-
         private void Add_Parse()
         {
-            var cs = new CsCodeWriter();
+            var cs = CsCodeWriter.Create<Self>();
             cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.ValueTypeName}));");
-            cs.WriteLine($"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");
+            cs.WriteLine(
+                $"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");
             Target.AddMethod("Parse", Cfg.ValueTypeName)
                 .WithBody(cs)
                 .WithStatic()
@@ -166,30 +166,13 @@ namespace UnitGenerator
 
         private void Add_Round()
         {
-            var cs = new CsCodeWriter();
+            var cs = CsCodeWriter.Create<Self>();
             cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.ValueTypeName}));");
-            cs.WriteLine($"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");
+            cs.WriteLine(
+                $"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");
             Target.AddMethod("Round", Cfg.ValueTypeName)
                 .WithBodyFromExpression("new " + Cfg.ValueTypeName + "(Math.Round(Value, decimalPlaces), Unit)")
                 .AddParam<int>("decimalPlaces", Target);
         }
-
-
-
-        protected override ConstructorParameterInfo[] GetConstructorProperties()
-        {
-            return new[]
-            {
-                new ConstructorParameterInfo(ValuePropName,
-                    ValuePropertyType,
-                    null,
-                    "value"),
-                new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypeName, null, "unit")
-            };
-        }
-
-
-
     }
 }
