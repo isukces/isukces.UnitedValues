@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace iSukces.UnitedValues
 {
@@ -75,6 +74,4 @@ namespace iSukces.UnitedValues
             return FromKg(Math.Round(w.Value, decimalPlaces));
         }
     }
-
- 
 }

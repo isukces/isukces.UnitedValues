@@ -18,8 +18,8 @@ namespace UnitGenerator
 
             var pi = new[]
             {
-                new ConstructorParameterInfo("CounterUnit", Cfg.CounterUnit.UnitTypeName, null, "counter unit"),
-                new ConstructorParameterInfo("DenominatorUnit", Cfg.DenominatorUnit.UnitTypeName, null, "denominator unit")
+                new ConstructorParameterInfo("CounterUnit", Cfg.CounterUnit.Unit, null, "counter unit"),
+                new ConstructorParameterInfo("DenominatorUnit", Cfg.DenominatorUnit.Unit, null, "denominator unit")
             };
             Add_Constructor(pi);
             Add_Properties(pi);

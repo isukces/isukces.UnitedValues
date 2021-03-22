@@ -104,14 +104,6 @@ namespace UnitGenerator
             }
         }
 
-
-        private void WithUnit(string unitShortName,
-            string propertyName, string multiplicator, string nameSingular = null,
-            string namePlural = null)
-        {
-            Units.Add(new DerivedUnitDefinition(unitShortName, multiplicator, nameSingular, namePlural, propertyName));
-        }
-
         public DerivedUnitInfo WithUnit(string unitShortName,
             string propertyName, decimal multiplicator, string nameSingular = null,
             string namePlural = null)
@@ -121,9 +113,17 @@ namespace UnitGenerator
             return this;
         }
 
+
+        private void WithUnit(string unitShortName,
+            string propertyName, string multiplicator, string nameSingular = null,
+            string namePlural = null)
+        {
+            Units.Add(new DerivedUnitDefinition(unitShortName, multiplicator, nameSingular, namePlural, propertyName));
+        }
+
         public string Name { get; }
 
         public List<DerivedUnitDefinition> Units           { get; } = new List<DerivedUnitDefinition>();
-        public List<PrefixRelation>  PrefixRelations { get; } = new List<PrefixRelation>();
+        public List<PrefixRelation>        PrefixRelations { get; } = new List<PrefixRelation>();
     }
 }

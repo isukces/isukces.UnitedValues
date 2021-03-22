@@ -9,7 +9,7 @@ namespace iSukces.UnitedValues.Test
         {
             var a = GlobalUnitRegistry.Factors.Get<LengthUnit>("yd");
             Assert.NotNull(a);
-            Assert.Equal(0.9144m,a.Value);
+            Assert.Equal(0.9144m, a.Value);
         }
     }
 }

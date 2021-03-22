@@ -80,7 +80,7 @@ namespace UnitGenerator
 
             foreach (var i in "+,-".Split(','))
             {
-                var cw    = CsCodeWriter.Create<Self>();
+                var cw               = CsCodeWriter.Create<Self>();
                 var minusIfNecessary = i == "-" ? "-" : "";
                 cw.SingleLineIf(
                     "left.Value.Equals(" + ValuePropertyType + ".Zero) && string.IsNullOrEmpty(left.Unit.UnitName)",

@@ -85,11 +85,11 @@ namespace UnitGenerator
             foreach (var u in Cfg.Units)
             {
                 var o  = u.PropertyName.Substring(i.My.Length);
-                var p1 =  u.PropertyName;
+                var p1 = u.PropertyName;
                 var p2 = i.OtherUnitContainer + "s." + i.Other + o;
                 var q  = $"dict.AddRelated<{i.MyUnitContainer}, {i.OtherUnitContainer}>({p1}, {p2});";
                 cw.WriteLine(q);
-                 q = $"dict.AddRelated<{i.OtherUnitContainer}, {i.MyUnitContainer}>({p2}, {p1});";
+                q = $"dict.AddRelated<{i.OtherUnitContainer}, {i.MyUnitContainer}>({p2}, {p1});";
                 cw.WriteLine(q);
             }
 

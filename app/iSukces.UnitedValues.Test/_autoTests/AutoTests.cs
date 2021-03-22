@@ -6,7 +6,7 @@ using Xunit;
 using iSukces.UnitedValues;
 
 
-namespace isukces.UnitedValues.Test
+namespace iSukces.UnitedValues.Test
 {
     public class AlgebraTests
     {
@@ -29,6 +29,16 @@ namespace isukces.UnitedValues.Test
 			var c = a + b;
 			Assert.Equal(expected, c);
         }
+
+        [Fact]
+        public void ShoulSubstractWeight()
+        {
+			var a = new Weight(10m, WeightUnits.Kg);
+			var b = new Weight(6m, WeightUnits.Kg);
+            var expected = new Weight(4m, WeightUnits.Kg);            
+			var c = a - b;
+			Assert.Equal(expected, c);
+        }
         [Fact]
         public void ShoulDivideLength()
         {
@@ -46,6 +56,16 @@ namespace isukces.UnitedValues.Test
 			var b = new Length(5m, LengthUnits.Meter);
             var expected = new Length(15m, LengthUnits.Meter);            
 			var c = a + b;
+			Assert.Equal(expected, c);
+        }
+
+        [Fact]
+        public void ShoulSubstractLength()
+        {
+			var a = new Length(10m, LengthUnits.Meter);
+			var b = new Length(6m, LengthUnits.Meter);
+            var expected = new Length(4m, LengthUnits.Meter);            
+			var c = a - b;
 			Assert.Equal(expected, c);
         }
         [Fact]
@@ -67,6 +87,16 @@ namespace isukces.UnitedValues.Test
 			var c = a + b;
 			Assert.Equal(expected, c);
         }
+
+        [Fact]
+        public void ShoulSubstractArea()
+        {
+			var a = new Area(10m, AreaUnits.SquareMeter);
+			var b = new Area(6m, AreaUnits.SquareMeter);
+            var expected = new Area(4m, AreaUnits.SquareMeter);            
+			var c = a - b;
+			Assert.Equal(expected, c);
+        }
         [Fact]
         public void ShoulDivideVolume()
         {
@@ -86,6 +116,16 @@ namespace isukces.UnitedValues.Test
 			var c = a + b;
 			Assert.Equal(expected, c);
         }
+
+        [Fact]
+        public void ShoulSubstractVolume()
+        {
+			var a = new Volume(10m, VolumeUnits.QubicMeter);
+			var b = new Volume(6m, VolumeUnits.QubicMeter);
+            var expected = new Volume(4m, VolumeUnits.QubicMeter);            
+			var c = a - b;
+			Assert.Equal(expected, c);
+        }
         [Fact]
         public void ShoulDivideForce()
         {
@@ -103,6 +143,16 @@ namespace isukces.UnitedValues.Test
 			var b = new Force(5m, ForceUnits.Newton);
             var expected = new Force(15m, ForceUnits.Newton);            
 			var c = a + b;
+			Assert.Equal(expected, c);
+        }
+
+        [Fact]
+        public void ShoulSubstractForce()
+        {
+			var a = new Force(10m, ForceUnits.Newton);
+			var b = new Force(6m, ForceUnits.Newton);
+            var expected = new Force(4m, ForceUnits.Newton);            
+			var c = a - b;
 			Assert.Equal(expected, c);
         }
 	}

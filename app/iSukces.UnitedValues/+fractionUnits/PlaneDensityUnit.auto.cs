@@ -1,4 +1,5 @@
 // ReSharper disable All
+
 using System;
 using System.Globalization;
 
@@ -7,14 +8,34 @@ namespace iSukces.UnitedValues
     public partial struct PlaneDensityUnit : IUnit, IEquatable<PlaneDensityUnit>
     {
         /// <summary>
-        /// creates instance of PlaneDensityUnit
+        ///     creates instance of PlaneDensityUnit
         /// </summary>
         /// <param name="counterUnit">counter unit</param>
         /// <param name="denominatorUnit">denominator unit</param>
         public PlaneDensityUnit(WeightUnit counterUnit, AreaUnit denominatorUnit)
         {
-            CounterUnit = counterUnit;
+            CounterUnit     = counterUnit;
             DenominatorUnit = denominatorUnit;
+        }
+
+        /// <summary>
+        ///     Equality operator
+        /// </summary>
+        /// <param name="left">first value to compare</param>
+        /// <param name="right">second value to compare</param>
+        public static bool operator ==(PlaneDensityUnit left, PlaneDensityUnit right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        ///     Inequality operator
+        /// </summary>
+        /// <param name="left">first value to compare</param>
+        /// <param name="right">second value to compare</param>
+        public static bool operator !=(PlaneDensityUnit left, PlaneDensityUnit right)
+        {
+            return !left.Equals(right);
         }
 
         public bool Equals(PlaneDensityUnit other)
@@ -36,7 +57,7 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
-        /// Returns unit name
+        ///     Returns unit name
         /// </summary>
         public override string ToString()
         {
@@ -44,32 +65,12 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
-        /// Inequality operator
-        /// </summary>
-        /// <param name="left">first value to compare</param>
-        /// <param name="right">second value to compare</param>
-        public static bool operator !=(PlaneDensityUnit left, PlaneDensityUnit right)
-        {
-            return !left.Equals(right);
-        }
-
-        /// <summary>
-        /// Equality operator
-        /// </summary>
-        /// <param name="left">first value to compare</param>
-        /// <param name="right">second value to compare</param>
-        public static bool operator ==(PlaneDensityUnit left, PlaneDensityUnit right)
-        {
-            return left.Equals(right);
-        }
-
-        /// <summary>
-        /// counter unit
+        ///     counter unit
         /// </summary>
         public WeightUnit CounterUnit { get; }
 
         /// <summary>
-        /// denominator unit
+        ///     denominator unit
         /// </summary>
         public AreaUnit DenominatorUnit { get; }
 
@@ -77,6 +78,5 @@ namespace iSukces.UnitedValues
         {
             get { return CounterUnit.UnitName + "/" + DenominatorUnit.UnitName; }
         }
-
     }
 }

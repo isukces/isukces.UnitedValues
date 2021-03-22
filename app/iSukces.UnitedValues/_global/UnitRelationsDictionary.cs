@@ -5,30 +5,6 @@ namespace iSukces.UnitedValues
 {
     public class UnitRelationsDictionary
     {
-        public void AddRelated<T1, T2>(T1 a, T2 b)
-            where T1 : IUnit
-            where T2 : IUnit
-        {
-            var t1 = typeof(T1);
-            var t2 = typeof(T2);
-            rd[new Key(t1, t2, a.UnitName)] = b;
-        }
-
-
-        public Tuple<T2> Get<T1, T2>(T1 a)
-            where T1 : IUnit
-            where T2 : IUnit
-        {
-            var t1 = typeof(T1);
-            var t2 = typeof(T2);
-            if (t1 == t2)
-                //throw new NotSupportedException();
-                return Tuple.Create((T2)(object)a); //new UnitDefinition<T2>(a.UnitName, 1));
-            var    key = new Key(t1, t2, a.UnitName);
-            object value;
-            return rd.TryGetValue(key, out value) ? Tuple.Create((T2)value) : null;
-        }
-
         public static T2 GetT<T1, T2>(T1 a)
             where T1 : IUnit
             where T2 : IUnit
@@ -39,18 +15,37 @@ namespace iSukces.UnitedValues
             return resultUnit.Item1;
         }
 
-        private readonly Dictionary<Key, object> rd = new Dictionary<Key, object>();
+        public void AddRelated<T1, T2>(T1 a, T2 b)
+            where T1 : IUnit
+            where T2 : IUnit
+        {
+            var t1 = typeof(T1);
+            var t2 = typeof(T2);
+            _rd[new Key(t1, t2, a.UnitName)] = b;
+        }
+
+
+        public Tuple<T2> Get<T1, T2>(T1 a)
+            where T1 : IUnit
+            where T2 : IUnit
+        {
+            var t1 = typeof(T1);
+            var t2 = typeof(T2);
+            if (t1 == t2)
+                return Tuple.Create((T2)(object)a);
+            var key = new Key(t1, t2, a.UnitName);
+            return _rd.TryGetValue(key, out var value) ? Tuple.Create((T2)value) : null;
+        }
+
+        private readonly Dictionary<Key, object> _rd = new Dictionary<Key, object>();
 
         private struct Key : IEquatable<Key>
         {
             public Key(Type type1, Type type2, string name)
             {
-                if (type1 == null) throw new ArgumentNullException(nameof(type1));
-                if (type2 == null) throw new ArgumentNullException(nameof(type2));
-                if (name == null) throw new ArgumentNullException(nameof(name));
-                _type1    = type1;
-                _type2    = type2;
-                _name     = name;
+                _type1    = type1 ?? throw new ArgumentNullException(nameof(type1));
+                _type2    = type2 ?? throw new ArgumentNullException(nameof(type2));
+                _name     = name ?? throw new ArgumentNullException(nameof(name));
                 _hashCode = (type1.GetHashCode() * 397) ^ type2.GetHashCode();
                 _hashCode = (_hashCode * 397) ^ _name.GetHashCode();
             }

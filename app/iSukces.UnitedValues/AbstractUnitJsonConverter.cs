@@ -35,7 +35,7 @@ namespace iSukces.UnitedValues
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var a = (T)value;
+            var a      = (T)value;
             var value2 = a.Value.ToString(CultureInfo.InvariantCulture) + a.Unit.UnitName;
             writer.WriteValue(value2);
         }

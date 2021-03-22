@@ -78,7 +78,7 @@ namespace iSukces.UnitedValues
             where T : IUnit, IEquatable<T>
         {
             if (string.IsNullOrEmpty(format)) format = "G";
-            if (provider == null) provider = CultureInfo.CurrentCulture;
+            if (provider == null) provider           = CultureInfo.CurrentCulture;
 
             format = format.ToUpperInvariant().Trim();
             if (format.StartsWith("F"))
@@ -88,6 +88,7 @@ namespace iSukces.UnitedValues
                 if (int.TryParse(tmp, out value1))
                     return value.Value.ToString(format, provider) + " " + value.Unit;
             }
+
             return value.Value.ToString("F2", provider) + " " + value.Unit;
         }
     }

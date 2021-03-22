@@ -9,7 +9,7 @@ namespace iSukces.UnitedValues.Test
         private static void Main(string[] args)
         {
             var length = new Length(1, LengthUnits.Meter);
-            var t = typeof(LengthUnit);
+            var t      = typeof(LengthUnit);
 
             foreach (var i in typeof(Program).Assembly.GetTypes())
             {
@@ -24,7 +24,6 @@ namespace iSukces.UnitedValues.Test
                     if (!method.IsStatic)
                         instance = Activator.CreateInstance(method.ReflectedType);
                     method.Invoke(instance, null);
-
                 }
             }
         }

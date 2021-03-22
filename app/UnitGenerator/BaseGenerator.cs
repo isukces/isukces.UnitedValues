@@ -42,8 +42,6 @@ namespace UnitGenerator
                 GenerateOne();
                 file.BeginContent += "// generator: " + GetType().Name;
                 var filename = Path.Combine(_output, name + ".auto.cs");
-                if (filename==@"C:\programs\isukces\dotnetLib\isukces.UnitedValues\app\iSukces.UnitedValues\+jsonConverters\DensityJsonConverter.auto.cs")
-                    Debug.WriteLine("");
                 file.SaveIfDifferent(filename);
             }
         }
@@ -59,20 +57,6 @@ namespace UnitGenerator
             }
 
             m.WithBody(code);
-        }
-
-
-        protected void AddCommon_EqualityOperators()
-        {
-            for (var i = 0; i < 2; i++)
-            {
-                var eq = i == 0;
-                var m = Target.AddMethod(eq ? "==" : "!=", "bool", eq ? "Equality operator" : "Inequality operator")
-                    .WithBody($"return {(eq ? "" : "!")}left.Equals(right);");
-
-                m.AddParam("left", Target.Name, "first value to compare");
-                m.AddParam("right", Target.Name, "second value to compare");
-            }
         }
 
         protected void Add_EqualsUniversal(string compareType, bool nullable, OverridingType overridingType,
@@ -127,6 +111,20 @@ namespace UnitGenerator
             Target.AddMethod("ToString", "string", "Returns unit name")
                 .WithOverride()
                 .WithBody("return " + expression + ";");
+        }
+
+
+        protected void AddCommon_EqualityOperators()
+        {
+            for (var i = 0; i < 2; i++)
+            {
+                var eq = i == 0;
+                var m = Target.AddMethod(eq ? "==" : "!=", "bool", eq ? "Equality operator" : "Inequality operator")
+                    .WithBody($"return {(eq ? "" : "!")}left.Equals(right);");
+
+                m.AddParam("left", Target.Name, "first value to compare");
+                m.AddParam("right", Target.Name, "second value to compare");
+            }
         }
 
         protected abstract void GenerateOne();

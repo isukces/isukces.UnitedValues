@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
-using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
@@ -22,17 +20,17 @@ namespace UnitGenerator
 
         private static void Main(string[] args)
         {
-           
             var projectRoot = FindProjectRootDirectory();
-            var basePath       = Path.Combine(projectRoot.FullName, "app", "iSukces.UnitedValues");
+            var basePath    = Path.Combine(projectRoot.FullName, "app", "iSukces.UnitedValues");
             var nameSpace   = "iSukces.UnitedValues";
-           
+
             BasicUnitsRunner.Run(basePath, nameSpace);
             FractionUnitGeneratorRunner.Run(basePath, nameSpace);
             DerivedUnitGeneratorRunner.Run(basePath, nameSpace);
             FractionValuesGeneratorRunner.Run(basePath, nameSpace);
-            
-            AlgebraGeneratorRunner.Run(basePath, nameSpace);
+
+            // AlgebraGeneratorRunner.Run(basePath, nameSpace);
+            AlgebraGenerator2Runner.Run(basePath, nameSpace);
         }
     }
 }

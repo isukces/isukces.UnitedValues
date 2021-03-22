@@ -12,7 +12,8 @@ namespace UnitGenerator
 
         public override string ToString()
         {
-            return $"Other={Other}, My={My}, MyUnitContainer={MyUnitContainer}, OtherUnitContainer={OtherUnitContainer}";
+            return
+                $"Other={Other}, My={My}, MyUnitContainer={MyUnitContainer}, OtherUnitContainer={OtherUnitContainer}";
         }
 
         public string Other { get; }
@@ -22,6 +23,5 @@ namespace UnitGenerator
         public string MyUnitContainer { get; }
 
         public string OtherUnitContainer { get; }
-
     }
 }

@@ -29,7 +29,7 @@ namespace iSukces.UnitedValues
     {
         public QuotientUnit(TCounter counter, TDenominator denominator) : this()
         {
-            Counter = counter;
+            Counter     = counter;
             Denominator = denominator;
         }
 
@@ -66,8 +66,8 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public string UnitName => $"{Counter.UnitName}/{Denominator.UnitName}";
-        public TCounter Counter { get; }
+        public string       UnitName    => $"{Counter.UnitName}/{Denominator.UnitName}";
+        public TCounter     Counter     { get; }
         public TDenominator Denominator { get; }
     }
 }

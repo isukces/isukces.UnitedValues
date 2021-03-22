@@ -35,24 +35,21 @@ namespace iSukces.UnitedValues.Test
             var possibilities = "123kg;123 kg; 123.00kg; 123.000 kg ;0.12300 ton; 123000g";
 
             foreach (var prefix in ";+;  ; + ".Split(';'))
+            foreach (var i in possibilities.Split(';'))
             {
-                foreach (var i in possibilities.Split(';'))
-                {
-                    var json = "\"" + prefix + i + "\"";
-                    d = JsonConvert.DeserializeObject<Weight>(json);
-                    var dd = d.ConvertToKg();
-                    Assert.Equal(a, dd);
-                }
+                var json = "\"" + prefix + i + "\"";
+                d = JsonConvert.DeserializeObject<Weight>(json);
+                var dd = d.ConvertToKg();
+                Assert.Equal(a, dd);
             }
+
             foreach (var prefix in "-; - ".Split(';'))
+            foreach (var i in possibilities.Split(';'))
             {
-                foreach (var i in possibilities.Split(';'))
-                {
-                    var json = "\"" + prefix + i + "\"";
-                    d = JsonConvert.DeserializeObject<Weight>(json);
-                    var dd = d.ConvertToKg();
-                    Assert.Equal(-a, dd);
-                }
+                var json = "\"" + prefix + i + "\"";
+                d = JsonConvert.DeserializeObject<Weight>(json);
+                var dd = d.ConvertToKg();
+                Assert.Equal(-a, dd);
             }
 
             d = JsonConvert.DeserializeObject<Weight>("123");
@@ -67,11 +64,11 @@ namespace iSukces.UnitedValues.Test
             var c = new Complex
             {
                 Name = "A",
-                W1 = Weight.FromKg(123),
-                W2 = null
+                W1   = Weight.FromKg(123),
+                W2   = null
             };
             {
-                var json = JsonConvert.SerializeObject(c);
+                var json     = JsonConvert.SerializeObject(c);
                 var expected = @"{""Name"":""A"",""W1"":""123kg"",""W2"":null}";
                 Assert.Equal(expected, json);
                 var cc = JsonConvert.DeserializeObject<Complex>(json);
@@ -80,7 +77,7 @@ namespace iSukces.UnitedValues.Test
             }
             c.W2 = c.W1;
             {
-                var json = JsonConvert.SerializeObject(c);
+                var json     = JsonConvert.SerializeObject(c);
                 var expected = @"{""Name"":""A"",""W1"":""123kg"",""W2"":""123kg""}";
                 Assert.Equal(expected, json);
                 var cc = JsonConvert.DeserializeObject<Complex>(json);
@@ -110,37 +107,37 @@ namespace iSukces.UnitedValues.Test
             var b = Weight.FromKg(2);
             {
                 IEnumerable<Weight> items = null;
-                var sum = items.Sum();
+                var                 sum   = items.Sum();
                 Assert.Equal(Weight.Zero, sum);
                 items = new Weight[0];
-                sum = items.Sum();
+                sum   = items.Sum();
                 Assert.Equal(Weight.Zero, sum);
 
-                sum = new[] { a }.Sum();
+                sum = new[] {a}.Sum();
                 Assert.Equal(a, sum);
 
-                sum = new[] { a, b }.Sum();
+                sum = new[] {a, b}.Sum();
                 Assert.Equal(Weight.FromKg(7), sum);
             }
             {
                 IEnumerable<Weight?> items = null;
-                var sum = items.Sum();
+                var                  sum   = items.Sum();
                 Assert.Equal(Weight.Zero, sum);
 
                 items = new Weight?[0];
-                sum = items.Sum();
+                sum   = items.Sum();
                 Assert.Equal(Weight.Zero, sum);
 
-                items = new[] { (Weight?)a };
-                sum = items.Sum();
+                items = new[] {(Weight?)a};
+                sum   = items.Sum();
                 Assert.Equal(a, sum);
 
-                items = new[] { (Weight?)a, Weight.Zero, null };
-                sum = items.Sum();
+                items = new[] {(Weight?)a, Weight.Zero, null};
+                sum   = items.Sum();
                 Assert.Equal(a, sum);
 
-                items = new[] { (Weight?)a, Weight.Zero, null, b };
-                sum = items.Sum();
+                items = new[] {(Weight?)a, Weight.Zero, null, b};
+                sum   = items.Sum();
                 Assert.Equal(Weight.FromKg(7), sum);
             }
         }
@@ -156,7 +153,7 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T07_ShouldConvertToString()
         {
-            var w = Weight.FromKg(1234.56789);
+            var w   = Weight.FromKg(1234.56789);
             var txt = w.ToString("F3", CultureInfo.InvariantCulture);
             Assert.Equal("1234.568 kg", txt);
 
@@ -170,7 +167,7 @@ namespace iSukces.UnitedValues.Test
         public void T08_ShouldAddToEmptyValue()
         {
             var nullValue = new Weight();
-            var w = Weight.FromKg(1234.56789);
+            var w         = Weight.FromKg(1234.56789);
 
             var sum = nullValue + w;
             Assert.Equal(w, sum);
@@ -181,8 +178,8 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T09_ShouldSubstractFromEmptyValue()
         {
-            var nullValue = new Weight();
-            var w = Weight.FromKg(1234.56789);
+            var nullValue  = new Weight();
+            var w          = Weight.FromKg(1234.56789);
             var difference = nullValue - w;
             Assert.Equal(-w, difference);
             difference = w - nullValue;
@@ -190,13 +187,11 @@ namespace iSukces.UnitedValues.Test
         }
 
 
-
-
         private class Complex
         {
-            public string Name { get; set; }
-            public Weight W1 { get; set; }
-            public Weight? W2 { get; set; }
+            public string  Name { get; set; }
+            public Weight  W1   { get; set; }
+            public Weight? W2   { get; set; }
         }
     }
 }

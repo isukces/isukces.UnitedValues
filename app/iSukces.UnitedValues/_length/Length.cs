@@ -49,39 +49,6 @@ namespace iSukces.UnitedValues
         }
 
 
-        public static Length operator /(Area left, Length right)
-        {
-            return UnitedValuesUtils
-                .Divide<Area, AreaUnit, Length, LengthUnit, Length, LengthUnit>(
-                    left, right,
-                    (length, unit) => length.ConvertTo(unit), (value, unit) => new Length(value, unit));
-        }
-
-        public static Area operator *(Length left, Length right)
-        {
-            return UnitedValuesUtils
-                .Multiply<Length, LengthUnit, Length, LengthUnit, Area, AreaUnit>(
-                    left, right,
-                    (length, unit) => length.ConvertTo(unit), (value, unit) => new Area(value, unit));
-        }
-
-        public static Volume operator *(Length left, Area right)
-        {
-            return UnitedValuesUtils
-                .Multiply<Length, LengthUnit, Area, AreaUnit, Volume, VolumeUnit>(
-                    left, right,
-                    (area, unit) => area.ConvertTo(unit), (value, unit) => new Volume(value, unit));
-        }
-
-        public static Volume operator *(Area left, Length right)
-        {
-            return UnitedValuesUtils
-                .Multiply<Area, AreaUnit, Length, LengthUnit, Volume, VolumeUnit>(
-                    left, right,
-                    (length, unit) => length.ConvertTo(unit), (value, unit) => new Volume(value, unit));
-        }
-
-
         public Length ConvertToMeter()
         {
             return ConvertTo(LengthUnits.Meter);

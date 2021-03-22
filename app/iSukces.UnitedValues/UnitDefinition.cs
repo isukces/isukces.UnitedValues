@@ -8,14 +8,14 @@ namespace iSukces.UnitedValues
     {
         public UnitDefinition(string unitName, decimal multiplication, params string[] aliases)
         {
-            UnitName = unitName;
+            UnitName       = unitName;
             Multiplication = multiplication;
-            Aliases = aliases ?? new string[0];
+            Aliases        = aliases ?? new string[0];
         }
 
-        public string UnitName { get; }
-        public decimal Multiplication { get; }
-        public string[] Aliases { get; }
+        public string   UnitName       { get; }
+        public decimal  Multiplication { get; }
+        public string[] Aliases        { get; }
     }
 
     public class UnitEqualityComparer<TUnit> : IEqualityComparer<TUnit>
@@ -27,8 +27,10 @@ namespace iSukces.UnitedValues
         }
 
         public int GetHashCode(TUnit obj)
-            => string.IsNullOrEmpty(obj?.UnitName)
+        {
+            return string.IsNullOrEmpty(obj?.UnitName)
                 ? 0
                 : obj.UnitName.GetHashCode();
+        }
     }
 }

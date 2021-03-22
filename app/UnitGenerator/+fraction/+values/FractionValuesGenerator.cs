@@ -53,15 +53,15 @@ namespace UnitGenerator
         private void Add_AlternateConstructor()
         {
             var cw   = new CsCodeWriter();
-            var code = $"new {Cfg.Names.UnitTypeName}(counterUnit, denominatorUnit)";
+            var code = $"new {Cfg.Names.Unit}(counterUnit, denominatorUnit)";
             cw.WriteLine("{0} = {1};", ValuePropName, ValuePropName.FirstLower());
             cw.WriteLine("{0} = {1};", UnitPropName, code);
 
             var m = Target.AddConstructor()
                 .WithBody(cw);
             m.AddParam(ValuePropName.FirstLower(), ValuePropertyType);
-            m.AddParam("counterUnit", Cfg.CounterUnit.UnitTypeName);
-            m.AddParam("denominatorUnit", Cfg.DenominatorUnit.UnitTypeName);
+            m.AddParam("counterUnit", Cfg.CounterUnit.Unit);
+            m.AddParam("denominatorUnit", Cfg.DenominatorUnit.Unit);
         }
 
         private void Add_ClassAttributes()
@@ -78,11 +78,11 @@ namespace UnitGenerator
             var cw = new CsCodeWriter();
             cw.SingleLineIf("Unit.Equals(newUnit)", ReturnValue("this"));
 
-            cw.WriteLine("var a = new " + Cfg.CounterUnit.ValueTypeName + "(Value, Unit.CounterUnit);");
-            cw.WriteLine("var b = new " + Cfg.DenominatorUnit.ValueTypeName + "(1, Unit.DenominatorUnit);");
+            cw.WriteLine("var a = new " + Cfg.CounterUnit.Value + "(Value, Unit.CounterUnit);");
+            cw.WriteLine("var b = new " + Cfg.DenominatorUnit.Value + "(1, Unit.DenominatorUnit);");
             cw.WriteLine("a = a.ConvertTo(newUnit.CounterUnit);");
             cw.WriteLine("b = b.ConvertTo(newUnit.DenominatorUnit);");
-            cw.WriteLine(ReturnValue("new " + Cfg.Names.ValueTypeName + "(a.Value / b.Value, newUnit)"));
+            cw.WriteLine(ReturnValue("new " + Cfg.Names.Value + "(a.Value / b.Value, newUnit)"));
 
             Target.AddMethod("ConvertTo", Target.Name)
                 .WithBody(cw)
@@ -115,11 +115,11 @@ namespace UnitGenerator
             cw.SingleLineIf("units.Length != 2",
                 "throw new Exception($\"{r.UnitName} is not valid " + Target.Name + " unit\");");
 
-            cw.WriteLine("var counterUnit = new " + Cfg.CounterUnit.UnitTypeName + "(units[0]);");
-            cw.WriteLine("var denominatorUnit = new " + Cfg.DenominatorUnit.UnitTypeName + "(units[1]);");
+            cw.WriteLine("var counterUnit = new " + Cfg.CounterUnit.Unit + "(units[0]);");
+            cw.WriteLine("var denominatorUnit = new " + Cfg.DenominatorUnit.Unit + "(units[1]);");
             cw.WriteLine(ReturnValue($"new {Target.Name}(r.Value, counterUnit, denominatorUnit)"));
 
-            var m = Target.AddMethod("Parse", Cfg.Names.ValueTypeName)
+            var m = Target.AddMethod("Parse", Cfg.Names.Value)
                 .WithStatic()
                 .WithBody(cw);
             m.AddParam("value", "string");

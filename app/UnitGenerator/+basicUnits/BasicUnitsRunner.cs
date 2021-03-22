@@ -3,9 +3,8 @@ using System.Linq;
 
 namespace UnitGenerator
 {
-    public class BasicUnitsRunner:PrimitiveValuesDefinitions
+    public class BasicUnitsRunner : PrimitiveValuesDefinitions
     {
- 
         public static void Run(string basePath, string nameSpace)
         {
             var infos         = All();
@@ -21,6 +20,5 @@ namespace UnitGenerator
             var ext = new UnitExtensionsGenerator(Path.Combine(basePath, "+extensions"), nameSpace);
             ext.Generate(infos);
         }
-
     }
 }

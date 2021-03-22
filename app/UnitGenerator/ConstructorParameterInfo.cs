@@ -16,7 +16,7 @@ namespace UnitGenerator
 
         private static string GetExpr(string propertyName, string propertyType)
         {
-            var arg= propertyName.FirstLower();
+            var arg = propertyName.FirstLower();
             if (propertyType == "string")
                 arg += ".TrimToNull()";
             return arg;

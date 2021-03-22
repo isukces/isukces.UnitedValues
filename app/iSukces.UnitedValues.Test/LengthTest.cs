@@ -34,24 +34,21 @@ namespace iSukces.UnitedValues.Test
             var possibilities = "123m;123 m; 123.00m; 123.000 m ;0.12300 km; 123000mm";
 
             foreach (var prefix in ";+;  ; + ".Split(';'))
+            foreach (var i in possibilities.Split(';'))
             {
-                foreach (var i in possibilities.Split(';'))
-                {
-                    var json = "\"" + prefix + i + "\"";
-                    d = JsonConvert.DeserializeObject<Length>(json);
-                    var dd = d.ConvertToMeter();
-                    Assert.Equal(a, dd);
-                }
+                var json = "\"" + prefix + i + "\"";
+                d = JsonConvert.DeserializeObject<Length>(json);
+                var dd = d.ConvertToMeter();
+                Assert.Equal(a, dd);
             }
+
             foreach (var prefix in "-; - ".Split(';'))
+            foreach (var i in possibilities.Split(';'))
             {
-                foreach (var i in possibilities.Split(';'))
-                {
-                    var json = "\"" + prefix + i + "\"";
-                    d = JsonConvert.DeserializeObject<Length>(json);
-                    var dd = d.ConvertToMeter();
-                    Assert.Equal(-a, dd);
-                }
+                var json = "\"" + prefix + i + "\"";
+                d = JsonConvert.DeserializeObject<Length>(json);
+                var dd = d.ConvertToMeter();
+                Assert.Equal(-a, dd);
             }
 
             d = JsonConvert.DeserializeObject<Length>("123");
@@ -66,11 +63,11 @@ namespace iSukces.UnitedValues.Test
             var c = new Complex
             {
                 Name = "A",
-                W1 = Length.FromMeter(123),
-                W2 = null
+                W1   = Length.FromMeter(123),
+                W2   = null
             };
             {
-                var json = JsonConvert.SerializeObject(c);
+                var json     = JsonConvert.SerializeObject(c);
                 var expected = @"{""Name"":""A"",""W1"":""123m"",""W2"":null}";
                 Assert.Equal(expected, json);
                 var cc = JsonConvert.DeserializeObject<Complex>(json);
@@ -79,7 +76,7 @@ namespace iSukces.UnitedValues.Test
             }
             c.W2 = c.W1;
             {
-                var json = JsonConvert.SerializeObject(c);
+                var json     = JsonConvert.SerializeObject(c);
                 var expected = @"{""Name"":""A"",""W1"":""123m"",""W2"":""123m""}";
                 Assert.Equal(expected, json);
                 var cc = JsonConvert.DeserializeObject<Complex>(json);
@@ -110,37 +107,37 @@ namespace iSukces.UnitedValues.Test
             var b = Length.FromMeter(2);
             {
                 IEnumerable<Length> items = null;
-                var sum = items.Sum();
+                var                 sum   = items.Sum();
                 Assert.Equal(Length.Zero, sum);
                 items = new Length[0];
-                sum = items.Sum();
+                sum   = items.Sum();
                 Assert.Equal(Length.Zero, sum);
 
-                sum = new[] { a }.Sum();
+                sum = new[] {a}.Sum();
                 Assert.Equal(a, sum);
 
-                sum = new[] { a, b }.Sum();
+                sum = new[] {a, b}.Sum();
                 Assert.Equal(Length.FromMeter(7), sum);
             }
             {
                 IEnumerable<Length?> items = null;
-                var sum = items.Sum();
+                var                  sum   = items.Sum();
                 Assert.Equal(Length.Zero, sum);
 
                 items = new Length?[0];
-                sum = items.Sum();
+                sum   = items.Sum();
                 Assert.Equal(Length.Zero, sum);
 
-                items = new[] { (Length?)a };
-                sum = items.Sum();
+                items = new[] {(Length?)a};
+                sum   = items.Sum();
                 Assert.Equal(a, sum);
 
-                items = new[] { (Length?)a, Length.Zero, null };
-                sum = items.Sum();
+                items = new[] {(Length?)a, Length.Zero, null};
+                sum   = items.Sum();
                 Assert.Equal(a, sum);
 
-                items = new[] { (Length?)a, Length.Zero, null, b };
-                sum = items.Sum();
+                items = new[] {(Length?)a, Length.Zero, null, b};
+                sum   = items.Sum();
                 Assert.Equal(Length.FromMeter(7), sum);
             }
         }
@@ -175,14 +172,13 @@ namespace iSukces.UnitedValues.Test
             var vol = a * b;
             Assert.Equal(1000, vol.Value);
             Assert.Equal(VolumeUnits.QubicYard, vol.Unit);
-
         }
 
         private class Complex
         {
-            public string Name { get; set; }
-            public Length W1 { get; set; }
-            public Length? W2 { get; set; }
+            public string  Name { get; set; }
+            public Length  W1   { get; set; }
+            public Length? W2   { get; set; }
         }
     }
 }

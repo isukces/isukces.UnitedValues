@@ -13,7 +13,7 @@ namespace iSukces.UnitedValues
             var m = ParseRegex.Match(value);
             if (!m.Success)
                 throw new ArgumentException($"Unable to convert \'{value}\' into {resultType}");
-            var minus = m.Groups[1].Value == "-";
+            var minus  = m.Groups[1].Value == "-";
             var number = decimal.Parse(m.Groups[2].Value, CultureInfo.InvariantCulture);
             if (minus)
                 number = -number;
@@ -27,12 +27,12 @@ namespace iSukces.UnitedValues
         {
             public ParseResult(decimal value, string unitName)
             {
-                Value = value;
+                Value    = value;
                 UnitName = unitName;
             }
 
-            public decimal Value { get; }
-            public string UnitName { get; }
+            public decimal Value    { get; }
+            public string  UnitName { get; }
         }
 
         public const string RegexFilter = @"^\s*([-+]?)\s*((\d+)(\.(\d+))?)\s*(.*)\s*$";
