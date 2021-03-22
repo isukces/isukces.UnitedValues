@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using iSukces.Code;
 
 namespace UnitGenerator
@@ -15,6 +17,16 @@ namespace UnitGenerator
         public static string CsEncode(decimal multiplicator)
         {
             return multiplicator.ToString(CultureInfo.InvariantCulture) + "m";
+        }
+
+        public static TValue[] GetStaticFieldsValues<THost, TValue>()
+        {
+            var l            = new List<TValue>();
+            var bindingFlags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+            foreach (var i in typeof(THost).GetFields(bindingFlags))
+                if (i.FieldType == typeof(TValue))
+                    l.Add((TValue)i.GetValue(null));
+            return l.ToArray();
         }
 
         public static CsMethod WithBodyFromAssignment(this CsMethod method, string variable, string code)

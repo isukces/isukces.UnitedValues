@@ -7,13 +7,7 @@ namespace UnitGenerator
     {
         public static FractionUnitInfo[] GetFractionUnits()
         {
-            var infos = new[]
-            {
-                FractionUnitInfo.Make<LinearDensity, Weight, Length>(),
-                FractionUnitInfo.Make<Density, Weight, Volume>(),
-                FractionUnitInfo.Make<PlanarDensity, Weight, Area>(),
-            };
-            return infos;
+            return Ext.GetStaticFieldsValues<FractionUnitGeneratorRunner, FractionUnitInfo>();
         }
 
         public static void Run(string basePath, string nameSpace)
@@ -22,5 +16,10 @@ namespace UnitGenerator
             var generator = new FractionUnitGenerator(Path.Combine(basePath, "+fractionUnits"), nameSpace);
             generator.Generate(infos);
         }
+
+
+        public static readonly FractionUnitInfo LinearDensity = FractionUnitInfo.Make<LinearDensity, Weight, Length>();
+        public static readonly FractionUnitInfo Density = FractionUnitInfo.Make<Density, Weight, Volume>();
+        public static readonly FractionUnitInfo PlanarDensity = FractionUnitInfo.Make<PlanarDensity, Weight, Area>();
     }
 }

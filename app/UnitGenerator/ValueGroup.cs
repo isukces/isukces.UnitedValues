@@ -1,17 +1,17 @@
+using System;
+using iSukces.UnitedValues;
+
 namespace UnitGenerator
 {
     public class ValueGroup
     {
-        public ValueGroup(string valueTypeName)
-            : this(valueTypeName, valueTypeName + "Unit", valueTypeName + "Units")
+        public ValueGroup(string valueTypeName, string unitTypeName = null, string unitContainerTypeName = null)
         {
-        }
-
-        public ValueGroup(string valueTypeName, string unitTypeName, string unitContainerTypeName)
-        {
-            ValueTypeName         = valueTypeName;
-            UnitTypeName          = unitTypeName;
-            UnitContainerTypeName = unitContainerTypeName;
+            valueTypeName = valueTypeName?.TrimToNull();
+            ValueTypeName = valueTypeName ?? throw new ArgumentException(nameof(valueTypeName));
+            
+            UnitTypeName          = unitTypeName?.TrimToNull() ?? valueTypeName + "Unit";
+            UnitContainerTypeName = unitContainerTypeName?.TrimToNull() ?? UnitTypeName + "s";
         }
 
         public override string ToString()

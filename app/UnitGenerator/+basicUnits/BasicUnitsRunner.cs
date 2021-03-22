@@ -3,20 +3,12 @@ using System.Linq;
 
 namespace UnitGenerator
 {
-    public class BasicUnitsRunner
+    public class BasicUnitsRunner:PrimitiveValuesDefinitions
     {
+ 
         public static void Run(string basePath, string nameSpace)
         {
-            var data = @"
-Force,+,Newton
-Weight,+,Kg
-Length,+,Meter
-Area,-,SquareMeter
-Volume,-,QubicMeter
-";
-            var infos = data.Split('\n', '\r')
-                .Select(UnitInfo.Parse).Where(a => a != null)
-                .ToArray();
+            var infos         = All();
             var unitGenerator = new UnitGenerator(Path.Combine(basePath, "+IUnits"), nameSpace);
             unitGenerator.Generate(infos.Select(a => a.UnitTypeName).Distinct());
 
@@ -29,5 +21,6 @@ Volume,-,QubicMeter
             var ext = new UnitExtensionsGenerator(Path.Combine(basePath, "+extensions"), nameSpace);
             ext.Generate(infos);
         }
+
     }
 }

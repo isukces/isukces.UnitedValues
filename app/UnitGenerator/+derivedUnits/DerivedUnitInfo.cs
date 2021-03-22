@@ -75,13 +75,16 @@ namespace UnitGenerator
             Add("Mile", "mil", 1609.344m);
             Add("NauticalMile", "nm", 1852m);
 
-            if (power > 1)
-                for (var i = 1; i < power; i++)
-                {
-                    var unit2 = GetUnit(i)+"Unit";
-                    var unit1 = GetUnit(power)+"Unit";
-                    PrefixRelations.Add(new PrefixRelation(Prefix(i), Prefix(power), unit1, unit2));
-                }
+            if (power <= 1) return this;
+            for (var i = 1; i < power; i++)
+            {
+                var otherUnitContainer = GetUnit(i) + "Unit";
+                var myUnitContainer    = GetUnit(power) + "Unit";
+                var relation = new PrefixRelation(
+                    Prefix(i), Prefix(power),
+                    myUnitContainer, otherUnitContainer);
+                PrefixRelations.Add(relation);
+            }
 
             return this;
 
@@ -102,53 +105,25 @@ namespace UnitGenerator
         }
 
 
-        public DerivedUnitInfo WithUnit(string unitShortName,
+        private void WithUnit(string unitShortName,
             string propertyName, string multiplicator, string nameSingular = null,
             string namePlural = null)
         {
-            Units.Add(new UnitDefinition2(unitShortName, multiplicator, nameSingular, namePlural, propertyName));
-            return this;
+            Units.Add(new DerivedUnitDefinition(unitShortName, multiplicator, nameSingular, namePlural, propertyName));
         }
 
         public DerivedUnitInfo WithUnit(string unitShortName,
             string propertyName, decimal multiplicator, string nameSingular = null,
             string namePlural = null)
         {
-            Units.Add(new UnitDefinition2(unitShortName, Ext.CsEncode(multiplicator), nameSingular, namePlural,
+            Units.Add(new DerivedUnitDefinition(unitShortName, Ext.CsEncode(multiplicator), nameSingular, namePlural,
                 propertyName));
             return this;
         }
 
         public string Name { get; }
 
-        public List<UnitDefinition2> Units           { get; } = new List<UnitDefinition2>();
+        public List<DerivedUnitDefinition> Units           { get; } = new List<DerivedUnitDefinition>();
         public List<PrefixRelation>  PrefixRelations { get; } = new List<PrefixRelation>();
     }
-
-
-    public class PrefixRelation
-    {
-        public PrefixRelation(string other, string my, string myUnitContainer, string otherUnitContainer)
-        {
-            Other              = other;
-            My                 = my;
-            MyUnitContainer    = myUnitContainer;
-            OtherUnitContainer = otherUnitContainer;
-        }
-
-        public override string ToString()
-        {
-            return $"Other={Other}, My={My}, MyUnitContainer={MyUnitContainer}, OtherUnitContainer={OtherUnitContainer}";
-        }
-
-        public string Other { get; }
-
-        public string My { get; }
-
-        public string MyUnitContainer { get; }
-
-        public string OtherUnitContainer { get; }
-
-    }
-
 }

@@ -4,19 +4,11 @@ namespace UnitGenerator
 {
     public class UnitInfo : IUnitConfig
     {
-        public static UnitInfo Parse(string x)
+        public UnitInfo(string valueTypeName, string mainUnit, bool isComparable)
         {
-            if (string.IsNullOrEmpty(x))
-                return null;
-            var a = x.Split(',');
-            if (a.Length < 3) return null;
-            var valueGroup = new ValueGroup(a[0].Trim());
-            return new UnitInfo
-            {
-                Gr           = valueGroup,
-                IsComparable = a[1].Trim() == "+",
-                BaseUnit     = valueGroup.UnitContainerTypeName + "." + a[2].Trim()
-            };
+            Gr           = new ValueGroup(valueTypeName);
+            IsComparable = isComparable;
+            BaseUnit     = Gr.UnitContainerTypeName + "." + mainUnit.Trim();
         }
 
         public ValueGroup Gr            { get; set; }
