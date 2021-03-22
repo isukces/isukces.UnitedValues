@@ -17,7 +17,7 @@ namespace UnitGenerator
 
         public string Create(string constructedTypeName)
         {
-            return $"new {constructedTypeName}({this})";
+            return $"new {constructedTypeName}({ToString()})";
         }
 
         public override string ToString()
@@ -26,5 +26,10 @@ namespace UnitGenerator
         }
 
         private readonly string[] _args;
+
+        public string MakeGenericType(string type)
+        {
+            return $"{type}<{ToString()}>";
+        }
     }
 }

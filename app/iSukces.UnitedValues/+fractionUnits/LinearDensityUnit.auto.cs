@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial struct LinearDensityUnit : IUnit, IEquatable<LinearDensityUnit>
+    public partial struct LinearDensityUnit : IFractionalUnit<WeightUnit, LengthUnit>, IEquatable<LinearDensityUnit>
     {
         /// <summary>
         /// creates instance of LinearDensityUnit

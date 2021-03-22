@@ -14,8 +14,12 @@ namespace UnitGenerator
         protected override void GenerateOne()
         {
             Target.Kind = CsNamespaceMemberKind.Struct;
-            Target.ImplementedInterfaces.Add("IUnit");
-            Target.ImplementedInterfaces.Add("IEquatable<" + Cfg.UnitTypeName + ">");
+            var name = new Args(Cfg.CounterUnit.Unit, Cfg.DenominatorUnit.Unit)
+                .MakeGenericType(nameof(IFractionalUnit));
+            Target.ImplementedInterfaces.Add(name);
+            name = "IEquatable<" + Cfg.UnitTypeName + ">";
+            Target.ImplementedInterfaces.Add(name);
+            
 
             var pi = new[]
             {

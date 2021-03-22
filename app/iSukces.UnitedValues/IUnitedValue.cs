@@ -24,4 +24,21 @@ namespace iSukces.UnitedValues
     {
         decimal Multiplication { get; }
     }
+
+    public interface IFractionalUnit : IUnit
+    {
+    }
+
+    public interface IFractionalUnit<out TCounter, out TDenominator> : IUnit
+    {
+        /// <summary>
+        ///     counter unit
+        /// </summary>
+        TCounter CounterUnit { get; }
+
+        /// <summary>
+        ///     denominator unit
+        /// </summary>
+        TDenominator DenominatorUnit { get; }
+    }
 }
