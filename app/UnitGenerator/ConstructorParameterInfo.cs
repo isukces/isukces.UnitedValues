@@ -18,7 +18,7 @@ namespace UnitGenerator
         {
             var arg= propertyName.FirstLower();
             if (propertyType == "string")
-                arg += "?.Trim();";
+                arg += ".TrimToNull()";
             return arg;
         }
 

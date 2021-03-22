@@ -14,7 +14,7 @@ namespace iSukces.UnitedValues
         /// <param name="unitName">name of unit</param>
         public AreaUnit(string unitName)
         {
-            UnitName = unitName?.Replace('2', '²')?.Trim();
+            UnitName = unitName?.Replace('2', '²').TrimToNull();
         }
 
         public bool Equals(AreaUnit other)

@@ -8,7 +8,7 @@ namespace iSukces.UnitedValues
     {
         decimal GetBaseUnitValue();
         decimal Value { get; }
-        TUnit Unit { get; }
+        TUnit   Unit  { get; }
     }
 
     public interface IUnitNameContainer
@@ -24,6 +24,4 @@ namespace iSukces.UnitedValues
     {
         decimal Multiplication { get; }
     }
-
-    
 }
