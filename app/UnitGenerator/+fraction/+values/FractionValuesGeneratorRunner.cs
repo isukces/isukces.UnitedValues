@@ -9,7 +9,7 @@ namespace UnitGenerator
             var infos     = FractionUnitGeneratorRunner.AllFractionUnits;
             var path      = Path.Combine(basePath, "+IUnitedValue", "+fraction");
             var generator = new FractionValuesGenerator(path, nameSpace);
-            generator.Generate(infos);
+            generator.Generate(infos.Items);
 
             path = Path.Combine(basePath, "+jsonConverters", "+fraction");
             var jsonConverter =
@@ -17,7 +17,7 @@ namespace UnitGenerator
                 {
                     ClassicImpl = true
                 };
-            jsonConverter.Generate(infos);
+            jsonConverter.Generate(infos.Items);
         }
     }
 }

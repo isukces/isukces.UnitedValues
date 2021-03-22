@@ -30,6 +30,7 @@ namespace UnitGenerator
             Add_Comparable();
             Add_Algebra();
             Add_ConvertTo();
+            Add_FromMethods();
         }
 
 
@@ -124,6 +125,31 @@ namespace UnitGenerator
             Target.AddMethod("ConvertTo", Target.Name)
                 .WithBody(cw)
                 .AddParam("newUnit", Cfg.UnitTypeName);
+        }
+
+        private void Add_FromMethods()
+        {
+            var tmp = DerivedUnitGeneratorRunner.GetAll();
+            var d   = tmp.ByName(Cfg.ValueTypeName);
+
+            if (d is null) return;
+            foreach (var inputType in "decimal,double,int,long".Split(','))
+            foreach (var u in d.Units)
+            {
+                var arg = "value";
+                if (inputType == OtherValuePropertyType)
+                    arg = $"({ValuePropertyType}){arg}";
+
+                var args = new Args(arg, Cfg.Gr.Container + "." + u.PropertyName)
+                    .Create(Target.Name);
+                var valueIn           = $" value in {u.UnitShortName}";
+                var methodName        = "From" + u.FromMethodNameSufix.CoalesceNullOrWhiteSpace(u.PropertyName);
+                var methodDescription = $"creates {Cfg.Gr.Value.FirstLower()} from{valueIn}";
+                var m = Target.AddMethod(methodName, Target.Name, methodDescription)
+                    .WithStatic()
+                    .WithBodyFromExpression(args);
+                m.AddParam("value", inputType).Description = string.Format("{0}{1}", Cfg.ValueTypeName, valueIn);
+            }
         }
 
         private void Add_GetBaseUnitValue()

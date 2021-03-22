@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using iSukces.UnitedValues;
 
@@ -5,14 +6,19 @@ namespace UnitGenerator
 {
     public class DerivedUnitGeneratorRunner
     {
-        public static void Run(string basePath, string nameSpace)
+        public static DerivedUnitInfoCollection GetAll()
+        {
+            return _lazy.Value;
+        }
+
+        public static DerivedUnitInfo[] GetAllItems()
         {
             var arr = new[]
             {
                 new DerivedUnitInfo(nameof(Weight))
                     .WithUnit("kg", null, 1)
-                    .WithUnit("t", "Tone", 1000, "ton")
-                    .WithUnit("g", "Gram", 0.001m),
+                    .WithUnit("t", "Tone", 1000, "ton", fromMethodNameSufix: "Tons")
+                    .WithUnit("g", "Gram", 0.001m, fromMethodNameSufix: "Grams"),
                 new DerivedUnitInfo(nameof(Length)).WithLengths(1),
                 new DerivedUnitInfo(nameof(Area)).WithLengths(2),
                 new DerivedUnitInfo(nameof(Volume)).WithLengths(3),
@@ -23,9 +29,18 @@ namespace UnitGenerator
                     .WithUnit("MN", "MegaNewton", 1000_000)
                     .WithUnit("mN", "MiliNewton", 0.001m)
             };
+            return arr;
+        }
+
+        public static void Run(string basePath, string nameSpace)
+        {
+            var arr  = GetAll();
             var path = Path.Combine(basePath, "+derivedUnits");
             var ano  = new DerivedUnitGenerator(path, nameSpace);
-            ano.Generate(arr);
+            ano.Generate(arr.Items);
         }
+
+        private static readonly Lazy<DerivedUnitInfoCollection> _lazy =
+            new Lazy<DerivedUnitInfoCollection>(() => new DerivedUnitInfoCollection(GetAllItems()));
     }
 }

@@ -193,6 +193,438 @@ namespace iSukces.UnitedValues
             return left.CompareTo(right) >= 0;
         }
 
+        /// <summary>
+        /// creates length from value in cm
+        /// </summary>
+        /// <param name="value">Length value in cm</param>
+        public static Length FromCentimeters(decimal value)
+        {
+            return new Length(value, LengthUnits.Cm);
+        }
+
+        /// <summary>
+        /// creates length from value in cm
+        /// </summary>
+        /// <param name="value">Length value in cm</param>
+        public static Length FromCentimeters(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Cm);
+        }
+
+        /// <summary>
+        /// creates length from value in cm
+        /// </summary>
+        /// <param name="value">Length value in cm</param>
+        public static Length FromCentimeters(int value)
+        {
+            return new Length(value, LengthUnits.Cm);
+        }
+
+        /// <summary>
+        /// creates length from value in cm
+        /// </summary>
+        /// <param name="value">Length value in cm</param>
+        public static Length FromCentimeters(long value)
+        {
+            return new Length(value, LengthUnits.Cm);
+        }
+
+        /// <summary>
+        /// creates length from value in dm
+        /// </summary>
+        /// <param name="value">Length value in dm</param>
+        public static Length FromDecimeters(decimal value)
+        {
+            return new Length(value, LengthUnits.Dm);
+        }
+
+        /// <summary>
+        /// creates length from value in dm
+        /// </summary>
+        /// <param name="value">Length value in dm</param>
+        public static Length FromDecimeters(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Dm);
+        }
+
+        /// <summary>
+        /// creates length from value in dm
+        /// </summary>
+        /// <param name="value">Length value in dm</param>
+        public static Length FromDecimeters(int value)
+        {
+            return new Length(value, LengthUnits.Dm);
+        }
+
+        /// <summary>
+        /// creates length from value in dm
+        /// </summary>
+        /// <param name="value">Length value in dm</param>
+        public static Length FromDecimeters(long value)
+        {
+            return new Length(value, LengthUnits.Dm);
+        }
+
+        /// <summary>
+        /// creates length from value in fh
+        /// </summary>
+        /// <param name="value">Length value in fh</param>
+        public static Length FromFathom(decimal value)
+        {
+            return new Length(value, LengthUnits.Fathom);
+        }
+
+        /// <summary>
+        /// creates length from value in fh
+        /// </summary>
+        /// <param name="value">Length value in fh</param>
+        public static Length FromFathom(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Fathom);
+        }
+
+        /// <summary>
+        /// creates length from value in fh
+        /// </summary>
+        /// <param name="value">Length value in fh</param>
+        public static Length FromFathom(int value)
+        {
+            return new Length(value, LengthUnits.Fathom);
+        }
+
+        /// <summary>
+        /// creates length from value in fh
+        /// </summary>
+        /// <param name="value">Length value in fh</param>
+        public static Length FromFathom(long value)
+        {
+            return new Length(value, LengthUnits.Fathom);
+        }
+
+        /// <summary>
+        /// creates length from value in ft
+        /// </summary>
+        /// <param name="value">Length value in ft</param>
+        public static Length FromFoot(decimal value)
+        {
+            return new Length(value, LengthUnits.Feet);
+        }
+
+        /// <summary>
+        /// creates length from value in ft
+        /// </summary>
+        /// <param name="value">Length value in ft</param>
+        public static Length FromFoot(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Feet);
+        }
+
+        /// <summary>
+        /// creates length from value in ft
+        /// </summary>
+        /// <param name="value">Length value in ft</param>
+        public static Length FromFoot(int value)
+        {
+            return new Length(value, LengthUnits.Feet);
+        }
+
+        /// <summary>
+        /// creates length from value in ft
+        /// </summary>
+        /// <param name="value">Length value in ft</param>
+        public static Length FromFoot(long value)
+        {
+            return new Length(value, LengthUnits.Feet);
+        }
+
+        /// <summary>
+        /// creates length from value in fg
+        /// </summary>
+        /// <param name="value">Length value in fg</param>
+        public static Length FromFurlongs(decimal value)
+        {
+            return new Length(value, LengthUnits.Furlong);
+        }
+
+        /// <summary>
+        /// creates length from value in fg
+        /// </summary>
+        /// <param name="value">Length value in fg</param>
+        public static Length FromFurlongs(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Furlong);
+        }
+
+        /// <summary>
+        /// creates length from value in fg
+        /// </summary>
+        /// <param name="value">Length value in fg</param>
+        public static Length FromFurlongs(int value)
+        {
+            return new Length(value, LengthUnits.Furlong);
+        }
+
+        /// <summary>
+        /// creates length from value in fg
+        /// </summary>
+        /// <param name="value">Length value in fg</param>
+        public static Length FromFurlongs(long value)
+        {
+            return new Length(value, LengthUnits.Furlong);
+        }
+
+        /// <summary>
+        /// creates length from value in inch
+        /// </summary>
+        /// <param name="value">Length value in inch</param>
+        public static Length FromInches(decimal value)
+        {
+            return new Length(value, LengthUnits.Inch);
+        }
+
+        /// <summary>
+        /// creates length from value in inch
+        /// </summary>
+        /// <param name="value">Length value in inch</param>
+        public static Length FromInches(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Inch);
+        }
+
+        /// <summary>
+        /// creates length from value in inch
+        /// </summary>
+        /// <param name="value">Length value in inch</param>
+        public static Length FromInches(int value)
+        {
+            return new Length(value, LengthUnits.Inch);
+        }
+
+        /// <summary>
+        /// creates length from value in inch
+        /// </summary>
+        /// <param name="value">Length value in inch</param>
+        public static Length FromInches(long value)
+        {
+            return new Length(value, LengthUnits.Inch);
+        }
+
+        /// <summary>
+        /// creates length from value in km
+        /// </summary>
+        /// <param name="value">Length value in km</param>
+        public static Length FromKilometers(decimal value)
+        {
+            return new Length(value, LengthUnits.Km);
+        }
+
+        /// <summary>
+        /// creates length from value in km
+        /// </summary>
+        /// <param name="value">Length value in km</param>
+        public static Length FromKilometers(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Km);
+        }
+
+        /// <summary>
+        /// creates length from value in km
+        /// </summary>
+        /// <param name="value">Length value in km</param>
+        public static Length FromKilometers(int value)
+        {
+            return new Length(value, LengthUnits.Km);
+        }
+
+        /// <summary>
+        /// creates length from value in km
+        /// </summary>
+        /// <param name="value">Length value in km</param>
+        public static Length FromKilometers(long value)
+        {
+            return new Length(value, LengthUnits.Km);
+        }
+
+        /// <summary>
+        /// creates length from value in m
+        /// </summary>
+        /// <param name="value">Length value in m</param>
+        public static Length FromMeter(decimal value)
+        {
+            return new Length(value, LengthUnits.Meter);
+        }
+
+        /// <summary>
+        /// creates length from value in m
+        /// </summary>
+        /// <param name="value">Length value in m</param>
+        public static Length FromMeter(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Meter);
+        }
+
+        /// <summary>
+        /// creates length from value in m
+        /// </summary>
+        /// <param name="value">Length value in m</param>
+        public static Length FromMeter(int value)
+        {
+            return new Length(value, LengthUnits.Meter);
+        }
+
+        /// <summary>
+        /// creates length from value in m
+        /// </summary>
+        /// <param name="value">Length value in m</param>
+        public static Length FromMeter(long value)
+        {
+            return new Length(value, LengthUnits.Meter);
+        }
+
+        /// <summary>
+        /// creates length from value in mil
+        /// </summary>
+        /// <param name="value">Length value in mil</param>
+        public static Length FromMiles(decimal value)
+        {
+            return new Length(value, LengthUnits.Mile);
+        }
+
+        /// <summary>
+        /// creates length from value in mil
+        /// </summary>
+        /// <param name="value">Length value in mil</param>
+        public static Length FromMiles(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Mile);
+        }
+
+        /// <summary>
+        /// creates length from value in mil
+        /// </summary>
+        /// <param name="value">Length value in mil</param>
+        public static Length FromMiles(int value)
+        {
+            return new Length(value, LengthUnits.Mile);
+        }
+
+        /// <summary>
+        /// creates length from value in mil
+        /// </summary>
+        /// <param name="value">Length value in mil</param>
+        public static Length FromMiles(long value)
+        {
+            return new Length(value, LengthUnits.Mile);
+        }
+
+        /// <summary>
+        /// creates length from value in mm
+        /// </summary>
+        /// <param name="value">Length value in mm</param>
+        public static Length FromMilimeters(decimal value)
+        {
+            return new Length(value, LengthUnits.Mm);
+        }
+
+        /// <summary>
+        /// creates length from value in mm
+        /// </summary>
+        /// <param name="value">Length value in mm</param>
+        public static Length FromMilimeters(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Mm);
+        }
+
+        /// <summary>
+        /// creates length from value in mm
+        /// </summary>
+        /// <param name="value">Length value in mm</param>
+        public static Length FromMilimeters(int value)
+        {
+            return new Length(value, LengthUnits.Mm);
+        }
+
+        /// <summary>
+        /// creates length from value in mm
+        /// </summary>
+        /// <param name="value">Length value in mm</param>
+        public static Length FromMilimeters(long value)
+        {
+            return new Length(value, LengthUnits.Mm);
+        }
+
+        /// <summary>
+        /// creates length from value in nm
+        /// </summary>
+        /// <param name="value">Length value in nm</param>
+        public static Length FromNauticalMiles(decimal value)
+        {
+            return new Length(value, LengthUnits.NauticalMile);
+        }
+
+        /// <summary>
+        /// creates length from value in nm
+        /// </summary>
+        /// <param name="value">Length value in nm</param>
+        public static Length FromNauticalMiles(double value)
+        {
+            return new Length((decimal)value, LengthUnits.NauticalMile);
+        }
+
+        /// <summary>
+        /// creates length from value in nm
+        /// </summary>
+        /// <param name="value">Length value in nm</param>
+        public static Length FromNauticalMiles(int value)
+        {
+            return new Length(value, LengthUnits.NauticalMile);
+        }
+
+        /// <summary>
+        /// creates length from value in nm
+        /// </summary>
+        /// <param name="value">Length value in nm</param>
+        public static Length FromNauticalMiles(long value)
+        {
+            return new Length(value, LengthUnits.NauticalMile);
+        }
+
+        /// <summary>
+        /// creates length from value in yd
+        /// </summary>
+        /// <param name="value">Length value in yd</param>
+        public static Length FromYards(decimal value)
+        {
+            return new Length(value, LengthUnits.Yard);
+        }
+
+        /// <summary>
+        /// creates length from value in yd
+        /// </summary>
+        /// <param name="value">Length value in yd</param>
+        public static Length FromYards(double value)
+        {
+            return new Length((decimal)value, LengthUnits.Yard);
+        }
+
+        /// <summary>
+        /// creates length from value in yd
+        /// </summary>
+        /// <param name="value">Length value in yd</param>
+        public static Length FromYards(int value)
+        {
+            return new Length(value, LengthUnits.Yard);
+        }
+
+        /// <summary>
+        /// creates length from value in yd
+        /// </summary>
+        /// <param name="value">Length value in yd</param>
+        public static Length FromYards(long value)
+        {
+            return new Length(value, LengthUnits.Yard);
+        }
+
         public static Length Parse(string value)
         {
             // generator : BasicUnitedValuesGenerator.Add_Parse

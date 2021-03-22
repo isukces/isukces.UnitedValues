@@ -193,6 +193,114 @@ namespace iSukces.UnitedValues
             return left.CompareTo(right) >= 0;
         }
 
+        /// <summary>
+        /// creates weight from value in g
+        /// </summary>
+        /// <param name="value">Weight value in g</param>
+        public static Weight FromGrams(decimal value)
+        {
+            return new Weight(value, WeightUnits.Gram);
+        }
+
+        /// <summary>
+        /// creates weight from value in g
+        /// </summary>
+        /// <param name="value">Weight value in g</param>
+        public static Weight FromGrams(double value)
+        {
+            return new Weight((decimal)value, WeightUnits.Gram);
+        }
+
+        /// <summary>
+        /// creates weight from value in g
+        /// </summary>
+        /// <param name="value">Weight value in g</param>
+        public static Weight FromGrams(int value)
+        {
+            return new Weight(value, WeightUnits.Gram);
+        }
+
+        /// <summary>
+        /// creates weight from value in g
+        /// </summary>
+        /// <param name="value">Weight value in g</param>
+        public static Weight FromGrams(long value)
+        {
+            return new Weight(value, WeightUnits.Gram);
+        }
+
+        /// <summary>
+        /// creates weight from value in kg
+        /// </summary>
+        /// <param name="value">Weight value in kg</param>
+        public static Weight FromKg(decimal value)
+        {
+            return new Weight(value, WeightUnits.Kg);
+        }
+
+        /// <summary>
+        /// creates weight from value in kg
+        /// </summary>
+        /// <param name="value">Weight value in kg</param>
+        public static Weight FromKg(double value)
+        {
+            return new Weight((decimal)value, WeightUnits.Kg);
+        }
+
+        /// <summary>
+        /// creates weight from value in kg
+        /// </summary>
+        /// <param name="value">Weight value in kg</param>
+        public static Weight FromKg(int value)
+        {
+            return new Weight(value, WeightUnits.Kg);
+        }
+
+        /// <summary>
+        /// creates weight from value in kg
+        /// </summary>
+        /// <param name="value">Weight value in kg</param>
+        public static Weight FromKg(long value)
+        {
+            return new Weight(value, WeightUnits.Kg);
+        }
+
+        /// <summary>
+        /// creates weight from value in t
+        /// </summary>
+        /// <param name="value">Weight value in t</param>
+        public static Weight FromTons(decimal value)
+        {
+            return new Weight(value, WeightUnits.Tone);
+        }
+
+        /// <summary>
+        /// creates weight from value in t
+        /// </summary>
+        /// <param name="value">Weight value in t</param>
+        public static Weight FromTons(double value)
+        {
+            return new Weight((decimal)value, WeightUnits.Tone);
+        }
+
+        /// <summary>
+        /// creates weight from value in t
+        /// </summary>
+        /// <param name="value">Weight value in t</param>
+        public static Weight FromTons(int value)
+        {
+            return new Weight(value, WeightUnits.Tone);
+        }
+
+        /// <summary>
+        /// creates weight from value in t
+        /// </summary>
+        /// <param name="value">Weight value in t</param>
+        public static Weight FromTons(long value)
+        {
+            return new Weight(value, WeightUnits.Tone);
+        }
+
         public static Weight Parse(string value)
         {
             // generator : BasicUnitedValuesGenerator.Add_Parse

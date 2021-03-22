@@ -99,7 +99,7 @@ namespace iSukces.UnitedValues.Test
         {
             var density = new Density(8000, WeightUnits.Kg, VolumeUnits.CubicMeter);
             Assert.Equal("8000kg/m³", density.ToString());
-            var area = Length.FromMm(50) * Length.FromMm(5);
+            var area = Length.FromMilimeters(50) * Length.FromMilimeters(5);
             Assert.Equal("250mm²", area.ToString());
 
             var linearDensity = density * area;

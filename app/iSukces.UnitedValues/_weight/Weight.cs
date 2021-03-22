@@ -4,35 +4,7 @@ namespace iSukces.UnitedValues
 {
     public partial struct Weight
     {
-        public static Weight FromKg(decimal kg)
-        {
-            return new Weight(kg, WeightUnits.Kg);
-        }
-
-        public static Weight FromKg(long kg)
-        {
-            return new Weight(kg, WeightUnits.Kg);
-        }
-
-        public static Weight FromKg(double kg)
-        {
-            return new Weight((decimal)kg, WeightUnits.Kg);
-        }
-
-        public static Weight FromTons(decimal tons)
-        {
-            return new Weight(tons, WeightUnits.Tone);
-        }
-
-        public static Weight FromTons(double tons)
-        {
-            return new Weight((decimal)tons, WeightUnits.Tone);
-        }
-
-        public static Weight FromTons(long tons)
-        {
-            return new Weight(tons, WeightUnits.Tone);
-        }
+ 
 
         /// <summary>
         ///     Div

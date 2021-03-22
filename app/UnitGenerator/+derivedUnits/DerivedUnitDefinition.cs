@@ -5,7 +5,7 @@ namespace UnitGenerator
     public class DerivedUnitDefinition
     {
         public DerivedUnitDefinition(string unitShortName, string multiplicator, string nameSingular, string namePlural,
-            string propertyName)
+            string propertyName, string fromMethodNameSufix)
         {
             if (string.IsNullOrEmpty(namePlural) && !string.IsNullOrEmpty(nameSingular))
                 namePlural = nameSingular + "s";
@@ -13,6 +13,7 @@ namespace UnitGenerator
             Multiplicator = multiplicator;
             NameSingular  = nameSingular;
             NamePlural    = namePlural;
+            FromMethodNameSufix       = fromMethodNameSufix;
 
             if (string.IsNullOrEmpty(propertyName))
                 propertyName = UnitShortName;
@@ -32,6 +33,7 @@ namespace UnitGenerator
         public string NameSingular { get; }
 
         public string NamePlural   { get; }
+        public string FromMethodNameSufix      { get; }
         public string PropertyName { get; }
     }
 }

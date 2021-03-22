@@ -8,30 +8,30 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T01_Should_divide_area_by_length()
         {
-            var area     = Area.FromKm(2);
+            var area     = Area.FromSquareKilometers(2);
             var length   = Length.FromMeter(10);
             var result   = area / length;
-            var expected = Length.FromKm(200);
+            var expected = Length.FromKilometers(200);
             Assert.Equal(expected, result);
         }
 
         [Fact]
         public void T02_Should_multiply_km_by_m()
         {
-            var kmLength    = Length.FromKm(200);
+            var kmLength    = Length.FromKilometers(200);
             var meterLength = Length.FromMeter(10);
             var result      = kmLength * meterLength;
-            var area        = Area.FromKm(2);
+            var area        = Area.FromSquareKilometers(2);
             Assert.Equal(area, result);
         }
 
         [Fact]
         public void T03_Should_multiply_m_by_km()
         {
-            var kmLength    = Length.FromKm(200);
+            var kmLength    = Length.FromKilometers(200);
             var meterLength = Length.FromMeter(10);
             var result      = meterLength * kmLength;
-            var area        = Area.FromMeter(2_000_000);
+            var area        = Area.FromSquareMeter(2_000_000);
             Assert.Equal(area, result);
         }
 
@@ -40,7 +40,7 @@ namespace iSukces.UnitedValues.Test
         public void T04_Should_divide_newton_by_square_meter()
         {
             var force = new Force(8, ForceUnits.Newton);
-            var area  = Area.FromMeter(4);
+            var area  = Area.FromSquareMeter(4);
 
             var result   = force / area;
             var expected = new Pressure(2, force.Unit, area.Unit);
@@ -52,7 +52,7 @@ namespace iSukces.UnitedValues.Test
         public void T05_Should_multiply_kilopascal_by_square_centimeter()
         {
             var pressure = new Pressure(2, ForceUnits.KiloNewton, AreaUnits.SquareMeter);
-            var area     = Area.FromCentiMeter(4);
+            var area     = Area.FromSquareCentimeters(4);
             var result   = pressure * area;
 
             var expected = new Force(0.0008m, ForceUnits.KiloNewton);

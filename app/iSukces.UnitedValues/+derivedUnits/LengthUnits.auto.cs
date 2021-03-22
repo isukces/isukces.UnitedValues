@@ -23,7 +23,7 @@ namespace iSukces.UnitedValues
                     Cm,
                     Mm,
                     Inch,
-                    Foot,
+                    Feet,
                     Yard,
                     Furlong,
                     Fathom,
@@ -45,7 +45,7 @@ namespace iSukces.UnitedValues
 
         public static readonly UnitDefinition<LengthUnit> Inch = new UnitDefinition<LengthUnit>("inch", 0.0254m);
 
-        public static readonly UnitDefinition<LengthUnit> Foot = new UnitDefinition<LengthUnit>("ft", 0.3048m);
+        public static readonly UnitDefinition<LengthUnit> Feet = new UnitDefinition<LengthUnit>("ft", 0.3048m);
 
         public static readonly UnitDefinition<LengthUnit> Yard = new UnitDefinition<LengthUnit>("yd", 0.9144m);
 

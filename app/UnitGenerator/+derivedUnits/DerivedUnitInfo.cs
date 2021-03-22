@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
@@ -44,7 +45,7 @@ namespace UnitGenerator
                 case 1:
                     return null;
                 case 2:
-                    return "²";
+                    return AreaUnits.SquareSign;
                 case 3:
                     return "³";
                 default:
@@ -57,23 +58,25 @@ namespace UnitGenerator
             var unitSuffix     = Suffix(power);
             var propertyPrefix = Prefix(power);
 
-            void Add(string prop, string unit, decimal m)
+            void Add(string prop, string unit, decimal m, string fromMethodNameSufix = null)
             {
-                WithUnit(unit + unitSuffix, propertyPrefix + prop, Mul(power, m));
+                fromMethodNameSufix = fromMethodNameSufix.AddPrefix(propertyPrefix);
+                WithUnit(unit + unitSuffix, propertyPrefix + prop, Mul(power, m),
+                    fromMethodNameSufix: fromMethodNameSufix);
             }
 
             Add("Meter", "m", 1m);
-            Add("Km", "km", 1000m);
-            Add("Dm", "dm", 0.1m);
-            Add("Cm", "cm", 0.01m);
-            Add("Mm", "mm", 0.001m);
-            Add("Inch", "inch", 0.0254m);
-            Add("Foot", "ft", 0.3048m);
-            Add("Yard", "yd", 0.9144m);
-            Add("Furlong", "fg", 201.1680m);
+            Add("Km", "km", 1000m, "Kilometers");
+            Add("Dm", "dm", 0.1m, "Decimeters");
+            Add("Cm", "cm", 0.01m, "Centimeters");
+            Add("Mm", "mm", 0.001m, "Milimeters");
+            Add("Inch", "inch", 0.0254m, "Inches");
+            Add("Feet", "ft", 0.3048m, "Foot");
+            Add("Yard", "yd", 0.9144m, "Yards");
+            Add("Furlong", "fg", 201.1680m, "Furlongs");
             Add("Fathom", "fh", 1.8288m);
-            Add("Mile", "mil", 1609.344m);
-            Add("NauticalMile", "nm", 1852m);
+            Add("Mile", "mil", 1609.344m, "Miles");
+            Add("NauticalMile", "nm", 1852m, "NauticalMiles");
 
             if (power <= 1) return this;
             for (var i = 1; i < power; i++)
@@ -106,19 +109,22 @@ namespace UnitGenerator
 
         public DerivedUnitInfo WithUnit(string unitShortName,
             string propertyName, decimal multiplicator, string nameSingular = null,
-            string namePlural = null)
+            string namePlural = null,
+            string fromMethodNameSufix = null)
         {
             Units.Add(new DerivedUnitDefinition(unitShortName, Ext.CsEncode(multiplicator), nameSingular, namePlural,
-                propertyName));
+                propertyName, fromMethodNameSufix));
             return this;
         }
 
 
         private void WithUnit(string unitShortName,
             string propertyName, string multiplicator, string nameSingular = null,
-            string namePlural = null)
+            string namePlural = null,
+            string fromMethodNameSufix = null)
         {
-            Units.Add(new DerivedUnitDefinition(unitShortName, multiplicator, nameSingular, namePlural, propertyName));
+            Units.Add(new DerivedUnitDefinition(unitShortName, multiplicator, nameSingular, namePlural, propertyName,
+                fromMethodNameSufix));
         }
 
         public string Name { get; }

@@ -146,8 +146,8 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T06_ShouldCompare()
         {
-            Assert.True(Length.FromMeter(1001) > Length.FromKm(1));
-            Assert.True(Length.FromMeter(1000) == Length.FromKm(1));
+            Assert.True(Length.FromMeter(1001) > Length.FromKilometers(1));
+            Assert.True(Length.FromMeter(1000) == Length.FromKilometers(1));
         }
 
         [Fact]

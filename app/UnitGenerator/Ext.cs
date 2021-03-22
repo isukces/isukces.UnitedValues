@@ -70,5 +70,19 @@ namespace UnitGenerator
             code.WriteLine("// generator : " + location.ToString());
             return code;
         }
+
+        public static string CoalesceNullOrWhiteSpace(this string a, string b)
+        {
+            if (string.IsNullOrWhiteSpace(a))
+                return b;
+            return a;
+        }
+
+        public static string AddPrefix(this string txt, string prefix)
+        {
+            if (string.IsNullOrWhiteSpace(txt))
+                return null;
+            return prefix + txt;
+        }
     }
 }

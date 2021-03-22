@@ -22,8 +22,8 @@ namespace iSukces.UnitedValues
             dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Mm, SquareMm);
             dict.AddRelated<AreaUnit, LengthUnit>(SquareInch, LengthUnits.Inch);
             dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Inch, SquareInch);
-            dict.AddRelated<AreaUnit, LengthUnit>(SquareFoot, LengthUnits.Foot);
-            dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Foot, SquareFoot);
+            dict.AddRelated<AreaUnit, LengthUnit>(SquareFeet, LengthUnits.Feet);
+            dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Feet, SquareFeet);
             dict.AddRelated<AreaUnit, LengthUnit>(SquareYard, LengthUnits.Yard);
             dict.AddRelated<LengthUnit, AreaUnit>(LengthUnits.Yard, SquareYard);
             dict.AddRelated<AreaUnit, LengthUnit>(SquareFurlong, LengthUnits.Furlong);
@@ -51,7 +51,7 @@ namespace iSukces.UnitedValues
                     SquareCm,
                     SquareMm,
                     SquareInch,
-                    SquareFoot,
+                    SquareFeet,
                     SquareYard,
                     SquareFurlong,
                     SquareFathom,
@@ -73,7 +73,7 @@ namespace iSukces.UnitedValues
 
         public static readonly UnitDefinition<AreaUnit> SquareInch = new UnitDefinition<AreaUnit>("inch²", 0.0254m * 0.0254m);
 
-        public static readonly UnitDefinition<AreaUnit> SquareFoot = new UnitDefinition<AreaUnit>("ft²", 0.3048m * 0.3048m);
+        public static readonly UnitDefinition<AreaUnit> SquareFeet = new UnitDefinition<AreaUnit>("ft²", 0.3048m * 0.3048m);
 
         public static readonly UnitDefinition<AreaUnit> SquareYard = new UnitDefinition<AreaUnit>("yd²", 0.9144m * 0.9144m);
 

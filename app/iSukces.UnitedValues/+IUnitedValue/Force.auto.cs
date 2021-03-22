@@ -193,6 +193,150 @@ namespace iSukces.UnitedValues
             return left.CompareTo(right) >= 0;
         }
 
+        /// <summary>
+        /// creates force from value in kN
+        /// </summary>
+        /// <param name="value">Force value in kN</param>
+        public static Force FromKiloNewton(decimal value)
+        {
+            return new Force(value, ForceUnits.KiloNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in kN
+        /// </summary>
+        /// <param name="value">Force value in kN</param>
+        public static Force FromKiloNewton(double value)
+        {
+            return new Force((decimal)value, ForceUnits.KiloNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in kN
+        /// </summary>
+        /// <param name="value">Force value in kN</param>
+        public static Force FromKiloNewton(int value)
+        {
+            return new Force(value, ForceUnits.KiloNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in kN
+        /// </summary>
+        /// <param name="value">Force value in kN</param>
+        public static Force FromKiloNewton(long value)
+        {
+            return new Force(value, ForceUnits.KiloNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in MN
+        /// </summary>
+        /// <param name="value">Force value in MN</param>
+        public static Force FromMegaNewton(decimal value)
+        {
+            return new Force(value, ForceUnits.MegaNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in MN
+        /// </summary>
+        /// <param name="value">Force value in MN</param>
+        public static Force FromMegaNewton(double value)
+        {
+            return new Force((decimal)value, ForceUnits.MegaNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in MN
+        /// </summary>
+        /// <param name="value">Force value in MN</param>
+        public static Force FromMegaNewton(int value)
+        {
+            return new Force(value, ForceUnits.MegaNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in MN
+        /// </summary>
+        /// <param name="value">Force value in MN</param>
+        public static Force FromMegaNewton(long value)
+        {
+            return new Force(value, ForceUnits.MegaNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in mN
+        /// </summary>
+        /// <param name="value">Force value in mN</param>
+        public static Force FromMiliNewton(decimal value)
+        {
+            return new Force(value, ForceUnits.MiliNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in mN
+        /// </summary>
+        /// <param name="value">Force value in mN</param>
+        public static Force FromMiliNewton(double value)
+        {
+            return new Force((decimal)value, ForceUnits.MiliNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in mN
+        /// </summary>
+        /// <param name="value">Force value in mN</param>
+        public static Force FromMiliNewton(int value)
+        {
+            return new Force(value, ForceUnits.MiliNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in mN
+        /// </summary>
+        /// <param name="value">Force value in mN</param>
+        public static Force FromMiliNewton(long value)
+        {
+            return new Force(value, ForceUnits.MiliNewton);
+        }
+
+        /// <summary>
+        /// creates force from value in N
+        /// </summary>
+        /// <param name="value">Force value in N</param>
+        public static Force FromNewton(decimal value)
+        {
+            return new Force(value, ForceUnits.Newton);
+        }
+
+        /// <summary>
+        /// creates force from value in N
+        /// </summary>
+        /// <param name="value">Force value in N</param>
+        public static Force FromNewton(double value)
+        {
+            return new Force((decimal)value, ForceUnits.Newton);
+        }
+
+        /// <summary>
+        /// creates force from value in N
+        /// </summary>
+        /// <param name="value">Force value in N</param>
+        public static Force FromNewton(int value)
+        {
+            return new Force(value, ForceUnits.Newton);
+        }
+
+        /// <summary>
+        /// creates force from value in N
+        /// </summary>
+        /// <param name="value">Force value in N</param>
+        public static Force FromNewton(long value)
+        {
+            return new Force(value, ForceUnits.Newton);
+        }
+
         public static Force Parse(string value)
         {
             // generator : BasicUnitedValuesGenerator.Add_Parse

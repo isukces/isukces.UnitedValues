@@ -2,42 +2,6 @@
 {
     public partial struct Area
     {
-        public static Area FromKm(decimal m)
-        {
-            return new Area(m, AreaUnits.SquareKm);
-        }
-
-        public static Area FromKm(long m)
-        {
-            return new Area(m, AreaUnits.SquareKm);
-        }
-
-        public static Area FromKm(double m)
-        {
-            return new Area((decimal)m, AreaUnits.SquareKm);
-        }
-
-
-        public static Area FromMeter(decimal m)
-        {
-            return new Area(m, AreaUnits.SquareMeter);
-        }
-
-        public static Area FromMeter(long m)
-        {
-            return new Area(m, AreaUnits.SquareMeter);
-        }
-
-        public static Area FromMeter(double m)
-        {
-            return new Area((decimal)m, AreaUnits.SquareMeter);
-        }
-
-        public static Area FromCentiMeter(double m)
-        {
-            return new Area((decimal)m, AreaUnits.SquareCm);
-        }
-
         public Area ConvertToMeter()
         {
             return ConvertTo(AreaUnits.SquareMeter);
@@ -52,6 +16,6 @@
 
     partial class AreaUnits
     {
-        public const string Square = "²";
+        public const string SquareSign = "²";
     }
 }

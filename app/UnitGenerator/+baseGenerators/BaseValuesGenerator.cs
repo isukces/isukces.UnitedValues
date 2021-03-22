@@ -56,6 +56,7 @@ namespace UnitGenerator
         }
 
         public const string ValuePropertyType = "decimal";
+        public const string OtherValuePropertyType = "double";
 
         protected const string ValuePropName = "Value";
         protected const string UnitPropName = "Unit";

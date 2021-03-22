@@ -22,8 +22,8 @@ namespace iSukces.UnitedValues
             dict.AddRelated<LengthUnit, VolumeUnit>(LengthUnits.Mm, CubicMm);
             dict.AddRelated<VolumeUnit, LengthUnit>(CubicInch, LengthUnits.Inch);
             dict.AddRelated<LengthUnit, VolumeUnit>(LengthUnits.Inch, CubicInch);
-            dict.AddRelated<VolumeUnit, LengthUnit>(CubicFoot, LengthUnits.Foot);
-            dict.AddRelated<LengthUnit, VolumeUnit>(LengthUnits.Foot, CubicFoot);
+            dict.AddRelated<VolumeUnit, LengthUnit>(CubicFeet, LengthUnits.Feet);
+            dict.AddRelated<LengthUnit, VolumeUnit>(LengthUnits.Feet, CubicFeet);
             dict.AddRelated<VolumeUnit, LengthUnit>(CubicYard, LengthUnits.Yard);
             dict.AddRelated<LengthUnit, VolumeUnit>(LengthUnits.Yard, CubicYard);
             dict.AddRelated<VolumeUnit, LengthUnit>(CubicFurlong, LengthUnits.Furlong);
@@ -46,8 +46,8 @@ namespace iSukces.UnitedValues
             dict.AddRelated<AreaUnit, VolumeUnit>(AreaUnits.SquareMm, CubicMm);
             dict.AddRelated<VolumeUnit, AreaUnit>(CubicInch, AreaUnits.SquareInch);
             dict.AddRelated<AreaUnit, VolumeUnit>(AreaUnits.SquareInch, CubicInch);
-            dict.AddRelated<VolumeUnit, AreaUnit>(CubicFoot, AreaUnits.SquareFoot);
-            dict.AddRelated<AreaUnit, VolumeUnit>(AreaUnits.SquareFoot, CubicFoot);
+            dict.AddRelated<VolumeUnit, AreaUnit>(CubicFeet, AreaUnits.SquareFeet);
+            dict.AddRelated<AreaUnit, VolumeUnit>(AreaUnits.SquareFeet, CubicFeet);
             dict.AddRelated<VolumeUnit, AreaUnit>(CubicYard, AreaUnits.SquareYard);
             dict.AddRelated<AreaUnit, VolumeUnit>(AreaUnits.SquareYard, CubicYard);
             dict.AddRelated<VolumeUnit, AreaUnit>(CubicFurlong, AreaUnits.SquareFurlong);
@@ -75,7 +75,7 @@ namespace iSukces.UnitedValues
                     CubicCm,
                     CubicMm,
                     CubicInch,
-                    CubicFoot,
+                    CubicFeet,
                     CubicYard,
                     CubicFurlong,
                     CubicFathom,
@@ -97,7 +97,7 @@ namespace iSukces.UnitedValues
 
         public static readonly UnitDefinition<VolumeUnit> CubicInch = new UnitDefinition<VolumeUnit>("inch³", 0.0254m * 0.0254m * 0.0254m);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicFoot = new UnitDefinition<VolumeUnit>("ft³", 0.3048m * 0.3048m * 0.3048m);
+        public static readonly UnitDefinition<VolumeUnit> CubicFeet = new UnitDefinition<VolumeUnit>("ft³", 0.3048m * 0.3048m * 0.3048m);
 
         public static readonly UnitDefinition<VolumeUnit> CubicYard = new UnitDefinition<VolumeUnit>("yd³", 0.9144m * 0.9144m * 0.9144m);
 

@@ -158,6 +158,438 @@ namespace iSukces.UnitedValues
             return new Area(left.Value + right.Value, left.Unit);
         }
 
+        /// <summary>
+        /// creates area from value in cm²
+        /// </summary>
+        /// <param name="value">Area value in cm²</param>
+        public static Area FromSquareCentimeters(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareCm);
+        }
+
+        /// <summary>
+        /// creates area from value in cm²
+        /// </summary>
+        /// <param name="value">Area value in cm²</param>
+        public static Area FromSquareCentimeters(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareCm);
+        }
+
+        /// <summary>
+        /// creates area from value in cm²
+        /// </summary>
+        /// <param name="value">Area value in cm²</param>
+        public static Area FromSquareCentimeters(int value)
+        {
+            return new Area(value, AreaUnits.SquareCm);
+        }
+
+        /// <summary>
+        /// creates area from value in cm²
+        /// </summary>
+        /// <param name="value">Area value in cm²</param>
+        public static Area FromSquareCentimeters(long value)
+        {
+            return new Area(value, AreaUnits.SquareCm);
+        }
+
+        /// <summary>
+        /// creates area from value in dm²
+        /// </summary>
+        /// <param name="value">Area value in dm²</param>
+        public static Area FromSquareDecimeters(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareDm);
+        }
+
+        /// <summary>
+        /// creates area from value in dm²
+        /// </summary>
+        /// <param name="value">Area value in dm²</param>
+        public static Area FromSquareDecimeters(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareDm);
+        }
+
+        /// <summary>
+        /// creates area from value in dm²
+        /// </summary>
+        /// <param name="value">Area value in dm²</param>
+        public static Area FromSquareDecimeters(int value)
+        {
+            return new Area(value, AreaUnits.SquareDm);
+        }
+
+        /// <summary>
+        /// creates area from value in dm²
+        /// </summary>
+        /// <param name="value">Area value in dm²</param>
+        public static Area FromSquareDecimeters(long value)
+        {
+            return new Area(value, AreaUnits.SquareDm);
+        }
+
+        /// <summary>
+        /// creates area from value in fh²
+        /// </summary>
+        /// <param name="value">Area value in fh²</param>
+        public static Area FromSquareFathom(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareFathom);
+        }
+
+        /// <summary>
+        /// creates area from value in fh²
+        /// </summary>
+        /// <param name="value">Area value in fh²</param>
+        public static Area FromSquareFathom(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareFathom);
+        }
+
+        /// <summary>
+        /// creates area from value in fh²
+        /// </summary>
+        /// <param name="value">Area value in fh²</param>
+        public static Area FromSquareFathom(int value)
+        {
+            return new Area(value, AreaUnits.SquareFathom);
+        }
+
+        /// <summary>
+        /// creates area from value in fh²
+        /// </summary>
+        /// <param name="value">Area value in fh²</param>
+        public static Area FromSquareFathom(long value)
+        {
+            return new Area(value, AreaUnits.SquareFathom);
+        }
+
+        /// <summary>
+        /// creates area from value in ft²
+        /// </summary>
+        /// <param name="value">Area value in ft²</param>
+        public static Area FromSquareFoot(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareFeet);
+        }
+
+        /// <summary>
+        /// creates area from value in ft²
+        /// </summary>
+        /// <param name="value">Area value in ft²</param>
+        public static Area FromSquareFoot(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareFeet);
+        }
+
+        /// <summary>
+        /// creates area from value in ft²
+        /// </summary>
+        /// <param name="value">Area value in ft²</param>
+        public static Area FromSquareFoot(int value)
+        {
+            return new Area(value, AreaUnits.SquareFeet);
+        }
+
+        /// <summary>
+        /// creates area from value in ft²
+        /// </summary>
+        /// <param name="value">Area value in ft²</param>
+        public static Area FromSquareFoot(long value)
+        {
+            return new Area(value, AreaUnits.SquareFeet);
+        }
+
+        /// <summary>
+        /// creates area from value in fg²
+        /// </summary>
+        /// <param name="value">Area value in fg²</param>
+        public static Area FromSquareFurlongs(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareFurlong);
+        }
+
+        /// <summary>
+        /// creates area from value in fg²
+        /// </summary>
+        /// <param name="value">Area value in fg²</param>
+        public static Area FromSquareFurlongs(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareFurlong);
+        }
+
+        /// <summary>
+        /// creates area from value in fg²
+        /// </summary>
+        /// <param name="value">Area value in fg²</param>
+        public static Area FromSquareFurlongs(int value)
+        {
+            return new Area(value, AreaUnits.SquareFurlong);
+        }
+
+        /// <summary>
+        /// creates area from value in fg²
+        /// </summary>
+        /// <param name="value">Area value in fg²</param>
+        public static Area FromSquareFurlongs(long value)
+        {
+            return new Area(value, AreaUnits.SquareFurlong);
+        }
+
+        /// <summary>
+        /// creates area from value in inch²
+        /// </summary>
+        /// <param name="value">Area value in inch²</param>
+        public static Area FromSquareInches(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareInch);
+        }
+
+        /// <summary>
+        /// creates area from value in inch²
+        /// </summary>
+        /// <param name="value">Area value in inch²</param>
+        public static Area FromSquareInches(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareInch);
+        }
+
+        /// <summary>
+        /// creates area from value in inch²
+        /// </summary>
+        /// <param name="value">Area value in inch²</param>
+        public static Area FromSquareInches(int value)
+        {
+            return new Area(value, AreaUnits.SquareInch);
+        }
+
+        /// <summary>
+        /// creates area from value in inch²
+        /// </summary>
+        /// <param name="value">Area value in inch²</param>
+        public static Area FromSquareInches(long value)
+        {
+            return new Area(value, AreaUnits.SquareInch);
+        }
+
+        /// <summary>
+        /// creates area from value in km²
+        /// </summary>
+        /// <param name="value">Area value in km²</param>
+        public static Area FromSquareKilometers(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareKm);
+        }
+
+        /// <summary>
+        /// creates area from value in km²
+        /// </summary>
+        /// <param name="value">Area value in km²</param>
+        public static Area FromSquareKilometers(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareKm);
+        }
+
+        /// <summary>
+        /// creates area from value in km²
+        /// </summary>
+        /// <param name="value">Area value in km²</param>
+        public static Area FromSquareKilometers(int value)
+        {
+            return new Area(value, AreaUnits.SquareKm);
+        }
+
+        /// <summary>
+        /// creates area from value in km²
+        /// </summary>
+        /// <param name="value">Area value in km²</param>
+        public static Area FromSquareKilometers(long value)
+        {
+            return new Area(value, AreaUnits.SquareKm);
+        }
+
+        /// <summary>
+        /// creates area from value in m²
+        /// </summary>
+        /// <param name="value">Area value in m²</param>
+        public static Area FromSquareMeter(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareMeter);
+        }
+
+        /// <summary>
+        /// creates area from value in m²
+        /// </summary>
+        /// <param name="value">Area value in m²</param>
+        public static Area FromSquareMeter(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareMeter);
+        }
+
+        /// <summary>
+        /// creates area from value in m²
+        /// </summary>
+        /// <param name="value">Area value in m²</param>
+        public static Area FromSquareMeter(int value)
+        {
+            return new Area(value, AreaUnits.SquareMeter);
+        }
+
+        /// <summary>
+        /// creates area from value in m²
+        /// </summary>
+        /// <param name="value">Area value in m²</param>
+        public static Area FromSquareMeter(long value)
+        {
+            return new Area(value, AreaUnits.SquareMeter);
+        }
+
+        /// <summary>
+        /// creates area from value in mil²
+        /// </summary>
+        /// <param name="value">Area value in mil²</param>
+        public static Area FromSquareMiles(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareMile);
+        }
+
+        /// <summary>
+        /// creates area from value in mil²
+        /// </summary>
+        /// <param name="value">Area value in mil²</param>
+        public static Area FromSquareMiles(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareMile);
+        }
+
+        /// <summary>
+        /// creates area from value in mil²
+        /// </summary>
+        /// <param name="value">Area value in mil²</param>
+        public static Area FromSquareMiles(int value)
+        {
+            return new Area(value, AreaUnits.SquareMile);
+        }
+
+        /// <summary>
+        /// creates area from value in mil²
+        /// </summary>
+        /// <param name="value">Area value in mil²</param>
+        public static Area FromSquareMiles(long value)
+        {
+            return new Area(value, AreaUnits.SquareMile);
+        }
+
+        /// <summary>
+        /// creates area from value in mm²
+        /// </summary>
+        /// <param name="value">Area value in mm²</param>
+        public static Area FromSquareMilimeters(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareMm);
+        }
+
+        /// <summary>
+        /// creates area from value in mm²
+        /// </summary>
+        /// <param name="value">Area value in mm²</param>
+        public static Area FromSquareMilimeters(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareMm);
+        }
+
+        /// <summary>
+        /// creates area from value in mm²
+        /// </summary>
+        /// <param name="value">Area value in mm²</param>
+        public static Area FromSquareMilimeters(int value)
+        {
+            return new Area(value, AreaUnits.SquareMm);
+        }
+
+        /// <summary>
+        /// creates area from value in mm²
+        /// </summary>
+        /// <param name="value">Area value in mm²</param>
+        public static Area FromSquareMilimeters(long value)
+        {
+            return new Area(value, AreaUnits.SquareMm);
+        }
+
+        /// <summary>
+        /// creates area from value in nm²
+        /// </summary>
+        /// <param name="value">Area value in nm²</param>
+        public static Area FromSquareNauticalMiles(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareNauticalMile);
+        }
+
+        /// <summary>
+        /// creates area from value in nm²
+        /// </summary>
+        /// <param name="value">Area value in nm²</param>
+        public static Area FromSquareNauticalMiles(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareNauticalMile);
+        }
+
+        /// <summary>
+        /// creates area from value in nm²
+        /// </summary>
+        /// <param name="value">Area value in nm²</param>
+        public static Area FromSquareNauticalMiles(int value)
+        {
+            return new Area(value, AreaUnits.SquareNauticalMile);
+        }
+
+        /// <summary>
+        /// creates area from value in nm²
+        /// </summary>
+        /// <param name="value">Area value in nm²</param>
+        public static Area FromSquareNauticalMiles(long value)
+        {
+            return new Area(value, AreaUnits.SquareNauticalMile);
+        }
+
+        /// <summary>
+        /// creates area from value in yd²
+        /// </summary>
+        /// <param name="value">Area value in yd²</param>
+        public static Area FromSquareYards(decimal value)
+        {
+            return new Area(value, AreaUnits.SquareYard);
+        }
+
+        /// <summary>
+        /// creates area from value in yd²
+        /// </summary>
+        /// <param name="value">Area value in yd²</param>
+        public static Area FromSquareYards(double value)
+        {
+            return new Area((decimal)value, AreaUnits.SquareYard);
+        }
+
+        /// <summary>
+        /// creates area from value in yd²
+        /// </summary>
+        /// <param name="value">Area value in yd²</param>
+        public static Area FromSquareYards(int value)
+        {
+            return new Area(value, AreaUnits.SquareYard);
+        }
+
+        /// <summary>
+        /// creates area from value in yd²
+        /// </summary>
+        /// <param name="value">Area value in yd²</param>
+        public static Area FromSquareYards(long value)
+        {
+            return new Area(value, AreaUnits.SquareYard);
+        }
+
         public static Area Parse(string value)
         {
             // generator : BasicUnitedValuesGenerator.Add_Parse
