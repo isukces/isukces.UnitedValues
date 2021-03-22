@@ -10,8 +10,16 @@ namespace UnitGenerator
         {
             PropertyName = propertyName;
             PropertyType = propertyType;
-            Expression   = expression ?? propertyName.FirstLower();
+            Expression   = expression ?? GetExpr(propertyName, propertyType);
             Description  = description;
+        }
+
+        private static string GetExpr(string propertyName, string propertyType)
+        {
+            var arg= propertyName.FirstLower();
+            if (propertyType == "string")
+                arg += "?.Trim();";
+            return arg;
         }
 
         public override string ToString()

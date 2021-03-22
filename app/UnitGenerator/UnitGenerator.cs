@@ -108,6 +108,7 @@ namespace UnitGenerator
             }
 
             var expr = PropertyName.FirstLower() + GetExpressionPlus();
+            expr += "?.Trim()";
             return new[]
             {
                 new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit")

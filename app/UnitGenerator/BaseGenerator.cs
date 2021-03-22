@@ -54,7 +54,7 @@ namespace UnitGenerator
             var m    = Target.AddConstructor("creates instance of " + Target.Name);
             foreach (var i in items)
             {
-                code.WriteLine(i.PropertyName + " = " + i.Expression + ";");
+                code.WriteLine(string.Format("{0} = {1};", i.PropertyName, i.Expression));
                 m.AddParam(i.PropertyName.FirstLower(), i.PropertyType, i.Description);
             }
 

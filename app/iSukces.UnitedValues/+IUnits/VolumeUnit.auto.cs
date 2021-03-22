@@ -14,7 +14,7 @@ namespace iSukces.UnitedValues
         /// <param name="unitName">name of unit</param>
         public VolumeUnit(string unitName)
         {
-            UnitName = unitName?.Replace('3', '³');
+            UnitName = unitName?.Replace('3', '³')?.Trim();
         }
 
         public bool Equals(VolumeUnit other)

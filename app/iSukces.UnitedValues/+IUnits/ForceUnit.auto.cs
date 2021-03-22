@@ -14,7 +14,7 @@ namespace iSukces.UnitedValues
         /// <param name="unitName">name of unit</param>
         public ForceUnit(string unitName)
         {
-            UnitName = unitName;
+            UnitName = unitName?.Trim();
         }
 
         public bool Equals(ForceUnit other)
