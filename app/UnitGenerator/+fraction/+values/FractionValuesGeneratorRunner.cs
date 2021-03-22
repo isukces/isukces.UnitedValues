@@ -1,5 +1,4 @@
 using System.IO;
-using System.Linq;
 
 namespace UnitGenerator
 {
@@ -12,13 +11,13 @@ namespace UnitGenerator
             var generator = new FractionValuesGenerator(path, nameSpace);
             generator.Generate(infos);
 
-            /*var path = Path.Combine(basePath, "+fractionValues");
+            path = Path.Combine(basePath, "+jsonConverters", "+fraction");
             var jsonConverter =
                 new UnitJsonConverterGenerator(path, nameSpace)
                 {
                     ClassicImpl = true
                 };
-            jsonConverter.Generate(infos);*/
+            jsonConverter.Generate(infos);
         }
     }
 }

@@ -21,13 +21,6 @@ namespace UnitGenerator
             var infos     = GetFractionUnits();
             var generator = new FractionUnitGenerator(Path.Combine(basePath, "+fractionUnits"), nameSpace);
             generator.Generate(infos);
-            var path = Path.Combine(basePath, "+jsonConverters");
-            var jsonConverter =
-                new UnitJsonConverterGenerator(path, nameSpace)
-                {
-                    ClassicImpl = true
-                };
-            jsonConverter.Generate(infos);
         }
     }
 }

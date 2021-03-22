@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
@@ -40,7 +41,10 @@ namespace UnitGenerator
                 Target.IsPartial = true;
                 GenerateOne();
                 file.BeginContent += "// generator: " + GetType().Name;
-                file.SaveIfDifferent(Path.Combine(_output, name + ".auto.cs"));
+                var filename = Path.Combine(_output, name + ".auto.cs");
+                if (filename==@"C:\programs\isukces\dotnetLib\isukces.UnitedValues\app\iSukces.UnitedValues\+jsonConverters\DensityJsonConverter.auto.cs")
+                    Debug.WriteLine("");
+                file.SaveIfDifferent(filename);
             }
         }
 

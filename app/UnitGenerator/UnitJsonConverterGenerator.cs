@@ -76,13 +76,13 @@ namespace UnitGenerator
             cw.Close();
             cw.WriteLine("throw new NotImplementedException();");
 
-            var m = Target.AddMethod("ReadJson", "object")
+            var m = Target.AddMethod("ReadJson", "object", "Reads the JSON representation of the object.")
                 .WithOverride()
                 .WithBody(cw);
-            m.AddParam<JsonReader>("reader", Target);
-            m.AddParam<Type>("objectType", Target);
-            m.AddParam<object>("existingValue", Target);
-            m.AddParam<JsonSerializer>("serializer", Target);
+            m.AddParam<JsonReader>("reader", Target, "The JsonReader to read from.");
+            m.AddParam<Type>("objectType", Target, "Type of the object.");
+            m.AddParam<object>("existingValue", Target, "The existing value of object being read.");
+            m.AddParam<JsonSerializer>("serializer", Target, "The calling serializer.");
         }
 
         private void Add_WriteJson()
