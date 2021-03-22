@@ -12,23 +12,23 @@ namespace UnitGenerator
 
         protected override void GenerateOne()
         {
-            cl.Kind = CsNamespaceMemberKind.Struct;
-            cl.ImplementedInterfaces.Add("IUnit");
-            cl.ImplementedInterfaces.Add("IEquatable<" + Cfg.UnitTypeName + ">");
+            Target.Kind = CsNamespaceMemberKind.Struct;
+            Target.ImplementedInterfaces.Add("IUnit");
+            Target.ImplementedInterfaces.Add("IEquatable<" + Cfg.UnitTypeName + ">");
 
             var pi = new[]
             {
-                new ConstructorParameterInfo("CounterUnit", Cfg.CounterUnit, null, "counter unit"),
-                new ConstructorParameterInfo("DenominatorUnit", Cfg.DenominatorUnit, null, "denominator unit")
+                new ConstructorParameterInfo("CounterUnit", Cfg.CounterUnit.UnitTypeName, null, "counter unit"),
+                new ConstructorParameterInfo("DenominatorUnit", Cfg.DenominatorUnit.UnitTypeName, null, "denominator unit")
             };
             Add_Constructor(pi);
             Add_Properties(pi);
             Add_Equals();
             Add_GetHashCode("(CounterUnit.GetHashCode() * 397) ^ DenominatorUnit.GetHashCode()");
-            Add_EqualityOperators();
+            AddCommon_EqualityOperators();
             Add_ToString(PropertyName);
 
-            cl.AddProperty(PropertyName, "string")
+            Target.AddProperty(PropertyName, "string")
                 .WithIsPropertyReadOnly()
                 .WithNoEmitField()
                 .WithOwnGetter("CounterUnit.UnitName + \"/\" + DenominatorUnit.UnitName")
@@ -44,9 +44,9 @@ namespace UnitGenerator
         private void Add_Equals()
         {
             var compareCode = "CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit)";
-            Add_EqualsUniversal(cl.Name, false, OverridingType.None, compareCode);
+            Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
             Add_EqualsUniversal("object", false, OverridingType.Override,
-                "other is " + cl.Name + " unitedValue ? Equals(unitedValue) : false");
+                "other is " + Target.Name + " unitedValue ? Equals(unitedValue) : false");
         }
 
         private const string PropertyName = nameof(IUnitNameContainer.UnitName);

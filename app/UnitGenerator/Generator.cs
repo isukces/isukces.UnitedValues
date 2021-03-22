@@ -33,16 +33,16 @@ namespace UnitGenerator
 
         protected override void GenerateOne()
         {
-            cl.Kind        = CsNamespaceMemberKind.Struct;
-            cl.Description = $"Reprezentuje {Cfg.Description} w [{Cfg.Unit}]";
+            Target.Kind        = CsNamespaceMemberKind.Struct;
+            Target.Description = $"Reprezentuje {Cfg.Description} w [{Cfg.Unit}]";
             {
-                var p = cl.AddProperty("Value", "double");
+                var p = Target.AddProperty("Value", "double");
                 p.IsPropertyReadOnly          = true;
                 p.EmitField                   = false;
                 p.MakeAutoImplementIfPossible = true;
             }
             {
-                var c = cl.AddConstructor("").WithBody("Value = value;");
+                var c = Target.AddConstructor("").WithBody("Value = value;");
                 c.AddParam("value", "double");
             }
             {
@@ -55,23 +55,23 @@ namespace UnitGenerator
             }
             {
                 // operatory mnożenia przez liczbę
-                var m = cl.AddMethod("*", Cfg.ClassName)
+                var m = Target.AddMethod("*", Cfg.ClassName)
                     .WithBody($"return new {Cfg.ClassName}(number * x.Value);");
                 m.AddParam("number", "double");
                 m.AddParam("x", Cfg.ClassName);
                 // odwrócona wersja
-                m = cl.AddMethod("*", Cfg.ClassName)
+                m = Target.AddMethod("*", Cfg.ClassName)
                     .WithBody($"return new {Cfg.ClassName}(x.Value * number);");
                 m.AddParam("x", Cfg.ClassName);
                 m.AddParam("number", "double");
                 // operator dzielenia
-                m = cl.AddMethod("/", Cfg.ClassName)
+                m = Target.AddMethod("/", Cfg.ClassName)
                     .WithBody($"return new {Cfg.ClassName}(x.Value / number);");
                 m.AddParam("x", Cfg.ClassName);
                 m.AddParam("number", "double");
 
                 // operator dzielenia
-                m = cl.AddMethod("/", "double")
+                m = Target.AddMethod("/", "double")
                     .WithBody("return x.Value / y.Value;");
                 m.AddParam("x", Cfg.ClassName);
                 m.AddParam("y", Cfg.ClassName);
@@ -79,7 +79,7 @@ namespace UnitGenerator
             // operatory dodawania/odejmowania
             foreach (var op in "+-")
             {
-                var m = cl.AddMethod(op.ToString(), Cfg.ClassName)
+                var m = Target.AddMethod(op.ToString(), Cfg.ClassName)
                     .WithBody($"return new {Cfg.ClassName}(left.Value {op} right.Value);");
                 m.AddParam("left", Cfg.ClassName);
                 m.AddParam("right", Cfg.ClassName);
@@ -87,7 +87,7 @@ namespace UnitGenerator
 
             // operator negacji
             {
-                var m = cl.AddMethod("-", Cfg.ClassName)
+                var m = Target.AddMethod("-", Cfg.ClassName)
                     .WithBody($"return new {Cfg.ClassName}(-x.Value);");
                 m.AddParam("x", Cfg.ClassName);
             }
@@ -95,17 +95,17 @@ namespace UnitGenerator
                 // operatory mnożenia przez inne jednostki
                 foreach (var i in Cfg.MulsAndDivs)
                 {
-                    AddOperatorMethod(cl, i);
+                    AddOperatorMethod(Target, i);
                     if (i.Operator == "*")
                     {
                         var swapped = i.GetSwap();
                         if (!i.Equals(swapped))
-                            AddOperatorMethod(cl, swapped);
+                            AddOperatorMethod(Target, swapped);
                     }
                 }
             }
 
-            MakeToString(cl, $@"$""{{Value}} {Cfg.Unit}""");
+            MakeToString(Target, $@"$""{{Value}} {Cfg.Unit}""");
         }
 
         protected override string GetTypename(UnitDefinition cfg)

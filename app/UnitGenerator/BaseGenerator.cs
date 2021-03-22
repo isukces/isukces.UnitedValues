@@ -36,9 +36,10 @@ namespace UnitGenerator
                 PrepareFile(file);
                 var ns   = file.GetOrCreateNamespace(_nameSpace);
                 var name = GetTypename(unit);
-                cl           = ns.GetOrCreateClass(name);
-                cl.IsPartial = true;
+                Target           = ns.GetOrCreateClass(name);
+                Target.IsPartial = true;
                 GenerateOne();
+                file.BeginContent += "// generator: " + GetType().Name;
                 file.SaveIfDifferent(Path.Combine(_output, name + ".auto.cs"));
             }
         }
@@ -46,7 +47,7 @@ namespace UnitGenerator
         protected void Add_Constructor(params ConstructorParameterInfo[] items)
         {
             var code = new CsCodeWriter();
-            var m    = cl.AddConstructor("creates instance of " + cl.Name);
+            var m    = Target.AddConstructor("creates instance of " + Target.Name);
             foreach (var i in items)
             {
                 code.WriteLine(i.PropertyName + " = " + i.Expression + ";");
@@ -57,16 +58,16 @@ namespace UnitGenerator
         }
 
 
-        protected void Add_EqualityOperators()
+        protected void AddCommon_EqualityOperators()
         {
             for (var i = 0; i < 2; i++)
             {
                 var eq = i == 0;
-                var m = cl.AddMethod(eq ? "==" : "!=", "bool", eq ? "Equality operator" : "Inequality operator")
+                var m = Target.AddMethod(eq ? "==" : "!=", "bool", eq ? "Equality operator" : "Inequality operator")
                     .WithBody($"return {(eq ? "" : "!")}left.Equals(right);");
 
-                m.AddParam("left", cl.Name, "first value to compare");
-                m.AddParam("right", cl.Name, "second value to compare");
+                m.AddParam("left", Target.Name, "first value to compare");
+                m.AddParam("right", Target.Name, "second value to compare");
             }
         }
 
@@ -77,7 +78,7 @@ namespace UnitGenerator
             if (nullable)
                 cw.SingleLineIf("other is null", ReturnValue("false"));
             cw.WriteLine(ReturnValue(compareCode));
-            var m = cl.AddMethod("Equals", "bool")
+            var m = Target.AddMethod("Equals", "bool")
                 .WithBody(cw);
             m.Overriding = overridingType;
             m.AddParam("other", compareType);
@@ -89,7 +90,7 @@ namespace UnitGenerator
             cw.Open("unchecked");
             cw.WriteLine(ReturnValue(expression));
             cw.Close();
-            cl.AddMethod("GetHashCode", "int")
+            Target.AddMethod("GetHashCode", "int")
                 .WithOverride()
                 .WithBody(cw);
         }
@@ -97,7 +98,7 @@ namespace UnitGenerator
         protected void Add_ImplicitOperator(string source, string target, string expr)
         {
             var description = $"Converts {source} into {target} implicitly.";
-            var m = cl.AddMethod(CsMethod.Implicit, target, description)
+            var m = Target.AddMethod(CsMethod.Implicit, target, description)
                 .WithBodyFromExpression(expr);
             m.AddParam("src", source);
         }
@@ -110,7 +111,7 @@ namespace UnitGenerator
 
         protected void Add_Property(string name, string type, string description)
         {
-            cl.AddProperty(name, type)
+            Target.AddProperty(name, type)
                 .WithDescription(description)
                 .WithNoEmitField()
                 .WithMakeAutoImplementIfPossible()
@@ -119,7 +120,7 @@ namespace UnitGenerator
 
         protected void Add_ToString(string expression)
         {
-            cl.AddMethod("ToString", "string", "Returns unit name")
+            Target.AddMethod("ToString", "string", "Returns unit name")
                 .WithOverride()
                 .WithBody("return " + expression + ";");
         }
@@ -138,9 +139,9 @@ namespace UnitGenerator
             return "return " + expression + ";";
         }
 
-        public TDef Cfg { get; set; }
+        protected TDef Cfg { get; private set; }
 
-        public CsClass cl { get; set; }
+        protected CsClass Target { get; private set; }
 
         private readonly string _output;
         private readonly string _nameSpace;

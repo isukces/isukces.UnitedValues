@@ -16,7 +16,7 @@ namespace UnitGenerator
         {
             if (ClassicImpl)
             {
-                cl.BaseClass = "JsonConverter";
+                Target.BaseClass = "JsonConverter";
 
                 Add_CanConvert();
                 Add_ReadJson();
@@ -24,14 +24,14 @@ namespace UnitGenerator
             }
             else
             {
-                cl.BaseClass = "AbstractUnitJsonConverter<" + Cfg.ValueTypeName + ", " + Cfg.UnitTypeName + ">";
+                Target.BaseClass = "AbstractUnitJsonConverter<" + Cfg.ValueTypeName + ", " + Cfg.UnitTypeName + ">";
                 {
                     var cw = new CsCodeWriter();
                     cw.WriteLine("unit = unit?.Trim();");
                     cw.WriteLine(
                         $"return new {Cfg.ValueTypeName}(value, string.IsNullOrEmpty(unit) ? {Cfg.ValueTypeName}.BaseUnit : new {Cfg.UnitTypeName}(unit));");
 
-                    var m = cl.AddMethod("Make", Cfg.ValueTypeName)
+                    var m = Target.AddMethod("Make", Cfg.ValueTypeName)
                         .WithOverride()
                         .WithVisibility(Visibilities.Protected)
                         .WithBody(cw);
@@ -39,7 +39,7 @@ namespace UnitGenerator
                     m.AddParam("unit", "string");
                 }
                 {
-                    var m = cl.AddMethod("Parse", Cfg.ValueTypeName)
+                    var m = Target.AddMethod("Parse", Cfg.ValueTypeName)
                         .WithOverride()
                         .WithVisibility(Visibilities.Protected)
                         .WithBodyFromExpression(Cfg.ValueTypeName + ".Parse(txt)");
@@ -61,7 +61,7 @@ namespace UnitGenerator
 
         private void Add_CanConvert()
         {
-            cl.AddMethod("CanConvert", "bool")
+            Target.AddMethod("CanConvert", "bool")
                 .WithOverride()
                 .WithBodyFromExpression($"objectType == typeof({Cfg.UnitTypeName})")
                 .AddParam("objectType", "Type");
@@ -76,13 +76,13 @@ namespace UnitGenerator
             cw.Close();
             cw.WriteLine("throw new NotImplementedException();");
 
-            var m = cl.AddMethod("ReadJson", "object")
+            var m = Target.AddMethod("ReadJson", "object")
                 .WithOverride()
                 .WithBody(cw);
-            m.AddParam<JsonReader>("reader", cl);
-            m.AddParam<Type>("objectType", cl);
-            m.AddParam<object>("existingValue", cl);
-            m.AddParam<JsonSerializer>("serializer", cl);
+            m.AddParam<JsonReader>("reader", Target);
+            m.AddParam<Type>("objectType", Target);
+            m.AddParam<object>("existingValue", Target);
+            m.AddParam<JsonSerializer>("serializer", Target);
         }
 
         private void Add_WriteJson()
@@ -93,12 +93,12 @@ namespace UnitGenerator
                 "writer.WriteNull();",
                 "writer.WriteValue(value.ToString());");
 
-            var m = cl.AddMethod("WriteJson", "void")
+            var m = Target.AddMethod("WriteJson", "void")
                 .WithOverride()
                 .WithBody(cw);
-            m.AddParam<JsonWriter>("writer", cl);
-            m.AddParam<object>("value", cl);
-            m.AddParam<JsonSerializer>("serializer", cl);
+            m.AddParam<JsonWriter>("writer", Target);
+            m.AddParam<object>("value", Target);
+            m.AddParam<JsonSerializer>("serializer", Target);
         }
 
         public bool ClassicImpl { get; set; }

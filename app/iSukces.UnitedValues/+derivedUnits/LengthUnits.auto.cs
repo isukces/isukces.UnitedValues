@@ -1,4 +1,5 @@
 // ReSharper disable All
+// generator: DerivedUnitGenerator
 using System;
 using System.Collections.Generic;
 using System.Globalization;

@@ -15,11 +15,11 @@ namespace UnitGenerator
 
         protected override void GenerateOne()
         {
-            cl.Kind = CsNamespaceMemberKind.Struct;
+            Target.Kind = CsNamespaceMemberKind.Struct;
             // cl.Description = $"Reprezentuje {unit.Description} w [{unit.Unit}]";
             Add_Constructor();
             Add_ImplicitOperator();
-            Add_EqualityOperators();
+            AddCommon_EqualityOperators();
             Add_Equals();
             Add_EqualsOverride();
             Add_GetHashCode();
@@ -27,10 +27,10 @@ namespace UnitGenerator
             Add_IEquatableEquals();
             Add_Property();
 
-            cl.ImplementedInterfaces.Add(cl.Owner.GetTypeName<IUnit>());
-            var t = MakeGenericType<IEquatable<int>>(cl.Owner, Cfg);
-            cl.ImplementedInterfaces.Add(t);
-            cl.WithAttribute(typeof(SerializableAttribute));
+            Target.ImplementedInterfaces.Add(Target.Owner.GetTypeName<IUnit>());
+            var t = MakeGenericType<IEquatable<int>>(Target.Owner, Cfg);
+            Target.ImplementedInterfaces.Add(t);
+            Target.WithAttribute(typeof(SerializableAttribute));
         }
 
 
@@ -47,7 +47,7 @@ namespace UnitGenerator
 
         private void Add_Equals()
         {
-            var m = cl.AddMethod("Equals", "bool")
+            var m = Target.AddMethod("Equals", "bool")
                 .WithBodyFromExpression($"String.Equals({PropertyName}, other.{PropertyName})");
             m.AddParam("other", Cfg);
         }
@@ -57,8 +57,8 @@ namespace UnitGenerator
             // equals override
             var cw = new CsCodeWriter();
             cw.WriteLine("if (ReferenceEquals(null, obj)) return false;");
-            cw.WriteLine(ReturnValue("obj is " + cl.Name + " tmp && Equals(tmp)"));
-            var m = cl.AddMethod("Equals", "bool")
+            cw.WriteLine(ReturnValue("obj is " + Target.Name + " tmp && Equals(tmp)"));
+            var m = Target.AddMethod("Equals", "bool")
                 .WithOverride()
                 .WithBody(cw);
             m.AddParam("obj", "object");
@@ -67,23 +67,23 @@ namespace UnitGenerator
         private void Add_GetHashCode()
         {
             // GetHashCode override
-            cl.AddMethod("GetHashCode", "int")
+            Target.AddMethod("GetHashCode", "int")
                 .WithOverride()
                 .WithBodyFromExpression("" + PropertyName + "?.GetHashCode() ?? 0");
         }
 
         private void Add_IEquatableEquals()
         {
-            cl.AddMethod($"IEquatable<{cl.Name}>.Equals", "bool")
+            Target.AddMethod($"IEquatable<{Target.Name}>.Equals", "bool")
                 .WithBodyFromExpression("Equals(other)")
                 .WithVisibility(Visibilities.InterfaceDefault)
-                .AddParam("other", cl.Name);
+                .AddParam("other", Target.Name);
         }
 
         private void Add_ImplicitOperator()
         {
-            var pa = MakeGenericType<UnitDefinition<IUnit>>(cl, Cfg);
-            Add_ImplicitOperator(pa, cl.Name, $"new {Cfg}(src.{PropertyName})");
+            var pa = MakeGenericType<UnitDefinition<IUnit>>(Target, Cfg);
+            Add_ImplicitOperator(pa, Target.Name, $"new {Cfg}(src.{PropertyName})");
         }
 
         private void Add_Property()

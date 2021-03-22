@@ -14,7 +14,7 @@ namespace UnitGenerator
 
         protected override void GenerateOne()
         {
-            cl.IsStatic = true;
+            Target.IsStatic = true;
             Add_AllProperty();
             Add_Properties();
             Add_Register();
@@ -44,7 +44,7 @@ namespace UnitGenerator
 
             cw.DecIndent();
             cw.WriteLine("};");
-            cl.AddProperty("All", "IReadOnlyList<UnitDefinition<" + Cfg.Name + "Unit>>")
+            Target.AddProperty("All", "IReadOnlyList<UnitDefinition<" + Cfg.Name + "Unit>>")
                 .WithIsPropertyReadOnly()
                 .WithNoEmitField()
                 .WithStatic()
@@ -69,7 +69,7 @@ namespace UnitGenerator
                     type,
                     string.Join(", ", args)
                 );
-                cl.AddField(i.PropertyName, type)
+                Target.AddField(i.PropertyName, type)
                     .WithIsReadOnly()
                     .WithStatic()
                     .WithConstValue(value);
@@ -93,11 +93,11 @@ namespace UnitGenerator
                 cw.WriteLine(q);
             }
 
-            cl.AddMethod("Register", "void")
+            Target.AddMethod("Register", "void")
                 .WithBody(cw)
                 .WithStatic()
                 .WithVisibility(Visibilities.Internal)
-                .AddParam<UnitRelationsDictionary>("dict", cl);
+                .AddParam<UnitRelationsDictionary>("dict", Target);
         }
     }
 }

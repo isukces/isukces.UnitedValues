@@ -14,7 +14,7 @@ namespace UnitGenerator
 
         protected override void GenerateOne()
         {
-            cl.IsStatic = true;
+            Target.IsStatic = true;
 
             CsMethod Add1(string itemType, Action<CsCodeWriter> actions)
             {
@@ -23,10 +23,10 @@ namespace UnitGenerator
                 cw.SingleLineIf("items is null", ReturnValue(Cfg.ValueTypeName + ".Zero"));
 
                 actions(cw);
-                var m = cl.AddMethod("Sum", Cfg.ValueTypeName)
+                var m = Target.AddMethod("Sum", Cfg.ValueTypeName)
                     .WithStatic()
                     .WithBody(cw);
-                m.AddParam("items", MakeGenericType<IEnumerable<int>>(cl, itemType)).UseThis = true;
+                m.AddParam("items", MakeGenericType<IEnumerable<int>>(Target, itemType)).UseThis = true;
                 return m;
             }
 

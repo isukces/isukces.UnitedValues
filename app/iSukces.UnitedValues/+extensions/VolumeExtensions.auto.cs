@@ -1,4 +1,5 @@
 // ReSharper disable All
+// generator: UnitExtensionsGenerator
 using System;
 using System.Collections.Generic;
 using System.Globalization;

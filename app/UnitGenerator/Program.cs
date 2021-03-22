@@ -92,6 +92,7 @@ namespace UnitGenerator
             BasicUnitsRunner.Run(basePath, nameSpace);
             FractionUnitGeneratorRunner.Run(basePath, nameSpace);
             DerivedUnitGeneratorRunner.Run(basePath, nameSpace);
+            FractionValuesGeneratorRunner.Run(basePath, nameSpace);
         }
     }
 

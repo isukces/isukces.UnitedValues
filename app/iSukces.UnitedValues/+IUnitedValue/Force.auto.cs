@@ -1,4 +1,5 @@
 // ReSharper disable All
+// generator: UnitedValuesGenerator
 using Newtonsoft.Json;
 using System;
 using System.Globalization;

@@ -1,4 +1,5 @@
 // ReSharper disable All
+// generator: FractionUnitGenerator
 using System;
 using System.Globalization;
 
