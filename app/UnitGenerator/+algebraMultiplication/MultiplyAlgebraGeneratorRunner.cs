@@ -11,6 +11,9 @@ namespace UnitGenerator
                 .WithMul<Length, Length, Area>(true)
                 .WithMul<Length, Area, Volume>(true)
                 
+                
+                .WithDiv<Force, Area, Pressure>(false)
+                
                 // .WithDiv<>()
                 ;
 

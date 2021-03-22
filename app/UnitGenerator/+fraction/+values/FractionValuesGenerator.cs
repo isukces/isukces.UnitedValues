@@ -1,6 +1,7 @@
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
+using Self = UnitGenerator.FractionValuesGenerator;
 
 namespace UnitGenerator
 {
@@ -22,6 +23,9 @@ namespace UnitGenerator
             Add_AlternateConstructor();
             Add_Parse();
             Add_GetBaseUnitValue();
+
+            Add_WithCounterUnit();
+            Add_WithDenominatorUnit();
         }
 
 
@@ -123,6 +127,35 @@ namespace UnitGenerator
                 .WithStatic()
                 .WithBody(cw);
             m.AddParam("value", "string");
+        }
+
+        private void Add_WithCounterUnit()
+        {
+            var cw = Ext.Create<Self>();
+            cw.SingleLineIf("Unit.CounterUnit.Equals(newCounterUnit)", "return this;");
+
+            const string valueToConvert        = "tmp";
+            const string resultUnit = "resultUnit";
+            cw.WriteLine("var {0} = new {1}(Value, Unit.CounterUnit);", valueToConvert, Cfg.CounterUnit.Value);
+            cw.WriteLine("{0} = {0}.ConvertTo(newCounterUnit);", valueToConvert);
+            cw.WriteLine("var {1} = new {0}(newCounterUnit, Unit.DenominatorUnit);", Cfg.Names.Unit, resultUnit);
+            cw.WriteLine("return new {0}({2}.Value, {1});", Cfg.Names.Value, resultUnit, valueToConvert);
+
+            Target.AddMethod("WithCounterUnit", Cfg.ValueTypeName)
+                .WithBody(cw)
+                .AddParam("newCounterUnit", Cfg.CounterUnit.Unit);
+        }
+        
+        private void Add_WithDenominatorUnit()
+        {
+            var cw = Ext.Create<Self>();
+            cw.SingleLineIf("this.Unit.DenominatorUnit == newDenominatorUnit", "return this;");
+            cw.WriteLine("var nu = new {0}(Unit.CounterUnit, newDenominatorUnit);", Cfg.UnitTypeName);
+            cw.WriteLine("return ConvertTo(nu);");
+
+            Target.AddMethod("WithDenominatorUnit", Cfg.ValueTypeName)
+                .WithBody(cw)
+                .AddParam("newDenominatorUnit", Cfg.DenominatorUnit.Unit);
         }
     }
 }

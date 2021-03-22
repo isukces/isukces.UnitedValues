@@ -69,7 +69,7 @@ namespace UnitGenerator
                 .AddParam("value", Target.Name);
 
             {
-                var cw = CsCodeWriter.Create<BasicUnitedValuesGenerator>();
+                var cw = Ext.Create<BasicUnitedValuesGenerator>();
                 cw.WriteLine("right = right.ConvertTo(left.Unit);");
                 cw.WriteLine(ReturnValue("left.Value / right.Value"));
                 Target.AddMethod("/", ValuePropertyType)
@@ -79,7 +79,7 @@ namespace UnitGenerator
 
             foreach (var i in "+,-".Split(','))
             {
-                var cw               = CsCodeWriter.Create<BasicUnitedValuesGenerator>();
+                var cw               = Ext.Create<BasicUnitedValuesGenerator>();
                 var minusIfNecessary = i == "-" ? "-" : "";
                 cw.SingleLineIf(
                     "left.Value.Equals(" + ValuePropertyType + ".Zero) && string.IsNullOrEmpty(left.Unit.UnitName)",
@@ -115,7 +115,7 @@ namespace UnitGenerator
 
         private void Add_ConvertTo()
         {
-            var cw = CsCodeWriter.Create<BasicUnitedValuesGenerator>();
+            var cw = Ext.Create<BasicUnitedValuesGenerator>();
             cw.SingleLineIf("Unit.Equals(newUnit)", ReturnValue("this"));
             cw.WriteLine("var basic = GetBaseUnitValue();");
             cw.WriteLine("var factor = GlobalUnitRegistry.Factors.Get(newUnit);");
@@ -130,7 +130,7 @@ namespace UnitGenerator
 
         private void Add_GetBaseUnitValue()
         {
-            var cs = CsCodeWriter.Create<BasicUnitedValuesGenerator>();
+            var cs = Ext.Create<BasicUnitedValuesGenerator>();
             cs.SingleLineIf("Unit.Equals(BaseUnit)", ReturnValue("Value"));
             cs.WriteLine("var factor = GlobalUnitRegistry.Factors.Get(Unit);");
             cs.SingleLineIf("!(factor is null)", ReturnValue("Value * factor.Value"));
@@ -141,7 +141,7 @@ namespace UnitGenerator
 
         private void Add_Parse()
         {
-            var cs = CsCodeWriter.Create<BasicUnitedValuesGenerator>();
+            var cs = Ext.Create<BasicUnitedValuesGenerator>();
             cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.ValueTypeName}));");
             cs.WriteLine(
                 $"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");
@@ -165,7 +165,7 @@ namespace UnitGenerator
 
         private void Add_Round()
         {
-            var cs = CsCodeWriter.Create<BasicUnitedValuesGenerator>();
+            var cs = Ext.Create<BasicUnitedValuesGenerator>();
             cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.ValueTypeName}));");
             cs.WriteLine(
                 $"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");

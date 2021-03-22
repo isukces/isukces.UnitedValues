@@ -13,6 +13,7 @@
             Factors.RegisterMany(AreaUnits.All);
             Factors.RegisterMany(VolumeUnits.All);
             Factors.RegisterMany(WeightUnits.All);
+            Factors.RegisterMany(ForceUnits.All);
         }
 
         public static readonly UnitRelationsDictionary Relations;

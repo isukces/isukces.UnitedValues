@@ -86,6 +86,26 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
+        public PlanarDensity WithCounterUnit(WeightUnit newCounterUnit)
+        {
+            // generator : FractionValuesGenerator.Add_WithCounterUnit
+            if (Unit.CounterUnit.Equals(newCounterUnit))
+                return this;
+            var tmp = new Weight(Value, Unit.CounterUnit);
+            tmp = tmp.ConvertTo(newCounterUnit);
+            var resultUnit = new PlanarDensityUnit(newCounterUnit, Unit.DenominatorUnit);
+            return new PlanarDensity(tmp.Value, resultUnit);
+        }
+
+        public PlanarDensity WithDenominatorUnit(AreaUnit newDenominatorUnit)
+        {
+            // generator : FractionValuesGenerator.Add_WithDenominatorUnit
+            if (this.Unit.DenominatorUnit == newDenominatorUnit)
+                return this;
+            var nu = new PlanarDensityUnit(Unit.CounterUnit, newDenominatorUnit);
+            return ConvertTo(nu);
+        }
+
         /// <summary>
         /// Inequality operator
         /// </summary>

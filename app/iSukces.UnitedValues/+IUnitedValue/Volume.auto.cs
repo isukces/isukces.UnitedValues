@@ -23,7 +23,7 @@ namespace iSukces.UnitedValues
 
         public Volume ConvertTo(VolumeUnit newUnit)
         {
-            // generator : BasicUnitedValuesGenerator.Add_ConvertTo:118
+            // generator : BasicUnitedValuesGenerator.Add_ConvertTo
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
@@ -52,7 +52,7 @@ namespace iSukces.UnitedValues
 
         public decimal GetBaseUnitValue()
         {
-            // generator : BasicUnitedValuesGenerator.Add_GetBaseUnitValue:133
+            // generator : BasicUnitedValuesGenerator.Add_GetBaseUnitValue
             if (Unit.Equals(BaseUnit))
                 return Value;
             var factor = GlobalUnitRegistry.Factors.Get(Unit);
@@ -103,7 +103,7 @@ namespace iSukces.UnitedValues
 
         public static Volume operator -(Volume left, Volume right)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Algebra:82
+            // generator : BasicUnitedValuesGenerator.Add_Algebra
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return -right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
@@ -144,14 +144,14 @@ namespace iSukces.UnitedValues
 
         public static decimal operator /(Volume left, Volume right)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Algebra:72
+            // generator : BasicUnitedValuesGenerator.Add_Algebra
             right = right.ConvertTo(left.Unit);
             return left.Value / right.Value;
         }
 
         public static Volume operator +(Volume left, Volume right)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Algebra:82
+            // generator : BasicUnitedValuesGenerator.Add_Algebra
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
@@ -162,7 +162,7 @@ namespace iSukces.UnitedValues
 
         public static Volume Parse(string value)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Parse:144
+            // generator : BasicUnitedValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(Volume));
             return new Volume(parseResult.Value, new VolumeUnit(parseResult.UnitName));
         }

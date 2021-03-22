@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using iSukces.Code;
+using iSukces.Code.Interfaces;
 
 namespace UnitGenerator
 {
@@ -48,6 +50,24 @@ namespace UnitGenerator
             method.AddParam(leftName, leftType);
             method.AddParam(rightName, rightType);
             return method;
+        }
+
+        public static CsCodeWriter Create<T>([CallerLineNumber] int lineNumber = 0,
+            [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null
+        )
+        {
+            var location = new SourceCodeLocation(lineNumber, memberName, filePath)
+                .WithGeneratorClass(typeof(T));
+            var code = new CsCodeWriter
+            {
+                Location = location
+            };
+            
+            location = new SourceCodeLocation(0, memberName, filePath)
+                .WithGeneratorClass(typeof(T));
+            
+            code.WriteLine("// generator : " + location.ToString());
+            return code;
         }
     }
 }

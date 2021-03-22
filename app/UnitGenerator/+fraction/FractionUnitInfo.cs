@@ -20,6 +20,15 @@ namespace UnitGenerator
                 new TypesGoup(typeof(T3).Name)
             );
         }
+        
+        public static FractionUnitInfo Make< T2, T3>(string name)
+        {
+            return new FractionUnitInfo(
+                new TypesGoup(name), 
+                new TypesGoup(typeof(T2).Name),
+                new TypesGoup(typeof(T3).Name)
+            );
+        }
 
         public override string ToString()
         {

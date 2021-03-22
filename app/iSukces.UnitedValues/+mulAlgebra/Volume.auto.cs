@@ -12,11 +12,12 @@ namespace iSukces.UnitedValues
         /// <param name="divisor">a divisor (denominator) - a value which dividend is divided by</param>
         public static Length operator /(Volume dividend, Area divisor)
         {
-            // generator : MultiplyAlgebraGenerator.CreateOperator:46
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRelatedUnits
+            // scenario C
             var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, AreaUnit>(dividend.Unit);
             var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(dividend.Unit);
             var divisorConverted = divisor.ConvertTo(rightUnit);
-            var value          = dividend.Value / divisorConverted.Value;
+            var value = dividend.Value / divisorConverted.Value;
             return new Length(value, resultUnit);
         }
 
@@ -27,11 +28,12 @@ namespace iSukces.UnitedValues
         /// <param name="divisor">a divisor (denominator) - a value which dividend is divided by</param>
         public static Area operator /(Volume dividend, Length divisor)
         {
-            // generator : MultiplyAlgebraGenerator.CreateOperator:46
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRelatedUnits
+            // scenario C
             var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(dividend.Unit);
             var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, AreaUnit>(dividend.Unit);
             var divisorConverted = divisor.ConvertTo(rightUnit);
-            var value          = dividend.Value / divisorConverted.Value;
+            var value = dividend.Value / divisorConverted.Value;
             return new Area(value, resultUnit);
         }
 

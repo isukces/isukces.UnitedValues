@@ -33,6 +33,10 @@
             return new Area((decimal)m, AreaUnits.SquareMeter);
         }
 
+        public static Area FromCentiMeter(double m)
+        {
+            return new Area((decimal)m, AreaUnits.SquareCm);
+        }
 
         public Area ConvertToMeter()
         {
