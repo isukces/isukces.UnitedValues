@@ -31,7 +31,7 @@ namespace UnitGenerator
                 case 2:
                     return "Square";
                 case 3:
-                    return "Qubic";
+                    return "Cubic";
                 default:
                     throw new NotSupportedException();
             }

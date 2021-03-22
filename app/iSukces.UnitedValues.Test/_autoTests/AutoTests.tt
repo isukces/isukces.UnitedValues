@@ -14,7 +14,7 @@ using iSukces.UnitedValues;
 Weight,WeightUnits.Kg
 Length,LengthUnits.Meter
 Area,AreaUnits.SquareMeter
-Volume,VolumeUnits.QubicMeter
+Volume,VolumeUnits.CubicMeter
 Force,ForceUnits.Newton
 ";
     var tests2 = tests.Split('\r', '\n').Select(a => a.Trim().Split(',')).Where(a => a.Length > 1);

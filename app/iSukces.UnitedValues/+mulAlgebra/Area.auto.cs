@@ -12,7 +12,7 @@ namespace iSukces.UnitedValues
         /// <param name="rightFactor">rigth factor (multiplier)</param>
         public static Volume operator *(Area leftFactor, Length rightFactor)
         {
-            // generator : AlgebraGenerator2.CreateOperator:61
+            // generator : MultiplyAlgebraGenerator.CreateOperator:46
             var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, LengthUnit>(leftFactor.Unit);
             var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, VolumeUnit>(leftFactor.Unit);
             var rightFactorConverted = rightFactor.ConvertTo(rightUnit);
@@ -27,7 +27,7 @@ namespace iSukces.UnitedValues
         /// <param name="divisor">a divisor (denominator) - a value which dividend is divided by</param>
         public static Length operator /(Area dividend, Length divisor)
         {
-            // generator : AlgebraGenerator2.CreateOperator:61
+            // generator : MultiplyAlgebraGenerator.CreateOperator:46
             var newUnit = GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, LengthUnit>(dividend.Unit);
             var divisorConverted = divisor.ConvertTo(newUnit);
             var value          = dividend.Value / divisorConverted.Value;

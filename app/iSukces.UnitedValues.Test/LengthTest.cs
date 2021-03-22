@@ -171,7 +171,7 @@ namespace iSukces.UnitedValues.Test
 
             var vol = a * b;
             Assert.Equal(1000, vol.Value);
-            Assert.Equal(VolumeUnits.QubicYard, vol.Unit);
+            Assert.Equal(VolumeUnits.CubicYard, vol.Unit);
         }
 
         private class Complex

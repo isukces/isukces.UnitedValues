@@ -10,11 +10,11 @@ namespace iSukces.UnitedValues.Test
         public void T01_ShouldEqual()
         {
             {
-                var density = new Density(8000, WeightUnits.Kg, VolumeUnits.QubicMeter);
-                Assert.Equal(density, new Density(8000, WeightUnits.Kg, VolumeUnits.QubicMeter));
-                Assert.NotEqual(density, new Density(8001, WeightUnits.Kg, VolumeUnits.QubicMeter));
-                Assert.NotEqual(density, new Density(8000, WeightUnits.Kg, VolumeUnits.QubicMm));
-                Assert.NotEqual(density, new Density(8000, WeightUnits.Gram, VolumeUnits.QubicMeter));
+                var density = new Density(8000, WeightUnits.Kg, VolumeUnits.CubicMeter);
+                Assert.Equal(density, new Density(8000, WeightUnits.Kg, VolumeUnits.CubicMeter));
+                Assert.NotEqual(density, new Density(8001, WeightUnits.Kg, VolumeUnits.CubicMeter));
+                Assert.NotEqual(density, new Density(8000, WeightUnits.Kg, VolumeUnits.CubicMm));
+                Assert.NotEqual(density, new Density(8000, WeightUnits.Gram, VolumeUnits.CubicMeter));
             }
             {
                 var density = new PlanarDensity(8000, WeightUnits.Kg, AreaUnits.SquareMeter);
@@ -36,13 +36,13 @@ namespace iSukces.UnitedValues.Test
         public void T02_ShouldComputeDensity()
         {
             var w       = Weight.FromKg(8000);
-            var volume  = new Volume(1, VolumeUnits.QubicMeter);
+            var volume  = new Volume(1, VolumeUnits.CubicMeter);
             var density = w / volume;
             Assert.Equal(8000m, density.Value);
             Assert.Equal("kg/m³", density.Unit.UnitName);
             Assert.Equal("8000kg/m³", density.ToString());
 
-            var d2 = density.ConvertTo(new DensityUnit(WeightUnits.Kg, VolumeUnits.QubicDm));
+            var d2 = density.ConvertTo(new DensityUnit(WeightUnits.Kg, VolumeUnits.CubicDm));
             Assert.Equal(8m, d2.Value);
             Assert.Equal("kg/dm³", d2.Unit.UnitName);
             Assert.Equal("8kg/dm³", d2.ToString());
@@ -64,7 +64,7 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T03_ShouldConvertDensityAndPlanarDensity()
         {
-            var density = new Density(8000, WeightUnits.Kg, VolumeUnits.QubicMeter);
+            var density = new Density(8000, WeightUnits.Kg, VolumeUnits.CubicMeter);
             Assert.Equal("8000kg/m³", density.ToString());
 
             var length = new Length(2, LengthUnits.Meter);
@@ -97,7 +97,7 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T04_ShouldConvertDensityAndLinearDensity()
         {
-            var density = new Density(8000, WeightUnits.Kg, VolumeUnits.QubicMeter);
+            var density = new Density(8000, WeightUnits.Kg, VolumeUnits.CubicMeter);
             Assert.Equal("8000kg/m³", density.ToString());
             var area = Length.FromMm(50) * Length.FromMm(5);
             Assert.Equal("250mm²", area.ToString());
@@ -115,7 +115,7 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T05_ShouldSerializeToJson()
         {
-            var density = new Density(8000, WeightUnits.Kg, VolumeUnits.QubicMeter);
+            var density = new Density(8000, WeightUnits.Kg, VolumeUnits.CubicMeter);
             var json    = JsonConvert.SerializeObject(density);
             Assert.Equal("\"8000kg/m³\"", json);
             var planarDensity = new PlanarDensity(8000, WeightUnits.Kg, AreaUnits.SquareMeter);
@@ -135,7 +135,7 @@ namespace iSukces.UnitedValues.Test
                 var tmp = JsonConvert.DeserializeObject<Density>("\"" + xx + "\"");
                 Assert.Equal(8000, tmp.Value);
                 Assert.Equal(WeightUnits.Kg, tmp.Unit.CounterUnit);
-                Assert.Equal(VolumeUnits.QubicMeter, tmp.Unit.DenominatorUnit);
+                Assert.Equal(VolumeUnits.CubicMeter, tmp.Unit.DenominatorUnit);
             }
 
             testValues = "8000kg/m²,8000 kg / m², 8000  kg / m2";

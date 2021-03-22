@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T02_Should_find_length_unit_related_to_cubic_meter()
         {
-            var newUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(VolumeUnits.QubicMeter);
+            var newUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(VolumeUnits.CubicMeter);
             LengthUnit expected = LengthUnits.Meter;
             Assert.Equal(expected, newUnit);
         }

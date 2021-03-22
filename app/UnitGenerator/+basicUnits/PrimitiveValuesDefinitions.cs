@@ -12,6 +12,6 @@ namespace UnitGenerator
 
         private static readonly UnitInfo Length = new UnitInfo("Length", "Meter", true);
         private static readonly UnitInfo Area = new UnitInfo("Area", "SquareMeter", false);
-        private static readonly UnitInfo Volume = new UnitInfo("Volume", "QubicMeter", false);
+        private static readonly UnitInfo Volume = new UnitInfo("Volume", "CubicMeter", false);
     }
 }

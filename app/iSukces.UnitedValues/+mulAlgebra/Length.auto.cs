@@ -12,7 +12,7 @@ namespace iSukces.UnitedValues
         /// <param name="rightFactor">rigth factor (multiplier)</param>
         public static Area operator *(Length leftFactor, Length rightFactor)
         {
-            // generator : AlgebraGenerator2.CreateOperator:61
+            // generator : MultiplyAlgebraGenerator.CreateOperator:46
             var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, LengthUnit>(leftFactor.Unit);
             var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, AreaUnit>(leftFactor.Unit);
             var rightFactorConverted = rightFactor.ConvertTo(rightUnit);
@@ -27,7 +27,7 @@ namespace iSukces.UnitedValues
         /// <param name="rightFactor">rigth factor (multiplier)</param>
         public static Volume operator *(Length leftFactor, Area rightFactor)
         {
-            // generator : AlgebraGenerator2.CreateOperator:61
+            // generator : MultiplyAlgebraGenerator.CreateOperator:46
             var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, AreaUnit>(leftFactor.Unit);
             var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, VolumeUnit>(leftFactor.Unit);
             var rightFactorConverted = rightFactor.ConvertTo(rightUnit);

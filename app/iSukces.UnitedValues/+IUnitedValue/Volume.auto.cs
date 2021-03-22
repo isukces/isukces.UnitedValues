@@ -177,7 +177,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         public VolumeUnit Unit { get; }
 
-        public static readonly VolumeUnit BaseUnit = VolumeUnits.QubicMeter;
+        public static readonly VolumeUnit BaseUnit = VolumeUnits.CubicMeter;
 
         public static readonly Volume Zero = new Volume(0, BaseUnit);
 

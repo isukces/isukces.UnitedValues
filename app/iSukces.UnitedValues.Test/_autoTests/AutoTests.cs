@@ -100,8 +100,8 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void ShoulDivideVolume()
         {
-			var a = new Volume(10m, VolumeUnits.QubicMeter);
-			var b = new Volume(5m, VolumeUnits.QubicMeter);
+			var a = new Volume(10m, VolumeUnits.CubicMeter);
+			var b = new Volume(5m, VolumeUnits.CubicMeter);
 			var c = a / b;
 			Assert.Equal(2, c);
         }
@@ -110,9 +110,9 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void ShoulAddVolume()
         {
-			var a = new Volume(10m, VolumeUnits.QubicMeter);
-			var b = new Volume(5m, VolumeUnits.QubicMeter);
-            var expected = new Volume(15m, VolumeUnits.QubicMeter);            
+			var a = new Volume(10m, VolumeUnits.CubicMeter);
+			var b = new Volume(5m, VolumeUnits.CubicMeter);
+            var expected = new Volume(15m, VolumeUnits.CubicMeter);            
 			var c = a + b;
 			Assert.Equal(expected, c);
         }
@@ -120,9 +120,9 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void ShoulSubstractVolume()
         {
-			var a = new Volume(10m, VolumeUnits.QubicMeter);
-			var b = new Volume(6m, VolumeUnits.QubicMeter);
-            var expected = new Volume(4m, VolumeUnits.QubicMeter);            
+			var a = new Volume(10m, VolumeUnits.CubicMeter);
+			var b = new Volume(6m, VolumeUnits.CubicMeter);
+            var expected = new Volume(4m, VolumeUnits.CubicMeter);            
 			var c = a - b;
 			Assert.Equal(expected, c);
         }
