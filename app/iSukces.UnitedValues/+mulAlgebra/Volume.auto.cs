@@ -13,15 +13,11 @@ namespace iSukces.UnitedValues
         public static Length operator /(Volume dividend, Area divisor)
         {
             // generator : AlgebraGenerator2.CreateOperator:61
-            var rightUnit = GlobalUnitRegistry.Relations.Get<VolumeUnit, AreaUnit>(dividend.Unit);
-            if (rightUnit is null)
-                throw new Exception($"Unable to convert {divisor.Unit} into {typeof(AreaUnit)}");
-            var resultUnit = GlobalUnitRegistry.Relations.Get<VolumeUnit, LengthUnit>(dividend.Unit);
-            if (resultUnit is null)
-                throw new Exception($"Unable to convert {divisor.Unit} into {typeof(LengthUnit)}");
-            var divisorConverted = divisor.ConvertTo(rightUnit.Item1);
+            var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, AreaUnit>(dividend.Unit);
+            var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(dividend.Unit);
+            var divisorConverted = divisor.ConvertTo(rightUnit);
             var value          = dividend.Value / divisorConverted.Value;
-            return new Length(value, resultUnit.Item1);
+            return new Length(value, resultUnit);
         }
 
         /// <summary>
@@ -32,15 +28,11 @@ namespace iSukces.UnitedValues
         public static Area operator /(Volume dividend, Length divisor)
         {
             // generator : AlgebraGenerator2.CreateOperator:61
-            var rightUnit = GlobalUnitRegistry.Relations.Get<VolumeUnit, LengthUnit>(dividend.Unit);
-            if (rightUnit is null)
-                throw new Exception($"Unable to convert {divisor.Unit} into {typeof(LengthUnit)}");
-            var resultUnit = GlobalUnitRegistry.Relations.Get<VolumeUnit, AreaUnit>(dividend.Unit);
-            if (resultUnit is null)
-                throw new Exception($"Unable to convert {divisor.Unit} into {typeof(AreaUnit)}");
-            var divisorConverted = divisor.ConvertTo(rightUnit.Item1);
+            var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(dividend.Unit);
+            var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, AreaUnit>(dividend.Unit);
+            var divisorConverted = divisor.ConvertTo(rightUnit);
             var value          = dividend.Value / divisorConverted.Value;
-            return new Area(value, resultUnit.Item1);
+            return new Area(value, resultUnit);
         }
 
     }

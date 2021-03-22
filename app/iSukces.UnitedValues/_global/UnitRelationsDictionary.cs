@@ -36,6 +36,21 @@ namespace iSukces.UnitedValues
             var key = new Key(t1, t2, a.UnitName);
             return _rd.TryGetValue(key, out var value) ? Tuple.Create((T2)value) : null;
         }
+        
+        public T2 GetOrThrow<T1, T2>(T1 a)
+            where T1 : IUnit
+            where T2 : IUnit
+        {
+            var t1 = typeof(T1);
+            var t2 = typeof(T2);
+            if (t1 == t2)
+                return (T2)(object)a;
+            var key = new Key(t1, t2, a.UnitName);
+            if (_rd.TryGetValue(key, out var value))
+                return (T2)value;
+            throw new UnableToFindRelatedUnitException(typeof(T1), typeof(T2), a);
+        }
+
 
         private readonly Dictionary<Key, object> _rd = new Dictionary<Key, object>();
 

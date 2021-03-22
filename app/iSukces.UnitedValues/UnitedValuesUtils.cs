@@ -31,18 +31,18 @@ namespace iSukces.UnitedValues
             where TRightUnit : IUnit, IEquatable<TRightUnit>
             where TResultUnit : IUnit, IEquatable<TResultUnit>
         {
-            var rightUnit = GlobalUnitRegistry.Relations.Get<TLeftUnit, TRightUnit>(a.Unit);
+            var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<TLeftUnit, TRightUnit>(a.Unit);
             if (rightUnit == null)
                 throw new Exception($"Unable to convert {a.Unit} into {typeof(TRightUnit)}");
 
-            var resultUnit = GlobalUnitRegistry.Relations.Get<TLeftUnit, TResultUnit>(a.Unit);
+            var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<TLeftUnit, TResultUnit>(a.Unit);
             if (resultUnit == null)
                 throw new Exception($"Unable to convert {a.Unit} into {typeof(TResultUnit)}");
 
-            b = leftConvert(b, rightUnit.Item1);
+            b = leftConvert(b, rightUnit);
 
             var value = b.Value / a.Value;
-            return result(value, resultUnit.Item1);
+            return result(value, resultUnit);
         }
 
         public static TResult Multiply<
@@ -60,18 +60,18 @@ namespace iSukces.UnitedValues
             where TRightUnit : IUnit, IEquatable<TRightUnit>
             where TResultUnit : IUnit, IEquatable<TResultUnit>
         {
-            var rightUnit = GlobalUnitRegistry.Relations.Get<TLeftUnit, TRightUnit>(a.Unit);
+            var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<TLeftUnit, TRightUnit>(a.Unit);
             if (rightUnit == null)
                 throw new Exception($"Unable to convert {a.Unit} into {typeof(TRightUnit)}");
 
-            var resultUnit = GlobalUnitRegistry.Relations.Get<TLeftUnit, TResultUnit>(a.Unit);
+            var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<TLeftUnit, TResultUnit>(a.Unit);
             if (resultUnit == null)
                 throw new Exception($"Unable to convert {a.Unit} into {typeof(TResultUnit)}");
 
-            b = leftConvert(b, rightUnit.Item1);
+            b = leftConvert(b, rightUnit);
 
             var value = b.Value * a.Value;
-            return result(value, resultUnit.Item1);
+            return result(value, resultUnit);
         }
 
         public static string ToStringFormat<T>(this IUnitedValue<T> value, string format, IFormatProvider provider)

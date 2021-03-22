@@ -30,7 +30,7 @@ namespace UnitGenerator
             FractionValuesGeneratorRunner.Run(basePath, nameSpace);
 
             // AlgebraGeneratorRunner.Run(basePath, nameSpace);
-            AlgebraGenerator2Runner.Run(basePath, nameSpace);
+            MultiplyAlgebraGeneratorRunner.Run(basePath, nameSpace);
         }
     }
 }

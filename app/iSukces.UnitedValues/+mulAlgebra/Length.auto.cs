@@ -13,15 +13,11 @@ namespace iSukces.UnitedValues
         public static Area operator *(Length leftFactor, Length rightFactor)
         {
             // generator : AlgebraGenerator2.CreateOperator:61
-            var rightUnit = GlobalUnitRegistry.Relations.Get<LengthUnit, LengthUnit>(leftFactor.Unit);
-            if (rightUnit is null)
-                throw new Exception($"Unable to convert {rightFactor.Unit} into {typeof(LengthUnit)}");
-            var resultUnit = GlobalUnitRegistry.Relations.Get<LengthUnit, AreaUnit>(leftFactor.Unit);
-            if (resultUnit is null)
-                throw new Exception($"Unable to convert {rightFactor.Unit} into {typeof(AreaUnit)}");
-            var rightFactorConverted = rightFactor.ConvertTo(rightUnit.Item1);
+            var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, LengthUnit>(leftFactor.Unit);
+            var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, AreaUnit>(leftFactor.Unit);
+            var rightFactorConverted = rightFactor.ConvertTo(rightUnit);
             var value          = leftFactor.Value * rightFactorConverted.Value;
-            return new Area(value, resultUnit.Item1);
+            return new Area(value, resultUnit);
         }
 
         /// <summary>
@@ -32,15 +28,11 @@ namespace iSukces.UnitedValues
         public static Volume operator *(Length leftFactor, Area rightFactor)
         {
             // generator : AlgebraGenerator2.CreateOperator:61
-            var rightUnit = GlobalUnitRegistry.Relations.Get<LengthUnit, AreaUnit>(leftFactor.Unit);
-            if (rightUnit is null)
-                throw new Exception($"Unable to convert {rightFactor.Unit} into {typeof(AreaUnit)}");
-            var resultUnit = GlobalUnitRegistry.Relations.Get<LengthUnit, VolumeUnit>(leftFactor.Unit);
-            if (resultUnit is null)
-                throw new Exception($"Unable to convert {rightFactor.Unit} into {typeof(VolumeUnit)}");
-            var rightFactorConverted = rightFactor.ConvertTo(rightUnit.Item1);
+            var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, AreaUnit>(leftFactor.Unit);
+            var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, VolumeUnit>(leftFactor.Unit);
+            var rightFactorConverted = rightFactor.ConvertTo(rightUnit);
             var value          = leftFactor.Value * rightFactorConverted.Value;
-            return new Volume(value, resultUnit.Item1);
+            return new Volume(value, resultUnit);
         }
 
     }

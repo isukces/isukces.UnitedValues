@@ -4,34 +4,19 @@ using System.IO;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
-using iSukces.UnitedValues;
-using Self = UnitGenerator.AlgebraGenerator2;
 
 namespace UnitGenerator
 {
-    public class AlgebraGenerator2
+    public class MultiplyAlgebraGenerator
     {
-    }
+        private string _nameSpace;
 
-    public class AlgebraGenerator2Runner
-    {
-        public AlgebraGenerator2Runner(string nameSpace)
+        public MultiplyAlgebraGenerator(string nameSpace)
         {
             _nameSpace = nameSpace;
         }
-
-        public static void Run(string basePath, string nameSpace)
-        {
-            var tmp = new AlgebraGenerator2Runner(nameSpace);
-            var c = new MultiplicationAlgebraConfig()
-                .WithMul<Length, Length, Area>()
-                .WithMul<Length, Area, Volume>();
-
-            tmp.CreateOperators(c);
-            var path = Path.Combine(basePath, "+mulAlgebra");
-            tmp.Save(path);
-        }
-
+        
+        
         private void CreateOperator(TypesGoup left, TypesGoup right, TypesGoup result, string op)
         {
             var key = new OperatorGenerationKey(left.Value, right.Value, op);
@@ -58,18 +43,13 @@ namespace UnitGenerator
             var cl = GetClass(key.Left);
             cl.Kind = CsNamespaceMemberKind.Struct;
 
-            var cw = CsCodeWriter.Create<Self>();
+            var cw = CsCodeWriter.Create<MultiplyAlgebraGenerator>();
 
             void Add(string srcUnit, string targetUnit, string variable)
             {
                 var line1 =
-                    $"var {variable} = GlobalUnitRegistry.Relations.Get<{srcUnit}, {targetUnit}>({leftName}.Unit);";
-                var throwCode = "throw new Exception($\"Unable to convert {" + rightName + ".Unit} into {typeof(" +
-                                targetUnit +
-                                ")}\");";
-
+                    $"var {variable} = GlobalUnitRegistry.Relations.GetOrThrow<{srcUnit}, {targetUnit}>({leftName}.Unit);";
                 cw.WriteLine(line1);
-                cw.SingleLineIf($"{variable} is null", throwCode);
             }
 
             var rightUnit  = "rightUnit";
@@ -85,9 +65,9 @@ namespace UnitGenerator
                 Add(tLeftUnit, tResultUnit, resultUnit);
             }
 
-            cw.WriteLine($"var {rightName}Converted = {rightName}.ConvertTo({rightUnit}.Item1);");
+            cw.WriteLine($"var {rightName}Converted = {rightName}.ConvertTo({rightUnit});");
             cw.WriteLine($"var value          = {leftName}.Value {op} {rightName}Converted.Value;");
-            cw.WriteLine($"return new {tResult}(value, {resultUnit}.Item1);");
+            cw.WriteLine($"return new {tResult}(value, {resultUnit});");
 
             var method = cl.AddMethod(op, tResult, info.Description)
                 .WithBody(cw);
@@ -98,7 +78,7 @@ namespace UnitGenerator
             p.Description = info.Right.Desctiption;
         }
 
-        private void CreateOperators(MultiplicationAlgebraConfig c)
+        internal void CreateOperators(MultiplicationAlgebraConfig c)
         {
             foreach (var i in c.Items)
             {
@@ -123,7 +103,7 @@ namespace UnitGenerator
             return info.Cl;
         }
 
-        private void Save(string path)
+        public void Save(string path)
         {
             foreach (var i in _clases.Values)
             {
@@ -136,6 +116,6 @@ namespace UnitGenerator
             new Dictionary<OperatorGenerationKey, string>();
 
         private readonly Dictionary<string, FileHolder> _clases = new Dictionary<string, FileHolder>();
-        private readonly string _nameSpace;
+   
     }
 }
