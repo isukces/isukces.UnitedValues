@@ -65,10 +65,7 @@ namespace UnitGenerator
                     i.NamePlural.CsEncode()
                 }.Where(a => a != "null");
 
-                var value = string.Format("new {0}({1})",
-                    type,
-                    string.Join(", ", args)
-                );
+                var value = new Args(args).Create(type);
                 Target.AddField(i.PropertyName, type)
                     .WithIsReadOnly()
                     .WithStatic()

@@ -86,24 +86,28 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public PlanarDensity WithCounterUnit(WeightUnit newCounterUnit)
+        public PlanarDensity WithCounterUnit(WeightUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
-            if (Unit.CounterUnit.Equals(newCounterUnit))
+            var oldUnit = Unit.CounterUnit;
+            if (oldUnit == newUnit)
                 return this;
-            var tmp = new Weight(Value, Unit.CounterUnit);
-            tmp = tmp.ConvertTo(newCounterUnit);
-            var resultUnit = new PlanarDensityUnit(newCounterUnit, Unit.DenominatorUnit);
-            return new PlanarDensity(tmp.Value, resultUnit);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var resultUnit = Unit.WithCounterUnit(newUnit);
+            return new PlanarDensity(oldFactor / newFactor * Value, resultUnit);
         }
 
-        public PlanarDensity WithDenominatorUnit(AreaUnit newDenominatorUnit)
+        public PlanarDensity WithDenominatorUnit(AreaUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithDenominatorUnit
-            if (this.Unit.DenominatorUnit == newDenominatorUnit)
+            var oldUnit = Unit.DenominatorUnit;
+            if (oldUnit == newUnit)
                 return this;
-            var nu = new PlanarDensityUnit(Unit.CounterUnit, newDenominatorUnit);
-            return ConvertTo(nu);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var resultUnit = Unit.WithDenominatorUnit(newUnit);
+            return new PlanarDensity(newFactor / oldFactor * Value, resultUnit);
         }
 
         /// <summary>

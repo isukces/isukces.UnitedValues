@@ -44,6 +44,18 @@ namespace iSukces.UnitedValues
             return UnitName;
         }
 
+        public PressureUnit WithCounterUnit(ForceUnit newUnit)
+        {
+            // generator : FractionUnitGenerator.Add_WithCounterUnit
+            return new PressureUnit(newUnit, DenominatorUnit);
+        }
+
+        public PressureUnit WithDenominatorUnit(AreaUnit newUnit)
+        {
+            // generator : FractionUnitGenerator.Add_WithDenominatorUnit
+            return new PressureUnit(CounterUnit, newUnit);
+        }
+
         /// <summary>
         /// Inequality operator
         /// </summary>

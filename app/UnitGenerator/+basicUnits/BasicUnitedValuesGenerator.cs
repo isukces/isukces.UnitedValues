@@ -118,10 +118,8 @@ namespace UnitGenerator
             var cw = Ext.Create<BasicUnitedValuesGenerator>();
             cw.SingleLineIf("Unit.Equals(newUnit)", ReturnValue("this"));
             cw.WriteLine("var basic = GetBaseUnitValue();");
-            cw.WriteLine("var factor = GlobalUnitRegistry.Factors.Get(newUnit);");
-            cw.SingleLineIf("factor is null",
-                "throw new Exception(\"Unable to find multiplication for unit \" + newUnit);");
-            cw.WriteLine(ReturnValue("new " + Target.Name + "(basic / factor.Value, newUnit)"));
+            cw.WriteLine("var factor = GlobalUnitRegistry.Factors.GetThrow(newUnit);");
+            cw.WriteLine(ReturnValue("new " + Target.Name + "(basic / factor, newUnit)"));
 
             Target.AddMethod("ConvertTo", Target.Name)
                 .WithBody(cw)

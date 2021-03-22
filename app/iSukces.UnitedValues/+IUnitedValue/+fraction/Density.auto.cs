@@ -86,24 +86,28 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public Density WithCounterUnit(WeightUnit newCounterUnit)
+        public Density WithCounterUnit(WeightUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
-            if (Unit.CounterUnit.Equals(newCounterUnit))
+            var oldUnit = Unit.CounterUnit;
+            if (oldUnit == newUnit)
                 return this;
-            var tmp = new Weight(Value, Unit.CounterUnit);
-            tmp = tmp.ConvertTo(newCounterUnit);
-            var resultUnit = new DensityUnit(newCounterUnit, Unit.DenominatorUnit);
-            return new Density(tmp.Value, resultUnit);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var resultUnit = Unit.WithCounterUnit(newUnit);
+            return new Density(oldFactor / newFactor * Value, resultUnit);
         }
 
-        public Density WithDenominatorUnit(VolumeUnit newDenominatorUnit)
+        public Density WithDenominatorUnit(VolumeUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithDenominatorUnit
-            if (this.Unit.DenominatorUnit == newDenominatorUnit)
+            var oldUnit = Unit.DenominatorUnit;
+            if (oldUnit == newUnit)
                 return this;
-            var nu = new DensityUnit(Unit.CounterUnit, newDenominatorUnit);
-            return ConvertTo(nu);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var resultUnit = Unit.WithDenominatorUnit(newUnit);
+            return new Density(newFactor / oldFactor * Value, resultUnit);
         }
 
         /// <summary>

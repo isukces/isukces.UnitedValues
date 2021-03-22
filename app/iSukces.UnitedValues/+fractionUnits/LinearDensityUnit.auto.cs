@@ -44,6 +44,18 @@ namespace iSukces.UnitedValues
             return UnitName;
         }
 
+        public LinearDensityUnit WithCounterUnit(WeightUnit newUnit)
+        {
+            // generator : FractionUnitGenerator.Add_WithCounterUnit
+            return new LinearDensityUnit(newUnit, DenominatorUnit);
+        }
+
+        public LinearDensityUnit WithDenominatorUnit(LengthUnit newUnit)
+        {
+            // generator : FractionUnitGenerator.Add_WithDenominatorUnit
+            return new LinearDensityUnit(CounterUnit, newUnit);
+        }
+
         /// <summary>
         /// Inequality operator
         /// </summary>

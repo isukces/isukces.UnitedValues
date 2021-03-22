@@ -19,16 +19,14 @@ namespace UnitGenerator
         {
             var cw = Ext.Create<MultiplyAlgebraGenerator>();
             cw.WriteLine("// scenario E");
-            var args = new[]
-            {
+            var args = new Args(
                 $"{p.LeftName}.Value {p.Oper} {p.RightName}.Value",
                 $"{p.LeftName}.Unit",
                 $"{p.RightName}.Unit"
-            };
-            var args2   = string.Join(", ", args);
+            );
             var tResult = p.Result.Value;
 
-            var expression = $"new {tResult}({args2})";
+            var expression = args.Create(tResult);
             cw.WriteLine($"return {expression};");
             return cw;
         }

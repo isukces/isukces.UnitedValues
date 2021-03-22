@@ -86,24 +86,28 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public Pressure WithCounterUnit(ForceUnit newCounterUnit)
+        public Pressure WithCounterUnit(ForceUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
-            if (Unit.CounterUnit.Equals(newCounterUnit))
+            var oldUnit = Unit.CounterUnit;
+            if (oldUnit == newUnit)
                 return this;
-            var tmp = new Force(Value, Unit.CounterUnit);
-            tmp = tmp.ConvertTo(newCounterUnit);
-            var resultUnit = new PressureUnit(newCounterUnit, Unit.DenominatorUnit);
-            return new Pressure(tmp.Value, resultUnit);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var resultUnit = Unit.WithCounterUnit(newUnit);
+            return new Pressure(oldFactor / newFactor * Value, resultUnit);
         }
 
-        public Pressure WithDenominatorUnit(AreaUnit newDenominatorUnit)
+        public Pressure WithDenominatorUnit(AreaUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithDenominatorUnit
-            if (this.Unit.DenominatorUnit == newDenominatorUnit)
+            var oldUnit = Unit.DenominatorUnit;
+            if (oldUnit == newUnit)
                 return this;
-            var nu = new PressureUnit(Unit.CounterUnit, newDenominatorUnit);
-            return ConvertTo(nu);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var resultUnit = Unit.WithDenominatorUnit(newUnit);
+            return new Pressure(newFactor / oldFactor * Value, resultUnit);
         }
 
         /// <summary>

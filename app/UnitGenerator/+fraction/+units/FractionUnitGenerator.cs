@@ -1,6 +1,7 @@
 using iSukces.Code;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
+using Self=UnitGenerator.FractionUnitGenerator;
 
 namespace UnitGenerator
 {
@@ -23,16 +24,34 @@ namespace UnitGenerator
             };
             Add_Constructor(pi);
             Add_Properties(pi);
+            Add_UnitNameProperty();
             Add_Equals();
             Add_GetHashCode("(CounterUnit.GetHashCode() * 397) ^ DenominatorUnit.GetHashCode()");
             AddCommon_EqualityOperators();
             Add_ToString(PropertyName);
 
-            Target.AddProperty(PropertyName, "string")
-                .WithIsPropertyReadOnly()
-                .WithNoEmitField()
-                .WithOwnGetter("CounterUnit.UnitName + \"/\" + DenominatorUnit.UnitName")
-                .OwnGetterIsExpression = true;
+            Add_WithDenominatorUnit();
+            Add_WithCounterUnit();
+        }
+
+        private void Add_WithDenominatorUnit()
+        {
+            var cw = Ext.Create<Self>();
+            var e  = new Args("CounterUnit", "newUnit").Create(Target.Name);
+            cw.WriteLine($"return {e};");
+            Target.AddMethod("WithDenominatorUnit", Cfg.UnitTypeName)
+                .WithBody(cw)
+                .AddParam("newUnit", Cfg.DenominatorUnit.Unit);
+        }
+
+        private void Add_WithCounterUnit()
+        {
+            var cw = Ext.Create<Self>();
+            var e  = new Args("newUnit", "DenominatorUnit").Create(Target.Name);
+            cw.WriteLine($"return {e};");
+            Target.AddMethod("WithCounterUnit", Cfg.UnitTypeName)
+                .WithBody(cw)
+                .AddParam("newUnit", Cfg.CounterUnit.Unit);
         }
 
 
@@ -47,6 +66,15 @@ namespace UnitGenerator
             Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
             Add_EqualsUniversal("object", false, OverridingType.Override,
                 "other is " + Target.Name + " unitedValue ? Equals(unitedValue) : false");
+        }
+
+        private void Add_UnitNameProperty()
+        {
+            Target.AddProperty(PropertyName, "string")
+                .WithIsPropertyReadOnly()
+                .WithNoEmitField()
+                .WithOwnGetter("CounterUnit.UnitName + \"/\" + DenominatorUnit.UnitName")
+                .OwnGetterIsExpression = true;
         }
 
         private const string PropertyName = nameof(IUnitNameContainer.UnitName);

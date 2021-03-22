@@ -11,9 +11,10 @@ namespace UnitGenerator
     {
         public static CsMethod AddOperator(this CsClass cl, string operatorName, params string[] args)
         {
-            var arg = string.Join(", ", args);
+            var arg  = new Args(args);
+            var code = arg.Create(cl.Name);
             return cl.AddMethod(operatorName, cl.Name, "implements " + operatorName + " operator")
-                .WithBodyFromExpression($"new {cl.Name}({arg})");
+                .WithBodyFromExpression(code);
         }
 
         public static string CsEncode(decimal multiplicator)

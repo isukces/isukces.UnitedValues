@@ -19,6 +19,15 @@ namespace iSukces.UnitedValues
             var key = new Key(typeof(TUnit), unit.UnitName);
             return _dict.TryGetValue(key, out var value) ? (decimal?)value : null;
         }
+        
+        public decimal GetThrow<TUnit>(TUnit unit)
+            where TUnit : IUnit
+        {
+            var key = new Key(typeof(TUnit), unit.UnitName);
+            if (_dict.TryGetValue(key, out var value))
+                return value;
+            throw new UnknownDerivedUnitFactorException(typeof(TUnit), unit);
+        }
 
         public void Register<TUnit>(UnitDefinition<TUnit> item)
             where TUnit : IUnit

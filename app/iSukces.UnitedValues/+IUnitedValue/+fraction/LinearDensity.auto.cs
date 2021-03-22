@@ -86,24 +86,28 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public LinearDensity WithCounterUnit(WeightUnit newCounterUnit)
+        public LinearDensity WithCounterUnit(WeightUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
-            if (Unit.CounterUnit.Equals(newCounterUnit))
+            var oldUnit = Unit.CounterUnit;
+            if (oldUnit == newUnit)
                 return this;
-            var tmp = new Weight(Value, Unit.CounterUnit);
-            tmp = tmp.ConvertTo(newCounterUnit);
-            var resultUnit = new LinearDensityUnit(newCounterUnit, Unit.DenominatorUnit);
-            return new LinearDensity(tmp.Value, resultUnit);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var resultUnit = Unit.WithCounterUnit(newUnit);
+            return new LinearDensity(oldFactor / newFactor * Value, resultUnit);
         }
 
-        public LinearDensity WithDenominatorUnit(LengthUnit newDenominatorUnit)
+        public LinearDensity WithDenominatorUnit(LengthUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithDenominatorUnit
-            if (this.Unit.DenominatorUnit == newDenominatorUnit)
+            var oldUnit = Unit.DenominatorUnit;
+            if (oldUnit == newUnit)
                 return this;
-            var nu = new LinearDensityUnit(Unit.CounterUnit, newDenominatorUnit);
-            return ConvertTo(nu);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var resultUnit = Unit.WithDenominatorUnit(newUnit);
+            return new LinearDensity(newFactor / oldFactor * Value, resultUnit);
         }
 
         /// <summary>

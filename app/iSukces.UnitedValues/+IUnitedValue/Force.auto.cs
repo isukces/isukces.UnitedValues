@@ -32,10 +32,8 @@ namespace iSukces.UnitedValues
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
-            var factor = GlobalUnitRegistry.Factors.Get(newUnit);
-            if (factor is null)
-                throw new Exception("Unable to find multiplication for unit " + newUnit);
-            return new Force(basic / factor.Value, newUnit);
+            var factor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            return new Force(basic / factor, newUnit);
         }
 
         public bool Equals(Force other)
