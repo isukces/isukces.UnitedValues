@@ -9,7 +9,10 @@ namespace UnitGenerator
         {
             var c = new MultiplicationAlgebraConfig()
                 .WithMul<Length, Length, Area>(true)
-                .WithMul<Length, Area, Volume>(true);
+                .WithMul<Length, Area, Volume>(true)
+                
+                // .WithDiv<>()
+                ;
 
             var tmp = new MultiplyAlgebraGenerator(nameSpace);
             tmp.CreateOperators(c);

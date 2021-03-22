@@ -1,5 +1,5 @@
 // ReSharper disable All
-// generator: UnitedValuesGenerator
+// generator: BasicUnitedValuesGenerator
 using Newtonsoft.Json;
 using System;
 using System.Globalization;
@@ -28,7 +28,7 @@ namespace iSukces.UnitedValues
 
         public Length ConvertTo(LengthUnit newUnit)
         {
-            // generator : UnitedValuesGenerator.Add_ConvertTo:119
+            // generator : BasicUnitedValuesGenerator.Add_ConvertTo:118
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
@@ -57,7 +57,7 @@ namespace iSukces.UnitedValues
 
         public decimal GetBaseUnitValue()
         {
-            // generator : UnitedValuesGenerator.Add_GetBaseUnitValue:134
+            // generator : BasicUnitedValuesGenerator.Add_GetBaseUnitValue:133
             if (Unit.Equals(BaseUnit))
                 return Value;
             var factor = GlobalUnitRegistry.Factors.Get(Unit);
@@ -108,7 +108,7 @@ namespace iSukces.UnitedValues
 
         public static Length operator -(Length left, Length right)
         {
-            // generator : UnitedValuesGenerator.Add_Algebra:83
+            // generator : BasicUnitedValuesGenerator.Add_Algebra:82
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return -right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
@@ -154,14 +154,14 @@ namespace iSukces.UnitedValues
 
         public static decimal operator /(Length left, Length right)
         {
-            // generator : UnitedValuesGenerator.Add_Algebra:73
+            // generator : BasicUnitedValuesGenerator.Add_Algebra:72
             right = right.ConvertTo(left.Unit);
             return left.Value / right.Value;
         }
 
         public static Length operator +(Length left, Length right)
         {
-            // generator : UnitedValuesGenerator.Add_Algebra:83
+            // generator : BasicUnitedValuesGenerator.Add_Algebra:82
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
@@ -197,7 +197,7 @@ namespace iSukces.UnitedValues
 
         public static Length Parse(string value)
         {
-            // generator : UnitedValuesGenerator.Add_Parse:145
+            // generator : BasicUnitedValuesGenerator.Add_Parse:144
             var parseResult = CommonParse.Parse(value, typeof(Length));
             return new Length(parseResult.Value, new LengthUnit(parseResult.UnitName));
         }

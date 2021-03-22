@@ -24,7 +24,7 @@ namespace UnitGenerator
             var basePath    = Path.Combine(projectRoot.FullName, "app", "iSukces.UnitedValues");
             var nameSpace   = "iSukces.UnitedValues";
 
-            BasicUnitsRunner.Run(basePath, nameSpace);
+            BasicUnitedValuesGeneratorRunner.Run(basePath, nameSpace);
             FractionUnitGeneratorRunner.Run(basePath, nameSpace);
             DerivedUnitGeneratorRunner.Run(basePath, nameSpace);
             FractionValuesGeneratorRunner.Run(basePath, nameSpace);
