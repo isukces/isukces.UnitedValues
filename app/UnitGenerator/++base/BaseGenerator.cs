@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
@@ -33,6 +32,8 @@ namespace UnitGenerator
             foreach (var unit in all)
             {
                 Cfg = unit;
+                if (!CanGenerate())
+                    continue;
                 var file = new CsFile();
                 PrepareFile(file);
                 var ns   = file.GetOrCreateNamespace(_nameSpace);
@@ -125,6 +126,11 @@ namespace UnitGenerator
                 m.AddParam("left", Target.Name, "first value to compare");
                 m.AddParam("right", Target.Name, "second value to compare");
             }
+        }
+
+        protected virtual bool CanGenerate()
+        {
+            return true;
         }
 
         protected abstract void GenerateOne();

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace UnitGenerator
 {
@@ -7,12 +8,23 @@ namespace UnitGenerator
     {
         public PrimitiveUnitsCollection(IReadOnlyList<PrimitiveUnit> items)
         {
-            Items         = items;
-            DistinctNames = items.Select(a => a.UnitTypeName).Distinct().ToArray();
+            Items = items;
+            _dict = items.GroupBy(a => a.UnitTypes.Unit)
+                .ToDictionary(a => a.Key, a => a.ToArray());
+            DistinctNames = _dict.Keys.ToArray();
+        }
+
+        [CanBeNull]
+        public PrimitiveUnit GetDeltaByUnit(string unit)
+        {
+            if (!_dict.TryGetValue(unit, out var item))
+                return null;
+            return item.FirstOrDefault(a => a.UnitTypes.ValueKind == Kind.Delta);
         }
 
         public IReadOnlyList<PrimitiveUnit> Items { get; }
 
         public IReadOnlyList<string> DistinctNames { get; }
+        private readonly Dictionary<string, PrimitiveUnit[]> _dict;
     }
 }

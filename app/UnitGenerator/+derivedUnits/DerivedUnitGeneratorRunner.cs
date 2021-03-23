@@ -30,7 +30,13 @@ namespace UnitGenerator
                     .WithUnit("mN", "MiliNewton", 0.001m),
 
                 new DerivedUnitInfo(nameof(Time)).WithTime(1),
-                new DerivedUnitInfo(nameof(SquareTime)).WithTime(2)
+                new DerivedUnitInfo(nameof(SquareTime)).WithTime(2),
+                
+                new DerivedUnitInfo(nameof(CelsiusTemperature))
+                    .WithUnit("°C", "Degree", 1),
+                new DerivedUnitInfo(nameof(KelvinTemperature))
+                    .WithUnit("K", "Degree", 1)
+
             };
             return arr;
         }

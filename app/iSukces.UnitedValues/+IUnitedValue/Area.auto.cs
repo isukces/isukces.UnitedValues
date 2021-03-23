@@ -101,7 +101,7 @@ namespace iSukces.UnitedValues
 
         public static Area operator -(Area left, Area right)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Algebra
+            // generator : BasicUnitedValuesGenerator.Add_Algebra_PlusMinus
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return -right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
@@ -142,14 +142,14 @@ namespace iSukces.UnitedValues
 
         public static decimal operator /(Area left, Area right)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Algebra
+            // generator : BasicUnitedValuesGenerator.Add_Algebra_MulDiv
             right = right.ConvertTo(left.Unit);
             return left.Value / right.Value;
         }
 
         public static Area operator +(Area left, Area right)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Algebra
+            // generator : BasicUnitedValuesGenerator.Add_Algebra_PlusMinus
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))

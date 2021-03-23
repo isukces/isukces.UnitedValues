@@ -1,3 +1,4 @@
+using System;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
@@ -40,16 +41,18 @@ namespace UnitGenerator
 
             Target.Attributes.Add(new CsAttribute("Serializable"));
             Target.Attributes.Add(
-                new CsAttribute("JsonConverter").WithArgumentCode("typeof(" + Cfg.ValueTypeName + "JsonConverter)"));
+                new CsAttribute("JsonConverter").WithArgumentCode("typeof(" + Cfg.UnitTypes.Value + "JsonConverter)"));
 
-            AddCommonValues_PropertiesAndConstructor(Cfg.UnitTypeName);
+            AddCommonValues_PropertiesAndConstructor(Cfg.UnitTypes.Unit);
 
             Add_Properties();
             Add_GetBaseUnitValue();
             Add_Parse();
             Add_Round();
             Add_Comparable();
-            Add_Algebra();
+            Add_Algebra_MulDiv();
+            Add_Algebra_MinusUnary();
+            Add_Algebra_PlusMinus();
             Add_ConvertTo();
             Add_FromMethods();
         }
@@ -64,13 +67,13 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypeName, null, "unit")
+                    Cfg.UnitTypes.Unit, null, "unit")
             };
         }
 
         protected override string GetTypename(PrimitiveUnit cfg)
         {
-            return cfg.ValueTypeName;
+            return cfg.UnitTypes.Value;
         }
 
         protected override void PrepareFile(CsFile file)
@@ -79,16 +82,21 @@ namespace UnitGenerator
             file.AddImportNamespace("Newtonsoft.Json");
         }
 
-        private void Add_Algebra()
+        private void Add_Algebra_MinusUnary()
         {
-            Target.AddOperator("*", "value.Value * number", "value.Unit")
-                .WithLeftRightArguments(Target.Name, ValuePropertyType, "value", "number");
-            Target.AddOperator("*", "value.Value * number", "value.Unit")
-                .WithLeftRightArguments(ValuePropertyType, Target.Name, "number", "value");
-            Target.AddOperator("/", "value.Value / number", "value.Unit")
-                .WithLeftRightArguments(Target.Name, ValuePropertyType, "value", "number");
-            Target.AddOperator("-", "-value.Value", "value.Unit")
+            Target.AddOperator("-", new Args("-value.Value", "value.Unit"))
                 .AddParam("value", Target.Name);
+        }
+
+
+        private void Add_Algebra_MulDiv()
+        {
+            Target.AddOperator("*", new Args("value.Value * number", "value.Unit"))
+                .WithLeftRightArguments(Target.Name, ValuePropertyType, "value", "number");
+            Target.AddOperator("*", new Args("value.Value * number", "value.Unit"))
+                .WithLeftRightArguments(ValuePropertyType, Target.Name, "number", "value");
+            Target.AddOperator("/", new Args("value.Value / number", "value.Unit"))
+                .WithLeftRightArguments(Target.Name, ValuePropertyType, "value", "number");
 
             {
                 var cw = Ext.Create<BasicUnitedValuesGenerator>();
@@ -98,24 +106,74 @@ namespace UnitGenerator
                     .WithLeftRightArguments(Target.Name, Target.Name)
                     .WithBody(cw);
             }
+        }
 
-            foreach (var i in "+,-".Split(','))
+        private void Add_Algebra_PlusMinus()
+        {
+            const string right = "right";
+            const string left  = "left";
+
+            var delta = PrimitiveValuesDefinitions.All.GetDeltaByUnit(Cfg.UnitTypes.Unit);
+            if (delta != null)
+                if (delta.UnitTypes.Value == Cfg.UnitTypes.Value)
+                    delta = null;
+
+            void AddPlusOrMinus(string op, string lt, string rt)
             {
-                var cw               = Ext.Create<BasicUnitedValuesGenerator>();
-                var minusIfNecessary = i == "-" ? "-" : "";
-                cw.SingleLineIf(
-                    "left.Value.Equals(" + ValuePropertyType + ".Zero) && string.IsNullOrEmpty(left.Unit.UnitName)",
-                    ReturnValue(minusIfNecessary + "right"));
-                cw.SingleLineIf(
-                    "right.Value.Equals(" + ValuePropertyType + ".Zero) && string.IsNullOrEmpty(right.Unit.UnitName)",
-                    ReturnValue("left"));
+                var resultType = Cfg.UnitTypes.Value;
+                if (delta != null && op == "-")
+                    resultType = delta.UnitTypes.Value;
 
-                cw.WriteLine("right = right.ConvertTo(left.Unit);");
-                cw.WriteLine(ReturnValue("new " + Cfg.ValueTypeName + "(left.Value " + i + " right.Value, left.Unit)"));
+                string CreateResultFromVariable(string varName, string srcType, bool addMinus = false)
+                {
+                    var result = addMinus ? "-" + varName : varName;
+                    if (delta is null || srcType == resultType) return result;
 
-                Target.AddMethod(i, Cfg.ValueTypeName)
-                    .WithLeftRightArguments(Target.Name, Target.Name)
+                    var unitSource = varName;
+                    if (lt != rt)
+                    {
+                        if (lt == resultType)
+                            unitSource = left;
+                        else if (rt == resultType)
+                            unitSource = right;
+                        else
+                            throw new NotSupportedException();
+                    }
+
+                    result = new Args(result + ".Value", unitSource + ".Unit").Create(resultType);
+                    return result;
+                }
+
+                var cw = Ext.Create<BasicUnitedValuesGenerator>();
+
+                var result1 = CreateResultFromVariable(right, rt, op == "-");
+                cw.SingleLineIf(
+                    $"{left}.Value.Equals({ValuePropertyType}.Zero) && string.IsNullOrEmpty({left}.Unit.UnitName)",
+                    ReturnValue(result1));
+
+                result1 = CreateResultFromVariable(left, lt);
+                cw.SingleLineIf(
+                    right + ".Value.Equals(" + ValuePropertyType + ".Zero) && string.IsNullOrEmpty(" + right +
+                    ".Unit.UnitName)",
+                    ReturnValue(result1));
+
+                cw.WriteLine($"{right} = {right}.ConvertTo({left}.Unit);");
+                var returnExpression = new Args($"{left}.Value {op} {right}.Value", $"{left}.Unit").Create(resultType);
+                cw.WriteLine(ReturnValue(returnExpression));
+                Target.AddMethod(op, resultType)
+                    .WithLeftRightArguments(lt, rt)
                     .WithBody(cw);
+            }
+
+            AddPlusOrMinus("-", Target.Name, Target.Name);
+            if (delta != null)
+            {
+                AddPlusOrMinus("+", Target.Name, delta.UnitTypes.Value);
+                AddPlusOrMinus("+", delta.UnitTypes.Value, Target.Name);
+            }
+            else
+            {
+                AddPlusOrMinus("+", Target.Name, Target.Name);
             }
         }
 
@@ -124,7 +182,7 @@ namespace UnitGenerator
             if (!Cfg.IsComparable) return;
             Target.AddMethod("CompareTo", "int")
                 .WithBodyFromExpression(
-                    "UnitedValuesUtils.Compare<" + Cfg.ValueTypeName + ", " + Cfg.UnitTypeName + ">(this, other)")
+                    "UnitedValuesUtils.Compare<" + Cfg.UnitTypes.Value + ", " + Cfg.UnitTypes.Unit + ">(this, other)")
                 .AddParam("other", Target.Name);
 
             var operators = "!=,==,>,<,>=,<=";
@@ -145,17 +203,17 @@ namespace UnitGenerator
 
             Target.AddMethod("ConvertTo", Target.Name)
                 .WithBody(cw)
-                .AddParam("newUnit", Cfg.UnitTypeName);
+                .AddParam("newUnit", Cfg.UnitTypes.Unit);
         }
 
         private void Add_FromMethods()
         {
             var tmp = DerivedUnitGeneratorRunner.GetAll();
-            var d   = tmp.ByName(Cfg.ValueTypeName);
+            var d   = tmp.ByName(Cfg.UnitTypes.Value);
 
             if (d is null) return;
-            foreach (var u in d.Units) 
-                Add_FromMethods(Cfg.ValueTypeName, Cfg.UnitTypes, Target, u);
+            foreach (var u in d.Units)
+                Add_FromMethods(Cfg.UnitTypes.Value, Cfg.UnitTypes, Target, u);
         }
 
 
@@ -173,10 +231,10 @@ namespace UnitGenerator
         private void Add_Parse()
         {
             var cs = Ext.Create<BasicUnitedValuesGenerator>();
-            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.ValueTypeName}));");
+            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.UnitTypes.Value}));");
             cs.WriteLine(
-                $"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");
-            Target.AddMethod("Parse", Cfg.ValueTypeName)
+                $"return new {Cfg.UnitTypes.Value}(parseResult.Value, new {Cfg.UnitTypes.Unit}(parseResult.UnitName));");
+            Target.AddMethod("Parse", Cfg.UnitTypes.Value)
                 .WithBody(cs)
                 .WithStatic()
                 .AddParam<string>("value", Target);
@@ -184,11 +242,11 @@ namespace UnitGenerator
 
         private void Add_Properties()
         {
-            Target.AddField("BaseUnit", Cfg.UnitTypeName)
+            Target.AddField("BaseUnit", Cfg.UnitTypes.Unit)
                 .WithStatic()
                 .WithIsReadOnly()
                 .WithConstValue(Cfg.BaseUnit);
-            Target.AddField("Zero", Cfg.ValueTypeName)
+            Target.AddField("Zero", Cfg.UnitTypes.Value)
                 .WithStatic()
                 .WithIsReadOnly()
                 .WithConstValue($"new {Target.Name}(0, BaseUnit)");
@@ -197,11 +255,11 @@ namespace UnitGenerator
         private void Add_Round()
         {
             var cs = Ext.Create<BasicUnitedValuesGenerator>();
-            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.ValueTypeName}));");
+            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.UnitTypes.Value}));");
             cs.WriteLine(
-                $"return new {Cfg.ValueTypeName}(parseResult.Value, new {Cfg.UnitTypeName}(parseResult.UnitName));");
-            Target.AddMethod("Round", Cfg.ValueTypeName)
-                .WithBodyFromExpression("new " + Cfg.ValueTypeName + "(Math.Round(Value, decimalPlaces), Unit)")
+                $"return new {Cfg.UnitTypes.Value}(parseResult.Value, new {Cfg.UnitTypes.Unit}(parseResult.UnitName));");
+            Target.AddMethod("Round", Cfg.UnitTypes.Value)
+                .WithBodyFromExpression("new " + Cfg.UnitTypes.Value + "(Math.Round(Value, decimalPlaces), Unit)")
                 .AddParam<int>("decimalPlaces", Target);
         }
     }

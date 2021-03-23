@@ -16,7 +16,11 @@ namespace UnitGenerator
             value = value?.TrimToNull();
             Value = value ?? throw new ArgumentException(nameof(value));
 
-            Unit      = unit?.TrimToNull() ?? value + "Unit";
+            var isDeltaValue = Value.StartsWith("Delta", StringComparison.Ordinal);
+            ValueKind = isDeltaValue ? Kind.Delta : Kind.Normal;
+            var valueNoDelta = isDeltaValue ? Value.Substring(5) : Value;
+
+            Unit      = unit?.TrimToNull() ?? valueNoDelta + "Unit";
             Container = container?.TrimToNull() ?? Unit + "s";
         }
 
@@ -63,6 +67,8 @@ namespace UnitGenerator
                 $"ValueTypeName={Value}, UnitTypeName={Unit}, UnitContainerTypeName={Container}";
         }
 
+        public Kind ValueKind { get; }
+
 
         /// <summary>
         ///     Name of type that contains value and unit i.e. Length
@@ -78,5 +84,11 @@ namespace UnitGenerator
         ///     Name of static type that contains fields with known unit names i.e. LengthUnits
         /// </summary>
         public string Container { get; }
+    }
+
+    public enum Kind
+    {
+        Normal,
+        Delta
     }
 }

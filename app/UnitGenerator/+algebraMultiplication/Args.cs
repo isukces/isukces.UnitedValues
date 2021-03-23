@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace UnitGenerator
 {
-    internal class Args
+    public class Args
     {
         public Args(params string[] args)
         {

@@ -31,7 +31,23 @@ namespace UnitGenerator
 
         private static readonly PrimitiveUnit
             SquareTime = new PrimitiveUnit("SquareTime", "SquareSecond", true);
+        
+        
+        
+        private static readonly PrimitiveUnit
+            CelsiusTemperature = new PrimitiveUnit("CelsiusTemperature", "Degree", true);
 
+        private static readonly PrimitiveUnit
+            KelvinTemperature = new PrimitiveUnit("KelvinTemperature", "Degree", true);
+             
+
+        private static readonly PrimitiveUnit
+            DeltaCelsiusTemperature = new PrimitiveUnit("DeltaCelsiusTemperature", "Degree", true);
+
+        private static readonly PrimitiveUnit
+            DeltaKelvinTemperature = new PrimitiveUnit("DeltaKelvinTemperature", "Degree", true);
+
+        
         private static PrimitiveUnitsCollection _all;
     }
 }

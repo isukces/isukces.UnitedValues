@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace UnitGenerator
@@ -17,9 +18,6 @@ namespace UnitGenerator
         /// </summary>
         public TypesGroup UnitTypes { get; }
 
-        public string ValueTypeName => UnitTypes.Value;
-
-        public string UnitTypeName => UnitTypes.Unit;
         public bool   IsComparable { get; }
 
         /// <summary>
@@ -31,10 +29,10 @@ namespace UnitGenerator
         {
             get
             {
-                yield return $"IUnitedValue<{UnitTypeName}>";
-                yield return $"IEquatable<{ValueTypeName}>";
+                yield return $"IUnitedValue<{UnitTypes.Unit}>";
+                yield return $"IEquatable<{UnitTypes.Value}>";
                 if (IsComparable)
-                    yield return $"IComparable<{ValueTypeName}>";
+                    yield return $"IComparable<{UnitTypes.Value}>";
                 yield return "IFormattable";
             }
         }

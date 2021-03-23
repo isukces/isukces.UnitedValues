@@ -9,12 +9,44 @@ namespace UnitGenerator
 {
     public static class Ext
     {
-        public static CsMethod AddOperator(this CsClass cl, string operatorName, params string[] args)
+        public static CsMethod AddOperator(this CsClass cl, string operatorName, Args arg, string resultType = null)
         {
-            var arg  = new Args(args);
-            var code = arg.Create(cl.Name);
-            return cl.AddMethod(operatorName, cl.Name, "implements " + operatorName + " operator")
+            resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name);
+            var code = arg.Create(resultType);
+            return cl.AddMethod(operatorName, resultType, "implements " + operatorName + " operator")
                 .WithBodyFromExpression(code);
+        }
+
+        public static string AddPrefix(this string txt, string prefix)
+        {
+            if (string.IsNullOrWhiteSpace(txt))
+                return null;
+            return prefix + txt;
+        }
+
+        public static string CoalesceNullOrWhiteSpace(this string a, string b)
+        {
+            if (string.IsNullOrWhiteSpace(a))
+                return b;
+            return a;
+        }
+
+        public static CsCodeWriter Create<T>([CallerLineNumber] int lineNumber = 0,
+            [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null
+        )
+        {
+            var location = new SourceCodeLocation(lineNumber, memberName, filePath)
+                .WithGeneratorClass(typeof(T));
+            var code = new CsCodeWriter
+            {
+                Location = location
+            };
+
+            location = new SourceCodeLocation(0, memberName, filePath)
+                .WithGeneratorClass(typeof(T));
+
+            code.WriteLine("// generator : " + location);
+            return code;
         }
 
         public static string CsEncode(decimal multiplicator)
@@ -51,38 +83,6 @@ namespace UnitGenerator
             method.AddParam(leftName, leftType);
             method.AddParam(rightName, rightType);
             return method;
-        }
-
-        public static CsCodeWriter Create<T>([CallerLineNumber] int lineNumber = 0,
-            [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null
-        )
-        {
-            var location = new SourceCodeLocation(lineNumber, memberName, filePath)
-                .WithGeneratorClass(typeof(T));
-            var code = new CsCodeWriter
-            {
-                Location = location
-            };
-            
-            location = new SourceCodeLocation(0, memberName, filePath)
-                .WithGeneratorClass(typeof(T));
-            
-            code.WriteLine("// generator : " + location.ToString());
-            return code;
-        }
-
-        public static string CoalesceNullOrWhiteSpace(this string a, string b)
-        {
-            if (string.IsNullOrWhiteSpace(a))
-                return b;
-            return a;
-        }
-
-        public static string AddPrefix(this string txt, string prefix)
-        {
-            if (string.IsNullOrWhiteSpace(txt))
-                return null;
-            return prefix + txt;
         }
     }
 }
