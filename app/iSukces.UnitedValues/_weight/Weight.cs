@@ -4,8 +4,6 @@ namespace iSukces.UnitedValues
 {
     public partial struct Weight
     {
- 
-
         /// <summary>
         ///     Div
         /// </summary>

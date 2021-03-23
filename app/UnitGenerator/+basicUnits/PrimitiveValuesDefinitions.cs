@@ -1,5 +1,8 @@
 namespace UnitGenerator
 {
+    /// <summary>
+    /// After adding new item update also units in <see cref="DerivedUnitGeneratorRunner.GetAllItems">GetAllItems</see>
+    /// </summary>
     public class PrimitiveValuesDefinitions
     {
         public static UnitInfo[] All()
@@ -16,6 +19,10 @@ namespace UnitGenerator
         private static readonly UnitInfo Area = new UnitInfo("Area", "SquareMeter", false);
         private static readonly UnitInfo Volume = new UnitInfo("Volume", "CubicMeter", false);
         
+        
+        
+        private static readonly UnitInfo Time = new UnitInfo("Time", "Second", true);
+        private static readonly UnitInfo SquareTime = new UnitInfo("SquareTime", "SquareSecond", true);
         
     }
 }

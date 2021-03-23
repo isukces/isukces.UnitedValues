@@ -27,7 +27,10 @@ namespace UnitGenerator
                     .WithUnit("N", "Newton", 1)
                     .WithUnit("kN", "KiloNewton", 1000)
                     .WithUnit("MN", "MegaNewton", 1000_000)
-                    .WithUnit("mN", "MiliNewton", 0.001m)
+                    .WithUnit("mN", "MiliNewton", 0.001m),
+                
+                new DerivedUnitInfo(nameof(Time)).WithTime(1),
+                new DerivedUnitInfo("SquareTime").WithTime(2),
             };
             return arr;
         }

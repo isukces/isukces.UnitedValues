@@ -55,34 +55,42 @@ namespace UnitGenerator
 
         public DerivedUnitInfo WithLengths(int power)
         {
+            var g = new[]
+            {
+                new ShortInfo("Meter", "m", 1m),
+                new ShortInfo("Km", "km", 1000m, "Kilometers"),
+                new ShortInfo("Dm", "dm", 0.1m, "Decimeters"),
+                new ShortInfo("Cm", "cm", 0.01m, "Centimeters"),
+                new ShortInfo("Mm", "mm", 0.001m, "Milimeters"),
+                new ShortInfo("Inch", "inch", 0.0254m, "Inches"),
+                new ShortInfo("Feet", "ft", 0.3048m, "Foot"),
+                new ShortInfo("Yard", "yd", 0.9144m, "Yards"),
+                new ShortInfo("Furlong", "fg", 201.1680m, "Furlongs"),
+                new ShortInfo("Fathom", "fh", 1.8288m),
+                new ShortInfo("Mile", "mil", 1609.344m, "Miles"),
+                new ShortInfo("NauticalMile", "nm", 1852m, "NauticalMiles")
+            };
+
+            return WithPoweredUnits(power, g, "Length,Area,Volume".Split(','));
+        }
+
+        public DerivedUnitInfo WithPoweredUnits(int power, ShortInfo[] items, string[] values)
+        {
             var unitSuffix     = Suffix(power);
             var propertyPrefix = Prefix(power);
 
-            void Add(string prop, string unit, decimal m, string fromMethodNameSufix = null)
+            foreach (var i in items)
             {
-                fromMethodNameSufix = fromMethodNameSufix.AddPrefix(propertyPrefix);
-                WithUnit(unit + unitSuffix, propertyPrefix + prop, Mul(power, m),
+                var fromMethodNameSufix = i.FromMethodNameSufix.AddPrefix(propertyPrefix);
+                WithUnit(i.Unit + unitSuffix, propertyPrefix + i.Prop, Mul(power, i.M),
                     fromMethodNameSufix: fromMethodNameSufix);
             }
-
-            Add("Meter", "m", 1m);
-            Add("Km", "km", 1000m, "Kilometers");
-            Add("Dm", "dm", 0.1m, "Decimeters");
-            Add("Cm", "cm", 0.01m, "Centimeters");
-            Add("Mm", "mm", 0.001m, "Milimeters");
-            Add("Inch", "inch", 0.0254m, "Inches");
-            Add("Feet", "ft", 0.3048m, "Foot");
-            Add("Yard", "yd", 0.9144m, "Yards");
-            Add("Furlong", "fg", 201.1680m, "Furlongs");
-            Add("Fathom", "fh", 1.8288m);
-            Add("Mile", "mil", 1609.344m, "Miles");
-            Add("NauticalMile", "nm", 1852m, "NauticalMiles");
 
             if (power <= 1) return this;
             for (var i = 1; i < power; i++)
             {
-                var otherUnitContainer = GetUnit(i) + "Unit";
-                var myUnitContainer    = GetUnit(power) + "Unit";
+                var otherUnitContainer = values[i - 1] + "Unit";
+                var myUnitContainer    = values[power - 1] + "Unit";
                 var relation = new PrefixRelation(
                     Prefix(i), Prefix(power),
                     myUnitContainer, otherUnitContainer);
@@ -90,21 +98,18 @@ namespace UnitGenerator
             }
 
             return this;
+        }
 
-            string GetUnit(int xPower)
+        public DerivedUnitInfo WithTime(int power)
+        {
+            var g = new[]
             {
-                switch (xPower)
-                {
-                    case 1:
-                        return "Length";
-                    case 2:
-                        return "Area";
-                    case 3:
-                        return "Volume";
-                    default:
-                        throw new NotImplementedException();
-                }
-            }
+                new ShortInfo("Second", "s", 1m),
+                new ShortInfo("Minute", "min", 60, "Minutes"),
+                new ShortInfo("Hour", "h", 3600, "Hours"),
+            };
+
+            return WithPoweredUnits(power, g, "Time,SquareTime".Split(','));
         }
 
         public DerivedUnitInfo WithUnit(string unitShortName,
@@ -131,5 +136,29 @@ namespace UnitGenerator
 
         public List<DerivedUnitDefinition> Units           { get; } = new List<DerivedUnitDefinition>();
         public List<PrefixRelation>        PrefixRelations { get; } = new List<PrefixRelation>();
+
+        public class ShortInfo
+        {
+            public ShortInfo(string prop, string unit, decimal m, string fromMethodNameSufix = null)
+            {
+                Prop                = prop;
+                Unit                = unit;
+                M                   = m;
+                FromMethodNameSufix = fromMethodNameSufix;
+            }
+
+            public override string ToString()
+            {
+                return $"Prop={Prop}, Unit={Unit}, M={M}, FromMethodNameSufix={FromMethodNameSufix}";
+            }
+
+            public string Prop { get; }
+
+            public string Unit { get; }
+
+            public decimal M { get; }
+
+            public string FromMethodNameSufix { get; }
+        }
     }
 }
