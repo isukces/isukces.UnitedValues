@@ -46,13 +46,13 @@ namespace iSukces.UnitedValues
 
         public LinearDensityUnit WithCounterUnit(WeightUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithCounterUnit
+            // generator : FractionUnitGenerator.Add_WithSecond
             return new LinearDensityUnit(newUnit, DenominatorUnit);
         }
 
         public LinearDensityUnit WithDenominatorUnit(LengthUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithDenominatorUnit
+            // generator : FractionUnitGenerator.Add_WithFirst
             return new LinearDensityUnit(CounterUnit, newUnit);
         }
 

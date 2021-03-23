@@ -46,13 +46,13 @@ namespace iSukces.UnitedValues
 
         public PressureUnit WithCounterUnit(ForceUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithCounterUnit
+            // generator : FractionUnitGenerator.Add_WithSecond
             return new PressureUnit(newUnit, DenominatorUnit);
         }
 
         public PressureUnit WithDenominatorUnit(AreaUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithDenominatorUnit
+            // generator : FractionUnitGenerator.Add_WithFirst
             return new PressureUnit(CounterUnit, newUnit);
         }
 

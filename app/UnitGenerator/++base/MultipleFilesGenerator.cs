@@ -31,6 +31,7 @@ namespace UnitGenerator
             if (_clases.TryGetValue(name, out var info))
                 return info.Cl;
             var file = new CsFile();
+            file.BeginContent += "// generator: " + GetType().Name;
             ProcessFile(file);
             var ns = file.GetOrCreateNamespace(_nameSpace);
             var cl = ns.GetOrCreateClass(name);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
@@ -31,22 +32,30 @@ namespace UnitGenerator
             return a;
         }
 
-        public static CsCodeWriter Create<T>([CallerLineNumber] int lineNumber = 0,
+        
+        public static CsCodeWriter Create(Type callerType, [CallerLineNumber] int lineNumber = 0,
             [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null
         )
         {
             var location = new SourceCodeLocation(lineNumber, memberName, filePath)
-                .WithGeneratorClass(typeof(T));
+                .WithGeneratorClass(callerType);
             var code = new CsCodeWriter
             {
                 Location = location
             };
 
             location = new SourceCodeLocation(0, memberName, filePath)
-                .WithGeneratorClass(typeof(T));
+                .WithGeneratorClass(callerType);
 
             code.WriteLine("// generator : " + location);
             return code;
+        }
+        
+        public static CsCodeWriter Create<T>([CallerLineNumber] int lineNumber = 0,
+            [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null
+        )
+        {
+            return Create(typeof(T), lineNumber, memberName, filePath);
         }
 
         public static string CsEncode(this decimal multiplicator)

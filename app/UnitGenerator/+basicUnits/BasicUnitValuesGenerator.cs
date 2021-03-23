@@ -195,7 +195,7 @@ namespace UnitGenerator
 
         private void Add_ConvertTo()
         {
-            var cw = Ext.Create<BasicUnitValuesGenerator>();
+            var cw = Ext.Create(GetType());
             cw.SingleLineIf("Unit.Equals(newUnit)", ReturnValue("this"));
             cw.WriteLine("var basic = GetBaseUnitValue();");
             cw.WriteLine("var factor = GlobalUnitRegistry.Factors.GetThrow(newUnit);");

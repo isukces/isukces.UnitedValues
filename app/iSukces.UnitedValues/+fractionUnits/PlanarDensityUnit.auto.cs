@@ -46,13 +46,13 @@ namespace iSukces.UnitedValues
 
         public PlanarDensityUnit WithCounterUnit(WeightUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithCounterUnit
+            // generator : FractionUnitGenerator.Add_WithSecond
             return new PlanarDensityUnit(newUnit, DenominatorUnit);
         }
 
         public PlanarDensityUnit WithDenominatorUnit(AreaUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithDenominatorUnit
+            // generator : FractionUnitGenerator.Add_WithFirst
             return new PlanarDensityUnit(CounterUnit, newUnit);
         }
 

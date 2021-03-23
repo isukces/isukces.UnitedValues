@@ -29,6 +29,7 @@ namespace iSukces.UnitedValues
 
         public Pressure ConvertTo(PressureUnit newUnit)
         {
+            // generator : FractionValuesGenerator.Add_ConvertTo
             if (Unit.Equals(newUnit))
                 return this;
             var a = new Force(Value, Unit.CounterUnit);
@@ -132,10 +133,11 @@ namespace iSukces.UnitedValues
 
         public static Pressure Parse(string value)
         {
+            // generator : FractionValuesGenerator.Add_Parse
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(value));
             var r = CommonParse.Parse(value, typeof(Pressure));
-            var units = r.UnitName.Split('/');
+            var units = Common.SplitUnitNameBySlash(r.UnitName);
             if (units.Length != 2)
                 throw new Exception($"{r.UnitName} is not valid Pressure unit");
             var counterUnit = new ForceUnit(units[0]);

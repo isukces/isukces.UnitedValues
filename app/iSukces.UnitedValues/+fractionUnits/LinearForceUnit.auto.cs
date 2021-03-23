@@ -46,13 +46,13 @@ namespace iSukces.UnitedValues
 
         public LinearForceUnit WithCounterUnit(LengthUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithCounterUnit
+            // generator : FractionUnitGenerator.Add_WithSecond
             return new LinearForceUnit(newUnit, DenominatorUnit);
         }
 
         public LinearForceUnit WithDenominatorUnit(SquareTimeUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithDenominatorUnit
+            // generator : FractionUnitGenerator.Add_WithFirst
             return new LinearForceUnit(CounterUnit, newUnit);
         }
 

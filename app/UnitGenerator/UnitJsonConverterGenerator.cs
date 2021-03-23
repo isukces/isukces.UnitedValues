@@ -17,7 +17,6 @@ namespace UnitGenerator
             if (ClassicImpl)
             {
                 Target.BaseClass = "JsonConverter";
-
                 Add_CanConvert();
                 Add_ReadJson();
                 Add_WriteJson();
@@ -92,9 +91,11 @@ namespace UnitGenerator
         {
             var cw = new CsCodeWriter();
 
+            var s                        = "value.ToString()";
+            if (Cfg is ProductUnit pu) s = $"(({pu.UnitTypes.Value})value).SerializeToJson()";
             cw.SingleLineIf("value is null",
                 "writer.WriteNull();",
-                "writer.WriteValue(value.ToString());");
+                "writer.WriteValue(" + s + ");");
 
             var m = Target.AddMethod("WriteJson", "void")
                 .WithOverride()

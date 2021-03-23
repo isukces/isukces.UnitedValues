@@ -29,6 +29,7 @@ namespace iSukces.UnitedValues
 
         public LinearDensity ConvertTo(LinearDensityUnit newUnit)
         {
+            // generator : FractionValuesGenerator.Add_ConvertTo
             if (Unit.Equals(newUnit))
                 return this;
             var a = new Weight(Value, Unit.CounterUnit);
@@ -132,10 +133,11 @@ namespace iSukces.UnitedValues
 
         public static LinearDensity Parse(string value)
         {
+            // generator : FractionValuesGenerator.Add_Parse
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(value));
             var r = CommonParse.Parse(value, typeof(LinearDensity));
-            var units = r.UnitName.Split('/');
+            var units = Common.SplitUnitNameBySlash(r.UnitName);
             if (units.Length != 2)
                 throw new Exception($"{r.UnitName} is not valid LinearDensity unit");
             var counterUnit = new WeightUnit(units[0]);

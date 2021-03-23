@@ -1,24 +1,19 @@
 using System.Collections.Generic;
 using iSukces.UnitedValues;
-using Self = UnitGenerator.FractionUnitGenerator;
+using Self = UnitGenerator.ProductUnitGenerator;
 
 namespace UnitGenerator
 {
-    internal class FractionUnitGenerator : BaseCompositeUnitGenerator<FractionUnit>
+    internal class ProductUnitGenerator : BaseCompositeUnitGenerator<ProductUnit>
     {
-        public FractionUnitGenerator(string output, string nameSpace) : base(output, nameSpace)
+        public ProductUnitGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
-        }
-
-        protected override Info2 GetInfo2()
-        {
-            return new Info2("/");
         }
 
         protected override IEnumerable<string> GetImplementedInterfaces()
         {
             var name = new Args(Cfg.CounterUnit.Unit, Cfg.DenominatorUnit.Unit)
-                .MakeGenericType(nameof(IFractionalUnit));
+                .MakeGenericType(nameof(IProductUnit));
             return new[] {name};
         }
 
@@ -27,8 +22,13 @@ namespace UnitGenerator
             return CompositeUnitGeneratorInfo.Make(Cfg);
         }
 
+        protected override Info2 GetInfo2()
+        {
+            return new Info2("");
+        }
 
-        protected override string GetTypename(FractionUnit cfg)
+
+        protected override string GetTypename(ProductUnit cfg)
         {
             return Cfg.UnitTypes.Unit;
         }

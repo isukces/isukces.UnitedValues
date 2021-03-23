@@ -29,9 +29,11 @@ namespace UnitGenerator
             FractionUnitGeneratorRunner.Run(basePath, nameSpace);
             DerivedUnitGeneratorRunner.Run(basePath, nameSpace);
             FractionValuesGeneratorRunner.Run(basePath, nameSpace);
+            ProductValuesGeneratorRunner.Run(basePath, nameSpace);
 
             // AlgebraGeneratorRunner.Run(basePath, nameSpace);
             MultiplyAlgebraGeneratorRunner.Run(basePath, nameSpace);
+            ProductUnitGeneratorRunner.Run(basePath, nameSpace);
 
             Console.WriteLine("Done");
         }

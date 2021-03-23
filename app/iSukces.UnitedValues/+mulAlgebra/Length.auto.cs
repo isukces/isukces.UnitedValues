@@ -1,4 +1,5 @@
 // ReSharper disable All
+// generator: MultiplyAlgebraGenerator
 using System;
 
 namespace iSukces.UnitedValues

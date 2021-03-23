@@ -29,7 +29,7 @@ namespace iSukces.UnitedValues
     {
     }
 
-    public interface IFractionalUnit<out TCounter, out TDenominator> : IUnit
+    public interface IFractionalUnit<out TCounter, out TDenominator> : IFractionalUnit
     {
         /// <summary>
         ///     counter unit
@@ -40,5 +40,22 @@ namespace iSukces.UnitedValues
         ///     denominator unit
         /// </summary>
         TDenominator DenominatorUnit { get; }
+    }
+
+    public interface IProductUnit : IUnit
+    {
+    }
+
+    public interface IProductUnit<out TCounter, out TDenominator> : IProductUnit
+    {
+        /// <summary>
+        ///     left unit
+        /// </summary>
+        TCounter LeftUnit { get; }
+
+        /// <summary>
+        ///     right unit
+        /// </summary>
+        TDenominator RightUnit { get; }
     }
 }

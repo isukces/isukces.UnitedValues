@@ -7,12 +7,15 @@ namespace UnitGenerator
         public static void Run(string basePath, string nameSpace)
         {
             var infos     = FractionUnitDefs.All;
-            var generator = new FractionUnitGenerator(Path.Combine(basePath, "+fractionUnits"), nameSpace);
+            var path   = Path.Combine(basePath, "+fractionUnits");
+            var generator = new FractionUnitGenerator(path, nameSpace);
             generator.Generate(infos.Items);
 
             var gen2 = new CommonFractionalUnitsGenerator(nameSpace);
             gen2.Generate(CommonFractionalUnitDefs.All);
-            gen2.Save(Path.Combine(basePath, "+++temp"));
+            
+            path = Path.Combine(path, "+common");
+            gen2.Save(path);
         }
     }
 }

@@ -1,4 +1,5 @@
 // ReSharper disable All
+// generator: CommonFractionalUnitsGenerator
 using System;
 
 namespace iSukces.UnitedValues

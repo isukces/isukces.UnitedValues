@@ -46,13 +46,13 @@ namespace iSukces.UnitedValues
 
         public AccelerationUnit WithCounterUnit(LengthUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithCounterUnit
+            // generator : FractionUnitGenerator.Add_WithSecond
             return new AccelerationUnit(newUnit, DenominatorUnit);
         }
 
         public AccelerationUnit WithDenominatorUnit(SquareTimeUnit newUnit)
         {
-            // generator : FractionUnitGenerator.Add_WithDenominatorUnit
+            // generator : FractionUnitGenerator.Add_WithFirst
             return new AccelerationUnit(CounterUnit, newUnit);
         }
 
