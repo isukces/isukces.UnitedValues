@@ -102,12 +102,9 @@ namespace UnitGenerator
             if (commonUnits.Length == 0) return;
             foreach (var i in commonUnits)
             {
-                IDerivedUnitDefinition u = new Dy
-                {
-                    PropertyName        = i.TargetPropertyName,
-                    UnitShortName       = i.GetUnitName(),
-                    FromMethodNameSufix = i.TargetPropertyName
-                };
+                var u = new Dy(i.TargetPropertyName,
+                    i.GetUnitName(),
+                    i.TargetPropertyName);
                 BasicUnitValuesGenerator.Add_FromMethods(
                     i.Type.Value,
                     i.Type,
@@ -195,13 +192,6 @@ namespace UnitGenerator
             Target.AddMethod("WithDenominatorUnit", Cfg.UnitTypes.Value)
                 .WithBody(cw)
                 .AddParam("newUnit", Cfg.DenominatorUnit.Unit);
-        }
-
-        private class Dy : IDerivedUnitDefinition
-        {
-            public string PropertyName        { get; set; }
-            public string UnitShortName       { get; set; }
-            public string FromMethodNameSufix { get; set; }
         }
     }
 }

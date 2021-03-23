@@ -1,39 +1,24 @@
-using iSukces.Code;
-
 namespace UnitGenerator
 {
-    public class DerivedUnitDefinition : IDerivedUnitDefinition
+    public class DerivedUnitDefinition : DerivedUnitItem, IDerivedUnitDefinition
     {
-        public DerivedUnitDefinition(string unitShortName, string multiplicator, string nameSingular, string namePlural,
-            string propertyName, string fromMethodNameSufix)
+        public DerivedUnitDefinition(
+            string fieldName,
+            string unitShortCode,
+            string scaleFactor,
+            string fromMethodNameSufix,
+            TypeCodeAliases aliases)
+            : base(fieldName, unitShortCode, scaleFactor, fromMethodNameSufix)
         {
-            if (string.IsNullOrEmpty(namePlural) && !string.IsNullOrEmpty(nameSingular))
-                namePlural = nameSingular + "s";
-            UnitShortName       = unitShortName;
-            Multiplicator       = multiplicator;
-            NameSingular        = nameSingular;
-            NamePlural          = namePlural;
-            FromMethodNameSufix = fromMethodNameSufix;
-
-            if (string.IsNullOrEmpty(propertyName))
-                propertyName = UnitShortName;
-            PropertyName = propertyName.FirstUpper();
+            Aliases = aliases;
         }
 
         public override string ToString()
         {
             return
-                $"UnitShortName={UnitShortName}, Multiplicator={Multiplicator}, NameSingular={NameSingular}, NamePlural={NamePlural}";
+                $"UnitShortName={UnitShortCode}, Multiplicator={ScaleFactor}, NameSingular={Aliases?.NameSingular}, NamePlural={Aliases?.NamePlural}";
         }
 
-        public string UnitShortName { get; }
-
-        public string Multiplicator { get; }
-
-        public string NameSingular { get; }
-
-        public string NamePlural          { get; }
-        public string FromMethodNameSufix { get; }
-        public string PropertyName        { get; }
+        public TypeCodeAliases Aliases { get; }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using iSukces.Code;
 using iSukces.UnitedValues;
 
 namespace UnitGenerator
@@ -15,9 +16,9 @@ namespace UnitGenerator
         }
 
 
-        private static string Mul(int power, decimal m)
+        private static string Mul(int power, string x)
         {
-            var x = Ext.CsEncode(m);
+            // var x = Ext.CsEncode(m);
             if (x == "1m")
                 return x;
             var y                 = x;
@@ -90,12 +91,22 @@ namespace UnitGenerator
         }
 
         public DerivedUnit WithUnit(string unitShortName,
-            string propertyName, decimal multiplicator, string nameSingular = null,
-            string namePlural = null,
-            string fromMethodNameSufix = null)
+            string fieldName, 
+            decimal multiplicator,
+            string fromMethodNameSufix = null,
+            TypeCodeAliases aliases = null
+            )
         {
-            Units.Add(new DerivedUnitDefinition(unitShortName, Ext.CsEncode(multiplicator), nameSingular, namePlural,
-                propertyName, fromMethodNameSufix));
+            if (aliases != null)
+            {
+                if (string. IsNullOrWhiteSpace(fieldName))
+                    if (!string.IsNullOrWhiteSpace(aliases.NameSingular))
+                        fieldName = aliases.NameSingular.FirstUpper();
+                if (string. IsNullOrWhiteSpace(fromMethodNameSufix))
+                    if (!string.IsNullOrWhiteSpace(aliases.NamePlural))
+                        fromMethodNameSufix = aliases.NamePlural.FirstUpper();
+            }
+            Units.Add(new DerivedUnitDefinition(fieldName, unitShortName, multiplicator.CsEncode(), fromMethodNameSufix, aliases));
             return this;
         }
 
@@ -107,7 +118,10 @@ namespace UnitGenerator
             foreach (var i in items)
             {
                 var fromMethodNameSufix = i.FromMethodNameSufix.AddPrefix(propertyPrefix);
-                WithUnit(i.UnitCode + unitSuffix, propertyPrefix + i.FieldName, Mul(power, i.Factor),
+                WithUnit(
+                    i.UnitShortCode + unitSuffix, 
+                    propertyPrefix + i.FieldName,
+                    Mul(power, i.ScaleFactor),
                     fromMethodNameSufix: fromMethodNameSufix);
             }
 
@@ -126,13 +140,10 @@ namespace UnitGenerator
         }
 
 
-        private void WithUnit(string unitShortName,
-            string propertyName, string multiplicator, string nameSingular = null,
-            string namePlural = null,
+        private void WithUnit(string unitShortName, string fieldName, string scaleFactor,
             string fromMethodNameSufix = null)
         {
-            Units.Add(new DerivedUnitDefinition(unitShortName, multiplicator, nameSingular, namePlural, propertyName,
-                fromMethodNameSufix));
+            Units.Add(new DerivedUnitDefinition(fieldName, unitShortName, scaleFactor, fromMethodNameSufix, null));
         }
 
         public string Name { get; }

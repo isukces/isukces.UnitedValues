@@ -49,7 +49,7 @@ namespace UnitGenerator
             return code;
         }
 
-        public static string CsEncode(decimal multiplicator)
+        public static string CsEncode(this decimal multiplicator)
         {
             return multiplicator.ToString(CultureInfo.InvariantCulture) + "m";
         }

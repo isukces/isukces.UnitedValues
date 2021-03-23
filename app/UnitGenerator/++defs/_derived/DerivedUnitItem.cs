@@ -1,36 +1,40 @@
 namespace UnitGenerator
 {
-    public class DerivedUnitItem
+    public class DerivedUnitItem : Dy
     {
         /// <summary>
         /// </summary>
         /// <param name="fieldName">static field name that holds unit name</param>
-        /// <param name="unitCode"></param>
-        /// <param name="factor"></param>
+        /// <param name="unitShortCode"></param>
+        /// <param name="scaleFactor"></param>
         /// <param name="fromMethodNameSufix"></param>
-        public DerivedUnitItem(string fieldName, string unitCode, decimal factor, string fromMethodNameSufix = null)
+        public DerivedUnitItem(string fieldName, string unitShortCode, decimal scaleFactor, string fromMethodNameSufix = null)
+            : base(fieldName, unitShortCode, fromMethodNameSufix)
         {
-            FieldName           = fieldName;
-            UnitCode            = unitCode;
-            Factor              = factor;
-            FromMethodNameSufix = fromMethodNameSufix;
+            ScaleFactor = scaleFactor.CsEncode();
+        }
+        
+        /// <summary>
+        /// </summary>
+        /// <param name="fieldName">static field name that holds unit name</param>
+        /// <param name="unitShortCode"></param>
+        /// <param name="scaleFactor"></param>
+        /// <param name="fromMethodNameSufix"></param>
+        public DerivedUnitItem(string fieldName, string unitShortCode, string scaleFactor, string fromMethodNameSufix = null)
+            : base(fieldName, unitShortCode, fromMethodNameSufix)
+        {
+            ScaleFactor = scaleFactor;
         }
 
         public override string ToString()
         {
-            return
-                $"FieldName={FieldName}, UnitCode={UnitCode}, Factor={Factor}, FromMethodNameSufix={FromMethodNameSufix}";
+            return $"{base.ToString()}, Factor={ScaleFactor}";
         }
 
         /// <summary>
         ///     static field name that holds unit name
         /// </summary>
-        public string FieldName { get; }
-
-        public string UnitCode { get; }
-
-        public decimal Factor { get; }
-
-        public string FromMethodNameSufix { get; }
+        
+        public string ScaleFactor { get; }
     }
 }

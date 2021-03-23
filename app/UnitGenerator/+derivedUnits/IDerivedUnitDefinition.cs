@@ -2,8 +2,8 @@ namespace UnitGenerator
 {
     public interface IDerivedUnitDefinition
     {
-        string PropertyName        { get; }
-        string UnitShortName       { get; }
+        string FieldName           { get; }
+        string UnitShortCode       { get; }
         string FromMethodNameSufix { get; }
     }
 }

@@ -39,7 +39,7 @@ namespace UnitGenerator
             for (var index = 0; index <= max; index++)
             {
                 var i = Cfg.Units[index];
-                cw.WriteLine(i.PropertyName + (index < max ? "," : ""));
+                cw.WriteLine(i.FieldName + (index < max ? "," : ""));
             }
 
             cw.DecIndent();
@@ -56,17 +56,20 @@ namespace UnitGenerator
         {
             foreach (var i in Cfg.Units)
             {
-                var type = "UnitDefinition<" + Cfg.Name + "Unit>";
+                var type = new Args(Cfg.Name + "Unit").MakeGenericType("UnitDefinition");
                 var args = new[]
                 {
-                    i.UnitShortName.CsEncode(),
-                    i.Multiplicator,
-                    i.NameSingular.CsEncode(),
-                    i.NamePlural.CsEncode()
-                }.Where(a => a != "null");
+                    i.UnitShortCode.CsEncode(),
+                    i.ScaleFactor
+                };
 
+                if (i.Aliases != null)
+                    args = i.Aliases.Plus(args);
+
+                // public static readonly UnitDefinition<LengthUnit> Km
+                // = new UnitDefinition<LengthUnit>("km", 1000m);
                 var value = new Args(args).Create(type);
-                Target.AddField(i.PropertyName, type)
+                Target.AddField(i.FieldName, type)
                     .WithIsReadOnly()
                     .WithStatic()
                     .WithConstValue(value);
@@ -81,8 +84,8 @@ namespace UnitGenerator
             foreach (var i in Cfg.PrefixRelations)
             foreach (var u in Cfg.Units)
             {
-                var o  = u.PropertyName.Substring(i.My.Length);
-                var p1 = u.PropertyName;
+                var o  = u.FieldName.Substring(i.My.Length);
+                var p1 = u.FieldName;
                 var p2 = i.OtherUnitContainer + "s." + i.Other + o;
                 var q  = $"dict.AddRelated<{i.MyUnitContainer}, {i.OtherUnitContainer}>({p1}, {p2});";
                 cw.WriteLine(q);

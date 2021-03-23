@@ -21,10 +21,10 @@ namespace UnitGenerator
                 if (inputType == OtherValuePropertyType)
                     arg = $"({ValuePropertyType}){arg}";
 
-                var args = new Args(arg, types.Container + "." + u.PropertyName)
+                var args = new Args(arg, types.Container + "." + u.FieldName)
                     .Create(target.Name);
-                var valueIn           = $" value in {u.UnitShortName}";
-                var methodName        = "From" + u.FromMethodNameSufix.CoalesceNullOrWhiteSpace(u.PropertyName);
+                var valueIn           = $" value in {u.UnitShortCode}";
+                var methodName        = "From" + u.FromMethodNameSufix.CoalesceNullOrWhiteSpace(u.FieldName);
                 var methodDescription = $"creates {types.Value.FirstLower()} from{valueIn}";
                 var m = target.AddMethod(methodName, target.Name, methodDescription)
                     .WithStatic()
@@ -208,7 +208,7 @@ namespace UnitGenerator
 
         private void Add_FromMethods()
         {
-            var tmp = DerivedUnitGeneratorRunner.GetAll();
+            var tmp = DerivedUnitGeneratorRunner.All;
             var d   = tmp.ByName(Cfg.UnitTypes.Value);
 
             if (d is null) return;
