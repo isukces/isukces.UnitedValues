@@ -1,4 +1,5 @@
 using System.Linq;
+using iSukces.Code;
 using iSukces.UnitedValues;
 
 namespace UnitGenerator
@@ -27,7 +28,10 @@ namespace UnitGenerator
 
         public string[] Plus(string[] args)
         {
-            var append = new[] {NameSingular, NamePlural}.Where(a => !string.IsNullOrWhiteSpace(a)).ToArray();
+            var append = new[] {NameSingular, NamePlural}
+                .Where(a => !string.IsNullOrWhiteSpace(a))
+                .Select(a=>a.CsEncode())
+                .ToArray();
             if (append.Length == 0)
                 return args;
             var l = args.ToList();
