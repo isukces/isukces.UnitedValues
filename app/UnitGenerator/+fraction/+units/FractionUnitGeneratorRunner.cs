@@ -38,5 +38,10 @@ namespace UnitGenerator
         public static readonly FractionUnitInfo PlanarDensity = FractionUnitInfo.Make<PlanarDensity, Weight, Area>();
 
         public static readonly FractionUnitInfo Pressure = FractionUnitInfo.Make<Pressure, Force, Area>();
+        
+        
+        public static readonly FractionUnitInfo Acceleration = FractionUnitInfo.Make<Acceleration, Length, SquareTime>();
+
+       
     }
 }
