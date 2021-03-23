@@ -32,7 +32,7 @@ namespace iSukces.UnitedValues.Test
             var d = JsonConvert.DeserializeObject<Weight>(s);
             Assert.Equal(a, d);
 
-            var possibilities = "123kg;123 kg; 123.00kg; 123.000 kg ;0.12300 ton; 123000g";
+            var possibilities = "123kg;123 kg; 123.00kg; 123.000 kg ;0.12300 tons; 123000g";
 
             foreach (var prefix in ";+;  ; + ".Split(';'))
             foreach (var i in possibilities.Split(';'))
