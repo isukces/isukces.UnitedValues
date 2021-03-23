@@ -75,7 +75,7 @@ namespace UnitGenerator
             return cw;
         }
 
-        private static CsCodeWriter CreateCodeForRightFractionValue(FractionUnitInfo rightFraction, OperatorParams p)
+        private static CsCodeWriter CreateCodeForRightFractionValue(FractionUnit rightFraction, OperatorParams p)
         {
             var cw = Ext.Create<MultiplyAlgebraGenerator>();
             Debug.WriteLine(rightFraction);
@@ -124,7 +124,7 @@ namespace UnitGenerator
             }
         }
 
-        private void CreateOperator(TypesGoup left, TypesGoup right, TypesGoup result, string op, bool areRelatedUnits)
+        private void CreateOperator(TypesGroup left, TypesGroup right, TypesGroup result, string op, bool areRelatedUnits)
         {
             var operatorGenerationKey = new OperatorGenerationKey(left.Value, right.Value, op);
 

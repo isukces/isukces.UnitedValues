@@ -4,14 +4,14 @@ using iSukces.Code.Interfaces;
 
 namespace UnitGenerator
 {
-    public class BasicUnitedValuesGenerator : BaseValuesGenerator<UnitInfo>
+    public class BasicUnitedValuesGenerator : BaseValuesGenerator<PrimitiveUnit>
     {
         public BasicUnitedValuesGenerator(string output, string nameSpace)
             : base(output, nameSpace)
         {
         }
 
-        public static void Add_FromMethods(string valueTypeName, TypesGoup types, CsClass target,
+        public static void Add_FromMethods(string valueTypeName, TypesGroup types, CsClass target,
             IDerivedUnitDefinition u)
         {
             foreach (var inputType in "decimal,double,int,long".Split(','))
@@ -68,7 +68,7 @@ namespace UnitGenerator
             };
         }
 
-        protected override string GetTypename(UnitInfo cfg)
+        protected override string GetTypename(PrimitiveUnit cfg)
         {
             return cfg.ValueTypeName;
         }
@@ -155,7 +155,7 @@ namespace UnitGenerator
 
             if (d is null) return;
             foreach (var u in d.Units) 
-                Add_FromMethods(Cfg.ValueTypeName, Cfg.Gr, Target, u);
+                Add_FromMethods(Cfg.ValueTypeName, Cfg.UnitTypes, Target, u);
         }
 
 

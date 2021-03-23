@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace UnitGenerator
 {
-    public class UnitJsonConverterGenerator : BaseGenerator<IUnitConfig>
+    public class UnitJsonConverterGenerator : BaseGenerator<IUnitInfo>
     {
         public UnitJsonConverterGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
@@ -24,14 +24,15 @@ namespace UnitGenerator
             }
             else
             {
-                Target.BaseClass = "AbstractUnitJsonConverter<" + Cfg.ValueTypeName + ", " + Cfg.UnitTypeName + ">";
+                var tt = Cfg.UnitTypes;
+                Target.BaseClass = new Args(tt.Value, tt.Unit).MakeGenericType("AbstractUnitJsonConverter");
                 {
                     var cw = new CsCodeWriter();
                     cw.WriteLine("unit = unit?.Trim();");
                     cw.WriteLine(
-                        $"return new {Cfg.ValueTypeName}(value, string.IsNullOrEmpty(unit) ? {Cfg.ValueTypeName}.BaseUnit : new {Cfg.UnitTypeName}(unit));");
+                        $"return new {tt.Value}(value, string.IsNullOrEmpty(unit) ? {tt.Value}.BaseUnit : new {tt.Unit}(unit));");
 
-                    var m = Target.AddMethod("Make", Cfg.ValueTypeName)
+                    var m = Target.AddMethod("Make", tt.Value)
                         .WithOverride()
                         .WithVisibility(Visibilities.Protected)
                         .WithBody(cw);
@@ -39,18 +40,18 @@ namespace UnitGenerator
                     m.AddParam("unit", "string");
                 }
                 {
-                    var m = Target.AddMethod("Parse", Cfg.ValueTypeName)
+                    var m = Target.AddMethod("Parse", tt.Value)
                         .WithOverride()
                         .WithVisibility(Visibilities.Protected)
-                        .WithBodyFromExpression(Cfg.ValueTypeName + ".Parse(txt)");
+                        .WithBodyFromExpression(tt.Value + ".Parse(txt)");
                     m.AddParam("txt", "string");
                 }
             }
         }
 
-        protected override string GetTypename(IUnitConfig cfg)
+        protected override string GetTypename(IUnitInfo cfg)
         {
-            return cfg.ValueTypeName + "JsonConverter";
+            return cfg.UnitTypes.Value + "JsonConverter";
         }
 
         protected override void PrepareFile(CsFile file)
@@ -61,18 +62,20 @@ namespace UnitGenerator
 
         private void Add_CanConvert()
         {
+            var tt = Cfg.UnitTypes;
             Target.AddMethod("CanConvert", "bool")
                 .WithOverride()
-                .WithBodyFromExpression($"objectType == typeof({Cfg.UnitTypeName})")
+                .WithBodyFromExpression($"objectType == typeof({tt.Unit})")
                 .AddParam("objectType", "Type");
         }
 
         private void Add_ReadJson()
         {
-            var cw = new CsCodeWriter();
+            var valueTypeName = Cfg.UnitTypes.Value;
+            var cw            = new CsCodeWriter();
             cw.Open("if (reader.ValueType == typeof(string))");
-            cw.SingleLineIf($"objectType == typeof({Cfg.ValueTypeName})",
-                ReturnValue($"{Cfg.ValueTypeName}.Parse((string)reader.Value)"));
+            cw.SingleLineIf($"objectType == typeof({valueTypeName})",
+                ReturnValue($"{valueTypeName}.Parse((string)reader.Value)"));
             cw.Close();
             cw.WriteLine("throw new NotImplementedException();");
 

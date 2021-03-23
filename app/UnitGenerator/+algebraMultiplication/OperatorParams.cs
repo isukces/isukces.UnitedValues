@@ -2,7 +2,7 @@ namespace UnitGenerator
 {
     public class OperatorParams
     {
-        public OperatorParams(TypesGoup left, TypesGoup right, TypesGoup result, string leftName, string rightName, string oper)
+        public OperatorParams(TypesGroup left, TypesGroup right, TypesGroup result, string leftName, string rightName, string oper)
         {
             Left      = left;
             Right     = right;
@@ -17,11 +17,11 @@ namespace UnitGenerator
             return $"Left={Left}, Right={Right}, Result={Result}, LeftName={LeftName}, RightName={RightName}, Oper={Oper}";
         }
 
-        public TypesGoup Left { get; }
+        public TypesGroup Left { get; }
 
-        public TypesGoup Right { get; }
+        public TypesGroup Right { get; }
 
-        public TypesGoup Result { get; }
+        public TypesGroup Result { get; }
 
         public string LeftName { get; }
 

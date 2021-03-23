@@ -6,7 +6,7 @@ using iSukces.Code.Interfaces;
 
 namespace UnitGenerator
 {
-    public class UnitExtensionsGenerator : BaseGenerator<UnitInfo>
+    public class UnitExtensionsGenerator : BaseGenerator<PrimitiveUnit>
     {
         public UnitExtensionsGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
@@ -56,7 +56,7 @@ namespace UnitGenerator
             mm.AddParam("map", "Func<T, " + Cfg.ValueTypeName + ">");
         }
 
-        protected override string GetTypename(UnitInfo cfg)
+        protected override string GetTypename(PrimitiveUnit cfg)
         {
             return cfg.ValueTypeName + "Extensions";
         }

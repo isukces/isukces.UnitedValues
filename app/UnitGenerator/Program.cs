@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace UnitGenerator
 {
@@ -31,6 +32,8 @@ namespace UnitGenerator
 
             // AlgebraGeneratorRunner.Run(basePath, nameSpace);
             MultiplyAlgebraGeneratorRunner.Run(basePath, nameSpace);
+
+            Console.WriteLine("Done");
         }
     }
 }

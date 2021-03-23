@@ -3,7 +3,7 @@ using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
-    public class TypesGoup : IEquatable<TypesGoup>
+    public class TypesGroup : IEquatable<TypesGroup>
     {
         /// <summary>
         ///     Creates instance
@@ -11,7 +11,7 @@ namespace UnitGenerator
         /// <param name="value">Name of type that contains value and unit i.e. Length</param>
         /// <param name="unit">Name of type that represents unit i.e. LengthUnit</param>
         /// <param name="container">Name of static type that contains fields with known unit names i.e. LengthUnits</param>
-        public TypesGoup(string value, string unit = null, string container = null)
+        public TypesGroup(string value, string unit = null, string container = null)
         {
             value = value?.TrimToNull();
             Value = value ?? throw new ArgumentException(nameof(value));
@@ -20,17 +20,17 @@ namespace UnitGenerator
             Container = container?.TrimToNull() ?? Unit + "s";
         }
 
-        public static bool operator ==(TypesGoup left, TypesGoup right)
+        public static bool operator ==(TypesGroup left, TypesGroup right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(TypesGoup left, TypesGoup right)
+        public static bool operator !=(TypesGroup left, TypesGroup right)
         {
             return !Equals(left, right);
         }
 
-        public bool Equals(TypesGoup other)
+        public bool Equals(TypesGroup other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -43,7 +43,7 @@ namespace UnitGenerator
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((TypesGoup)obj);
+            return Equals((TypesGroup)obj);
         }
 
         public override int GetHashCode()

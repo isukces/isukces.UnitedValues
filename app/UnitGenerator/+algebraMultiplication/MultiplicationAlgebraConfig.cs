@@ -7,9 +7,9 @@ namespace UnitGenerator
         public MultiplicationAlgebraConfig WithDiv<T1, T2, TDiv>(bool areRelatedUnits)
         {
             var x = new MultiplicationAlgebraConfigItem(
-                new TypesGoup(typeof(T1).Name),
-                new TypesGoup(typeof(T2).Name),
-                new TypesGoup(typeof(TDiv).Name),
+                new TypesGroup(typeof(T1).Name),
+                new TypesGroup(typeof(T2).Name),
+                new TypesGroup(typeof(TDiv).Name),
                 areRelatedUnits
             );
             Items.Add(x);
@@ -21,9 +21,9 @@ namespace UnitGenerator
             // T1/T2 = TMul
             // TMul * T2 = T1
             var x = new MultiplicationAlgebraConfigItem(
-                new TypesGoup(typeof(TMul).Name),
-                new TypesGoup(typeof(T2).Name),
-                new TypesGoup(typeof(T1).Name),
+                new TypesGroup(typeof(TMul).Name),
+                new TypesGroup(typeof(T2).Name),
+                new TypesGroup(typeof(T1).Name),
                 areRelatedUnits
             );
             Items.Add(x);

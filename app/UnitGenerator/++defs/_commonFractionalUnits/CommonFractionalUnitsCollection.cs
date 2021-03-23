@@ -4,16 +4,16 @@ namespace UnitGenerator
 {
     public class CommonFractionalUnitsCollection
     {
-        public CommonFractionalUnits[] Items { get; }
-
-        public CommonFractionalUnitsCollection(CommonFractionalUnits[] items)
+        public CommonFractionalUnitsCollection(CommonFractionalUnit[] items)
         {
             Items = items;
         }
 
-        public CommonFractionalUnits[] GetBy(string namesUnit)
+        public CommonFractionalUnit[] GetBy(string namesUnit)
         {
             return Items.Where(a => a.Type.Unit == namesUnit).ToArray();
         }
+
+        public CommonFractionalUnit[] Items { get; }
     }
 }

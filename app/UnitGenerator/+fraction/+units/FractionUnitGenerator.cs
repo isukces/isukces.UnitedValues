@@ -5,7 +5,7 @@ using Self=UnitGenerator.FractionUnitGenerator;
 
 namespace UnitGenerator
 {
-    internal class FractionUnitGenerator : BaseGenerator<FractionUnitInfo>
+    internal class FractionUnitGenerator : BaseGenerator<FractionUnit>
     {
         public FractionUnitGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
@@ -17,7 +17,7 @@ namespace UnitGenerator
             var name = new Args(Cfg.CounterUnit.Unit, Cfg.DenominatorUnit.Unit)
                 .MakeGenericType(nameof(IFractionalUnit));
             Target.ImplementedInterfaces.Add(name);
-            name = "IEquatable<" + Cfg.UnitTypeName + ">";
+            name = new Args(Cfg.UnitTypes.Unit).MakeGenericType("IEquatable");
             Target.ImplementedInterfaces.Add(name);
             
 
@@ -43,7 +43,7 @@ namespace UnitGenerator
             var cw = Ext.Create<Self>();
             var e  = new Args("CounterUnit", "newUnit").Create(Target.Name);
             cw.WriteLine($"return {e};");
-            Target.AddMethod("WithDenominatorUnit", Cfg.UnitTypeName)
+            Target.AddMethod("WithDenominatorUnit", Cfg.UnitTypes.Unit)
                 .WithBody(cw)
                 .AddParam("newUnit", Cfg.DenominatorUnit.Unit);
         }
@@ -53,15 +53,15 @@ namespace UnitGenerator
             var cw = Ext.Create<Self>();
             var e  = new Args("newUnit", "DenominatorUnit").Create(Target.Name);
             cw.WriteLine($"return {e};");
-            Target.AddMethod("WithCounterUnit", Cfg.UnitTypeName)
+            Target.AddMethod("WithCounterUnit", Cfg.UnitTypes.Unit)
                 .WithBody(cw)
                 .AddParam("newUnit", Cfg.CounterUnit.Unit);
         }
 
 
-        protected override string GetTypename(FractionUnitInfo cfg)
+        protected override string GetTypename(FractionUnit cfg)
         {
-            return Cfg.UnitTypeName;
+            return Cfg.UnitTypes.Unit;
         }
 
         private void Add_Equals()

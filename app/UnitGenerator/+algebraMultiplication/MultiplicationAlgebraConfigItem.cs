@@ -2,7 +2,7 @@ namespace UnitGenerator
 {
     internal class MultiplicationAlgebraConfigItem
     {
-        public MultiplicationAlgebraConfigItem(TypesGoup counter, TypesGoup denominator, TypesGoup result,
+        public MultiplicationAlgebraConfigItem(TypesGroup counter, TypesGroup denominator, TypesGroup result,
             bool areRelatedUnits)
         {
             Counter         = counter;
@@ -11,9 +11,9 @@ namespace UnitGenerator
             AreRelatedUnits = areRelatedUnits;
         }
 
-        public TypesGoup Counter         { get; }
-        public TypesGoup Denominator     { get; }
-        public TypesGoup Result          { get; }
+        public TypesGroup Counter         { get; }
+        public TypesGroup Denominator     { get; }
+        public TypesGroup Result          { get; }
         public bool      AreRelatedUnits { get; }
     }
 }

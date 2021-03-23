@@ -5,7 +5,7 @@ using Self = UnitGenerator.FractionValuesGenerator;
 
 namespace UnitGenerator
 {
-    internal class FractionValuesGenerator : BaseValuesGenerator<FractionUnitInfo>
+    internal class FractionValuesGenerator : BaseValuesGenerator<FractionUnit>
     {
         public FractionValuesGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
@@ -17,7 +17,7 @@ namespace UnitGenerator
             Add_ImplementedInterfaces();
 
             Add_ClassAttributes();
-            AddCommonValues_PropertiesAndConstructor(Cfg.UnitTypeName);
+            AddCommonValues_PropertiesAndConstructor(Cfg.UnitTypes.Unit);
             AddCommon_EqualityOperators();
             Add_ConvertTo();
             Add_AlternateConstructor();
@@ -40,14 +40,14 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypeName, null, "unit")
+                    Cfg.UnitTypes.Unit, null, "unit")
             };
         }
 
 
-        protected override string GetTypename(FractionUnitInfo cfg)
+        protected override string GetTypename(FractionUnit cfg)
         {
-            return Cfg.ValueTypeName;
+            return Cfg.UnitTypes.Value;
         }
 
         protected override void PrepareFile(CsFile file)
@@ -59,7 +59,7 @@ namespace UnitGenerator
         private void Add_AlternateConstructor()
         {
             var cw   = new CsCodeWriter();
-            var code = $"new {Cfg.Names.Unit}(counterUnit, denominatorUnit)";
+            var code = $"new {Cfg.UnitTypes.Unit}(counterUnit, denominatorUnit)";
             cw.WriteLine("{0} = {1};", ValuePropName, ValuePropName.FirstLower());
             cw.WriteLine("{0} = {1};", UnitPropName, code);
 
@@ -88,17 +88,17 @@ namespace UnitGenerator
             cw.WriteLine("var b = new " + Cfg.DenominatorUnit.Value + "(1, Unit.DenominatorUnit);");
             cw.WriteLine("a = a.ConvertTo(newUnit.CounterUnit);");
             cw.WriteLine("b = b.ConvertTo(newUnit.DenominatorUnit);");
-            cw.WriteLine(ReturnValue("new " + Cfg.Names.Value + "(a.Value / b.Value, newUnit)"));
+            cw.WriteLine(ReturnValue("new " + Cfg.UnitTypes.Value + "(a.Value / b.Value, newUnit)"));
 
             Target.AddMethod("ConvertTo", Target.Name)
                 .WithBody(cw)
-                .AddParam("newUnit", Cfg.UnitTypeName);
+                .AddParam("newUnit", Cfg.UnitTypes.Unit);
         }
 
         private void Add_FromMethods()
         {
-            var collection = CommonFractionalUnits.GetAll();
-            var commonUnits  = collection.GetBy(Cfg.Names.Unit);
+            var collection  = CommonFractionalUnitDefs.All;
+            var commonUnits = collection.GetBy(Cfg.UnitTypes.Unit);
             if (commonUnits.Length == 0) return;
             foreach (var i in commonUnits)
             {
@@ -154,7 +154,7 @@ namespace UnitGenerator
             cw.WriteLine("var denominatorUnit = new " + Cfg.DenominatorUnit.Unit + "(units[1]);");
             cw.WriteLine(ReturnValue($"new {Target.Name}(r.Value, counterUnit, denominatorUnit)"));
 
-            var m = Target.AddMethod("Parse", Cfg.Names.Value)
+            var m = Target.AddMethod("Parse", Cfg.UnitTypes.Value)
                 .WithStatic()
                 .WithBody(cw);
             m.AddParam("value", "string");
@@ -174,8 +174,8 @@ namespace UnitGenerator
             cw.WriteLine("return new {0}({2}.Value, {1});", Cfg.Names.Value, resultUnit, valueToConvert);
             */
 
-            var valueType = Cfg.Names.Value;
-            var unitType  = Cfg.Names.Unit;
+            var valueType = Cfg.UnitTypes.Value;
+            var unitType  = Cfg.UnitTypes.Unit;
             var cw        = Ext.Create<Self>();
             cw.WriteLine("var oldUnit = Unit.CounterUnit;");
             cw.SingleLineIf("oldUnit == newUnit", "return this;");
@@ -184,14 +184,14 @@ namespace UnitGenerator
             cw.WriteLine("var resultUnit = Unit.WithCounterUnit(newUnit);");
             cw.WriteLine($"return new {valueType}(oldFactor / newFactor * Value, resultUnit);");
 
-            Target.AddMethod("WithCounterUnit", Cfg.ValueTypeName)
+            Target.AddMethod("WithCounterUnit", Cfg.UnitTypes.Value)
                 .WithBody(cw)
                 .AddParam("newUnit", Cfg.CounterUnit.Unit);
         }
 
         private void Add_WithDenominatorUnit()
         {
-            var valueType = Cfg.Names.Value;
+            var valueType = Cfg.UnitTypes.Value;
             var cw        = Ext.Create<Self>();
             cw.WriteLine("var oldUnit = Unit.DenominatorUnit;");
             cw.SingleLineIf("oldUnit == newUnit", "return this;");
@@ -200,7 +200,7 @@ namespace UnitGenerator
             cw.WriteLine("var resultUnit = Unit.WithDenominatorUnit(newUnit);");
             cw.WriteLine($"return new {valueType}(newFactor / oldFactor * Value, resultUnit);");
 
-            Target.AddMethod("WithDenominatorUnit", Cfg.ValueTypeName)
+            Target.AddMethod("WithDenominatorUnit", Cfg.UnitTypes.Value)
                 .WithBody(cw)
                 .AddParam("newUnit", Cfg.DenominatorUnit.Unit);
         }
