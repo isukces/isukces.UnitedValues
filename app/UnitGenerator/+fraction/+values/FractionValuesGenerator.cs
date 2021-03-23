@@ -108,20 +108,12 @@ namespace UnitGenerator
                     UnitShortName       = i.GetUnitName(),
                     FromMethodNameSufix = i.TargetPropertyName
                 };
-                BasicUnitedValuesGenerator. Add_FromMethods(
+                BasicUnitValuesGenerator.Add_FromMethods(
                     i.Type.Value,
                     i.Type,
                     Target,
                     u);
- 
             }
-        }
-
-        private class Dy : IDerivedUnitDefinition
-        {
-            public string PropertyName        { get; set; }
-            public string UnitShortName       { get; set; }
-            public string FromMethodNameSufix { get; set; }
         }
 
         private void Add_GetBaseUnitValue()
@@ -203,6 +195,13 @@ namespace UnitGenerator
             Target.AddMethod("WithDenominatorUnit", Cfg.UnitTypes.Value)
                 .WithBody(cw)
                 .AddParam("newUnit", Cfg.DenominatorUnit.Unit);
+        }
+
+        private class Dy : IDerivedUnitDefinition
+        {
+            public string PropertyName        { get; set; }
+            public string UnitShortName       { get; set; }
+            public string FromMethodNameSufix { get; set; }
         }
     }
 }

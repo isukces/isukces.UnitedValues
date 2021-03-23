@@ -2,7 +2,8 @@ namespace UnitGenerator
 {
     public class OperatorParams
     {
-        public OperatorParams(TypesGroup left, TypesGroup right, TypesGroup result, string leftName, string rightName, string oper)
+        public OperatorParams(TypesGroup left, TypesGroup right, TypesGroup result, string leftName, string rightName,
+            string oper)
         {
             Left      = left;
             Right     = right;
@@ -14,7 +15,8 @@ namespace UnitGenerator
 
         public override string ToString()
         {
-            return $"Left={Left}, Right={Right}, Result={Result}, LeftName={LeftName}, RightName={RightName}, Oper={Oper}";
+            return
+                $"Left={Left}, Right={Right}, Result={Result}, LeftName={LeftName}, RightName={RightName}, Oper={Oper}";
         }
 
         public TypesGroup Left { get; }
@@ -28,6 +30,5 @@ namespace UnitGenerator
         public string RightName { get; }
 
         public string Oper { get; }
-
     }
 }

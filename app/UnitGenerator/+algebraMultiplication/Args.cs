@@ -20,16 +20,16 @@ namespace UnitGenerator
             return $"new {constructedTypeName}({ToString()})";
         }
 
+        public string MakeGenericType(string type)
+        {
+            return $"{type}<{ToString()}>";
+        }
+
         public override string ToString()
         {
             return string.Join(", ", _args);
         }
 
         private readonly string[] _args;
-
-        public string MakeGenericType(string type)
-        {
-            return $"{type}<{ToString()}>";
-        }
     }
 }

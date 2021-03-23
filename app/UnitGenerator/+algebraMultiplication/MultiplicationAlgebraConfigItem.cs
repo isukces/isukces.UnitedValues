@@ -14,6 +14,6 @@ namespace UnitGenerator
         public TypesGroup Counter         { get; }
         public TypesGroup Denominator     { get; }
         public TypesGroup Result          { get; }
-        public bool      AreRelatedUnits { get; }
+        public bool       AreRelatedUnits { get; }
     }
 }

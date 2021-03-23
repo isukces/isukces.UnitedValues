@@ -2,13 +2,6 @@ using iSukces.Code;
 
 namespace UnitGenerator
 {
-    public interface IDerivedUnitDefinition
-    {
-        string PropertyName        { get; }
-        string UnitShortName       { get; }
-        string FromMethodNameSufix { get; }
-    }
-
     public class DerivedUnitDefinition : IDerivedUnitDefinition
     {
         public DerivedUnitDefinition(string unitShortName, string multiplicator, string nameSingular, string namePlural,

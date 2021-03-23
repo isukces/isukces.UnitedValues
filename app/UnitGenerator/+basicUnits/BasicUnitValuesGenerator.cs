@@ -5,9 +5,9 @@ using iSukces.Code.Interfaces;
 
 namespace UnitGenerator
 {
-    public class BasicUnitedValuesGenerator : BaseValuesGenerator<PrimitiveUnit>
+    public class BasicUnitValuesGenerator : BaseValuesGenerator<BasicUnit>
     {
-        public BasicUnitedValuesGenerator(string output, string nameSpace)
+        public BasicUnitValuesGenerator(string output, string nameSpace)
             : base(output, nameSpace)
         {
         }
@@ -71,7 +71,7 @@ namespace UnitGenerator
             };
         }
 
-        protected override string GetTypename(PrimitiveUnit cfg)
+        protected override string GetTypename(BasicUnit cfg)
         {
             return cfg.UnitTypes.Value;
         }
@@ -99,7 +99,7 @@ namespace UnitGenerator
                 .WithLeftRightArguments(Target.Name, ValuePropertyType, "value", "number");
 
             {
-                var cw = Ext.Create<BasicUnitedValuesGenerator>();
+                var cw = Ext.Create<BasicUnitValuesGenerator>();
                 cw.WriteLine("right = right.ConvertTo(left.Unit);");
                 cw.WriteLine(ReturnValue("left.Value / right.Value"));
                 Target.AddMethod("/", ValuePropertyType)
@@ -113,7 +113,7 @@ namespace UnitGenerator
             const string right = "right";
             const string left  = "left";
 
-            var delta = PrimitiveValuesDefinitions.All.GetDeltaByUnit(Cfg.UnitTypes.Unit);
+            var delta = BasicUnitDefs.All.GetDeltaByUnit(Cfg.UnitTypes.Unit);
             if (delta != null)
                 if (delta.UnitTypes.Value == Cfg.UnitTypes.Value)
                     delta = null;
@@ -144,7 +144,7 @@ namespace UnitGenerator
                     return result;
                 }
 
-                var cw = Ext.Create<BasicUnitedValuesGenerator>();
+                var cw = Ext.Create<BasicUnitValuesGenerator>();
 
                 var result1 = CreateResultFromVariable(right, rt, op == "-");
                 cw.SingleLineIf(
@@ -195,7 +195,7 @@ namespace UnitGenerator
 
         private void Add_ConvertTo()
         {
-            var cw = Ext.Create<BasicUnitedValuesGenerator>();
+            var cw = Ext.Create<BasicUnitValuesGenerator>();
             cw.SingleLineIf("Unit.Equals(newUnit)", ReturnValue("this"));
             cw.WriteLine("var basic = GetBaseUnitValue();");
             cw.WriteLine("var factor = GlobalUnitRegistry.Factors.GetThrow(newUnit);");
@@ -219,7 +219,7 @@ namespace UnitGenerator
 
         private void Add_GetBaseUnitValue()
         {
-            var cs = Ext.Create<BasicUnitedValuesGenerator>();
+            var cs = Ext.Create<BasicUnitValuesGenerator>();
             cs.SingleLineIf("Unit.Equals(BaseUnit)", ReturnValue("Value"));
             cs.WriteLine("var factor = GlobalUnitRegistry.Factors.Get(Unit);");
             cs.SingleLineIf("!(factor is null)", ReturnValue("Value * factor.Value"));
@@ -230,7 +230,7 @@ namespace UnitGenerator
 
         private void Add_Parse()
         {
-            var cs = Ext.Create<BasicUnitedValuesGenerator>();
+            var cs = Ext.Create<BasicUnitValuesGenerator>();
             cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.UnitTypes.Value}));");
             cs.WriteLine(
                 $"return new {Cfg.UnitTypes.Value}(parseResult.Value, new {Cfg.UnitTypes.Unit}(parseResult.UnitName));");
@@ -254,7 +254,7 @@ namespace UnitGenerator
 
         private void Add_Round()
         {
-            var cs = Ext.Create<BasicUnitedValuesGenerator>();
+            var cs = Ext.Create<BasicUnitValuesGenerator>();
             cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.UnitTypes.Value}));");
             cs.WriteLine(
                 $"return new {Cfg.UnitTypes.Value}(parseResult.Value, new {Cfg.UnitTypes.Unit}(parseResult.UnitName));");

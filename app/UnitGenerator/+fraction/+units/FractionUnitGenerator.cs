@@ -1,7 +1,7 @@
 using iSukces.Code;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
-using Self=UnitGenerator.FractionUnitGenerator;
+using Self = UnitGenerator.FractionUnitGenerator;
 
 namespace UnitGenerator
 {
@@ -19,7 +19,6 @@ namespace UnitGenerator
             Target.ImplementedInterfaces.Add(name);
             name = new Args(Cfg.UnitTypes.Unit).MakeGenericType("IEquatable");
             Target.ImplementedInterfaces.Add(name);
-            
 
             var pi = new[]
             {
@@ -36,26 +35,6 @@ namespace UnitGenerator
 
             Add_WithDenominatorUnit();
             Add_WithCounterUnit();
-        }
-
-        private void Add_WithDenominatorUnit()
-        {
-            var cw = Ext.Create<Self>();
-            var e  = new Args("CounterUnit", "newUnit").Create(Target.Name);
-            cw.WriteLine($"return {e};");
-            Target.AddMethod("WithDenominatorUnit", Cfg.UnitTypes.Unit)
-                .WithBody(cw)
-                .AddParam("newUnit", Cfg.DenominatorUnit.Unit);
-        }
-
-        private void Add_WithCounterUnit()
-        {
-            var cw = Ext.Create<Self>();
-            var e  = new Args("newUnit", "DenominatorUnit").Create(Target.Name);
-            cw.WriteLine($"return {e};");
-            Target.AddMethod("WithCounterUnit", Cfg.UnitTypes.Unit)
-                .WithBody(cw)
-                .AddParam("newUnit", Cfg.CounterUnit.Unit);
         }
 
 
@@ -79,6 +58,26 @@ namespace UnitGenerator
                 .WithNoEmitField()
                 .WithOwnGetter("CounterUnit.UnitName + \"/\" + DenominatorUnit.UnitName")
                 .OwnGetterIsExpression = true;
+        }
+
+        private void Add_WithCounterUnit()
+        {
+            var cw = Ext.Create<Self>();
+            var e  = new Args("newUnit", "DenominatorUnit").Create(Target.Name);
+            cw.WriteLine($"return {e};");
+            Target.AddMethod("WithCounterUnit", Cfg.UnitTypes.Unit)
+                .WithBody(cw)
+                .AddParam("newUnit", Cfg.CounterUnit.Unit);
+        }
+
+        private void Add_WithDenominatorUnit()
+        {
+            var cw = Ext.Create<Self>();
+            var e  = new Args("CounterUnit", "newUnit").Create(Target.Name);
+            cw.WriteLine($"return {e};");
+            Target.AddMethod("WithDenominatorUnit", Cfg.UnitTypes.Unit)
+                .WithBody(cw)
+                .AddParam("newUnit", Cfg.DenominatorUnit.Unit);
         }
 
         private const string PropertyName = nameof(IUnitNameContainer.UnitName);

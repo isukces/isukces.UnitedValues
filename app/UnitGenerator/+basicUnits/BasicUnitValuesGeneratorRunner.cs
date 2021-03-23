@@ -1,9 +1,8 @@
 using System.IO;
-using System.Linq;
 
 namespace UnitGenerator
 {
-    public class BasicUnitedValuesGeneratorRunner : PrimitiveValuesDefinitions
+    public class BasicUnitValuesGeneratorRunner : BasicUnitDefs
     {
         public static void Run(string basePath, string nameSpace)
         {
@@ -11,7 +10,7 @@ namespace UnitGenerator
             var unitGenerator = new UnitGenerator(Path.Combine(basePath, "+IUnits"), nameSpace);
             unitGenerator.Generate(infos.DistinctNames);
 
-            var unitedValues = new BasicUnitedValuesGenerator(Path.Combine(basePath, "+IUnitedValue"), nameSpace);
+            var unitedValues = new BasicUnitValuesGenerator(Path.Combine(basePath, "+IUnitedValue"), nameSpace);
             unitedValues.Generate(infos.Items);
 
             var jsonConverter = new UnitJsonConverterGenerator(Path.Combine(basePath, "+jsonConverters"), nameSpace);

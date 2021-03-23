@@ -8,12 +8,10 @@ namespace UnitGenerator
         public static void Run(string basePath, string nameSpace)
         {
             var c = new MultiplicationAlgebraConfig()
-                .WithMul<Length, Length, Area>(true)
-                .WithMul<Length, Area, Volume>(true)
-                
-                
-                .WithDiv<Force, Area, Pressure>(false)
-                
+                    .WithMul<Length, Length, Area>(true)
+                    .WithMul<Length, Area, Volume>(true)
+                    .WithDiv<Force, Area, Pressure>(false)
+
                 // .WithDiv<>()
                 ;
 

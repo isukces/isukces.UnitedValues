@@ -4,9 +4,9 @@ using JetBrains.Annotations;
 
 namespace UnitGenerator
 {
-    public class PrimitiveUnitsCollection
+    public class BasicUnitsCollection
     {
-        public PrimitiveUnitsCollection(IReadOnlyList<PrimitiveUnit> items)
+        public BasicUnitsCollection(IReadOnlyList<BasicUnit> items)
         {
             Items = items;
             _dict = items.GroupBy(a => a.UnitTypes.Unit)
@@ -15,16 +15,16 @@ namespace UnitGenerator
         }
 
         [CanBeNull]
-        public PrimitiveUnit GetDeltaByUnit(string unit)
+        public BasicUnit GetDeltaByUnit(string unit)
         {
             if (!_dict.TryGetValue(unit, out var item))
                 return null;
             return item.FirstOrDefault(a => a.UnitTypes.ValueKind == Kind.Delta);
         }
 
-        public IReadOnlyList<PrimitiveUnit> Items { get; }
+        public IReadOnlyList<BasicUnit> Items { get; }
 
         public IReadOnlyList<string> DistinctNames { get; }
-        private readonly Dictionary<string, PrimitiveUnit[]> _dict;
+        private readonly Dictionary<string, BasicUnit[]> _dict;
     }
 }

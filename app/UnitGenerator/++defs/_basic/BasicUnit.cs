@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 
 namespace UnitGenerator
 {
-    public class PrimitiveUnit : IUnitInfo
+    public class BasicUnit : IUnitInfo
     {
-        public PrimitiveUnit(string valueTypeName, string mainUnit, bool isComparable)
+        public BasicUnit(string valueTypeName, string mainUnit, bool isComparable)
         {
             UnitTypes    = new TypesGroup(valueTypeName);
             IsComparable = isComparable;
@@ -18,7 +17,7 @@ namespace UnitGenerator
         /// </summary>
         public TypesGroup UnitTypes { get; }
 
-        public bool   IsComparable { get; }
+        public bool IsComparable { get; }
 
         /// <summary>
         ///     Base unit name (also property name in *Units class i.e. Newton

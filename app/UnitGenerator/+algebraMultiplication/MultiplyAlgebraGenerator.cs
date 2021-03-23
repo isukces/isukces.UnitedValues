@@ -6,8 +6,11 @@ using iSukces.Code.Interfaces;
 
 namespace UnitGenerator
 {
-    public class MultiplyAlgebraGenerator:MultipleFilesGenerator
+    public class MultiplyAlgebraGenerator : MultipleFilesGenerator
     {
+        public MultiplyAlgebraGenerator(string nameSpace) : base(nameSpace)
+        {
+        }
 
 
         private static CsCodeWriter CreateCodeForFractionalResult(OperatorParams p)
@@ -111,7 +114,6 @@ namespace UnitGenerator
             return cw;
         }
 
-        
 
         internal void CreateOperators(MultiplicationAlgebraConfig c)
         {
@@ -124,7 +126,8 @@ namespace UnitGenerator
             }
         }
 
-        private void CreateOperator(TypesGroup left, TypesGroup right, TypesGroup result, string op, bool areRelatedUnits)
+        private void CreateOperator(TypesGroup left, TypesGroup right, TypesGroup result, string op,
+            bool areRelatedUnits)
         {
             var operatorGenerationKey = new OperatorGenerationKey(left.Value, right.Value, op);
 
@@ -185,14 +188,7 @@ namespace UnitGenerator
         }
 
 
-
-
         private readonly Dictionary<OperatorGenerationKey, string> _done =
             new Dictionary<OperatorGenerationKey, string>();
-
-
-        public MultiplyAlgebraGenerator(string nameSpace) : base(nameSpace)
-        {
-        }
     }
 }

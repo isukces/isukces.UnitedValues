@@ -1,7 +1,5 @@
-using System.Linq;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
-using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
@@ -27,8 +25,8 @@ namespace UnitGenerator
 
                 var description = string.Format("represents {0} unit '{1}'",
                     item.Type.Value.FirstLower(), item.GetUnitName(ref fuDefinition));
-                var p1          = fuDefinition.CounterUnit.Container + "." + item.CounterUnit;
-                var p2          = fuDefinition.DenominatorUnit.Container + "." + item.DenominatorUnit;
+                var p1 = fuDefinition.CounterUnit.Container + "." + item.CounterUnit;
+                var p2 = fuDefinition.DenominatorUnit.Container + "." + item.DenominatorUnit;
 
                 var x = new Args(p1, p2).Create(item.Type.Unit);
                 var f = cl.AddField(item.TargetPropertyName, item.Type.Unit)

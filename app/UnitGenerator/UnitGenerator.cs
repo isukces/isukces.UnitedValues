@@ -11,7 +11,7 @@ namespace UnitGenerator
             : base(output, nameSpace)
         {
         }
-        
+
         protected override void GenerateOne()
         {
             Target.Kind = CsNamespaceMemberKind.Struct;

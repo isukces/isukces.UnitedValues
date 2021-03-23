@@ -36,7 +36,7 @@ namespace UnitGenerator
                         .WithOverride()
                         .WithVisibility(Visibilities.Protected)
                         .WithBody(cw);
-                    m.AddParam("value", BasicUnitedValuesGenerator.ValuePropertyType);
+                    m.AddParam("value", BasicUnitValuesGenerator.ValuePropertyType);
                     m.AddParam("unit", "string");
                 }
                 {

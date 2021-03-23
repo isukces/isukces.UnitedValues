@@ -1,5 +1,5 @@
 // ReSharper disable All
-// generator: BasicUnitedValuesGenerator
+// generator: BasicUnitValuesGenerator
 using Newtonsoft.Json;
 using System;
 using System.Globalization;
@@ -23,7 +23,7 @@ namespace iSukces.UnitedValues
 
         public Area ConvertTo(AreaUnit newUnit)
         {
-            // generator : BasicUnitedValuesGenerator.Add_ConvertTo
+            // generator : BasicUnitValuesGenerator.Add_ConvertTo
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
@@ -50,7 +50,7 @@ namespace iSukces.UnitedValues
 
         public decimal GetBaseUnitValue()
         {
-            // generator : BasicUnitedValuesGenerator.Add_GetBaseUnitValue
+            // generator : BasicUnitValuesGenerator.Add_GetBaseUnitValue
             if (Unit.Equals(BaseUnit))
                 return Value;
             var factor = GlobalUnitRegistry.Factors.Get(Unit);
@@ -101,7 +101,7 @@ namespace iSukces.UnitedValues
 
         public static Area operator -(Area left, Area right)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Algebra_PlusMinus
+            // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return -right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
@@ -142,14 +142,14 @@ namespace iSukces.UnitedValues
 
         public static decimal operator /(Area left, Area right)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Algebra_MulDiv
+            // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
             right = right.ConvertTo(left.Unit);
             return left.Value / right.Value;
         }
 
         public static Area operator +(Area left, Area right)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Algebra_PlusMinus
+            // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
                 return right;
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
@@ -592,7 +592,7 @@ namespace iSukces.UnitedValues
 
         public static Area Parse(string value)
         {
-            // generator : BasicUnitedValuesGenerator.Add_Parse
+            // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(Area));
             return new Area(parseResult.Value, new AreaUnit(parseResult.UnitName));
         }

@@ -4,9 +4,12 @@ using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
-    public class DerivedUnitInfo
+    /// <summary>
+    ///     Group of derived units connected to the same basic unit
+    /// </summary>
+    public class DerivedUnit
     {
-        public DerivedUnitInfo(string name)
+        public DerivedUnit(string name)
         {
             Name = name;
         }
@@ -53,28 +56,50 @@ namespace UnitGenerator
             }
         }
 
-        public DerivedUnitInfo WithLengths(int power)
+        public DerivedUnit WithLengths(int power)
         {
             var g = new[]
             {
-                new ShortInfo("Meter", "m", 1m),
-                new ShortInfo("Km", "km", 1000m, "Kilometers"),
-                new ShortInfo("Dm", "dm", 0.1m, "Decimeters"),
-                new ShortInfo("Cm", "cm", 0.01m, "Centimeters"),
-                new ShortInfo("Mm", "mm", 0.001m, "Milimeters"),
-                new ShortInfo("Inch", "inch", 0.0254m, "Inches"),
-                new ShortInfo("Feet", "ft", 0.3048m, "Foot"),
-                new ShortInfo("Yard", "yd", 0.9144m, "Yards"),
-                new ShortInfo("Furlong", "fg", 201.1680m, "Furlongs"),
-                new ShortInfo("Fathom", "fh", 1.8288m),
-                new ShortInfo("Mile", "mil", 1609.344m, "Miles"),
-                new ShortInfo("NauticalMile", "nm", 1852m, "NauticalMiles")
+                new DerivedUnitItem("Meter", "m", 1m),
+                new DerivedUnitItem("Km", "km", 1000m, "Kilometers"),
+                new DerivedUnitItem("Dm", "dm", 0.1m, "Decimeters"),
+                new DerivedUnitItem("Cm", "cm", 0.01m, "Centimeters"),
+                new DerivedUnitItem("Mm", "mm", 0.001m, "Milimeters"),
+                new DerivedUnitItem("Inch", "inch", 0.0254m, "Inches"),
+                new DerivedUnitItem("Feet", "ft", 0.3048m, "Foot"),
+                new DerivedUnitItem("Yard", "yd", 0.9144m, "Yards"),
+                new DerivedUnitItem("Furlong", "fg", 201.1680m, "Furlongs"),
+                new DerivedUnitItem("Fathom", "fh", 1.8288m),
+                new DerivedUnitItem("Mile", "mil", 1609.344m, "Miles"),
+                new DerivedUnitItem("NauticalMile", "nm", 1852m, "NauticalMiles")
             };
 
             return WithPoweredUnits(power, g, "Length,Area,Volume".Split(','));
         }
 
-        public DerivedUnitInfo WithPoweredUnits(int power, ShortInfo[] items, string[] values)
+        public DerivedUnit WithTime(int power)
+        {
+            var g = new[]
+            {
+                new DerivedUnitItem("Second", "s", 1m),
+                new DerivedUnitItem("Minute", "min", 60, "Minutes"),
+                new DerivedUnitItem("Hour", "h", 3600, "Hours"),
+            };
+
+            return WithPoweredUnits(power, g, "Time,SquareTime".Split(','));
+        }
+
+        public DerivedUnit WithUnit(string unitShortName,
+            string propertyName, decimal multiplicator, string nameSingular = null,
+            string namePlural = null,
+            string fromMethodNameSufix = null)
+        {
+            Units.Add(new DerivedUnitDefinition(unitShortName, Ext.CsEncode(multiplicator), nameSingular, namePlural,
+                propertyName, fromMethodNameSufix));
+            return this;
+        }
+
+        private DerivedUnit WithPoweredUnits(int power, DerivedUnitItem[] items, string[] values)
         {
             var unitSuffix     = Suffix(power);
             var propertyPrefix = Prefix(power);
@@ -82,7 +107,7 @@ namespace UnitGenerator
             foreach (var i in items)
             {
                 var fromMethodNameSufix = i.FromMethodNameSufix.AddPrefix(propertyPrefix);
-                WithUnit(i.Unit + unitSuffix, propertyPrefix + i.Prop, Mul(power, i.M),
+                WithUnit(i.UnitCode + unitSuffix, propertyPrefix + i.FieldName, Mul(power, i.Factor),
                     fromMethodNameSufix: fromMethodNameSufix);
             }
 
@@ -100,28 +125,6 @@ namespace UnitGenerator
             return this;
         }
 
-        public DerivedUnitInfo WithTime(int power)
-        {
-            var g = new[]
-            {
-                new ShortInfo("Second", "s", 1m),
-                new ShortInfo("Minute", "min", 60, "Minutes"),
-                new ShortInfo("Hour", "h", 3600, "Hours"),
-            };
-
-            return WithPoweredUnits(power, g, "Time,SquareTime".Split(','));
-        }
-
-        public DerivedUnitInfo WithUnit(string unitShortName,
-            string propertyName, decimal multiplicator, string nameSingular = null,
-            string namePlural = null,
-            string fromMethodNameSufix = null)
-        {
-            Units.Add(new DerivedUnitDefinition(unitShortName, Ext.CsEncode(multiplicator), nameSingular, namePlural,
-                propertyName, fromMethodNameSufix));
-            return this;
-        }
-
 
         private void WithUnit(string unitShortName,
             string propertyName, string multiplicator, string nameSingular = null,
@@ -136,29 +139,5 @@ namespace UnitGenerator
 
         public List<DerivedUnitDefinition> Units           { get; } = new List<DerivedUnitDefinition>();
         public List<PrefixRelation>        PrefixRelations { get; } = new List<PrefixRelation>();
-
-        public class ShortInfo
-        {
-            public ShortInfo(string prop, string unit, decimal m, string fromMethodNameSufix = null)
-            {
-                Prop                = prop;
-                Unit                = unit;
-                M                   = m;
-                FromMethodNameSufix = fromMethodNameSufix;
-            }
-
-            public override string ToString()
-            {
-                return $"Prop={Prop}, Unit={Unit}, M={M}, FromMethodNameSufix={FromMethodNameSufix}";
-            }
-
-            public string Prop { get; }
-
-            public string Unit { get; }
-
-            public decimal M { get; }
-
-            public string FromMethodNameSufix { get; }
-        }
     }
 }
