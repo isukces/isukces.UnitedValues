@@ -2,18 +2,25 @@ using iSukces.Code;
 
 namespace UnitGenerator
 {
-    public class DerivedUnitDefinition
+    public interface IDerivedUnitDefinition
+    {
+        string PropertyName        { get; }
+        string UnitShortName       { get; }
+        string FromMethodNameSufix { get; }
+    }
+
+    public class DerivedUnitDefinition : IDerivedUnitDefinition
     {
         public DerivedUnitDefinition(string unitShortName, string multiplicator, string nameSingular, string namePlural,
             string propertyName, string fromMethodNameSufix)
         {
             if (string.IsNullOrEmpty(namePlural) && !string.IsNullOrEmpty(nameSingular))
                 namePlural = nameSingular + "s";
-            UnitShortName = unitShortName;
-            Multiplicator = multiplicator;
-            NameSingular  = nameSingular;
-            NamePlural    = namePlural;
-            FromMethodNameSufix       = fromMethodNameSufix;
+            UnitShortName       = unitShortName;
+            Multiplicator       = multiplicator;
+            NameSingular        = nameSingular;
+            NamePlural          = namePlural;
+            FromMethodNameSufix = fromMethodNameSufix;
 
             if (string.IsNullOrEmpty(propertyName))
                 propertyName = UnitShortName;
@@ -32,8 +39,8 @@ namespace UnitGenerator
 
         public string NameSingular { get; }
 
-        public string NamePlural   { get; }
-        public string FromMethodNameSufix      { get; }
-        public string PropertyName { get; }
+        public string NamePlural          { get; }
+        public string FromMethodNameSufix { get; }
+        public string PropertyName        { get; }
     }
 }

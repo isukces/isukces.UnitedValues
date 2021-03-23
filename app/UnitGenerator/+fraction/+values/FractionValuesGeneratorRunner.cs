@@ -6,7 +6,7 @@ namespace UnitGenerator
     {
         public static void Run(string basePath, string nameSpace)
         {
-            var infos     = FractionUnitGeneratorRunner.AllFractionUnits;
+            var infos     = FractionUnitDefs.AllFractionUnits;
             var path      = Path.Combine(basePath, "+IUnitedValue", "+fraction");
             var generator = new FractionValuesGenerator(path, nameSpace);
             generator.Generate(infos.Items);

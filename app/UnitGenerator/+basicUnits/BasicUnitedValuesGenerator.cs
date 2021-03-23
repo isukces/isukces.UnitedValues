@@ -11,6 +11,27 @@ namespace UnitGenerator
         {
         }
 
+        public static void Add_FromMethods(string valueTypeName, TypesGoup types, CsClass target,
+            IDerivedUnitDefinition u)
+        {
+            foreach (var inputType in "decimal,double,int,long".Split(','))
+            {
+                var arg = "value";
+                if (inputType == OtherValuePropertyType)
+                    arg = $"({ValuePropertyType}){arg}";
+
+                var args = new Args(arg, types.Container + "." + u.PropertyName)
+                    .Create(target.Name);
+                var valueIn           = $" value in {u.UnitShortName}";
+                var methodName        = "From" + u.FromMethodNameSufix.CoalesceNullOrWhiteSpace(u.PropertyName);
+                var methodDescription = $"creates {types.Value.FirstLower()} from{valueIn}";
+                var m = target.AddMethod(methodName, target.Name, methodDescription)
+                    .WithStatic()
+                    .WithBodyFromExpression(args);
+                m.AddParam("value", inputType).Description = string.Format("{0}{1}", valueTypeName, valueIn);
+            }
+        }
+
         protected override void GenerateOne()
         {
             Target.Kind = CsNamespaceMemberKind.Struct;
@@ -133,24 +154,10 @@ namespace UnitGenerator
             var d   = tmp.ByName(Cfg.ValueTypeName);
 
             if (d is null) return;
-            foreach (var inputType in "decimal,double,int,long".Split(','))
-            foreach (var u in d.Units)
-            {
-                var arg = "value";
-                if (inputType == OtherValuePropertyType)
-                    arg = $"({ValuePropertyType}){arg}";
-
-                var args = new Args(arg, Cfg.Gr.Container + "." + u.PropertyName)
-                    .Create(Target.Name);
-                var valueIn           = $" value in {u.UnitShortName}";
-                var methodName        = "From" + u.FromMethodNameSufix.CoalesceNullOrWhiteSpace(u.PropertyName);
-                var methodDescription = $"creates {Cfg.Gr.Value.FirstLower()} from{valueIn}";
-                var m = Target.AddMethod(methodName, Target.Name, methodDescription)
-                    .WithStatic()
-                    .WithBodyFromExpression(args);
-                m.AddParam("value", inputType).Description = string.Format("{0}{1}", Cfg.ValueTypeName, valueIn);
-            }
+            foreach (var u in d.Units) 
+                Add_FromMethods(Cfg.ValueTypeName, Cfg.Gr, Target, u);
         }
+
 
         private void Add_GetBaseUnitValue()
         {

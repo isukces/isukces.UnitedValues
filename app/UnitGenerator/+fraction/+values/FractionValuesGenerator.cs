@@ -26,6 +26,8 @@ namespace UnitGenerator
 
             Add_WithCounterUnit();
             Add_WithDenominatorUnit();
+
+            Add_FromMethods();
         }
 
 
@@ -93,6 +95,35 @@ namespace UnitGenerator
                 .AddParam("newUnit", Cfg.UnitTypeName);
         }
 
+        private void Add_FromMethods()
+        {
+            var collection = CommonFractionalUnits.GetAll();
+            var commonUnits  = collection.GetBy(Cfg.Names.Unit);
+            if (commonUnits.Length == 0) return;
+            foreach (var i in commonUnits)
+            {
+                IDerivedUnitDefinition u = new Dy
+                {
+                    PropertyName        = i.TargetPropertyName,
+                    UnitShortName       = i.GetUnitName(),
+                    FromMethodNameSufix = i.TargetPropertyName
+                };
+                BasicUnitedValuesGenerator. Add_FromMethods(
+                    i.Type.Value,
+                    i.Type,
+                    Target,
+                    u);
+ 
+            }
+        }
+
+        private class Dy : IDerivedUnitDefinition
+        {
+            public string PropertyName        { get; set; }
+            public string UnitShortName       { get; set; }
+            public string FromMethodNameSufix { get; set; }
+        }
+
         private void Add_GetBaseUnitValue()
         {
             var cw = new CsCodeWriter();
@@ -142,8 +173,7 @@ namespace UnitGenerator
             cw.WriteLine("var {1} = new {0}(newCounterUnit, Unit.DenominatorUnit);", Cfg.Names.Unit, resultUnit);
             cw.WriteLine("return new {0}({2}.Value, {1});", Cfg.Names.Value, resultUnit, valueToConvert);
             */
-            
-            
+
             var valueType = Cfg.Names.Value;
             var unitType  = Cfg.Names.Unit;
             var cw        = Ext.Create<Self>();

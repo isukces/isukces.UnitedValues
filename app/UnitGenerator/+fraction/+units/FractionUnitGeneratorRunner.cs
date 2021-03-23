@@ -1,47 +1,19 @@
-using System;
+using System.Collections.Generic;
 using System.IO;
-using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
     public class FractionUnitGeneratorRunner
     {
-        public static FractionUnitInfo IsFraction(TypesGoup right)
-        {
-            foreach (var i in AllFractionUnits.Items)
-                if (i.Names.Value == right.Value)
-                    return i;
-            return null;
-        }
-
         public static void Run(string basePath, string nameSpace)
         {
-            var infos     = AllFractionUnits;
+            var infos     = FractionUnitDefs.AllFractionUnits;
             var generator = new FractionUnitGenerator(Path.Combine(basePath, "+fractionUnits"), nameSpace);
             generator.Generate(infos.Items);
+
+            var gen2 = new CommonFractionalUnitsGenerator(nameSpace);
+            gen2.Generate(CommonFractionalUnits.GetAll());
+            gen2.Save(Path.Combine(basePath, "+++temp"));
         }
-
-        private static FractionUnitInfoCollection LazyGetAllFractionUnits()
-        {
-            var q = Ext.GetStaticFieldsValues<FractionUnitGeneratorRunner, FractionUnitInfo>();
-            return new FractionUnitInfoCollection(q);
-        }
-
-        public static FractionUnitInfoCollection AllFractionUnits => LazyAllFractionUnits.Value;
-
-        private static readonly Lazy<FractionUnitInfoCollection> LazyAllFractionUnits
-            = new Lazy<FractionUnitInfoCollection>(LazyGetAllFractionUnits);
-
-
-        public static readonly FractionUnitInfo LinearDensity = FractionUnitInfo.Make<LinearDensity, Weight, Length>();
-        public static readonly FractionUnitInfo Density = FractionUnitInfo.Make<Density, Weight, Volume>();
-        public static readonly FractionUnitInfo PlanarDensity = FractionUnitInfo.Make<PlanarDensity, Weight, Area>();
-
-        public static readonly FractionUnitInfo Pressure = FractionUnitInfo.Make<Pressure, Force, Area>();
-        
-        
-        public static readonly FractionUnitInfo Acceleration = FractionUnitInfo.Make<Acceleration, Length, SquareTime>();
-
-       
     }
 }

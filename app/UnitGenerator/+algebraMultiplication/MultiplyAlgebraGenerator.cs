@@ -1,19 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using iSukces.Code;
-using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
 
 namespace UnitGenerator
 {
-    public class MultiplyAlgebraGenerator
+    public class MultiplyAlgebraGenerator:MultipleFilesGenerator
     {
-        public MultiplyAlgebraGenerator(string nameSpace)
-        {
-            _nameSpace = nameSpace;
-        }
+
 
         private static CsCodeWriter CreateCodeForFractionalResult(OperatorParams p)
         {
@@ -116,14 +111,7 @@ namespace UnitGenerator
             return cw;
         }
 
-        public void Save(string path)
-        {
-            foreach (var i in _clases.Values)
-            {
-                var fi = Path.Combine(path, i.Cl.Name + ".auto.cs");
-                i.File.SaveIfDifferent(fi);
-            }
-        }
+        
 
         internal void CreateOperators(MultiplicationAlgebraConfig c)
         {
@@ -161,8 +149,8 @@ namespace UnitGenerator
 
             // cw.WriteLine("// " + key + " " + areRelatedUnits);
 
-            var rightFraction = FractionUnitGeneratorRunner.IsFraction(right);
-            var leftFraction  = FractionUnitGeneratorRunner.IsFraction(left);
+            var rightFraction = FractionUnitDefs.IsFraction(right);
+            var leftFraction  = FractionUnitDefs.IsFraction(left);
 
             var rightUnit  = "rightUnit";
             var resultUnit = "resultUnit";
@@ -197,25 +185,14 @@ namespace UnitGenerator
         }
 
 
-        private CsClass GetClass(string name)
-        {
-            if (_clases.TryGetValue(name, out var info))
-                return info.Cl;
-            var file = new CsFile();
-            file.AddImportNamespace("System");
-            var ns = file.GetOrCreateNamespace(_nameSpace);
-            var cl = ns.GetOrCreateClass(name);
-            cl.IsPartial  = true;
-            info          = new FileHolder(file, ns, cl);
-            _clases[name] = info;
-            return info.Cl;
-        }
 
-        private readonly string _nameSpace;
 
         private readonly Dictionary<OperatorGenerationKey, string> _done =
             new Dictionary<OperatorGenerationKey, string>();
 
-        private readonly Dictionary<string, FileHolder> _clases = new Dictionary<string, FileHolder>();
+
+        public MultiplyAlgebraGenerator(string nameSpace) : base(nameSpace)
+        {
+        }
     }
 }

@@ -130,6 +130,42 @@ namespace iSukces.UnitedValues
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// creates acceleration from value in m/s²
+        /// </summary>
+        /// <param name="value">Acceleration value in m/s²</param>
+        public static Acceleration FromMetersPerSquareSeconds(decimal value)
+        {
+            return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
+        }
+
+        /// <summary>
+        /// creates acceleration from value in m/s²
+        /// </summary>
+        /// <param name="value">Acceleration value in m/s²</param>
+        public static Acceleration FromMetersPerSquareSeconds(double value)
+        {
+            return new Acceleration((decimal)value, AccelerationUnits.MetersPerSquareSeconds);
+        }
+
+        /// <summary>
+        /// creates acceleration from value in m/s²
+        /// </summary>
+        /// <param name="value">Acceleration value in m/s²</param>
+        public static Acceleration FromMetersPerSquareSeconds(int value)
+        {
+            return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
+        }
+
+        /// <summary>
+        /// creates acceleration from value in m/s²
+        /// </summary>
+        /// <param name="value">Acceleration value in m/s²</param>
+        public static Acceleration FromMetersPerSquareSeconds(long value)
+        {
+            return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
+        }
+
         public static Acceleration Parse(string value)
         {
             if (string.IsNullOrEmpty(value))
