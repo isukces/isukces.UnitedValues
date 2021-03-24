@@ -6,8 +6,14 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
+    [UnitsContainer]
     public static partial class ForceUnits
     {
+        public static void RegisterUnitExchangeFactors(UnitExchangeFactors factors)
+        {
+            factors.RegisterMany(All);
+        }
+
         /// <summary>
         /// All known force units
         /// </summary>

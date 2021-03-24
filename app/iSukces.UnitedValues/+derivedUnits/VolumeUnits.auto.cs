@@ -6,8 +6,14 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
+    [UnitsContainer]
     public static partial class VolumeUnits
     {
+        public static void RegisterUnitExchangeFactors(UnitExchangeFactors factors)
+        {
+            factors.RegisterMany(All);
+        }
+
         internal static void Register(UnitRelationsDictionary dict)
         {
             dict.AddRelated<VolumeUnit, LengthUnit>(CubicMeter, LengthUnits.Meter);

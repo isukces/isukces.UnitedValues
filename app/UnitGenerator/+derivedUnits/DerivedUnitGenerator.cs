@@ -1,4 +1,3 @@
-using System.Linq;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
@@ -8,7 +7,8 @@ namespace UnitGenerator
 {
     public class DerivedUnitGenerator : BaseGenerator<DerivedUnit>
     {
-        public DerivedUnitGenerator(string output, string nameSpace) : base(output, nameSpace)
+        public DerivedUnitGenerator(string output, string nameSpace)
+            : base(output, nameSpace)
         {
         }
 
@@ -18,6 +18,12 @@ namespace UnitGenerator
             Add_AllProperty();
             Add_Properties();
             Add_Register();
+
+            Target.WithAttributeFromName(nameof(UnitsContainerAttribute));
+            var m = Target.AddMethod("RegisterUnitExchangeFactors", "void")
+                .WithStatic()
+                .WithBody("factors.RegisterMany(All);");
+            m.AddParam<UnitExchangeFactors>("factors", Target);
         }
 
         protected override string GetTypename(DerivedUnit cfg)
