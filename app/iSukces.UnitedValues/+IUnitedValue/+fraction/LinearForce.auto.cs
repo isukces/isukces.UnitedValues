@@ -21,7 +21,7 @@ namespace iSukces.UnitedValues
             Unit = unit;
         }
 
-        public LinearForce(decimal value, LengthUnit counterUnit, SquareTimeUnit denominatorUnit)
+        public LinearForce(decimal value, ForceUnit counterUnit, LengthUnit denominatorUnit)
         {
             Value = value;
             Unit = new LinearForceUnit(counterUnit, denominatorUnit);
@@ -32,8 +32,8 @@ namespace iSukces.UnitedValues
             // generator : FractionValuesGenerator.Add_ConvertTo
             if (Unit.Equals(newUnit))
                 return this;
-            var a = new Length(Value, Unit.CounterUnit);
-            var b = new SquareTime(1, Unit.DenominatorUnit);
+            var a = new Force(Value, Unit.CounterUnit);
+            var b = new Length(1, Unit.DenominatorUnit);
             a = a.ConvertTo(newUnit.CounterUnit);
             b = b.ConvertTo(newUnit.DenominatorUnit);
             return new LinearForce(a.Value / b.Value, newUnit);
@@ -87,7 +87,7 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public LinearForce WithCounterUnit(LengthUnit newUnit)
+        public LinearForce WithCounterUnit(ForceUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
             var oldUnit = Unit.CounterUnit;
@@ -99,7 +99,7 @@ namespace iSukces.UnitedValues
             return new LinearForce(oldFactor / newFactor * Value, resultUnit);
         }
 
-        public LinearForce WithDenominatorUnit(SquareTimeUnit newUnit)
+        public LinearForce WithDenominatorUnit(LengthUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithDenominatorUnit
             var oldUnit = Unit.DenominatorUnit;
@@ -140,8 +140,8 @@ namespace iSukces.UnitedValues
             var units = Common.SplitUnitNameBySlash(r.UnitName);
             if (units.Length != 2)
                 throw new Exception($"{r.UnitName} is not valid LinearForce unit");
-            var counterUnit = new LengthUnit(units[0]);
-            var denominatorUnit = new SquareTimeUnit(units[1]);
+            var counterUnit = new ForceUnit(units[0]);
+            var denominatorUnit = new LengthUnit(units[1]);
             return new LinearForce(r.Value, counterUnit, denominatorUnit);
         }
 

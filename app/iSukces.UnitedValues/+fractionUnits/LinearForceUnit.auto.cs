@@ -5,14 +5,14 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial struct LinearForceUnit : IFractionalUnit<LengthUnit, SquareTimeUnit>, IEquatable<LinearForceUnit>
+    public partial struct LinearForceUnit : IFractionalUnit<ForceUnit, LengthUnit>, IEquatable<LinearForceUnit>
     {
         /// <summary>
         /// creates instance of LinearForceUnit
         /// </summary>
         /// <param name="counterUnit">counter unit</param>
         /// <param name="denominatorUnit">denominator unit</param>
-        public LinearForceUnit(LengthUnit counterUnit, SquareTimeUnit denominatorUnit)
+        public LinearForceUnit(ForceUnit counterUnit, LengthUnit denominatorUnit)
         {
             CounterUnit = counterUnit;
             DenominatorUnit = denominatorUnit;
@@ -44,13 +44,13 @@ namespace iSukces.UnitedValues
             return UnitName;
         }
 
-        public LinearForceUnit WithCounterUnit(LengthUnit newUnit)
+        public LinearForceUnit WithCounterUnit(ForceUnit newUnit)
         {
             // generator : FractionUnitGenerator.Add_WithSecond
             return new LinearForceUnit(newUnit, DenominatorUnit);
         }
 
-        public LinearForceUnit WithDenominatorUnit(SquareTimeUnit newUnit)
+        public LinearForceUnit WithDenominatorUnit(LengthUnit newUnit)
         {
             // generator : FractionUnitGenerator.Add_WithFirst
             return new LinearForceUnit(CounterUnit, newUnit);
@@ -79,12 +79,12 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// counter unit
         /// </summary>
-        public LengthUnit CounterUnit { get; }
+        public ForceUnit CounterUnit { get; }
 
         /// <summary>
         /// denominator unit
         /// </summary>
-        public SquareTimeUnit DenominatorUnit { get; }
+        public LengthUnit DenominatorUnit { get; }
 
         public string UnitName
         {

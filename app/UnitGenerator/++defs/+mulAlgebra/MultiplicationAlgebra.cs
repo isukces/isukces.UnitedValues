@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace UnitGenerator
 {
-    internal class MultiplicationAlgebraConfig
+    public class MultiplicationAlgebra
     {
-        public MultiplicationAlgebraConfig WithDiv<T1, T2, TDiv>(bool areRelatedUnits)
+        public MultiplicationAlgebra WithDiv<T1, T2, TDiv>(bool areRelatedUnits)
         {
-            var x = new MultiplicationAlgebraConfigItem(
+            var x = new MultiplicationAlgebraItem(
                 new TypesGroup(typeof(T1).Name),
                 new TypesGroup(typeof(T2).Name),
                 new TypesGroup(typeof(TDiv).Name),
@@ -16,11 +16,11 @@ namespace UnitGenerator
             return this;
         }
 
-        public MultiplicationAlgebraConfig WithMul<T1, T2, TMul>(bool areRelatedUnits)
+        public MultiplicationAlgebra WithMul<T1, T2, TMul>(bool areRelatedUnits)
         {
             // T1/T2 = TMul
             // TMul * T2 = T1
-            var x = new MultiplicationAlgebraConfigItem(
+            var x = new MultiplicationAlgebraItem(
                 new TypesGroup(typeof(TMul).Name),
                 new TypesGroup(typeof(T2).Name),
                 new TypesGroup(typeof(T1).Name),
@@ -30,6 +30,6 @@ namespace UnitGenerator
             return this;
         }
 
-        public List<MultiplicationAlgebraConfigItem> Items { get; } = new List<MultiplicationAlgebraConfigItem>();
+        public List<MultiplicationAlgebraItem> Items { get; } = new List<MultiplicationAlgebraItem>();
     }
 }

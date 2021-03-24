@@ -34,7 +34,7 @@ namespace UnitGenerator
             = FractionUnit.Make<Acceleration, Length, SquareTime>();
 
         public static readonly FractionUnit LinearForce
-            = FractionUnit.Make<Length, SquareTime>("LinearForce");
+            = FractionUnit.Make<Force, Length>("LinearForce");
 
 
         private static FractionUnitsCollection _allFractionUnitses;

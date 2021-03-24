@@ -1,8 +1,8 @@
 namespace UnitGenerator
 {
-    internal class MultiplicationAlgebraConfigItem
+    public class MultiplicationAlgebraItem
     {
-        public MultiplicationAlgebraConfigItem(TypesGroup counter, TypesGroup denominator, TypesGroup result,
+        public MultiplicationAlgebraItem(TypesGroup counter, TypesGroup denominator, TypesGroup result,
             bool areRelatedUnits)
         {
             Counter         = counter;

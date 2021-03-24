@@ -9,46 +9,77 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// Multiplication operation
         /// </summary>
-        /// <param name="leftFactor">left factor (multiplicand)</param>
-        /// <param name="rightFactor">rigth factor (multiplier)</param>
-        public static Volume operator *(Area leftFactor, Length rightFactor)
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static Volume operator *(Area area, Length length)
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRelatedUnits
             // scenario C
-            var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, LengthUnit>(leftFactor.Unit);
-            var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, VolumeUnit>(leftFactor.Unit);
-            var rightFactorConverted = rightFactor.ConvertTo(rightUnit);
-            var value = leftFactor.Value * rightFactorConverted.Value;
+            var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, LengthUnit>(area.Unit);
+            var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, VolumeUnit>(area.Unit);
+            var lengthConverted = length.ConvertTo(rightUnit);
+            var value = area.Value * lengthConverted.Value;
             return new Volume(value, resultUnit);
         }
 
         /// <summary>
         /// Multiplication operation
         /// </summary>
-        /// <param name="leftFactor">left factor (multiplicand)</param>
-        /// <param name="rightFactor">rigth factor (multiplier)</param>
-        public static Force operator *(Area leftFactor, Pressure rightFactor)
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static Volume operator *(Length length, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRelatedUnits
+            // scenario C
+            var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, AreaUnit>(length.Unit);
+            var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, VolumeUnit>(length.Unit);
+            var areaConverted = area.ConvertTo(rightUnit);
+            var value = length.Value * areaConverted.Value;
+            return new Volume(value, resultUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="pressure">rigth factor (multiplier)</param>
+        public static Force operator *(Area area, Pressure pressure)
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario B
-            var unit = new PressureUnit(rightFactor.Unit.CounterUnit, leftFactor.Unit);
-            var rightFactorConverted    = rightFactor.WithDenominatorUnit(leftFactor.Unit);
-            var value = leftFactor.Value / rightFactorConverted.Value;
-            return new Force(value, rightFactor.Unit.CounterUnit);
+            var unit = new PressureUnit(pressure.Unit.CounterUnit, area.Unit);
+            var pressureConverted    = pressure.WithDenominatorUnit(area.Unit);
+            var value = area.Value / pressureConverted.Value;
+            return new Force(value, pressure.Unit.CounterUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="pressure">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static Force operator *(Pressure pressure, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
+            // area unit will be taken from denominator of pressure unit
+            // scenario D
+            var areaConverted = area.ConvertTo(pressure.Unit.DenominatorUnit);
+            var value = areaConverted.Value * pressure.Value;
+            return new Force(value, pressure.Unit.CounterUnit);
         }
 
         /// <summary>
         /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
         /// </summary>
-        /// <param name="dividend">a dividend (counter) - a value that is being divided</param>
-        /// <param name="divisor">a divisor (denominator) - a value which dividend is divided by</param>
-        public static Length operator /(Area dividend, Length divisor)
+        /// <param name="area">a dividend (counter) - a value that is being divided</param>
+        /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Length operator /(Area area, Length length)
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRelatedUnits
             // scenario C
-            var newUnit = GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, LengthUnit>(dividend.Unit);
-            var divisorConverted = divisor.ConvertTo(newUnit);
-            var value = dividend.Value / divisorConverted.Value;
+            var newUnit = GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, LengthUnit>(area.Unit);
+            var lengthConverted = length.ConvertTo(newUnit);
+            var value = area.Value / lengthConverted.Value;
             return new Length(value, newUnit);
         }
 

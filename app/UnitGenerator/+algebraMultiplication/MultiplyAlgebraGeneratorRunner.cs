@@ -7,14 +7,7 @@ namespace UnitGenerator
     {
         public static void Run(string basePath, string nameSpace)
         {
-            var c = new MultiplicationAlgebraConfig()
-                    .WithMul<Length, Length, Area>(true)
-                    .WithMul<Length, Area, Volume>(true)
-                    .WithDiv<Force, Area, Pressure>(false)
-
-                // .WithDiv<>()
-                ;
-
+            var c   = MultiplicationAlgebraDefs.Definition;
             var tmp = new MultiplyAlgebraGenerator(nameSpace);
             tmp.CreateOperators(c);
             var path = Path.Combine(basePath, "+mulAlgebra");

@@ -52,6 +52,23 @@ namespace UnitGenerator
             }
         }
 
+        public string GetOperatorTargetType()
+        {
+            int G()
+            {
+                var c = Left.Length.CompareTo(Right.Length);
+                if (c != 0)
+                    return c;
+                return StringComparer.Ordinal.Compare(Left, Right);
+            }
+
+            if (Oper == "/")
+                return Left;
+
+            return G() > 0 ? Right : Left;
+        }
+
+
         public override string ToString()
         {
             return string.Format("{0} {1} {2}", Left, Oper, Right);

@@ -115,7 +115,7 @@ namespace UnitGenerator
         }
 
 
-        internal void CreateOperators(MultiplicationAlgebraConfig c)
+        internal void CreateOperators(MultiplicationAlgebra c)
         {
             foreach (var i in c.Items)
             {
@@ -147,7 +147,13 @@ namespace UnitGenerator
             var leftName  = info.Left.Name;
             var rightName = info.Right.Name;
 
-            var cl = GetClass(operatorGenerationKey.Left);
+            if (left.Value != right.Value)
+            {
+                leftName  = left.Value.FirstLower();
+                rightName = right.Value.FirstLower();
+            }
+
+            var cl = GetClass(operatorGenerationKey.GetOperatorTargetType());
             cl.Kind = CsNamespaceMemberKind.Struct;
 
             // cw.WriteLine("// " + key + " " + areRelatedUnits);
