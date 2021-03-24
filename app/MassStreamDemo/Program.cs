@@ -13,7 +13,8 @@ namespace MassStreamDemo
             stream = stream.WithCounterUnit(WeightUnits.Kg);
             Console.WriteLine("stream = " + stream);
 
-            stream = stream.WithDenominatorUnit(TimeUnits.Second);
+            stream = stream.WithDenominatorUnit(TimeUnits.Second)
+                .Round(3);
             Console.WriteLine("stream = " + stream);
         }
     }

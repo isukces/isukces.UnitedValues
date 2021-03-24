@@ -46,7 +46,6 @@ namespace UnitGenerator
 
         protected override void Add_FromMethods()
         {
-             
             var collection  = CommonFractionalUnitDefs.All;
             var commonUnits = collection.GetBy(Cfg.UnitTypes.Unit);
             if (commonUnits.Length == 0) return;
@@ -61,7 +60,6 @@ namespace UnitGenerator
                     Target,
                     u);
             }
-            
         }
         
         protected override void PrepareFile(CsFile file)

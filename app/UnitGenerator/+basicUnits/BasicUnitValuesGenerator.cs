@@ -48,7 +48,7 @@ namespace UnitGenerator
             Add_Properties();
             Add_GetBaseUnitValue();
             Add_Parse();
-            Add_Round();
+            Add_Round(Cfg.UnitTypes);
             Add_Comparable();
             Add_Algebra_MulDiv();
             Add_Algebra_MinusUnary();
@@ -252,15 +252,5 @@ namespace UnitGenerator
                 .WithConstValue($"new {Target.Name}(0, BaseUnit)");
         }
 
-        private void Add_Round()
-        {
-            var cs = Ext.Create<BasicUnitValuesGenerator>();
-            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.UnitTypes.Value}));");
-            cs.WriteLine(
-                $"return new {Cfg.UnitTypes.Value}(parseResult.Value, new {Cfg.UnitTypes.Unit}(parseResult.UnitName));");
-            Target.AddMethod("Round", Cfg.UnitTypes.Value)
-                .WithBodyFromExpression("new " + Cfg.UnitTypes.Value + "(Math.Round(Value, decimalPlaces), Unit)")
-                .AddParam<int>("decimalPlaces", Target);
-        }
     }
 }

@@ -69,6 +69,11 @@ namespace iSukces.UnitedValues
             }
         }
 
+        public Pressure Round(int decimalPlaces)
+        {
+            return new Pressure(Math.Round(Value, decimalPlaces), Unit);
+        }
+
         /// <summary>
         /// Returns unit name
         /// </summary>

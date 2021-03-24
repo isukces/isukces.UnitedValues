@@ -69,6 +69,11 @@ namespace iSukces.UnitedValues
             }
         }
 
+        public Acceleration Round(int decimalPlaces)
+        {
+            return new Acceleration(Math.Round(Value, decimalPlaces), Unit);
+        }
+
         /// <summary>
         /// Returns unit name
         /// </summary>

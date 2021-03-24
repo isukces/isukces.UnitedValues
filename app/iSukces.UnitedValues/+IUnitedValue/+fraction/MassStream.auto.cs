@@ -69,6 +69,11 @@ namespace iSukces.UnitedValues
             }
         }
 
+        public MassStream Round(int decimalPlaces)
+        {
+            return new MassStream(Math.Round(Value, decimalPlaces), Unit);
+        }
+
         /// <summary>
         /// Returns unit name
         /// </summary>

@@ -69,6 +69,11 @@ namespace iSukces.UnitedValues
             }
         }
 
+        public LinearForce Round(int decimalPlaces)
+        {
+            return new LinearForce(Math.Round(Value, decimalPlaces), Unit);
+        }
+
         /// <summary>
         /// Returns unit name
         /// </summary>

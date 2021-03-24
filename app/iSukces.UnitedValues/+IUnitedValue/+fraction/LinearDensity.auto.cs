@@ -69,6 +69,11 @@ namespace iSukces.UnitedValues
             }
         }
 
+        public LinearDensity Round(int decimalPlaces)
+        {
+            return new LinearDensity(Math.Round(Value, decimalPlaces), Unit);
+        }
+
         /// <summary>
         /// Returns unit name
         /// </summary>

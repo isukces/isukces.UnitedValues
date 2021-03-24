@@ -69,6 +69,11 @@ namespace iSukces.UnitedValues
             }
         }
 
+        public Torque Round(int decimalPlaces)
+        {
+            return new Torque(Math.Round(Value, decimalPlaces), Unit);
+        }
+
         public string SerializeToJson()
         {
             // generator : ProductValuesGenerator.Add_SerializeToJson

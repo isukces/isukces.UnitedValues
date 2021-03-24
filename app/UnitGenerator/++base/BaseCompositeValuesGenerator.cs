@@ -4,6 +4,7 @@ using iSukces.Code.Interfaces;
 namespace UnitGenerator
 {
     public abstract class BaseCompositeValuesGenerator<T> : BaseValuesGenerator<T>
+        where T:IUnitInfo
     {
         protected BaseCompositeValuesGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
@@ -54,6 +55,7 @@ namespace UnitGenerator
             Add_WithDenominatorUnit();
 
             Add_FromMethods();
+            Add_Round(Cfg.UnitTypes);
         }
 
         protected abstract CompositeUnitGeneratorInfo GetInfo();

@@ -1,5 +1,6 @@
 using System;
 using iSukces.Code;
+using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
 
 namespace UnitGenerator
@@ -10,6 +11,19 @@ namespace UnitGenerator
         {
         }
 
+        
+        
+        protected void Add_Round(TypesGroup names)
+        {
+            var cs = Ext.Create<BasicUnitValuesGenerator>();
+            cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({names.Value}));");
+            cs.WriteLine(
+                $"return new {names.Value}(parseResult.Value, new {names.Unit}(parseResult.UnitName));");
+            Target.AddMethod("Round", names.Value)
+                .WithBodyFromExpression("new " + names.Value + "(Math.Round(Value, decimalPlaces), Unit)")
+                .AddParam<int>("decimalPlaces", Target);
+        }
+        
         protected void AddCommonValues_PropertiesAndConstructor(string unitTypeName)
         {
             Add_Properties(GetConstructorProperties());
