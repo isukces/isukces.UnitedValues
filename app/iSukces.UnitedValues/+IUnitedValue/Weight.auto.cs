@@ -8,35 +8,35 @@ namespace iSukces.UnitedValues
 {
     [Serializable]
     [JsonConverter(typeof(WeightJsonConverter))]
-    public partial struct Weight : IUnitedValue<WeightUnit>, IEquatable<Weight>, IComparable<Weight>, IFormattable
+    public partial struct Mass : IUnitedValue<WeightUnit>, IEquatable<Mass>, IComparable<Mass>, IFormattable
     {
         /// <summary>
         /// creates instance of Weight
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public Weight(decimal value, WeightUnit unit)
+        public Mass(decimal value, WeightUnit unit)
         {
             Value = value;
             Unit = unit;
         }
 
-        public int CompareTo(Weight other)
+        public int CompareTo(Mass other)
         {
-            return UnitedValuesUtils.Compare<Weight, WeightUnit>(this, other);
+            return UnitedValuesUtils.Compare<Mass, WeightUnit>(this, other);
         }
 
-        public Weight ConvertTo(WeightUnit newUnit)
+        public Mass ConvertTo(WeightUnit newUnit)
         {
             // generator : BasicUnitValuesGenerator.Add_ConvertTo
             if (Unit.Equals(newUnit))
                 return this;
             var basic = GetBaseUnitValue();
             var factor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
-            return new Weight(basic / factor, newUnit);
+            return new Mass(basic / factor, newUnit);
         }
 
-        public bool Equals(Weight other)
+        public bool Equals(Mass other)
         {
             return Value == other.Value && Unit.Equals(other.Unit);
         }
@@ -72,9 +72,9 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public Weight Round(int decimalPlaces)
+        public Mass Round(int decimalPlaces)
         {
-            return new Weight(Math.Round(Value, decimalPlaces), Unit);
+            return new Mass(Math.Round(Value, decimalPlaces), Unit);
         }
 
         /// <summary>
@@ -99,12 +99,12 @@ namespace iSukces.UnitedValues
         /// implements - operator
         /// </summary>
         /// <param name="value"></param>
-        public static Weight operator -(Weight value)
+        public static Mass operator -(Mass value)
         {
-            return new Weight(-value.Value, value.Unit);
+            return new Mass(-value.Value, value.Unit);
         }
 
-        public static Weight operator -(Weight left, Weight right)
+        public static Mass operator -(Mass left, Mass right)
         {
             // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
@@ -112,10 +112,10 @@ namespace iSukces.UnitedValues
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
-            return new Weight(left.Value - right.Value, left.Unit);
+            return new Mass(left.Value - right.Value, left.Unit);
         }
 
-        public static bool operator !=(Weight left, Weight right)
+        public static bool operator !=(Mass left, Mass right)
         {
             return left.CompareTo(right) != 0;
         }
@@ -125,9 +125,9 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value"></param>
         /// <param name="number"></param>
-        public static Weight operator *(Weight value, decimal number)
+        public static Mass operator *(Mass value, decimal number)
         {
-            return new Weight(value.Value * number, value.Unit);
+            return new Mass(value.Value * number, value.Unit);
         }
 
         /// <summary>
@@ -135,9 +135,9 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="number"></param>
         /// <param name="value"></param>
-        public static Weight operator *(decimal number, Weight value)
+        public static Mass operator *(decimal number, Mass value)
         {
-            return new Weight(value.Value * number, value.Unit);
+            return new Mass(value.Value * number, value.Unit);
         }
 
         /// <summary>
@@ -145,19 +145,19 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value"></param>
         /// <param name="number"></param>
-        public static Weight operator /(Weight value, decimal number)
+        public static Mass operator /(Mass value, decimal number)
         {
-            return new Weight(value.Value / number, value.Unit);
+            return new Mass(value.Value / number, value.Unit);
         }
 
-        public static decimal operator /(Weight left, Weight right)
+        public static decimal operator /(Mass left, Mass right)
         {
             // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
             right = right.ConvertTo(left.Unit);
             return left.Value / right.Value;
         }
 
-        public static Weight operator +(Weight left, Weight right)
+        public static Mass operator +(Mass left, Mass right)
         {
             // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
             if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
@@ -165,30 +165,30 @@ namespace iSukces.UnitedValues
             if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
-            return new Weight(left.Value + right.Value, left.Unit);
+            return new Mass(left.Value + right.Value, left.Unit);
         }
 
-        public static bool operator <(Weight left, Weight right)
+        public static bool operator <(Mass left, Mass right)
         {
             return left.CompareTo(right) < 0;
         }
 
-        public static bool operator <=(Weight left, Weight right)
+        public static bool operator <=(Mass left, Mass right)
         {
             return left.CompareTo(right) <= 0;
         }
 
-        public static bool operator ==(Weight left, Weight right)
+        public static bool operator ==(Mass left, Mass right)
         {
             return left.CompareTo(right) == 0;
         }
 
-        public static bool operator >(Weight left, Weight right)
+        public static bool operator >(Mass left, Mass right)
         {
             return left.CompareTo(right) > 0;
         }
 
-        public static bool operator >=(Weight left, Weight right)
+        public static bool operator >=(Mass left, Mass right)
         {
             return left.CompareTo(right) >= 0;
         }
@@ -197,115 +197,115 @@ namespace iSukces.UnitedValues
         /// creates weight from value in g
         /// </summary>
         /// <param name="value">Weight value in g</param>
-        public static Weight FromGrams(decimal value)
+        public static Mass FromGrams(decimal value)
         {
-            return new Weight(value, WeightUnits.Gram);
+            return new Mass(value, WeightUnits.Gram);
         }
 
         /// <summary>
         /// creates weight from value in g
         /// </summary>
         /// <param name="value">Weight value in g</param>
-        public static Weight FromGrams(double value)
+        public static Mass FromGrams(double value)
         {
-            return new Weight((decimal)value, WeightUnits.Gram);
+            return new Mass((decimal)value, WeightUnits.Gram);
         }
 
         /// <summary>
         /// creates weight from value in g
         /// </summary>
         /// <param name="value">Weight value in g</param>
-        public static Weight FromGrams(int value)
+        public static Mass FromGrams(int value)
         {
-            return new Weight(value, WeightUnits.Gram);
+            return new Mass(value, WeightUnits.Gram);
         }
 
         /// <summary>
         /// creates weight from value in g
         /// </summary>
         /// <param name="value">Weight value in g</param>
-        public static Weight FromGrams(long value)
+        public static Mass FromGrams(long value)
         {
-            return new Weight(value, WeightUnits.Gram);
+            return new Mass(value, WeightUnits.Gram);
         }
 
         /// <summary>
         /// creates weight from value in kg
         /// </summary>
         /// <param name="value">Weight value in kg</param>
-        public static Weight FromKg(decimal value)
+        public static Mass FromKg(decimal value)
         {
-            return new Weight(value, WeightUnits.Kg);
+            return new Mass(value, WeightUnits.Kg);
         }
 
         /// <summary>
         /// creates weight from value in kg
         /// </summary>
         /// <param name="value">Weight value in kg</param>
-        public static Weight FromKg(double value)
+        public static Mass FromKg(double value)
         {
-            return new Weight((decimal)value, WeightUnits.Kg);
+            return new Mass((decimal)value, WeightUnits.Kg);
         }
 
         /// <summary>
         /// creates weight from value in kg
         /// </summary>
         /// <param name="value">Weight value in kg</param>
-        public static Weight FromKg(int value)
+        public static Mass FromKg(int value)
         {
-            return new Weight(value, WeightUnits.Kg);
+            return new Mass(value, WeightUnits.Kg);
         }
 
         /// <summary>
         /// creates weight from value in kg
         /// </summary>
         /// <param name="value">Weight value in kg</param>
-        public static Weight FromKg(long value)
+        public static Mass FromKg(long value)
         {
-            return new Weight(value, WeightUnits.Kg);
+            return new Mass(value, WeightUnits.Kg);
         }
 
         /// <summary>
         /// creates weight from value in t
         /// </summary>
         /// <param name="value">Weight value in t</param>
-        public static Weight FromTons(decimal value)
+        public static Mass FromTons(decimal value)
         {
-            return new Weight(value, WeightUnits.Tone);
+            return new Mass(value, WeightUnits.Tone);
         }
 
         /// <summary>
         /// creates weight from value in t
         /// </summary>
         /// <param name="value">Weight value in t</param>
-        public static Weight FromTons(double value)
+        public static Mass FromTons(double value)
         {
-            return new Weight((decimal)value, WeightUnits.Tone);
+            return new Mass((decimal)value, WeightUnits.Tone);
         }
 
         /// <summary>
         /// creates weight from value in t
         /// </summary>
         /// <param name="value">Weight value in t</param>
-        public static Weight FromTons(int value)
+        public static Mass FromTons(int value)
         {
-            return new Weight(value, WeightUnits.Tone);
+            return new Mass(value, WeightUnits.Tone);
         }
 
         /// <summary>
         /// creates weight from value in t
         /// </summary>
         /// <param name="value">Weight value in t</param>
-        public static Weight FromTons(long value)
+        public static Mass FromTons(long value)
         {
-            return new Weight(value, WeightUnits.Tone);
+            return new Mass(value, WeightUnits.Tone);
         }
 
-        public static Weight Parse(string value)
+        public static Mass Parse(string value)
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
-            var parseResult = CommonParse.Parse(value, typeof(Weight));
-            return new Weight(parseResult.Value, new WeightUnit(parseResult.UnitName));
+            var parseResult = CommonParse.Parse(value, typeof(Mass));
+            return new Mass(parseResult.Value, new WeightUnit(parseResult.UnitName));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace iSukces.UnitedValues
 
         public static readonly WeightUnit BaseUnit = WeightUnits.Kg;
 
-        public static readonly Weight Zero = new Weight(0, BaseUnit);
+        public static readonly Mass Zero = new Mass(0, BaseUnit);
 
     }
 }

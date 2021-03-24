@@ -6,17 +6,17 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial class WeightJsonConverter : AbstractUnitJsonConverter<Weight, WeightUnit>
+    public partial class WeightJsonConverter : AbstractUnitJsonConverter<Mass, WeightUnit>
     {
-        protected override Weight Make(decimal value, string unit)
+        protected override Mass Make(decimal value, string unit)
         {
             unit = unit?.Trim();
-            return new Weight(value, string.IsNullOrEmpty(unit) ? Weight.BaseUnit : new WeightUnit(unit));
+            return new Mass(value, string.IsNullOrEmpty(unit) ? Mass.BaseUnit : new WeightUnit(unit));
         }
 
-        protected override Weight Parse(string txt)
+        protected override Mass Parse(string txt)
         {
-            return Weight.Parse(txt);
+            return Mass.Parse(txt);
         }
 
     }

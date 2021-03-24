@@ -32,7 +32,7 @@ namespace iSukces.UnitedValues
             // generator : FractionValuesGenerator.Add_ConvertTo
             if (Unit.Equals(newUnit))
                 return this;
-            var a = new Weight(Value, Unit.CounterUnit);
+            var a = new Mass(Value, Unit.CounterUnit);
             var b = new Length(1, Unit.DenominatorUnit);
             a = a.ConvertTo(newUnit.CounterUnit);
             b = b.ConvertTo(newUnit.DenominatorUnit);

@@ -105,10 +105,10 @@
         /// <param name="density"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static Weight operator *(PlanarDensity density, Area length)
+        public static Mass operator *(PlanarDensity density, Area length)
         {
             length = length.ConvertTo(density.Unit.DenominatorUnit);
-            return new Weight(density.Value * length.Value, density.Unit.CounterUnit);
+            return new Mass(density.Value * length.Value, density.Unit.CounterUnit);
         }
 
         /// <summary>
@@ -117,10 +117,10 @@
         /// <param name="density"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static Weight operator *(Area length, PlanarDensity density)
+        public static Mass operator *(Area length, PlanarDensity density)
         {
             density = density.ConvertTo(new PlanarDensityUnit(density.Unit.CounterUnit, length.Unit));
-            return new Weight(density.Value * length.Value, density.Unit.CounterUnit);
+            return new Mass(density.Value * length.Value, density.Unit.CounterUnit);
         }
     }
 
@@ -133,10 +133,10 @@
         /// <param name="density"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static Weight operator *(LinearDensity density, Length length)
+        public static Mass operator *(LinearDensity density, Length length)
         {
             length = length.ConvertTo(density.Unit.DenominatorUnit);
-            return new Weight(density.Value * length.Value, density.Unit.CounterUnit);
+            return new Mass(density.Value * length.Value, density.Unit.CounterUnit);
         }
 
         /// <summary>
@@ -145,10 +145,10 @@
         /// <param name="density"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public static Weight operator *(Length length, LinearDensity density)
+        public static Mass operator *(Length length, LinearDensity density)
         {
             density = density.ConvertTo(new LinearDensityUnit(density.Unit.CounterUnit, length.Unit));
-            return new Weight(density.Value * length.Value, density.Unit.CounterUnit);
+            return new Mass(density.Value * length.Value, density.Unit.CounterUnit);
         }
     }
 }

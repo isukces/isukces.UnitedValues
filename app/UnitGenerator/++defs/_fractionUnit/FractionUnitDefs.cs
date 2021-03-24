@@ -25,9 +25,9 @@ namespace UnitGenerator
             }
         }
 
-        public static readonly FractionUnit LinearDensity = FractionUnit.Make<LinearDensity, Weight, Length>();
-        public static readonly FractionUnit Density = FractionUnit.Make<Density, Weight, Volume>();
-        public static readonly FractionUnit PlanarDensity = FractionUnit.Make<PlanarDensity, Weight, Area>();
+        public static readonly FractionUnit LinearDensity = FractionUnit.Make<LinearDensity, Mass, Length>();
+        public static readonly FractionUnit Density = FractionUnit.Make<Density, Mass, Volume>();
+        public static readonly FractionUnit PlanarDensity = FractionUnit.Make<PlanarDensity, Mass, Area>();
         public static readonly FractionUnit Pressure = FractionUnit.Make<Pressure, Force, Area>();
 
         public static readonly FractionUnit Acceleration
@@ -36,7 +36,7 @@ namespace UnitGenerator
         public static readonly FractionUnit LinearForce
             = FractionUnit.Make<LinearForce, Force, Length>();
         public static readonly FractionUnit MassStream
-            = FractionUnit.Make<Weight, Time>("MassStream");
+            = FractionUnit.Make<Mass, Time>("MassStream");
 
 
         private static FractionUnitsCollection _allFractionUnitses;

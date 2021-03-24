@@ -9,7 +9,7 @@ namespace UnitGenerator
         {
             var arr = new[]
             {
-                new DerivedUnit(nameof(Weight))
+                new DerivedUnit(nameof(Mass))
                     .WithUnit("kg", null, 1)
                     .WithUnit("t", null, 1000, null, TypeCodeAliases.Make("tone", "tons"))
                     .WithUnit("g", null, 0.001m, null, TypeCodeAliases.Make("gram", "grams")),

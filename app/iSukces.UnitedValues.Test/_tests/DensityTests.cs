@@ -35,7 +35,7 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T02_ShouldComputeDensity()
         {
-            var w       = Weight.FromKg(8000);
+            var w       = Mass.FromKg(8000);
             var volume  = new Volume(1, VolumeUnits.CubicMeter);
             var density = w / volume;
             Assert.Equal(8000m, density.Value);
