@@ -32,7 +32,7 @@ namespace UnitGenerator
             return a;
         }
 
-        
+
         public static CsCodeWriter Create(Type callerType, [CallerLineNumber] int lineNumber = 0,
             [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null
         )
@@ -50,7 +50,7 @@ namespace UnitGenerator
             code.WriteLine("// generator : " + location);
             return code;
         }
-        
+
         public static CsCodeWriter Create<T>([CallerLineNumber] int lineNumber = 0,
             [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null
         )
@@ -92,6 +92,13 @@ namespace UnitGenerator
             method.AddParam(leftName, leftType);
             method.AddParam(rightName, rightType);
             return method;
+        }
+
+        public static CsCodeWriter WithThrowNotImplementedException(this CsCodeWriter cw)
+        {
+            const string code = "throw new " + nameof(NotImplementedException) + "();";
+            cw.WriteLine(code);
+            return cw;
         }
     }
 }

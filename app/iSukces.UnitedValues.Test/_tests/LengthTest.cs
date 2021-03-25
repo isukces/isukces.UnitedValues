@@ -174,6 +174,31 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal(VolumeUnits.CubicYard, vol.Unit);
         }
 
+        [Fact]
+        public void T09_Should_mul_with_nullable()
+        {
+            {
+                Length? a = new Length(10, LengthUnits.Meter);
+                Length? b = new Length(20, LengthUnits.Meter);
+                var     c = a * b;
+                Assert.Equal(200, c.Value.Value);
+                Assert.Equal(AreaUnits.SquareMeter, c.Value.Unit);
+            }
+        }
+
+        [Fact]
+        public void T10_Should_mul()
+        {
+            {
+                var a  = Area.FromSquareMeter(0.5m);
+                var l  = Length.FromMeter(3);
+                var de = new Density(8, MassUnits.Tone, VolumeUnits.CubicMeter);
+                var v  = l * a;
+                var c  = de * v;
+                Assert.Equal(Mass.FromTons(12), c);
+            }
+        }
+
         private class Complex
         {
             public string  Name { get; set; }

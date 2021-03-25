@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
+using Self = UnitGenerator.MultiplyAlgebraGenerator;
 
 namespace UnitGenerator
 {
@@ -118,18 +120,27 @@ namespace UnitGenerator
         internal void CreateOperators(MultiplicationAlgebra c)
         {
             foreach (var i in c.Items)
-            {
-                CreateOperator(i.Counter, i.Denominator, i.Result, "/", i.AreRelatedUnits);
-                CreateOperator(i.Counter, i.Result, i.Denominator, "/", i.AreRelatedUnits);
-                CreateOperator(i.Denominator, i.Result, i.Counter, "*", i.AreRelatedUnits);
-                CreateOperator(i.Result, i.Denominator, i.Counter, "*", i.AreRelatedUnits);
-            }
+                for (var e = 0; e < 4; e++)
+                {
+                    var el = (NullableArguments)e;
+                    CreateOperator(i.Counter, i.Denominator, i.Result, "/", i.AreRelatedUnits, el);
+                    CreateOperator(i.Counter, i.Result, i.Denominator, "/", i.AreRelatedUnits, el);
+                    CreateOperator(i.Denominator, i.Result, i.Counter, "*", i.AreRelatedUnits, el);
+                    CreateOperator(i.Result, i.Denominator, i.Counter, "*", i.AreRelatedUnits, el);
+                }
         }
 
         private void CreateOperator(TypesGroup left, TypesGroup right, TypesGroup result, string op,
-            bool areRelatedUnits)
+            bool areRelatedUnits, NullableArguments nullableArguments)
         {
-            var operatorGenerationKey = new OperatorGenerationKey(left.Value, right.Value, op);
+            var leftValue  = left.Value;
+            var rightValue = right.Value;
+            if ((nullableArguments & NullableArguments.Left) != 0)
+                leftValue += "?";
+            if ((nullableArguments & NullableArguments.Right) != 0)
+                rightValue += "?";
+
+            var operatorGenerationKey = new OperatorGenerationKey(leftValue, rightValue, op);
 
             var tResult = result.Value;
 
@@ -166,30 +177,36 @@ namespace UnitGenerator
 
             CsCodeWriter PrepareCode()
             {
-                var ppp = new OperatorParams(left, right, result, leftName, rightName, op);
-                if (areRelatedUnits)
-                    return CreateCodeForRelatedUnits(ppp, ref rightUnit, ref resultUnit);
-                if (leftFraction != null)
+                if (nullableArguments == NullableArguments.None)
                 {
+                    var ppp = new OperatorParams(left, right, result, leftName, rightName, op);
+                    if (areRelatedUnits)
+                        return CreateCodeForRelatedUnits(ppp, ref rightUnit, ref resultUnit);
+                    if (leftFraction != null)
+                    {
+                        if (rightFraction != null)
+                            throw new NotSupportedException();
+                        return CreateCodeForLeftFractionValue(ppp);
+                    }
+
                     if (rightFraction != null)
-                        throw new NotSupportedException();
-                    return CreateCodeForLeftFractionValue(ppp);
+                        return CreateCodeForRightFractionValue(rightFraction, ppp);
+
+                    return CreateCodeForFractionalResult(ppp);
                 }
 
-                if (rightFraction != null)
-                    return CreateCodeForRightFractionValue(rightFraction, ppp);
-
-                return CreateCodeForFractionalResult(ppp);
+                return NullableArgument.CreateCode(leftName, rightName, op, nullableArguments);
             }
 
             var cw1 = PrepareCode();
 
-            var method = cl.AddMethod(op, tResult, info.Description)
+            var method = cl.AddMethod(op, tResult + (nullableArguments == NullableArguments.None ? "" : "?"),
+                    info.Description)
                 .WithBody(cw1);
 
-            var p = method.AddParam(leftName, left.Value);
+            var p = method.AddParam(leftName, leftValue);
             p.Description = info.Left.Desctiption;
-            p             = method.AddParam(rightName, right.Value);
+            p             = method.AddParam(rightName, rightValue);
             p.Description = info.Right.Desctiption;
         }
 

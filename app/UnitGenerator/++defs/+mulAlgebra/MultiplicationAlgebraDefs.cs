@@ -23,8 +23,7 @@ namespace UnitGenerator
                         .WithDiv<Mass, Length, LinearDensity>()
                         .WithDiv<Mass, Area, PlanarDensity>()
                         .WithDiv<Mass, Volume, Density>()
-                    
-
+                        //.WithMul<Length, PlanarDensity, LinearDensity>()
 
 
                     /*

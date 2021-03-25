@@ -54,18 +54,21 @@ namespace UnitGenerator
 
         public string GetOperatorTargetType()
         {
+            var left  = Left.TrimEnd('?');
+            var right = Right.TrimEnd('?');
+
             int G()
             {
-                var c = Left.Length.CompareTo(Right.Length);
+                var c = left.Length.CompareTo(right.Length);
                 if (c != 0)
                     return c;
-                return StringComparer.Ordinal.Compare(Left, Right);
+                return StringComparer.Ordinal.Compare(left, right);
             }
 
             if (Oper == "/")
-                return Left;
+                return left;
 
-            return G() > 0 ? Right : Left;
+            return G() > 0 ? right : left;
         }
 
 

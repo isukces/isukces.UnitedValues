@@ -38,6 +38,84 @@ namespace iSukces.UnitedValues
         /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
         /// </summary>
         /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
+        public static LinearDensity? operator /(Mass? mass, Length length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null)
+                return null;
+            return mass.Value / length;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="linearDensity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Length? operator /(Mass? mass, LinearDensity linearDensity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null)
+                return null;
+            return mass.Value / linearDensity;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
+        public static LinearDensity? operator /(Mass mass, Length? length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null)
+                return null;
+            return mass / length.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="linearDensity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Length? operator /(Mass mass, LinearDensity? linearDensity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (linearDensity is null)
+                return null;
+            return mass / linearDensity.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
+        public static LinearDensity? operator /(Mass? mass, Length? length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null || length is null)
+                return null;
+            return mass.Value / length.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="linearDensity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Length? operator /(Mass? mass, LinearDensity? linearDensity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null || linearDensity is null)
+                return null;
+            return mass.Value / linearDensity.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
         /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
         public static PlanarDensity operator /(Mass mass, Area area)
         {
@@ -66,6 +144,84 @@ namespace iSukces.UnitedValues
         /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
         /// </summary>
         /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+        public static PlanarDensity? operator /(Mass? mass, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null)
+                return null;
+            return mass.Value / area;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Area? operator /(Mass? mass, PlanarDensity planarDensity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null)
+                return null;
+            return mass.Value / planarDensity;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+        public static PlanarDensity? operator /(Mass mass, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null)
+                return null;
+            return mass / area.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Area? operator /(Mass mass, PlanarDensity? planarDensity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (planarDensity is null)
+                return null;
+            return mass / planarDensity.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+        public static PlanarDensity? operator /(Mass? mass, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null || area is null)
+                return null;
+            return mass.Value / area.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Area? operator /(Mass? mass, PlanarDensity? planarDensity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null || planarDensity is null)
+                return null;
+            return mass.Value / planarDensity.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
         /// <param name="volume">a divisor (denominator) - a value which dividend is divided by</param>
         public static Density operator /(Mass mass, Volume volume)
         {
@@ -88,6 +244,84 @@ namespace iSukces.UnitedValues
             var densityConverted    = density.WithCounterUnit(mass.Unit);
             var value = mass.Value / densityConverted.Value;
             return new Volume(value, density.Unit.DenominatorUnit);
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="volume">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Density? operator /(Mass? mass, Volume volume)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null)
+                return null;
+            return mass.Value / volume;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="density">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Volume? operator /(Mass? mass, Density density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null)
+                return null;
+            return mass.Value / density;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="volume">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Density? operator /(Mass mass, Volume? volume)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (volume is null)
+                return null;
+            return mass / volume.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="density">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Volume? operator /(Mass mass, Density? density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (density is null)
+                return null;
+            return mass / density.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="volume">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Density? operator /(Mass? mass, Volume? volume)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null || volume is null)
+                return null;
+            return mass.Value / volume.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="density">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Volume? operator /(Mass? mass, Density? density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (mass is null || density is null)
+                return null;
+            return mass.Value / density.Value;
         }
 
     }
