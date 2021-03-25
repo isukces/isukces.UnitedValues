@@ -10,7 +10,11 @@ namespace UnitGenerator
         {
             Items = items;
             _dict = items.GroupBy(a => a.UnitTypes.Unit)
-                .ToDictionary(a => a.Key, a => a.ToArray());
+                .ToDictionary(a => a.Key, a =>
+                {
+                    var items2 = a.ToArray();
+                    return new BasicUnitsCollectionItem(items2);
+                });
             DistinctNames = _dict.Keys.ToArray();
         }
 
@@ -19,12 +23,27 @@ namespace UnitGenerator
         {
             if (!_dict.TryGetValue(unit, out var item))
                 return null;
-            return item.FirstOrDefault(a => a.UnitTypes.ValueKind == Kind.Delta);
+            return item.GetDeltaByUnit();
         }
 
         public IReadOnlyList<BasicUnit> Items { get; }
 
         public IReadOnlyList<string> DistinctNames { get; }
-        private readonly Dictionary<string, BasicUnit[]> _dict;
+        private readonly Dictionary<string, BasicUnitsCollectionItem> _dict;
+    }
+
+    internal class BasicUnitsCollectionItem
+    {
+        public BasicUnitsCollectionItem(BasicUnit[] items)
+        {
+            Items = items;
+        }
+
+        public BasicUnit GetDeltaByUnit()
+        {
+            return Items.FirstOrDefault(a => a.UnitTypes.ValueKind == Kind.Delta);
+        }
+
+        public BasicUnit[] Items { get; }
     }
 }

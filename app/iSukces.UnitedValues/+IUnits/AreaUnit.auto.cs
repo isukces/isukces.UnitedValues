@@ -2,6 +2,7 @@
 // generator: UnitGenerator
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace iSukces.UnitedValues
 {
@@ -31,6 +32,20 @@ namespace iSukces.UnitedValues
         public override int GetHashCode()
         {
             return UnitName?.GetHashCode() ?? 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public LengthUnit GetLengthUnit()
+        {
+            // generator : UnitGenerator.Add_ConvertOtherPower
+            return GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, LengthUnit>(this);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VolumeUnit GetVolumeUnit()
+        {
+            // generator : UnitGenerator.Add_ConvertOtherPower
+            return GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, VolumeUnit>(this);
         }
 
         /// <summary>

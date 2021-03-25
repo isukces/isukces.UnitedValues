@@ -208,7 +208,7 @@ namespace UnitGenerator
 
         private void Add_FromMethods()
         {
-            var tmp = DerivedUnitGeneratorRunner.All;
+            var tmp = DerivedUnitGeneratorDefs.All;
             var d   = tmp.ByName(Cfg.UnitTypes.Value);
 
             if (d is null) return;

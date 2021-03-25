@@ -1,7 +1,9 @@
 using System;
 using iSukces.Code;
+using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
+using Self = UnitGenerator.UnitGenerator;
 
 namespace UnitGenerator
 {
@@ -30,6 +32,8 @@ namespace UnitGenerator
             var t = MakeGenericType<IEquatable<int>>(Target.Owner, Cfg);
             Target.ImplementedInterfaces.Add(t);
             Target.WithAttribute(typeof(SerializableAttribute));
+
+            Add_ConvertOtherPower();
         }
 
 
@@ -38,9 +42,36 @@ namespace UnitGenerator
             return cfg;
         }
 
+        protected override void PrepareFile(CsFile file)
+        {
+            base.PrepareFile(file);
+            file.AddImportNamespace("System.Runtime.CompilerServices");
+        }
+
         private void Add_Constructor()
         {
             Add_Constructor(GetConstructorProperties());
+        }
+
+        private void Add_ConvertOtherPower()
+        {
+            var infos = DerivedUnitGeneratorDefs.All;
+
+            var tmp = infos.GetPowers(Cfg);
+            if (tmp?.MyInfo is null || tmp.Other.Count == 0)
+                return;
+            foreach (var i in tmp.Other.Values)
+            {
+                var targetUnit = new TypesGroup(i.Name);
+                if (Cfg == targetUnit.Unit)
+                    continue;
+                var cw = Ext.Create<Self>();
+                var code = "GlobalUnitRegistry.Relations.GetOrThrow<" + Target.Name + ", " + targetUnit.Unit +
+                           ">(this)";
+                cw.WriteReturn(code);
+                var m = Target.AddMethod("Get" + targetUnit.Unit, targetUnit.Unit).WithBody(cw);
+                m.WithAggressiveInlining(Target);
+            }
         }
 
 

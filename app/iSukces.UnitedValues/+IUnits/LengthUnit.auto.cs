@@ -2,6 +2,7 @@
 // generator: UnitGenerator
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace iSukces.UnitedValues
 {
@@ -28,9 +29,23 @@ namespace iSukces.UnitedValues
             return obj is LengthUnit tmp && Equals(tmp);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public AreaUnit GetAreaUnit()
+        {
+            // generator : UnitGenerator.Add_ConvertOtherPower
+            return GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, AreaUnit>(this);
+        }
+
         public override int GetHashCode()
         {
             return UnitName?.GetHashCode() ?? 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public VolumeUnit GetVolumeUnit()
+        {
+            // generator : UnitGenerator.Add_ConvertOtherPower
+            return GlobalUnitRegistry.Relations.GetOrThrow<LengthUnit, VolumeUnit>(this);
         }
 
         /// <summary>

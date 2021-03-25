@@ -112,6 +112,9 @@ namespace UnitGenerator
 
         private DerivedUnit WithPoweredUnits(int power, DerivedUnitItem[] items, string[] values)
         {
+            Power    = power;
+            if (power != 1)
+                PowerOne = new TypesGroup(values[0]);
             var unitSuffix     = Suffix(power);
             var propertyPrefix = Prefix(power);
 
@@ -138,6 +141,10 @@ namespace UnitGenerator
 
             return this;
         }
+
+        public TypesGroup PowerOne { get; set; }
+
+        public int Power { get; set; } = 1;
 
 
         private void WithUnit(string unitShortName, string fieldName, string scaleFactor,

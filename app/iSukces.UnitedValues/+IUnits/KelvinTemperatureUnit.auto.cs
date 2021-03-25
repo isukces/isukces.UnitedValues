@@ -2,6 +2,7 @@
 // generator: UnitGenerator
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace iSukces.UnitedValues
 {

@@ -62,6 +62,11 @@ namespace UnitGenerator
         {
             return multiplicator.ToString(CultureInfo.InvariantCulture) + "m";
         }
+        
+        public static string CsEncode(this int multiplicator)
+        {
+            return multiplicator.ToString(CultureInfo.InvariantCulture);
+        }
 
         public static TValue[] GetStaticFieldsValues<THost, TValue>()
         {
@@ -98,6 +103,12 @@ namespace UnitGenerator
         {
             const string code = "throw new " + nameof(NotImplementedException) + "();";
             cw.WriteLine(code);
+            return cw;
+        }
+
+        public static CsCodeWriter WriteReturn(this CsCodeWriter cw, string expression)
+        {
+            cw.WriteLine("return " + expression + ";");
             return cw;
         }
     }

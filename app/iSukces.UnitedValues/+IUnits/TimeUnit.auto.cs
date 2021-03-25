@@ -2,6 +2,7 @@
 // generator: UnitGenerator
 using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace iSukces.UnitedValues
 {
@@ -31,6 +32,13 @@ namespace iSukces.UnitedValues
         public override int GetHashCode()
         {
             return UnitName?.GetHashCode() ?? 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SquareTimeUnit GetSquareTimeUnit()
+        {
+            // generator : UnitGenerator.Add_ConvertOtherPower
+            return GlobalUnitRegistry.Relations.GetOrThrow<TimeUnit, SquareTimeUnit>(this);
         }
 
         /// <summary>
