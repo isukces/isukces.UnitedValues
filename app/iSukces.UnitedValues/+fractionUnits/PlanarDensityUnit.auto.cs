@@ -5,14 +5,14 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial struct PlanarDensityUnit : IFractionalUnit<WeightUnit, AreaUnit>, IEquatable<PlanarDensityUnit>
+    public partial struct PlanarDensityUnit : IFractionalUnit<MassUnit, AreaUnit>, IEquatable<PlanarDensityUnit>
     {
         /// <summary>
         /// creates instance of PlanarDensityUnit
         /// </summary>
         /// <param name="counterUnit">counter unit</param>
         /// <param name="denominatorUnit">denominator unit</param>
-        public PlanarDensityUnit(WeightUnit counterUnit, AreaUnit denominatorUnit)
+        public PlanarDensityUnit(MassUnit counterUnit, AreaUnit denominatorUnit)
         {
             CounterUnit = counterUnit;
             DenominatorUnit = denominatorUnit;
@@ -44,7 +44,7 @@ namespace iSukces.UnitedValues
             return UnitName;
         }
 
-        public PlanarDensityUnit WithCounterUnit(WeightUnit newUnit)
+        public PlanarDensityUnit WithCounterUnit(MassUnit newUnit)
         {
             // generator : FractionUnitGenerator.Add_WithSecond
             return new PlanarDensityUnit(newUnit, DenominatorUnit);
@@ -79,7 +79,7 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// counter unit
         /// </summary>
-        public WeightUnit CounterUnit { get; }
+        public MassUnit CounterUnit { get; }
 
         /// <summary>
         /// denominator unit

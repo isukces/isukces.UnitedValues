@@ -99,7 +99,7 @@
         }
 
 
-        /// <summary>
+        /*/// <summary>
         ///     Multiplication operator
         /// </summary>
         /// <param name="density"></param>
@@ -121,34 +121,8 @@
         {
             density = density.ConvertTo(new PlanarDensityUnit(density.Unit.CounterUnit, length.Unit));
             return new Mass(density.Value * length.Value, density.Unit.CounterUnit);
-        }
+        }*/
     }
 
-
-    public partial struct LinearDensity
-    {
-        /// <summary>
-        ///     Multiplication operator
-        /// </summary>
-        /// <param name="density"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public static Mass operator *(LinearDensity density, Length length)
-        {
-            length = length.ConvertTo(density.Unit.DenominatorUnit);
-            return new Mass(density.Value * length.Value, density.Unit.CounterUnit);
-        }
-
-        /// <summary>
-        ///     Multiplication operator
-        /// </summary>
-        /// <param name="density"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public static Mass operator *(Length length, LinearDensity density)
-        {
-            density = density.ConvertTo(new LinearDensityUnit(density.Unit.CounterUnit, length.Unit));
-            return new Mass(density.Value * length.Value, density.Unit.CounterUnit);
-        }
-    }
+ 
 }

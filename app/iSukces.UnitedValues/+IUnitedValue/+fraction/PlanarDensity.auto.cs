@@ -21,7 +21,7 @@ namespace iSukces.UnitedValues
             Unit = unit;
         }
 
-        public PlanarDensity(decimal value, WeightUnit counterUnit, AreaUnit denominatorUnit)
+        public PlanarDensity(decimal value, MassUnit counterUnit, AreaUnit denominatorUnit)
         {
             Value = value;
             Unit = new PlanarDensityUnit(counterUnit, denominatorUnit);
@@ -92,7 +92,7 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public PlanarDensity WithCounterUnit(WeightUnit newUnit)
+        public PlanarDensity WithCounterUnit(MassUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
             var oldUnit = Unit.CounterUnit;
@@ -145,7 +145,7 @@ namespace iSukces.UnitedValues
             var units = Common.SplitUnitNameBySlash(r.UnitName);
             if (units.Length != 2)
                 throw new Exception($"{r.UnitName} is not valid PlanarDensity unit");
-            var counterUnit = new WeightUnit(units[0]);
+            var counterUnit = new MassUnit(units[0]);
             var denominatorUnit = new AreaUnit(units[1]);
             return new PlanarDensity(r.Value, counterUnit, denominatorUnit);
         }

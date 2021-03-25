@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace iSukces.UnitedValues
 {
-    public static partial class WeightExtensions
+    public static partial class MassExtensions
     {
         public static Mass Sum(this IEnumerable<Mass> items)
         {

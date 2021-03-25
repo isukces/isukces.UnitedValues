@@ -12,7 +12,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="counterUnit">counter unit</param>
         /// <param name="denominatorUnit">denominator unit</param>
-        public PlaneDensityUnit(WeightUnit counterUnit, AreaUnit denominatorUnit)
+        public PlaneDensityUnit(MassUnit counterUnit, AreaUnit denominatorUnit)
         {
             CounterUnit     = counterUnit;
             DenominatorUnit = denominatorUnit;
@@ -67,7 +67,7 @@ namespace iSukces.UnitedValues
         /// <summary>
         ///     counter unit
         /// </summary>
-        public WeightUnit CounterUnit { get; }
+        public MassUnit CounterUnit { get; }
 
         /// <summary>
         ///     denominator unit

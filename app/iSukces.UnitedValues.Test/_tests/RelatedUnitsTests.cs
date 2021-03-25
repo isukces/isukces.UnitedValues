@@ -26,13 +26,13 @@ namespace iSukces.UnitedValues.Test
         {
             var excp = Assert.Throws<UnableToFindRelatedUnitException>(() =>
             {
-                var newUnit = GlobalUnitRegistry.Relations.GetOrThrow<WeightUnit, LengthUnit>(WeightUnits.Kg);
+                var newUnit = GlobalUnitRegistry.Relations.GetOrThrow<MassUnit, LengthUnit>(MassUnits.Kg);
                 return newUnit;
             });
-            Assert.Equal(typeof(WeightUnit), excp.SourceUnitType);
+            Assert.Equal(typeof(MassUnit), excp.SourceUnitType);
             Assert.Equal(typeof(LengthUnit), excp.RelatedUnitType);
-            Assert.Equal(WeightUnits.Kg, (WeightUnit)excp.Unit);
-            const string message = "Unable to find related LengthUnit for WeightUnit 'kg'.";
+            Assert.Equal(MassUnits.Kg, (MassUnit)excp.Unit);
+            const string message = "Unable to find related LengthUnit for MassUnit 'kg'.";
             Assert.Equal(message, excp.Message);
         }
     }

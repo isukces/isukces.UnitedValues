@@ -15,11 +15,15 @@ namespace UnitGenerator
                         .WithMul<Length, Area, Volume>(true)
 
                         // N / m² => N/m²
-                        .WithDiv<Force, Area, Pressure>(false)
+                        .WithDiv<Force, Area, Pressure>()
 
                         // N / m => N/m
-                        .WithDiv<Force, Length, LinearForce>(false)
+                        .WithDiv<Force, Length, LinearForce>()
                     
+                        
+
+
+
                     /*
                  *          
         

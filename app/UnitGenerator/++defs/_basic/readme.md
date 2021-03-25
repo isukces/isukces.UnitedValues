@@ -1,1 +1,1 @@
-Defines basic values like `Force`, `Weight` or `Length`.
+Defines basic values like `Force`, `Mass` or `Length`.

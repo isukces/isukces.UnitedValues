@@ -13,28 +13,12 @@ namespace iSukces.UnitedValues
             return new LinearDensity(mass.Value / length.Value, mass.Unit, length.Unit);
         }
 
-        /// <summary>
-        ///     Div
-        /// </summary>
-        /// <returns></returns>
-        public static PlanarDensity operator /(Mass mass, Area area)
-        {
-            return new PlanarDensity(mass.Value / area.Value, mass.Unit, area.Unit);
-        }
-
-        /// <summary>
-        ///     Div
-        /// </summary>
-        /// <returns></returns>
-        public static Density operator /(Mass mass, Volume volume)
-        {
-            return new Density(mass.Value / volume.Value, mass.Unit, volume.Unit);
-        }
+ 
 
 
         public Mass ConvertToKg()
         {
-            return ConvertTo(WeightUnits.Kg);
+            return ConvertTo(MassUnits.Kg);
         }
 
 

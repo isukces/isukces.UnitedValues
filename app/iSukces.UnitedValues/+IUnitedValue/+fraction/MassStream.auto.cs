@@ -21,7 +21,7 @@ namespace iSukces.UnitedValues
             Unit = unit;
         }
 
-        public MassStream(decimal value, WeightUnit counterUnit, TimeUnit denominatorUnit)
+        public MassStream(decimal value, MassUnit counterUnit, TimeUnit denominatorUnit)
         {
             Value = value;
             Unit = new MassStreamUnit(counterUnit, denominatorUnit);
@@ -92,7 +92,7 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public MassStream WithCounterUnit(WeightUnit newUnit)
+        public MassStream WithCounterUnit(MassUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
             var oldUnit = Unit.CounterUnit;
@@ -145,7 +145,7 @@ namespace iSukces.UnitedValues
             var units = Common.SplitUnitNameBySlash(r.UnitName);
             if (units.Length != 2)
                 throw new Exception($"{r.UnitName} is not valid MassStream unit");
-            var counterUnit = new WeightUnit(units[0]);
+            var counterUnit = new MassUnit(units[0]);
             var denominatorUnit = new TimeUnit(units[1]);
             return new MassStream(r.Value, counterUnit, denominatorUnit);
         }

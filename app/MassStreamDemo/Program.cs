@@ -7,10 +7,10 @@ namespace MassStreamDemo
     {
         static void Main(string[] args)
         {
-            var stream = new MassStream(5, WeightUnits.Tone, TimeUnits.Hour);
+            var stream = new MassStream(5, MassUnits.Tone, TimeUnits.Hour);
             Console.WriteLine("stream = " + stream);
             
-            stream = stream.WithCounterUnit(WeightUnits.Kg);
+            stream = stream.WithCounterUnit(MassUnits.Kg);
             Console.WriteLine("stream = " + stream);
 
             stream = stream.WithDenominatorUnit(TimeUnits.Second)

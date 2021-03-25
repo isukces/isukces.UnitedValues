@@ -11,10 +11,10 @@ namespace iSukces.UnitedValues.Test
     public class AlgebraTests
     {
         [Fact]
-        public void ShoulDivideWeight()
+        public void ShoulDivideMass()
         {
-			var a = new Mass(10m, WeightUnits.Kg);
-			var b = new Mass(5m, WeightUnits.Kg);
+			var a = new Mass(10m, MassUnits.Kg);
+			var b = new Mass(5m, MassUnits.Kg);
 			var c = a / b;
 			Assert.Equal(2, c);
         }
@@ -23,9 +23,9 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void ShoulAddWeight()
         {
-			var a = new Mass(10m, WeightUnits.Kg);
-			var b = new Mass(5m, WeightUnits.Kg);
-            var expected = new Mass(15m, WeightUnits.Kg);            
+			var a = new Mass(10m, MassUnits.Kg);
+			var b = new Mass(5m, MassUnits.Kg);
+            var expected = new Mass(15m, MassUnits.Kg);            
 			var c = a + b;
 			Assert.Equal(expected, c);
         }
@@ -33,9 +33,9 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void ShoulSubstractWeight()
         {
-			var a = new Mass(10m, WeightUnits.Kg);
-			var b = new Mass(6m, WeightUnits.Kg);
-            var expected = new Mass(4m, WeightUnits.Kg);            
+			var a = new Mass(10m, MassUnits.Kg);
+			var b = new Mass(6m, MassUnits.Kg);
+            var expected = new Mass(4m, MassUnits.Kg);            
 			var c = a - b;
 			Assert.Equal(expected, c);
         }

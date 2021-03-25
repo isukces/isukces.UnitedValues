@@ -21,7 +21,7 @@ namespace iSukces.UnitedValues
             Unit = unit;
         }
 
-        public Density(decimal value, WeightUnit counterUnit, VolumeUnit denominatorUnit)
+        public Density(decimal value, MassUnit counterUnit, VolumeUnit denominatorUnit)
         {
             Value = value;
             Unit = new DensityUnit(counterUnit, denominatorUnit);
@@ -92,7 +92,7 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public Density WithCounterUnit(WeightUnit newUnit)
+        public Density WithCounterUnit(MassUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
             var oldUnit = Unit.CounterUnit;
@@ -145,7 +145,7 @@ namespace iSukces.UnitedValues
             var units = Common.SplitUnitNameBySlash(r.UnitName);
             if (units.Length != 2)
                 throw new Exception($"{r.UnitName} is not valid Density unit");
-            var counterUnit = new WeightUnit(units[0]);
+            var counterUnit = new MassUnit(units[0]);
             var denominatorUnit = new VolumeUnit(units[1]);
             return new Density(r.Value, counterUnit, denominatorUnit);
         }

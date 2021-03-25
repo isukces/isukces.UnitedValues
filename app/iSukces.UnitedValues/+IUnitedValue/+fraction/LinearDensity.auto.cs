@@ -21,7 +21,7 @@ namespace iSukces.UnitedValues
             Unit = unit;
         }
 
-        public LinearDensity(decimal value, WeightUnit counterUnit, LengthUnit denominatorUnit)
+        public LinearDensity(decimal value, MassUnit counterUnit, LengthUnit denominatorUnit)
         {
             Value = value;
             Unit = new LinearDensityUnit(counterUnit, denominatorUnit);
@@ -92,7 +92,7 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public LinearDensity WithCounterUnit(WeightUnit newUnit)
+        public LinearDensity WithCounterUnit(MassUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
             var oldUnit = Unit.CounterUnit;
@@ -145,7 +145,7 @@ namespace iSukces.UnitedValues
             var units = Common.SplitUnitNameBySlash(r.UnitName);
             if (units.Length != 2)
                 throw new Exception($"{r.UnitName} is not valid LinearDensity unit");
-            var counterUnit = new WeightUnit(units[0]);
+            var counterUnit = new MassUnit(units[0]);
             var denominatorUnit = new LengthUnit(units[1]);
             return new LinearDensity(r.Value, counterUnit, denominatorUnit);
         }

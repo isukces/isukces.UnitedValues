@@ -5,14 +5,14 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial struct MassStreamUnit : IFractionalUnit<WeightUnit, TimeUnit>, IEquatable<MassStreamUnit>
+    public partial struct MassStreamUnit : IFractionalUnit<MassUnit, TimeUnit>, IEquatable<MassStreamUnit>
     {
         /// <summary>
         /// creates instance of MassStreamUnit
         /// </summary>
         /// <param name="counterUnit">counter unit</param>
         /// <param name="denominatorUnit">denominator unit</param>
-        public MassStreamUnit(WeightUnit counterUnit, TimeUnit denominatorUnit)
+        public MassStreamUnit(MassUnit counterUnit, TimeUnit denominatorUnit)
         {
             CounterUnit = counterUnit;
             DenominatorUnit = denominatorUnit;
@@ -44,7 +44,7 @@ namespace iSukces.UnitedValues
             return UnitName;
         }
 
-        public MassStreamUnit WithCounterUnit(WeightUnit newUnit)
+        public MassStreamUnit WithCounterUnit(MassUnit newUnit)
         {
             // generator : FractionUnitGenerator.Add_WithSecond
             return new MassStreamUnit(newUnit, DenominatorUnit);
@@ -79,7 +79,7 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// counter unit
         /// </summary>
-        public WeightUnit CounterUnit { get; }
+        public MassUnit CounterUnit { get; }
 
         /// <summary>
         /// denominator unit

@@ -7,7 +7,7 @@ using System.Globalization;
 namespace iSukces.UnitedValues
 {
     [UnitsContainer]
-    public static partial class WeightUnits
+    public static partial class MassUnits
     {
         public static void RegisterUnitExchangeFactors(UnitExchangeFactors factors)
         {
@@ -15,9 +15,9 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
-        /// All known weight units
+        /// All known mass units
         /// </summary>
-        public static IReadOnlyList<UnitDefinition<WeightUnit>> All
+        public static IReadOnlyList<UnitDefinition<MassUnit>> All
         {
             get
             {
@@ -30,11 +30,11 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public static readonly UnitDefinition<WeightUnit> Kg = new UnitDefinition<WeightUnit>("kg", 1m);
+        public static readonly UnitDefinition<MassUnit> Kg = new UnitDefinition<MassUnit>("kg", 1m);
 
-        public static readonly UnitDefinition<WeightUnit> Tone = new UnitDefinition<WeightUnit>("t", 1000m, "tone", "tons");
+        public static readonly UnitDefinition<MassUnit> Tone = new UnitDefinition<MassUnit>("t", 1000m, "tone", "tons");
 
-        public static readonly UnitDefinition<WeightUnit> Gram = new UnitDefinition<WeightUnit>("g", 0.001m, "gram", "grams");
+        public static readonly UnitDefinition<MassUnit> Gram = new UnitDefinition<MassUnit>("g", 0.001m, "gram", "grams");
 
     }
 }

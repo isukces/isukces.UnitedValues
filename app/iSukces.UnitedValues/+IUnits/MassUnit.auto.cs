@@ -6,18 +6,18 @@ using System.Globalization;
 namespace iSukces.UnitedValues
 {
     [Serializable]
-    public partial struct WeightUnit : IUnit, IEquatable<WeightUnit>
+    public partial struct MassUnit : IUnit, IEquatable<MassUnit>
     {
         /// <summary>
-        /// creates instance of WeightUnit
+        /// creates instance of MassUnit
         /// </summary>
         /// <param name="unitName">name of unit</param>
-        public WeightUnit(string unitName)
+        public MassUnit(string unitName)
         {
             UnitName = unitName.TrimToNull();
         }
 
-        public bool Equals(WeightUnit other)
+        public bool Equals(MassUnit other)
         {
             return String.Equals(UnitName, other.UnitName);
         }
@@ -25,7 +25,7 @@ namespace iSukces.UnitedValues
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is WeightUnit tmp && Equals(tmp);
+            return obj is MassUnit tmp && Equals(tmp);
         }
 
         public override int GetHashCode()
@@ -41,7 +41,7 @@ namespace iSukces.UnitedValues
             return UnitName;
         }
 
-        bool IEquatable<WeightUnit>.Equals(WeightUnit other)
+        bool IEquatable<MassUnit>.Equals(MassUnit other)
         {
             return Equals(other);
         }
@@ -51,7 +51,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator !=(WeightUnit left, WeightUnit right)
+        public static bool operator !=(MassUnit left, MassUnit right)
         {
             return !left.Equals(right);
         }
@@ -61,18 +61,18 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator ==(WeightUnit left, WeightUnit right)
+        public static bool operator ==(MassUnit left, MassUnit right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// Converts UnitDefinition&lt;WeightUnit&gt; into WeightUnit implicitly.
+        /// Converts UnitDefinition&lt;MassUnit&gt; into MassUnit implicitly.
         /// </summary>
         /// <param name="src"></param>
-        public static implicit operator WeightUnit(UnitDefinition<WeightUnit> src)
+        public static implicit operator MassUnit(UnitDefinition<MassUnit> src)
         {
-            return new WeightUnit(src.UnitName);
+            return new MassUnit(src.UnitName);
         }
 
         /// <summary>
