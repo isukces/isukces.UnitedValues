@@ -52,5 +52,35 @@ namespace iSukces.UnitedValues
             return new Force(value, linearForce.Unit.CounterUnit);
         }
 
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="linearDensity">rigth factor (multiplier)</param>
+        public static Mass operator *(Length length, LinearDensity linearDensity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+            // scenario B
+            var unit = new LinearDensityUnit(linearDensity.Unit.CounterUnit, length.Unit);
+            var linearDensityConverted    = linearDensity.WithDenominatorUnit(length.Unit);
+            var value = length.Value / linearDensityConverted.Value;
+            return new Mass(value, linearDensity.Unit.CounterUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="linearDensity">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static Mass operator *(LinearDensity linearDensity, Length length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
+            // length unit will be taken from denominator of lineardensity unit
+            // scenario D
+            var lengthConverted = length.ConvertTo(linearDensity.Unit.DenominatorUnit);
+            var value = lengthConverted.Value * linearDensity.Value;
+            return new Mass(value, linearDensity.Unit.CounterUnit);
+        }
+
     }
 }

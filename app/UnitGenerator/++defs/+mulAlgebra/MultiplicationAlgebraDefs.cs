@@ -20,7 +20,10 @@ namespace UnitGenerator
                         // N / m => N/m
                         .WithDiv<Force, Length, LinearForce>()
                     
-                        
+                        .WithDiv<Mass, Length, LinearDensity>()
+                        .WithDiv<Mass, Area, PlanarDensity>()
+                        .WithDiv<Mass, Volume, Density>()
+                    
 
 
 

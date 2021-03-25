@@ -10,6 +10,34 @@ namespace iSukces.UnitedValues
         /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
         /// </summary>
         /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
+        public static LinearDensity operator /(Mass mass, Length length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForFractionalResult
+            // scenario E
+            return new LinearDensity(mass.Value / length.Value, mass.Unit, length.Unit);
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
+        /// <param name="linearDensity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Length operator /(Mass mass, LinearDensity linearDensity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+            // scenario A
+            // lineardensity unit will be synchronized with mass unit
+            var unit = new LinearDensityUnit(mass.Unit, linearDensity.Unit.DenominatorUnit);
+            var linearDensityConverted    = linearDensity.WithCounterUnit(mass.Unit);
+            var value = mass.Value / linearDensityConverted.Value;
+            return new Length(value, linearDensity.Unit.DenominatorUnit);
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="mass">a dividend (counter) - a value that is being divided</param>
         /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
         public static PlanarDensity operator /(Mass mass, Area area)
         {

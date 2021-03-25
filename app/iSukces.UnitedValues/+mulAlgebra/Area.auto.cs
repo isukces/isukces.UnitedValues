@@ -69,6 +69,36 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="planarDensity">rigth factor (multiplier)</param>
+        public static Mass operator *(Area area, PlanarDensity planarDensity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+            // scenario B
+            var unit = new PlanarDensityUnit(planarDensity.Unit.CounterUnit, area.Unit);
+            var planarDensityConverted    = planarDensity.WithDenominatorUnit(area.Unit);
+            var value = area.Value / planarDensityConverted.Value;
+            return new Mass(value, planarDensity.Unit.CounterUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="planarDensity">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static Mass operator *(PlanarDensity planarDensity, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
+            // area unit will be taken from denominator of planardensity unit
+            // scenario D
+            var areaConverted = area.ConvertTo(planarDensity.Unit.DenominatorUnit);
+            var value = areaConverted.Value * planarDensity.Value;
+            return new Mass(value, planarDensity.Unit.CounterUnit);
+        }
+
+        /// <summary>
         /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
         /// </summary>
         /// <param name="area">a dividend (counter) - a value that is being divided</param>

@@ -155,6 +155,16 @@ namespace iSukces.UnitedValues.Test
                 Assert.Equal(LengthUnits.Meter, tmp.Unit.DenominatorUnit);
             }
         }
+        
+        [Fact]
+        public void T07_Should_multiply_density_with_volume()
+        {
+            var den = Density.Parse("10kg/m3");
+            var vol = Volume.Parse("30cm3");
+            var mul = den * vol;
+            Assert.Equal(300m / 1_00_00_00, mul.Value);
+            Assert.Equal(mul.Unit.UnitName, "kg");
 
+        }
     }
 }
