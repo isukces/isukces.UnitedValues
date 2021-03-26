@@ -17,7 +17,7 @@ namespace iSukces.UnitedValues
             // scenario B
             var unit = new DensityUnit(density.Unit.CounterUnit, volume.Unit);
             var densityConverted    = density.WithDenominatorUnit(volume.Unit);
-            var value = volume.Value / densityConverted.Value;
+            var value = volume.Value * densityConverted.Value;
             return new Mass(value, density.Unit.CounterUnit);
         }
 

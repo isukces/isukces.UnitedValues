@@ -127,7 +127,7 @@ namespace iSukces.UnitedValues
             // scenario B
             var unit = new PlanarDensityUnit(planarDensity.Unit.CounterUnit, area.Unit);
             var planarDensityConverted    = planarDensity.WithDenominatorUnit(area.Unit);
-            var value = area.Value / planarDensityConverted.Value;
+            var value = area.Value * planarDensityConverted.Value;
             return new Mass(value, planarDensity.Unit.CounterUnit);
         }
 
@@ -349,7 +349,7 @@ namespace iSukces.UnitedValues
             // scenario B
             var unit = new PressureUnit(pressure.Unit.CounterUnit, area.Unit);
             var pressureConverted    = pressure.WithDenominatorUnit(area.Unit);
-            var value = area.Value / pressureConverted.Value;
+            var value = area.Value * pressureConverted.Value;
             return new Force(value, pressure.Unit.CounterUnit);
         }
 

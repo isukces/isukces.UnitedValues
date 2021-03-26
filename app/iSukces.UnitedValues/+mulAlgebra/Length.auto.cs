@@ -72,7 +72,7 @@ namespace iSukces.UnitedValues
             // scenario B
             var unit = new LinearDensityUnit(linearDensity.Unit.CounterUnit, length.Unit);
             var linearDensityConverted    = linearDensity.WithDenominatorUnit(length.Unit);
-            var value = length.Value / linearDensityConverted.Value;
+            var value = length.Value * linearDensityConverted.Value;
             return new Mass(value, linearDensity.Unit.CounterUnit);
         }
 
@@ -405,7 +405,7 @@ namespace iSukces.UnitedValues
             // scenario B
             var unit = new LinearForceUnit(linearForce.Unit.CounterUnit, length.Unit);
             var linearForceConverted    = linearForce.WithDenominatorUnit(length.Unit);
-            var value = length.Value / linearForceConverted.Value;
+            var value = length.Value * linearForceConverted.Value;
             return new Force(value, linearForce.Unit.CounterUnit);
         }
 

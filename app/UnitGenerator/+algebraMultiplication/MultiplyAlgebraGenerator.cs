@@ -130,7 +130,7 @@ namespace UnitGenerator
                     p.Right.Unit);
                 cw.WriteLine("var {1}Converted    = {1}.WithCounterUnit({0}.Unit);", p.LeftMethodArgumentName,
                     p.RightMethodArgumentName);
-                cw.WriteLine("var value = {0}.Value / {1}Converted.Value;", p.LeftMethodArgumentName,
+                cw.WriteLine($"var value = {{0}}.Value {p.Oper} {{1}}Converted.Value;", p.LeftMethodArgumentName,
                     p.RightMethodArgumentName);
                 cw.WriteLine("return new {0}(value, {1}.Unit.DenominatorUnit);", p.Result.Value,
                     p.RightMethodArgumentName);
@@ -144,7 +144,7 @@ namespace UnitGenerator
                     p.Right.Unit);
                 cw.WriteLine("var {1}Converted    = {1}.WithDenominatorUnit({0}.Unit);", p.LeftMethodArgumentName,
                     p.RightMethodArgumentName);
-                cw.WriteLine("var value = {0}.Value / {1}Converted.Value;", p.LeftMethodArgumentName,
+                cw.WriteLine($"var value = {{0}}.Value {p.Oper} {{1}}Converted.Value;", p.LeftMethodArgumentName,
                     p.RightMethodArgumentName);
                 cw.WriteLine("return new {0}(value, {1}.Unit.CounterUnit);", p.Result.Value, p.RightMethodArgumentName);
             }
