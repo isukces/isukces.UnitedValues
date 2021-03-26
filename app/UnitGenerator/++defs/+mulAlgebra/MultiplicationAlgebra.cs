@@ -4,13 +4,15 @@ namespace UnitGenerator
 {
     public class MultiplicationAlgebra
     {
-        public MultiplicationAlgebra WithDiv<T1, T2, TDiv>(bool areRelatedUnits = false)
+        public MultiplicationAlgebra WithDiv<T1, T2, TDiv>(OperatorHints operatorHints = null,
+            bool areRelatedUnits = false)
         {
             var x = new MultiplicationAlgebraItem(
                 new TypesGroup(typeof(T1).Name),
                 new TypesGroup(typeof(T2).Name),
                 new TypesGroup(typeof(TDiv).Name),
-                areRelatedUnits
+                areRelatedUnits,
+                operatorHints
             );
             Items.Add(x);
             return this;
@@ -24,7 +26,8 @@ namespace UnitGenerator
                 new TypesGroup(typeof(TMul).Name),
                 new TypesGroup(typeof(T2).Name),
                 new TypesGroup(typeof(T1).Name),
-                areRelatedUnits
+                areRelatedUnits,
+                null
             );
             Items.Add(x);
             return this;

@@ -19,6 +19,16 @@ namespace UnitGenerator
         {
             return $"new {constructedTypeName}({ToString()})";
         }
+        
+        public string Create<T>()
+        {
+            return Create(typeof(T).Name);
+        }
+        
+        public string CallMethod(string methodName)
+        {
+            return $"{methodName}({ToString()})";
+        }
 
         public string MakeGenericType(string type)
         {

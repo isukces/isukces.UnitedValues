@@ -120,114 +120,6 @@ namespace iSukces.UnitedValues
         /// Multiplication operation
         /// </summary>
         /// <param name="area">left factor (multiplicand)</param>
-        /// <param name="pressure">rigth factor (multiplier)</param>
-        public static Force operator *(Area area, Pressure pressure)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
-            // scenario B
-            var unit = new PressureUnit(pressure.Unit.CounterUnit, area.Unit);
-            var pressureConverted    = pressure.WithDenominatorUnit(area.Unit);
-            var value = area.Value / pressureConverted.Value;
-            return new Force(value, pressure.Unit.CounterUnit);
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="pressure">left factor (multiplicand)</param>
-        /// <param name="area">rigth factor (multiplier)</param>
-        public static Force operator *(Pressure pressure, Area area)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
-            // area unit will be taken from denominator of pressure unit
-            // scenario D
-            var areaConverted = area.ConvertTo(pressure.Unit.DenominatorUnit);
-            var value = areaConverted.Value * pressure.Value;
-            return new Force(value, pressure.Unit.CounterUnit);
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="area">left factor (multiplicand)</param>
-        /// <param name="pressure">rigth factor (multiplier)</param>
-        public static Force? operator *(Area? area, Pressure pressure)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (area is null)
-                return null;
-            return area.Value * pressure;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="pressure">left factor (multiplicand)</param>
-        /// <param name="area">rigth factor (multiplier)</param>
-        public static Force? operator *(Pressure? pressure, Area area)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (pressure is null)
-                return null;
-            return pressure.Value * area;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="area">left factor (multiplicand)</param>
-        /// <param name="pressure">rigth factor (multiplier)</param>
-        public static Force? operator *(Area area, Pressure? pressure)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (pressure is null)
-                return null;
-            return area * pressure.Value;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="pressure">left factor (multiplicand)</param>
-        /// <param name="area">rigth factor (multiplier)</param>
-        public static Force? operator *(Pressure pressure, Area? area)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (area is null)
-                return null;
-            return pressure * area.Value;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="area">left factor (multiplicand)</param>
-        /// <param name="pressure">rigth factor (multiplier)</param>
-        public static Force? operator *(Area? area, Pressure? pressure)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (area is null || pressure is null)
-                return null;
-            return area.Value * pressure.Value;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="pressure">left factor (multiplicand)</param>
-        /// <param name="area">rigth factor (multiplier)</param>
-        public static Force? operator *(Pressure? pressure, Area? area)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (pressure is null || area is null)
-                return null;
-            return pressure.Value * area.Value;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="area">left factor (multiplicand)</param>
         /// <param name="planarDensity">rigth factor (multiplier)</param>
         public static Mass operator *(Area area, PlanarDensity planarDensity)
         {
@@ -247,11 +139,12 @@ namespace iSukces.UnitedValues
         public static Mass operator *(PlanarDensity planarDensity, Area area)
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
-            // area unit will be taken from denominator of planardensity unit
-            // scenario D
-            var areaConverted = area.ConvertTo(planarDensity.Unit.DenominatorUnit);
+            // Mass operator *(PlanarDensity planarDensity, Area area)
+            // scenario D3
+            var planarDensityUnit = planarDensity.Unit;
+            var areaConverted = area.ConvertTo(planarDensityUnit.DenominatorUnit);
             var value = areaConverted.Value * planarDensity.Value;
-            return new Mass(value, planarDensity.Unit.CounterUnit);
+            return new Mass(value, planarDensityUnit.CounterUnit);
         }
 
         /// <summary>
@@ -330,6 +223,228 @@ namespace iSukces.UnitedValues
             if (planarDensity is null || area is null)
                 return null;
             return planarDensity.Value * area.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="density">rigth factor (multiplier)</param>
+        public static LinearDensity operator *(Area area, Density density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+            // scenario with hint
+            var rightArgumentUnit = density.Unit;
+            var lengthUnit = area.Unit.GetLengthUnit();
+            var volumeUnit = area.Unit.GetVolumeUnit();
+            var x3 = new DensityUnit(rightArgumentUnit.CounterUnit, volumeUnit);
+            var densityConverted = density.ConvertTo(x3);
+            var value = densityConverted.Value * area.Value;
+            return new LinearDensity(value, new LinearDensityUnit(rightArgumentUnit.CounterUnit, lengthUnit));
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="density">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static LinearDensity operator *(Density density, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
+            // LinearDensity operator *(Density density, Area area)
+            // scenario with hint
+            var lengthUnit = density.Unit.DenominatorUnit.GetLengthUnit();
+            var areaUnit = density.Unit.DenominatorUnit.GetAreaUnit();
+            var areaConverted = area.ConvertTo(areaUnit);
+            var value = areaConverted.Value * density.Value;
+            return new LinearDensity(value, new LinearDensityUnit(density.Unit.CounterUnit, lengthUnit));
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="density">rigth factor (multiplier)</param>
+        public static LinearDensity? operator *(Area? area, Density density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null)
+                return null;
+            return area.Value * density;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="density">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static LinearDensity? operator *(Density? density, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (density is null)
+                return null;
+            return density.Value * area;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="density">rigth factor (multiplier)</param>
+        public static LinearDensity? operator *(Area area, Density? density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (density is null)
+                return null;
+            return area * density.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="density">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static LinearDensity? operator *(Density density, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null)
+                return null;
+            return density * area.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="density">rigth factor (multiplier)</param>
+        public static LinearDensity? operator *(Area? area, Density? density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null || density is null)
+                return null;
+            return area.Value * density.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="density">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static LinearDensity? operator *(Density? density, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (density is null || area is null)
+                return null;
+            return density.Value * area.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="pressure">rigth factor (multiplier)</param>
+        public static Force operator *(Area area, Pressure pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+            // scenario B
+            var unit = new PressureUnit(pressure.Unit.CounterUnit, area.Unit);
+            var pressureConverted    = pressure.WithDenominatorUnit(area.Unit);
+            var value = area.Value / pressureConverted.Value;
+            return new Force(value, pressure.Unit.CounterUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="pressure">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static Force operator *(Pressure pressure, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
+            // Force operator *(Pressure pressure, Area area)
+            // scenario D3
+            var pressureUnit = pressure.Unit;
+            var areaConverted = area.ConvertTo(pressureUnit.DenominatorUnit);
+            var value = areaConverted.Value * pressure.Value;
+            return new Force(value, pressureUnit.CounterUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="pressure">rigth factor (multiplier)</param>
+        public static Force? operator *(Area? area, Pressure pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null)
+                return null;
+            return area.Value * pressure;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="pressure">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static Force? operator *(Pressure? pressure, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (pressure is null)
+                return null;
+            return pressure.Value * area;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="pressure">rigth factor (multiplier)</param>
+        public static Force? operator *(Area area, Pressure? pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (pressure is null)
+                return null;
+            return area * pressure.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="pressure">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static Force? operator *(Pressure pressure, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null)
+                return null;
+            return pressure * area.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="pressure">rigth factor (multiplier)</param>
+        public static Force? operator *(Area? area, Pressure? pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null || pressure is null)
+                return null;
+            return area.Value * pressure.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="pressure">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static Force? operator *(Pressure? pressure, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (pressure is null || area is null)
+                return null;
+            return pressure.Value * area.Value;
         }
 
         /// <summary>

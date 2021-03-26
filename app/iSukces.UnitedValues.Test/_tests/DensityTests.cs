@@ -110,7 +110,7 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal(0.002m, linearDensity.Value);
             Assert.Equal("kg/mm", linearDensity.Unit.ToString());
         }
-        
+
         [Fact]
         public void T05_ShouldSerializeToJson()
         {
@@ -155,16 +155,39 @@ namespace iSukces.UnitedValues.Test
                 Assert.Equal(LengthUnits.Meter, tmp.Unit.DenominatorUnit);
             }
         }
-        
+
         [Fact]
         public void T07_Should_multiply_density_with_volume()
         {
             var den = Density.Parse("10kg/m3");
             var vol = Volume.Parse("30cm3");
             var mul = den * vol;
-            Assert.Equal(300m / 1_00_00_00, mul.Value);
-            Assert.Equal(mul.Unit.UnitName, "kg");
+            Assert.Equal(0.0003m, mul.Value);
+            Assert.Equal("kg", mul.Unit.UnitName);
+        }
 
+        [Fact]
+        public void T08a_should_mul_PlanarDensity_and_Length()
+        {
+            var planarDensity = new PlanarDensity(12, MassUnits.Kg, AreaUnits.SquareMeter);
+            var length        = new Length(50, LengthUnits.Cm);
+            var mul           = planarDensity * length;
+            Assert.Equal(6, mul.Value);
+            Assert.Equal("kg/m", mul.Unit.UnitName);
+        }
+
+        [Fact]
+        public void T08b_should_mul_Length_and_PlanarDensity()
+        {
+            var planarDensity = new PlanarDensity(12, MassUnits.Kg, AreaUnits.SquareMeter);
+            var length        = new Length(50, LengthUnits.Cm);
+            var mul           = length * planarDensity;
+            Assert.Equal(0.06m, mul.Value);
+            Assert.Equal("kg/cm", mul.Unit.UnitName);
+
+            mul = mul.ConvertTo(new LinearDensityUnit(MassUnits.Kg, LengthUnits.Meter));
+            Assert.Equal(6, mul.Value);
+            Assert.Equal("kg/m", mul.Unit.UnitName);
         }
     }
 }

@@ -2,48 +2,25 @@ using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
-    public class MultiplicationAlgebraDefs
+    public partial class MultiplicationAlgebraDefs
     {
         public static MultiplicationAlgebra Definition
         {
             get
             {
                 var c = new MultiplicationAlgebra()
+                    .WithMul<Length, Length, Area>(true)
+                    .WithMul<Length, Area, Volume>(true)
+                    .WithDiv<Mass, Length, LinearDensity>()
+                    .WithDiv<Mass, Area, PlanarDensity>()
+                    .WithDiv<Mass, Volume, Density>();
 
-                        // m*m => m²
-                        .WithMul<Length, Length, Area>(true)
-                        .WithMul<Length, Area, Volume>(true)
+                Add_Length_PlanarDensity_LinearDensity(c);
+                Add_PlanarDensity_Length_Density(c);
+                Add_LinearDensity_Area_Density(c);
 
-                        // N / m² => N/m²
-                        .WithDiv<Force, Area, Pressure>()
-
-                        // N / m => N/m
-                        .WithDiv<Force, Length, LinearForce>()
-                    
-                        .WithDiv<Mass, Length, LinearDensity>()
-                        .WithDiv<Mass, Area, PlanarDensity>()
-                        .WithDiv<Mass, Volume, Density>()
-                        //.WithMul<Length, PlanarDensity, LinearDensity>()
-
-
-                    /*
-                 *          
-        
-            AddDiv(linForce, distance, pressure); // N/m  / m  => N/m²
-            AddDiv(force, area, pressure); 
-            AddMul(mass, acceleration, force); // kg * m/s² => N
-            AddMul(areaDensity, acceleration, pressure); // kg/m² * m/s² => N/m²
-
-            AddMul(density, distance, areaDensity); // kg/m³ * m => kh/m²
-            // AddMul(areaDensity, area,         pressure);
-
-            AddMul(force, distance, momentum); // N * m = Nm
-            AddMul(linForce, area, momentum); // N/m * m² = Nm
-
-            AddMul(temperature, linearExpansion, UnitDefinition.Scalar);
-                 * 
-                 */
-                    ;
+                c.WithDiv<Force, Area, Pressure>();
+                c.WithDiv<Force, Length, LinearForce>();
                 return c;
             }
         }

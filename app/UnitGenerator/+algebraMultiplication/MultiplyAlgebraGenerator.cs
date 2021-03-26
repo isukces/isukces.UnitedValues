@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
+using JetBrains.Annotations;
 using Self = UnitGenerator.MultiplyAlgebraGenerator;
 
 namespace UnitGenerator
@@ -20,9 +20,9 @@ namespace UnitGenerator
             var cw = Ext.Create<MultiplyAlgebraGenerator>();
             cw.WriteLine("// scenario E");
             var args = new Args(
-                $"{p.LeftName}.Value {p.Oper} {p.RightName}.Value",
-                $"{p.LeftName}.Unit",
-                $"{p.RightName}.Unit"
+                $"{p.LeftMethodArgumentName}.Value {p.Oper} {p.RightMethodArgumentName}.Value",
+                $"{p.LeftMethodArgumentName}.Unit",
+                $"{p.RightMethodArgumentName}.Unit"
             );
             var tResult = p.Result.Value;
 
@@ -31,19 +31,41 @@ namespace UnitGenerator
             return cw;
         }
 
-        private static CsCodeWriter CreateCodeForLeftFractionValue(OperatorParams p)
+        private static CsCodeWriter CreateCodeForLeftFractionValue(OperatorParams p,
+            [NotNull] FractionUnit leftFraction)
         {
-            var tResult = p.Result.Value;
-            var cw      = Ext.Create<MultiplyAlgebraGenerator>();
-            cw.WriteLine(
-                $"// {p.Right.Value.ToLower()} unit will be taken from denominator of {p.Left.Value.ToLower()} unit");
-            cw.WriteLine("// scenario D");
-            cw.WriteLine("var {1}Converted = {1}.ConvertTo({0}.Unit.DenominatorUnit);", p.LeftName, p.RightName);
-            cw.WriteLine("var value = {1}Converted.Value * {0}.Value;", p.LeftName, p.RightName);
-            cw.WriteLine("return new {2}(value, {0}.Unit.CounterUnit);", p.LeftName, p.RightName, tResult);
+            if (leftFraction == null) throw new ArgumentNullException(nameof(leftFraction));
+
+            var cw = Ext.Create<MultiplyAlgebraGenerator>();
+            cw.WriteLine("// " + p);
+            var canNormal = leftFraction.DenominatorUnit.Unit == p.Right.Unit
+                            && leftFraction.CounterUnit.Unit == p.Result.Unit;
+            if (canNormal)
+            {
+                if (TryHint(p, cw))
+                {
+                    cw.WriteLine("// scenario D1");
+                    return cw;
+                }
+            }
+            else
+            {
+                if (TryHint(p, cw))
+                    return cw;
+                cw.WriteLine("// scenario D2");
+                return cw.WithThrowNotImplementedException();
+            }
+
+            var oper     = new OperatorCodeBuilderInput(p);
+            var leftUnit = p.LeftMethodArgumentName + "Unit";
+            oper.ConvertRight(leftUnit + ".DenominatorUnit");
+            oper.ResultUnit = leftUnit + ".CounterUnit";
+            oper.AddVariable(leftUnit, p.LeftMethodArgumentName + ".Unit");
+            cw.WriteLine("// scenario D3");
+            var builder = new OperatorCodeBuilder(oper);
+            builder.WriteCode(cw);
             return cw;
         }
-
 
         private static CsCodeWriter CreateCodeForRelatedUnits(OperatorParams p, ref string rightUnit,
             ref string resultUnit)
@@ -59,7 +81,7 @@ namespace UnitGenerator
             void Add(string srcUnit, string targetUnit, string variable)
             {
                 var line1 =
-                    $"var {variable} = GlobalUnitRegistry.Relations.GetOrThrow<{srcUnit}, {targetUnit}>({p.LeftName}.Unit);";
+                    $"var {variable} = GlobalUnitRegistry.Relations.GetOrThrow<{srcUnit}, {targetUnit}>({p.LeftMethodArgumentName}.Unit);";
                 cw.WriteLine(line1);
             }
 
@@ -74,8 +96,10 @@ namespace UnitGenerator
                 Add(tLeftUnit, tResultUnit, resultUnit);
             }
 
-            cw.WriteLine($"var {p.RightName}Converted = {p.RightName}.ConvertTo({rightUnit});");
-            cw.WriteLine($"var value = {p.LeftName}.Value {p.Oper} {p.RightName}Converted.Value;");
+            cw.WriteLine(
+                $"var {p.RightMethodArgumentName}Converted = {p.RightMethodArgumentName}.ConvertTo({rightUnit});");
+            cw.WriteLine(
+                $"var value = {p.LeftMethodArgumentName}.Value {p.Oper} {p.RightMethodArgumentName}Converted.Value;");
             cw.WriteLine($"return new {tResult}(value, {resultUnit});");
             return cw;
         }
@@ -87,33 +111,64 @@ namespace UnitGenerator
             var isCnt    = rightFraction.CounterUnit == p.Left;
             var isResult = rightFraction.CounterUnit == p.Result;
             if (!(isCnt ^ isResult))
-                throw new NotImplementedException();
+            {
+                if (TryHint(p, cw))
+                    return cw;
+                cw.WriteLine("// scenario G");
+                cw.WithThrowNotImplementedException();
+                return cw;
+            }
+
             if (isCnt)
             {
                 cw.WriteLine("// scenario A");
                 cw.WriteLine(
                     $"// {p.Right.Value.ToLower()} unit will be synchronized with {p.Left.Value.ToLower()} unit");
                 cw.WriteLine("var unit = new {2}({0}.Unit, {1}.Unit.DenominatorUnit);",
-                    p.LeftName,
-                    p.RightName,
+                    p.LeftMethodArgumentName,
+                    p.RightMethodArgumentName,
                     p.Right.Unit);
-                cw.WriteLine("var {1}Converted    = {1}.WithCounterUnit({0}.Unit);", p.LeftName, p.RightName);
-                cw.WriteLine("var value = {0}.Value / {1}Converted.Value;", p.LeftName, p.RightName);
-                cw.WriteLine("return new {0}(value, {1}.Unit.DenominatorUnit);", p.Result.Value, p.RightName);
+                cw.WriteLine("var {1}Converted    = {1}.WithCounterUnit({0}.Unit);", p.LeftMethodArgumentName,
+                    p.RightMethodArgumentName);
+                cw.WriteLine("var value = {0}.Value / {1}Converted.Value;", p.LeftMethodArgumentName,
+                    p.RightMethodArgumentName);
+                cw.WriteLine("return new {0}(value, {1}.Unit.DenominatorUnit);", p.Result.Value,
+                    p.RightMethodArgumentName);
             }
             else
             {
                 cw.WriteLine("// scenario B");
                 cw.WriteLine("var unit = new {2}({1}.Unit.CounterUnit, {0}.Unit);",
-                    p.LeftName,
-                    p.RightName,
+                    p.LeftMethodArgumentName,
+                    p.RightMethodArgumentName,
                     p.Right.Unit);
-                cw.WriteLine("var {1}Converted    = {1}.WithDenominatorUnit({0}.Unit);", p.LeftName, p.RightName);
-                cw.WriteLine("var value = {0}.Value / {1}Converted.Value;", p.LeftName, p.RightName);
-                cw.WriteLine("return new {0}(value, {1}.Unit.CounterUnit);", p.Result.Value, p.RightName);
+                cw.WriteLine("var {1}Converted    = {1}.WithDenominatorUnit({0}.Unit);", p.LeftMethodArgumentName,
+                    p.RightMethodArgumentName);
+                cw.WriteLine("var value = {0}.Value / {1}Converted.Value;", p.LeftMethodArgumentName,
+                    p.RightMethodArgumentName);
+                cw.WriteLine("return new {0}(value, {1}.Unit.CounterUnit);", p.Result.Value, p.RightMethodArgumentName);
             }
 
             return cw;
+        }
+
+        private static bool TryHint(OperatorParams par, CsCodeWriter cw)
+        {
+            if (!(par.OperatorHints is null))
+            {
+                var builderInput = par.GetBuilder();
+                if (!(builderInput is null))
+                {
+                    var builder = new OperatorCodeBuilder(builderInput);
+                    cw.WriteLine("// scenario with hint");
+                    builder.WriteCode(cw);
+                    return true;
+                }
+            }
+
+            Console.WriteLine("args.Input" + par.DebugIs);
+
+            return false;
         }
 
 
@@ -123,15 +178,15 @@ namespace UnitGenerator
                 for (var e = 0; e < 4; e++)
                 {
                     var el = (NullableArguments)e;
-                    CreateOperator(i.Counter, i.Denominator, i.Result, "/", i.AreRelatedUnits, el);
-                    CreateOperator(i.Counter, i.Result, i.Denominator, "/", i.AreRelatedUnits, el);
-                    CreateOperator(i.Denominator, i.Result, i.Counter, "*", i.AreRelatedUnits, el);
-                    CreateOperator(i.Result, i.Denominator, i.Counter, "*", i.AreRelatedUnits, el);
+                    CreateOperator(i.Counter, i.Denominator, i.Result, "/", i.AreRelatedUnits, el, i.OperatorHints);
+                    CreateOperator(i.Counter, i.Result, i.Denominator, "/", i.AreRelatedUnits, el, i.OperatorHints);
+                    CreateOperator(i.Denominator, i.Result, i.Counter, "*", i.AreRelatedUnits, el, i.OperatorHints);
+                    CreateOperator(i.Result, i.Denominator, i.Counter, "*", i.AreRelatedUnits, el, i.OperatorHints);
                 }
         }
 
         private void CreateOperator(TypesGroup left, TypesGroup right, TypesGroup result, string op,
-            bool areRelatedUnits, NullableArguments nullableArguments)
+            bool areRelatedUnits, NullableArguments nullableArguments, OperatorHints operatorHints)
         {
             var leftValue  = left.Value;
             var rightValue = right.Value;
@@ -179,14 +234,27 @@ namespace UnitGenerator
             {
                 if (nullableArguments == NullableArguments.None)
                 {
-                    var ppp = new OperatorParams(left, right, result, leftName, rightName, op);
+                    var ppp = new OperatorParams(left, right, result, leftName, rightName, op, operatorHints);
                     if (areRelatedUnits)
                         return CreateCodeForRelatedUnits(ppp, ref rightUnit, ref resultUnit);
                     if (leftFraction != null)
                     {
-                        if (rightFraction != null)
-                            throw new NotSupportedException();
-                        return CreateCodeForLeftFractionValue(ppp);
+                        if (rightFraction == null)
+                            return CreateCodeForLeftFractionValue(ppp, leftFraction);
+
+                        {
+                            var cw = Ext.Create<Self>();
+
+                            if (TryHint(ppp, cw))
+                            {
+                                cw.WriteLine("// scenario F1");
+                                return cw;
+                            }
+
+                            cw.WriteLine("// scenario F2");
+                            cw.WithThrowNotImplementedException();
+                            return cw;
+                        }
                     }
 
                     if (rightFraction != null)

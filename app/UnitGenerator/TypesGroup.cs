@@ -61,6 +61,11 @@ namespace UnitGenerator
             }
         }
 
+        public bool IsValue<T>()
+        {
+            return typeof(T).Name == Value;
+        }
+
         public override string ToString()
         {
             return

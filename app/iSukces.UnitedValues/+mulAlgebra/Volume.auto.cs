@@ -29,11 +29,12 @@ namespace iSukces.UnitedValues
         public static Mass operator *(Density density, Volume volume)
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
-            // volume unit will be taken from denominator of density unit
-            // scenario D
-            var volumeConverted = volume.ConvertTo(density.Unit.DenominatorUnit);
+            // Mass operator *(Density density, Volume volume)
+            // scenario D3
+            var densityUnit = density.Unit;
+            var volumeConverted = volume.ConvertTo(densityUnit.DenominatorUnit);
             var value = volumeConverted.Value * density.Value;
-            return new Mass(value, density.Unit.CounterUnit);
+            return new Mass(value, densityUnit.CounterUnit);
         }
 
         /// <summary>

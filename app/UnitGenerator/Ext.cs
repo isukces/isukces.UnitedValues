@@ -62,11 +62,6 @@ namespace UnitGenerator
         {
             return multiplicator.ToString(CultureInfo.InvariantCulture) + "m";
         }
-        
-        public static string CsEncode(this int multiplicator)
-        {
-            return multiplicator.ToString(CultureInfo.InvariantCulture);
-        }
 
         public static TValue[] GetStaticFieldsValues<THost, TValue>()
         {
@@ -101,14 +96,21 @@ namespace UnitGenerator
 
         public static CsCodeWriter WithThrowNotImplementedException(this CsCodeWriter cw)
         {
-            const string code = "throw new " + nameof(NotImplementedException) + "();";
+            const string code = @"throw new NotImplementedException(""Not implemented yet"");";
             cw.WriteLine(code);
             return cw;
         }
 
-        public static CsCodeWriter WriteReturn(this CsCodeWriter cw, string expression)
+        public static CodeWriter WriteAssign(this CodeWriter cw, string variable, string value, bool addVar=false)
         {
-            cw.WriteLine("return " + expression + ";");
+            var code= (addVar?"var ":"")+variable + " = " + value + ";";
+            cw.WriteLine(code);
+            return cw;
+        }
+        
+        public static CodeWriter WriteReturn(this CodeWriter cw, string code)
+        {
+            cw.WriteLine($"return {code};");
             return cw;
         }
     }
