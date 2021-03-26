@@ -23,6 +23,8 @@ namespace UnitGenerator
         public Result GetPowers(string unitName)
         {
             var myInfo = FindByUnitName(unitName);
+            if (myInfo is null)
+                return null;
             var other  = new Dictionary<int, DerivedUnit>();
 
             var powerOneUnit = myInfo.Power == 1
@@ -67,7 +69,8 @@ namespace UnitGenerator
             }
 
             if (myInfo is null)
-                throw new NotImplementedException();
+                return null;
+                //throw new NotImplementedException();
             return myInfo;
         }
 

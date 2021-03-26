@@ -1,3 +1,4 @@
+using System;
 using iSukces.UnitedValues;
 
 namespace UnitGenerator
@@ -18,9 +19,7 @@ namespace UnitGenerator
 
                 new DerivedUnit(nameof(Force))
                     .WithUnit("N", "Newton", 1)
-                    .WithUnit("kN", "KiloNewton", 1000)
-                    .WithUnit("MN", "MegaNewton", 1000_000)
-                    .WithUnit("mN", "MiliNewton", 0.001m),
+                    .WithUnits("N", "Newton", Q123.Kilo | Q123.Mega | Q123.Mili),
 
                 new DerivedUnit(nameof(Time)).WithTime(1),
                 new DerivedUnit(nameof(SquareTime)).WithTime(2),
@@ -28,7 +27,20 @@ namespace UnitGenerator
                 new DerivedUnit(nameof(CelsiusTemperature))
                     .WithUnit("°C", "Degree", 1),
                 new DerivedUnit(nameof(KelvinTemperature))
-                    .WithUnit("K", "Degree", 1)
+                    .WithUnit("K", "Degree", 1),
+                
+                new DerivedUnit(nameof(Energy))
+                    .WithUnit("J", "Joule", 1)
+                    .WithUnits("J", "Joule", Q123.Kilo | Q123.Mega | Q123.Giga)
+                
+                    .WithUnit("Wh", "WattHour", 3600)
+                    .WithUnit("kWh", "KiloWattHour", 3600_000)
+                    .WithUnit("MWh", "MegaWattHour", 3600_000_000)
+                    .WithUnit("GWh", "GigaWattHour", 3600_000_000_000)
+                
+                    .WithUnit("cal", "Calorie", 4.1855m)
+                    .WithUnit("kcal", "KiloCalorie", 4185.5m)
+
             };
             return arr;
         }
@@ -48,4 +60,14 @@ namespace UnitGenerator
 
         private static DerivedUnitCollection _all;
     }
+
+    [Flags]
+    public enum Q123
+    {
+        Kilo = 1,
+        Mega = 2,
+        Giga = 4,
+        Mili = 8,
+        Micro = 16
+    };
 }

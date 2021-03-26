@@ -90,29 +90,46 @@ namespace UnitGenerator
             return WithPoweredUnits(power, g, "Time,SquareTime".Split(','));
         }
 
-        public DerivedUnit WithUnit(string unitShortName,
-            string fieldName, 
+        public DerivedUnit WithUnit(string unitShortName, string fieldName,
             decimal multiplicator,
             string fromMethodNameSufix = null,
             TypeCodeAliases aliases = null
-            )
+        )
         {
             if (aliases != null)
             {
-                if (string. IsNullOrWhiteSpace(fieldName))
+                if (string.IsNullOrWhiteSpace(fieldName))
                     if (!string.IsNullOrWhiteSpace(aliases.NameSingular))
                         fieldName = aliases.NameSingular.FirstUpper();
-                if (string. IsNullOrWhiteSpace(fromMethodNameSufix))
+                if (string.IsNullOrWhiteSpace(fromMethodNameSufix))
                     if (!string.IsNullOrWhiteSpace(aliases.NamePlural))
                         fromMethodNameSufix = aliases.NamePlural.FirstUpper();
             }
-            Units.Add(new DerivedUnitDefinition(fieldName, unitShortName, multiplicator.CsEncode(), fromMethodNameSufix, aliases));
+
+            Units.Add(new DerivedUnitDefinition(fieldName, unitShortName, multiplicator.CsEncode(), fromMethodNameSufix,
+                aliases));
+            return this;
+        }
+
+        public DerivedUnit WithUnits(string unitShortName, string fieldName, Q123 kilo)
+        {
+            void Add(string unitPrefix, string fieldPrefix, Q123 flag, decimal factor)
+            {
+                if ((kilo & flag) != 0)
+                    WithUnit(unitPrefix + unitShortName, fieldPrefix + fieldName, factor);
+            }
+
+            Add("k", "Kilo", Q123.Kilo, 1_000);
+            Add("M", "Mega", Q123.Mega, 1_000_000);
+            Add("G", "Giga", Q123.Giga, 1_000_000_000);
+            Add("m", "Mili", Q123.Mili, 0.001m);
+            Add("µ", "Micro", Q123.Micro, 0.000_001m);
             return this;
         }
 
         private DerivedUnit WithPoweredUnits(int power, DerivedUnitItem[] items, string[] values)
         {
-            Power    = power;
+            Power = power;
             if (power != 1)
                 PowerOne = new TypesGroup(values[0]);
             var unitSuffix     = Suffix(power);
@@ -122,10 +139,10 @@ namespace UnitGenerator
             {
                 var fromMethodNameSufix = i.FromMethodNameSufix.AddPrefix(propertyPrefix);
                 WithUnit(
-                    i.UnitShortCode + unitSuffix, 
+                    i.UnitShortCode + unitSuffix,
                     propertyPrefix + i.FieldName,
                     Mul(power, i.ScaleFactor),
-                    fromMethodNameSufix: fromMethodNameSufix);
+                    fromMethodNameSufix);
             }
 
             if (power <= 1) return this;
@@ -142,16 +159,16 @@ namespace UnitGenerator
             return this;
         }
 
-        public TypesGroup PowerOne { get; set; }
-
-        public int Power { get; set; } = 1;
-
 
         private void WithUnit(string unitShortName, string fieldName, string scaleFactor,
             string fromMethodNameSufix = null)
         {
             Units.Add(new DerivedUnitDefinition(fieldName, unitShortName, scaleFactor, fromMethodNameSufix, null));
         }
+
+        public TypesGroup PowerOne { get; set; }
+
+        public int Power { get; set; } = 1;
 
         public string Name { get; }
 

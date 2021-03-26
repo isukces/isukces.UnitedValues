@@ -27,8 +27,7 @@ namespace UnitGenerator
         private static readonly BasicUnit Length = new BasicUnit(nameof(Length), "Meter", true);
         private static readonly BasicUnit Area = new BasicUnit(nameof(Area), "SquareMeter", false);
         private static readonly BasicUnit Volume = new BasicUnit(nameof(Volume), "CubicMeter", false);
-
-
+        
         private static readonly BasicUnit Time = new BasicUnit(nameof(Time), "Second", true);
 
         private static readonly BasicUnit
@@ -47,6 +46,10 @@ namespace UnitGenerator
 
         private static readonly BasicUnit
             DeltaKelvinTemperature = new BasicUnit(nameof(DeltaKelvinTemperature), "Degree", true);
+
+        
+        private static readonly BasicUnit
+            Energy = new BasicUnit(nameof(Energy), "Joule", true);
 
 
         private static BasicUnitsCollection _all;
