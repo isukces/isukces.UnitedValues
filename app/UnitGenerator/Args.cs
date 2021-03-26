@@ -5,14 +5,14 @@ namespace UnitGenerator
 {
     public class Args
     {
-        public Args(params string[] args)
+        public Args(params string[] arguments)
         {
-            _args = args;
+            Arguments = arguments;
         }
 
         public Args(IEnumerable<string> args)
         {
-            _args = args.ToArray();
+            Arguments = args.ToArray();
         }
 
         public string Create(string constructedTypeName)
@@ -37,9 +37,9 @@ namespace UnitGenerator
 
         public override string ToString()
         {
-            return string.Join(", ", _args);
+            return string.Join(", ", Arguments);
         }
 
-        private readonly string[] _args;
+        public string[] Arguments { get; }
     }
 }

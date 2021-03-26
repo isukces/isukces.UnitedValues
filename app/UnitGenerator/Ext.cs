@@ -63,6 +63,11 @@ namespace UnitGenerator
             return multiplicator.ToString(CultureInfo.InvariantCulture) + "m";
         }
 
+        public static string CsEncode(this int multiplicator)
+        {
+            return multiplicator.ToString(CultureInfo.InvariantCulture);
+        }
+
         public static TValue[] GetStaticFieldsValues<THost, TValue>()
         {
             var l            = new List<TValue>();

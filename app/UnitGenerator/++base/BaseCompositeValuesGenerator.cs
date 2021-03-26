@@ -4,7 +4,7 @@ using iSukces.Code.Interfaces;
 namespace UnitGenerator
 {
     public abstract class BaseCompositeValuesGenerator<T> : BaseValuesGenerator<T>
-        where T:IUnitInfo
+        where T : IUnitInfo
     {
         protected BaseCompositeValuesGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
@@ -16,6 +16,39 @@ namespace UnitGenerator
 
         protected void Add_Parse(string splitMethodName)
         {
+            string ArrayItemCode(ref int columnIndex)
+            {
+                return $"units[{(columnIndex++).CsEncode()}]";
+            }
+
+            Args GetConstructorArguments(TypesGroup tg, ref int columnIndex)
+            {
+                var aa        = ProductUnitDefs.All;
+                var a4        = aa.ByValueTypeName(tg.Value);
+                var arguments = ArrayItemCode(ref columnIndex);
+                if (a4 is null) return new Args(arguments);
+
+                return new Args(
+                    new Args(arguments).Create(a4.CounterUnit.Unit),
+                    new Args(ArrayItemCode(ref columnIndex)).Create(a4.DenominatorUnit.Unit)
+                );
+            }
+
+            Args licznik, mianownik;
+            {
+                var columnIndex = 0;
+                if (Cfg is FractionUnit fu)
+                {
+                    licznik   = GetConstructorArguments(fu.CounterUnit, ref columnIndex);
+                    mianownik = GetConstructorArguments(fu.DenominatorUnit, ref columnIndex);
+                }
+                else
+                {
+                    licznik   = new Args(ArrayItemCode(ref columnIndex));
+                    mianownik = new Args(ArrayItemCode(ref columnIndex));
+                }
+            }
+
             var cw = Ext.Create(GetType());
             cw.SingleLineIf("string.IsNullOrEmpty(value)",
                 "throw new ArgumentNullException(nameof(value));");
@@ -23,11 +56,14 @@ namespace UnitGenerator
             cw.WriteLine("var r = CommonParse.Parse(value, typeof(" + Target.Name + "));");
 
             cw.WriteLine("var units = " + splitMethodName + "(r.UnitName);");
-            cw.SingleLineIf("units.Length != 2",
+            var sum = mianownik.Arguments.Length + licznik.Arguments.Length;
+            cw.SingleLineIf("units.Length != " + sum.CsEncode(),
                 "throw new Exception($\"{r.UnitName} is not valid " + Target.Name + " unit\");");
 
-            cw.WriteLine("var counterUnit = new " + GenInfo.First.Unit + "(units[0]);");
-            cw.WriteLine("var denominatorUnit = new " + GenInfo.Second.Unit + "(units[1]);");
+            cw.WriteAssign("counterUnit", new Args("units[0]").Create(GenInfo.First.Unit), true);
+            //cw.WriteLine("var counterUnit = new " + GenInfo.First.Unit + "(units[0]);");
+            cw.WriteAssign("denominatorUnit", mianownik.Create(GenInfo.Second.Unit), true);
+            // cw.WriteLine("var denominatorUnit = new " + GenInfo.Second.Unit + "(units[1]);");
             cw.WriteLine(ReturnValue($"new {Target.Name}(r.Value, counterUnit, denominatorUnit)"));
 
             var m = Target.AddMethod("Parse", GenInfo.Result.Value)
@@ -59,7 +95,7 @@ namespace UnitGenerator
         }
 
         protected abstract CompositeUnitGeneratorInfo GetInfo();
-        
+
         private void Add_AlternateConstructor()
         {
             var f    = GenInfo.FirstPropertyName.FirstLower();

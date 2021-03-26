@@ -26,8 +26,11 @@ namespace UnitGenerator
         }
 
         public static readonly ProductUnit Torque
-            = ProductUnit.Make<Force, Length>("Torque");
+            = ProductUnit.Make<Torque, Force, Length>();
 
+
+        public static readonly ProductUnit MassDetlaKelvin
+            = ProductUnit.Make<MassDetlaKelvin, Mass, DeltaKelvinTemperature>();
 
         private static ProductUnitsCollection _allProductUnitses;
     }
