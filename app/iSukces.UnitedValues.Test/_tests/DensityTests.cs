@@ -195,19 +195,13 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T09_should_mul()
         {
-            /*
-             * 52480mm³
-7850kg/m³
-
-6685350318.4713375796178343949kg
-             */
-
             var v = new Volume(52480, VolumeUnits.CubicMm);
             var d = new Density(7850, new DensityUnit(MassUnits.Kg, VolumeUnits.CubicMeter));
 
             var bb = v * d;
             bb = bb.ConvertToKg();
-            Assert.Equal(0.411968m, bb.Value);
+            const decimal expected = 52480 * 7850 * 0.000_000_001m; 
+            Assert.Equal(expected, bb.Value);
             Assert.Equal("kg", bb.Unit.UnitName);
         }
     }
