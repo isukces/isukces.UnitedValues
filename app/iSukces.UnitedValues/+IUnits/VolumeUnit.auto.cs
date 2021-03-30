@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 namespace iSukces.UnitedValues
 {
     [Serializable]
-    public partial class VolumeUnit : IUnit, IEquatable<VolumeUnit>
+    public partial class VolumeUnit : IUnit, IEquatable<VolumeUnit>, IDecomposableUnit, IDerivedDecomposableUnit
     {
         /// <summary>
         /// creates instance of VolumeUnit
@@ -21,6 +21,12 @@ namespace iSukces.UnitedValues
             if (string.IsNullOrWhiteSpace(unitName))
                 throw new ArgumentException(nameof(unitName));
             UnitName = unitName?.Replace('3', '³').TrimToNull();
+        }
+
+        public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
+        {
+            // generator : BasicUnitGenerator.Add_Decompose
+            return new[] { GetBasicUnit() };
         }
 
         public bool Equals(VolumeUnit other)
@@ -39,6 +45,13 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitGenerator.Add_ConvertOtherPower
             return GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, AreaUnit>(this);
+        }
+
+        public DecomposableUnitItem GetBasicUnit()
+        {
+            // generator : BasicUnitGenerator.Add_Decompose
+            var tmp = GetLengthUnit();
+            return new DecomposableUnitItem(tmp, 3);
         }
 
         public override int GetHashCode()

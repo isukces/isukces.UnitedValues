@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using iSukces.Code;
@@ -47,10 +46,16 @@ namespace UnitGenerator
             Add_WithFirst();
             Add_WithSecond();
 
-            AddDecompose();
+            Add_Decompose();
         }
 
-        private void AddDecompose()
+        protected abstract IEnumerable<string> GetImplementedInterfaces();
+
+        protected abstract CompositeUnitGeneratorInfo GetInfo();
+
+        protected abstract Info2 GetInfo2();
+
+        private void Add_Decompose()
         {
             var items = _info2?.Items;
             if (items is null || items.Length == 0)
@@ -61,9 +66,7 @@ namespace UnitGenerator
             var cs = Ext.Create(GetType());
             cs.WriteLine("var decomposer = new UnitDecomposer();");
             foreach (var item in items)
-            {
-                cs.WriteLine("decomposer.Add({0}, {1});", item.Propertyname, item.Power.CsEncode());    
-            }
+                cs.WriteLine("decomposer.Add({0}, {1});", item.Propertyname, item.Power.CsEncode());
             cs.WriteReturn("decomposer.Items");
 
             var m = Target.AddMethod(nameof(IDecomposableUnit.Decompose), type);
@@ -71,12 +74,6 @@ namespace UnitGenerator
 
             Target.ImplementedInterfaces.Add(nameof(IDecomposableUnit));
         }
-
-        protected abstract IEnumerable<string> GetImplementedInterfaces();
-
-        protected abstract CompositeUnitGeneratorInfo GetInfo();
-
-        protected abstract Info2 GetInfo2();
 
         private void Add_Equals()
         {
@@ -99,16 +96,6 @@ namespace UnitGenerator
                 .OwnGetterIsExpression = true;
         }
 
-        private void Add_WithSecond()
-        {
-            var cw = Ext.Create(GetType());
-            var e  = new Args("newUnit", _info.SecondPropertyName).Create(Target.Name);
-            cw.WriteLine($"return {e};");
-            Target.AddMethod($"With{_info.FirstPropertyName}", Cfg.UnitTypes.Unit)
-                .WithBody(cw)
-                .AddParam("newUnit", _info.First.Unit);
-        }
-
         private void Add_WithFirst()
         {
             var cw = Ext.Create(GetType());
@@ -117,6 +104,16 @@ namespace UnitGenerator
             Target.AddMethod("With" + _info.SecondPropertyName, Cfg.UnitTypes.Unit)
                 .WithBody(cw)
                 .AddParam("newUnit", _info.Second.Unit);
+        }
+
+        private void Add_WithSecond()
+        {
+            var cw = Ext.Create(GetType());
+            var e  = new Args("newUnit", _info.SecondPropertyName).Create(Target.Name);
+            cw.WriteLine($"return {e};");
+            Target.AddMethod($"With{_info.FirstPropertyName}", Cfg.UnitTypes.Unit)
+                .WithBody(cw)
+                .AddParam("newUnit", _info.First.Unit);
         }
 
         private CompositeUnitGeneratorInfo _info;
@@ -130,12 +127,13 @@ namespace UnitGenerator
         public Info2(string stringSeparator, NameAndPower[] items)
         {
             StringSeparator = stringSeparator;
-            Items      = items;
+            Items           = items;
         }
 
         public string         StringSeparator { get; }
         public NameAndPower[] Items           { get; }
     }
+
     [ImmutableObject(true)]
     public class NameAndPower
     {
@@ -153,7 +151,5 @@ namespace UnitGenerator
         public string Propertyname { get; }
 
         public int Power { get; }
-
     }
-
 }

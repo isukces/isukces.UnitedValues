@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 namespace iSukces.UnitedValues
 {
     [Serializable]
-    public partial class AreaUnit : IUnit, IEquatable<AreaUnit>
+    public partial class AreaUnit : IUnit, IEquatable<AreaUnit>, IDecomposableUnit, IDerivedDecomposableUnit
     {
         /// <summary>
         /// creates instance of AreaUnit
@@ -23,6 +23,12 @@ namespace iSukces.UnitedValues
             UnitName = unitName?.Replace('2', '²').TrimToNull();
         }
 
+        public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
+        {
+            // generator : BasicUnitGenerator.Add_Decompose
+            return new[] { GetBasicUnit() };
+        }
+
         public bool Equals(AreaUnit other)
         {
             return String.Equals(UnitName, other?.UnitName);
@@ -32,6 +38,13 @@ namespace iSukces.UnitedValues
         {
             if (ReferenceEquals(null, obj)) return false;
             return obj is AreaUnit tmp && Equals(tmp);
+        }
+
+        public DecomposableUnitItem GetBasicUnit()
+        {
+            // generator : BasicUnitGenerator.Add_Decompose
+            var tmp = GetLengthUnit();
+            return new DecomposableUnitItem(tmp, 2);
         }
 
         public override int GetHashCode()

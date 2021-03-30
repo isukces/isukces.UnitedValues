@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
@@ -11,6 +13,53 @@ namespace UnitGenerator
         public BasicUnitGenerator(string output, string nameSpace)
             : base(output, nameSpace)
         {
+        }
+
+        private void Add_Decompose()
+        {
+            var infos = DerivedUnitGeneratorDefs.All;
+            var tmp   = infos.GetPowers(Cfg);
+            if (tmp?.MyInfo is null || tmp.Other.Count == 0)
+                return;
+            if (tmp.MyInfo.Power < 2)
+                return;
+            var basicUnit = tmp.Other.Where(a => a.Key == 1)
+                .Select(a => a.Value)
+                .SingleOrDefault();
+       
+            {
+                var type = new Args(Target.GetTypeName<DecomposableUnitItem>())
+                    .MakeGenericType(Target.GetTypeName<IReadOnlyList<int>>(), true);
+
+                var cs = Ext.Create(GetType());
+                if (basicUnit is null)
+                {
+                    cs.WriteLine("var decomposer = new UnitDecomposer();");
+                    cs.WriteLine("decomposer.Add(this, 1);");
+                    cs.WriteReturn("decomposer.Items");
+                }
+                else
+                    cs.WriteReturn("new[] { " + nameof(IDerivedDecomposableUnit.GetBasicUnit) + "() }");
+                
+                
+                var m = Target.AddMethod(nameof(IDecomposableUnit.Decompose), type);
+                m.WithBody(cs);
+
+                Target.ImplementedInterfaces.Add(nameof(IDecomposableUnit));
+            }
+            if (basicUnit != null)
+            {
+                var resultType = Target.GetTypeName<DecomposableUnitItem>();
+                var cs         = Ext.Create(GetType());
+                cs.WriteAssign("tmp", "Get" + basicUnit.Name + "Unit()", true);
+                var args = new Args("tmp", tmp.MyInfo.Power.CsEncode()).Create(resultType);
+                cs.WriteReturn(args);
+
+                var m = Target.AddMethod(nameof(IDerivedDecomposableUnit.GetBasicUnit), resultType);
+                m.WithBody(cs);
+
+                Target.ImplementedInterfaces.Add(nameof(IDerivedDecomposableUnit));
+            }
         }
 
         protected override void GenerateOne()
@@ -33,6 +82,7 @@ namespace UnitGenerator
             Target.WithAttribute(typeof(SerializableAttribute));
 
             Add_ConvertOtherPower();
+            Add_Decompose();
         }
 
 

@@ -10,10 +10,6 @@ namespace iSukces.UnitedValues
 
         public IUnit Unit  { get; }
         public int   Power { get; }
-
-        public static DecomposableUnitItem Make(IUnit unit, int power)
-        {
-            throw new System.NotImplementedException();
-        }
+ 
     }
 }

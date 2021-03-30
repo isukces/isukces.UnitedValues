@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
@@ -57,7 +58,7 @@ namespace UnitGenerator
                 .WithOwnGetter(cw.Code)
                 .Description = $"All known {Cfg.Name.FirstLower()} units";
         }
-
+        
         private void Add_Properties()
         {
             foreach (var i in Cfg.Units)

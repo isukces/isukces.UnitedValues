@@ -20,7 +20,7 @@ namespace iSukces.UnitedValues
 
         public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
         {
-            // generator : ProductUnitGenerator.AddDecompose
+            // generator : ProductUnitGenerator.Add_Decompose
             var decomposer = new UnitDecomposer();
             decomposer.Add(LeftUnit, 1);
             decomposer.Add(RightUnit, 1);
