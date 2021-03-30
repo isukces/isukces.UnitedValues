@@ -1,5 +1,5 @@
 // ReSharper disable All
-// generator: UnitGenerator
+// generator: BasicUnitGenerator
 using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -42,7 +42,7 @@ namespace iSukces.UnitedValues
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SquareTimeUnit GetSquareTimeUnit()
         {
-            // generator : UnitGenerator.Add_ConvertOtherPower
+            // generator : BasicUnitGenerator.Add_ConvertOtherPower
             return GlobalUnitRegistry.Relations.GetOrThrow<TimeUnit, SquareTimeUnit>(this);
         }
 

@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial class MassStreamUnit : IFractionalUnit<MassUnit, TimeUnit>, IEquatable<MassStreamUnit>
+    public partial class MassStreamUnit : IFractionalUnit<MassUnit, TimeUnit>, IEquatable<MassStreamUnit>, IDecomposableUnit
     {
         /// <summary>
         /// creates instance of MassStreamUnit
@@ -16,6 +16,15 @@ namespace iSukces.UnitedValues
         {
             CounterUnit = counterUnit;
             DenominatorUnit = denominatorUnit;
+        }
+
+        public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
+        {
+            // generator : FractionUnitGenerator.AddDecompose
+            var decomposer = new UnitDecomposer();
+            decomposer.Add(CounterUnit, 1);
+            decomposer.Add(DenominatorUnit, -1);
+            return decomposer.Items;
         }
 
         public bool Equals(MassStreamUnit other)

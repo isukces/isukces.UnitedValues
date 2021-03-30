@@ -10,11 +10,6 @@ namespace UnitGenerator
         {
         }
 
-        protected override Info2 GetInfo2()
-        {
-            return new Info2("/");
-        }
-
         protected override IEnumerable<string> GetImplementedInterfaces()
         {
             var name = new Args(Cfg.CounterUnit.Unit, Cfg.DenominatorUnit.Unit)
@@ -25,6 +20,15 @@ namespace UnitGenerator
         protected override CompositeUnitGeneratorInfo GetInfo()
         {
             return CompositeUnitGeneratorInfo.Make(Cfg);
+        }
+
+        protected override Info2 GetInfo2()
+        {
+            return new Info2("/", new[]
+            {
+                new NameAndPower(nameof(FakeFractionalUnit.CounterUnit), 1),
+                new NameAndPower(nameof(FakeFractionalUnit.DenominatorUnit), -1)
+            });
         }
 
 

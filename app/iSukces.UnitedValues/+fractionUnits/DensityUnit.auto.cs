@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial class DensityUnit : IFractionalUnit<MassUnit, VolumeUnit>, IEquatable<DensityUnit>
+    public partial class DensityUnit : IFractionalUnit<MassUnit, VolumeUnit>, IEquatable<DensityUnit>, IDecomposableUnit
     {
         /// <summary>
         /// creates instance of DensityUnit
@@ -16,6 +16,15 @@ namespace iSukces.UnitedValues
         {
             CounterUnit = counterUnit;
             DenominatorUnit = denominatorUnit;
+        }
+
+        public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
+        {
+            // generator : FractionUnitGenerator.AddDecompose
+            var decomposer = new UnitDecomposer();
+            decomposer.Add(CounterUnit, 1);
+            decomposer.Add(DenominatorUnit, -1);
+            return decomposer.Items;
         }
 
         public bool Equals(DensityUnit other)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
@@ -45,6 +46,30 @@ namespace UnitGenerator
 
             Add_WithFirst();
             Add_WithSecond();
+
+            AddDecompose();
+        }
+
+        private void AddDecompose()
+        {
+            var items = _info2?.Items;
+            if (items is null || items.Length == 0)
+                return;
+            var type = new Args(Target.GetTypeName<DecomposableUnitItem>())
+                .MakeGenericType(Target.GetTypeName<IReadOnlyList<int>>(), true);
+
+            var cs = Ext.Create(GetType());
+            cs.WriteLine("var decomposer = new UnitDecomposer();");
+            foreach (var item in items)
+            {
+                cs.WriteLine("decomposer.Add({0}, {1});", item.Propertyname, item.Power.CsEncode());    
+            }
+            cs.WriteReturn("decomposer.Items");
+
+            var m = Target.AddMethod(nameof(IDecomposableUnit.Decompose), type);
+            m.WithBody(cs);
+
+            Target.ImplementedInterfaces.Add(nameof(IDecomposableUnit));
         }
 
         protected abstract IEnumerable<string> GetImplementedInterfaces();
@@ -102,11 +127,33 @@ namespace UnitGenerator
 
     public class Info2
     {
-        public Info2(string stringSeparator)
+        public Info2(string stringSeparator, NameAndPower[] items)
         {
             StringSeparator = stringSeparator;
+            Items      = items;
         }
 
-        public string StringSeparator { get; }
+        public string         StringSeparator { get; }
+        public NameAndPower[] Items           { get; }
     }
+    [ImmutableObject(true)]
+    public class NameAndPower
+    {
+        public NameAndPower(string propertyname, int power)
+        {
+            Propertyname = propertyname;
+            Power        = power;
+        }
+
+        public override string ToString()
+        {
+            return $"Propertyname={Propertyname}, Power={Power}";
+        }
+
+        public string Propertyname { get; }
+
+        public int Power { get; }
+
+    }
+
 }

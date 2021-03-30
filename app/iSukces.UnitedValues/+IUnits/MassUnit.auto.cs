@@ -1,5 +1,5 @@
 // ReSharper disable All
-// generator: UnitGenerator
+// generator: BasicUnitGenerator
 using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;

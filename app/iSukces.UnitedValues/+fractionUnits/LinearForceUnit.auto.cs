@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial class LinearForceUnit : IFractionalUnit<ForceUnit, LengthUnit>, IEquatable<LinearForceUnit>
+    public partial class LinearForceUnit : IFractionalUnit<ForceUnit, LengthUnit>, IEquatable<LinearForceUnit>, IDecomposableUnit
     {
         /// <summary>
         /// creates instance of LinearForceUnit
@@ -16,6 +16,15 @@ namespace iSukces.UnitedValues
         {
             CounterUnit = counterUnit;
             DenominatorUnit = denominatorUnit;
+        }
+
+        public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
+        {
+            // generator : FractionUnitGenerator.AddDecompose
+            var decomposer = new UnitDecomposer();
+            decomposer.Add(CounterUnit, 1);
+            decomposer.Add(DenominatorUnit, -1);
+            return decomposer.Items;
         }
 
         public bool Equals(LinearForceUnit other)

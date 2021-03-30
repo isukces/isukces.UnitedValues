@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial class MassDetlaKelvinUnit : IProductUnit<MassUnit, KelvinTemperatureUnit>, IEquatable<MassDetlaKelvinUnit>
+    public partial class MassDetlaKelvinUnit : IProductUnit<MassUnit, KelvinTemperatureUnit>, IEquatable<MassDetlaKelvinUnit>, IDecomposableUnit
     {
         /// <summary>
         /// creates instance of MassDetlaKelvinUnit
@@ -16,6 +16,15 @@ namespace iSukces.UnitedValues
         {
             LeftUnit = leftUnit;
             RightUnit = rightUnit;
+        }
+
+        public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
+        {
+            // generator : ProductUnitGenerator.AddDecompose
+            var decomposer = new UnitDecomposer();
+            decomposer.Add(LeftUnit, 1);
+            decomposer.Add(RightUnit, 1);
+            return decomposer.Items;
         }
 
         public bool Equals(MassDetlaKelvinUnit other)

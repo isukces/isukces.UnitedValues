@@ -43,8 +43,10 @@ namespace UnitGenerator
             return $"{methodName}({ToString()})";
         }
 
-        public string MakeGenericType(string type)
+        public string MakeGenericType(string type, bool trunc =false)
         {
+            if (trunc)
+                type = type.Split('<')[0];
             return $"{type}<{ToString()}>";
         }
 
@@ -54,5 +56,23 @@ namespace UnitGenerator
         }
 
         public string[] Arguments { get; }
+
+        public CsCodeWriter ReturnArray()
+        {
+            var c = new CsCodeWriter();
+            c.Open("return new[]");
+            var lastIdx = Arguments.Length-1;
+            for (var index = 0; index <= lastIdx; index++)
+            {
+                var i = Arguments[index];
+                if (index < lastIdx)
+                    i += ",";
+                c.WriteLine(i);
+            }
+
+            c.DecIndent();
+            c.WriteLine("};");
+            return c;
+        }
     }
 }

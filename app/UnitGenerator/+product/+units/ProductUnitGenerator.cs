@@ -24,9 +24,12 @@ namespace UnitGenerator
 
         protected override Info2 GetInfo2()
         {
-            return new Info2("");
+            return new Info2("", new[]
+            {
+                new NameAndPower(nameof(FakeProductUnit.LeftUnit), 1),
+                new NameAndPower(nameof(FakeProductUnit.RightUnit), 1)
+            });
         }
-
 
         protected override string GetTypename(ProductUnit cfg)
         {

@@ -3,13 +3,12 @@ using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
-using Self = UnitGenerator.UnitGenerator;
 
 namespace UnitGenerator
 {
-    public class UnitGenerator : BaseGenerator<string>
+    public class BasicUnitGenerator : BaseGenerator<string>
     {
-        public UnitGenerator(string output, string nameSpace)
+        public BasicUnitGenerator(string output, string nameSpace)
             : base(output, nameSpace)
         {
         }
@@ -65,7 +64,7 @@ namespace UnitGenerator
                 var targetUnit = new TypesGroup(i.Name);
                 if (Cfg == targetUnit.Unit)
                     continue;
-                var cw = Ext.Create<Self>();
+                var cw = Ext.Create<BasicUnitGenerator>();
                 var code = "GlobalUnitRegistry.Relations.GetOrThrow<" + Target.Name + ", " + targetUnit.Unit +
                            ">(this)";
                 cw.WriteReturn(code);

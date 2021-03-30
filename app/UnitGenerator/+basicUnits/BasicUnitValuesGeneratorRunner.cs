@@ -7,7 +7,7 @@ namespace UnitGenerator
         public static void Run(string basePath, string nameSpace)
         {
             var infos         = All;
-            var unitGenerator = new UnitGenerator(Path.Combine(basePath, "+IUnits"), nameSpace);
+            var unitGenerator = new BasicUnitGenerator(Path.Combine(basePath, "+IUnits"), nameSpace);
             unitGenerator.Generate(infos.DistinctNames);
 
             var unitedValues = new BasicUnitValuesGenerator(Path.Combine(basePath, "+IUnitedValue"), nameSpace);

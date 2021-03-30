@@ -1,5 +1,5 @@
 // ReSharper disable All
-// generator: UnitGenerator
+// generator: BasicUnitGenerator
 using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -42,14 +42,14 @@ namespace iSukces.UnitedValues
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public LengthUnit GetLengthUnit()
         {
-            // generator : UnitGenerator.Add_ConvertOtherPower
+            // generator : BasicUnitGenerator.Add_ConvertOtherPower
             return GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, LengthUnit>(this);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public VolumeUnit GetVolumeUnit()
         {
-            // generator : UnitGenerator.Add_ConvertOtherPower
+            // generator : BasicUnitGenerator.Add_ConvertOtherPower
             return GlobalUnitRegistry.Relations.GetOrThrow<AreaUnit, VolumeUnit>(this);
         }
 
