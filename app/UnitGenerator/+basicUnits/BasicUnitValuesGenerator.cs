@@ -67,7 +67,7 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypes.Unit, null, "unit")
+                    Cfg.UnitTypes.Unit, null, "unit", Flags1.NotNull)
             };
         }
 
@@ -147,15 +147,14 @@ namespace UnitGenerator
                 var cw = Ext.Create<BasicUnitValuesGenerator>();
 
                 var result1 = CreateResultFromVariable(right, rt, op == "-");
-                cw.SingleLineIf(
-                    $"{left}.Value.Equals({ValuePropertyType}.Zero) && string.IsNullOrEmpty({left}.Unit.UnitName)",
-                    ReturnValue(result1));
+                var condition =
+                    $"{left}.Value.Equals({ValuePropertyType}.Zero) && string.IsNullOrEmpty({left}.Unit?.UnitName)";
+                cw.SingleLineIf(condition, ReturnValue(result1));
 
                 result1 = CreateResultFromVariable(left, lt);
-                cw.SingleLineIf(
-                    right + ".Value.Equals(" + ValuePropertyType + ".Zero) && string.IsNullOrEmpty(" + right +
-                    ".Unit.UnitName)",
-                    ReturnValue(result1));
+                condition =
+                    $"{right}.Value.Equals({ValuePropertyType}.Zero) && string.IsNullOrEmpty({right}.Unit?.UnitName)";
+                cw.SingleLineIf(condition, ReturnValue(result1));
 
                 cw.WriteLine($"{right} = {right}.ConvertTo({left}.Unit);");
                 var returnExpression = new Args($"{left}.Value {op} {right}.Value", $"{left}.Unit").Create(resultType);
@@ -251,6 +250,5 @@ namespace UnitGenerator
                 .WithIsReadOnly()
                 .WithConstValue($"new {Target.Name}(0, BaseUnit)");
         }
-
     }
 }

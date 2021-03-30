@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial struct MassStreamUnit : IFractionalUnit<MassUnit, TimeUnit>, IEquatable<MassStreamUnit>
+    public partial class MassStreamUnit : IFractionalUnit<MassUnit, TimeUnit>, IEquatable<MassStreamUnit>
     {
         /// <summary>
         /// creates instance of MassStreamUnit

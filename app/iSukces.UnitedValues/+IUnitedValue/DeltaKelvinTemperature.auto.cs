@@ -15,9 +15,11 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public DeltaKelvinTemperature(decimal value, KelvinTemperatureUnit unit)
+        public DeltaKelvinTemperature(decimal value, [JetBrains.Annotations.NotNull] KelvinTemperatureUnit unit)
         {
             Value = value;
+            if (unit is null)
+                throw new NullReferenceException(nameof(unit));
             Unit = unit;
         }
 
@@ -38,14 +40,14 @@ namespace iSukces.UnitedValues
 
         public bool Equals(DeltaKelvinTemperature other)
         {
-            return Value == other.Value && Unit.Equals(other.Unit);
+            return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
         }
 
         public bool Equals(IUnitedValue<KelvinTemperatureUnit> other)
         {
             if (other is null)
                 return false;
-            return Value == other.Value && Unit.Equals(other.Unit);
+            return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
         }
 
         public override bool Equals(object other)
@@ -68,7 +70,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
+                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
             }
         }
 
@@ -107,9 +109,9 @@ namespace iSukces.UnitedValues
         public static DeltaKelvinTemperature operator -(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
         {
             // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-            if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+            if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
                 return -right;
-            if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+            if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
             return new DeltaKelvinTemperature(left.Value - right.Value, left.Unit);
@@ -160,9 +162,9 @@ namespace iSukces.UnitedValues
         public static DeltaKelvinTemperature operator +(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
         {
             // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-            if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+            if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
                 return right;
-            if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+            if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
             return new DeltaKelvinTemperature(left.Value + right.Value, left.Unit);

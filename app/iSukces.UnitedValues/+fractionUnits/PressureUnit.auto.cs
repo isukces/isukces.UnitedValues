@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial struct PressureUnit : IFractionalUnit<ForceUnit, AreaUnit>, IEquatable<PressureUnit>
+    public partial class PressureUnit : IFractionalUnit<ForceUnit, AreaUnit>, IEquatable<PressureUnit>
     {
         /// <summary>
         /// creates instance of PressureUnit

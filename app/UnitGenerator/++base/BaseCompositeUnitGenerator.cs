@@ -19,7 +19,7 @@ namespace UnitGenerator
         {
             _info       = GetInfo();
             _info2      = GetInfo2();
-            Target.Kind = CsNamespaceMemberKind.Struct;
+            Target.Kind = CsNamespaceMemberKind.Class;
 
             foreach (var i in GetImplementedInterfaces())
                 Target.ImplementedInterfaces.Add(i);

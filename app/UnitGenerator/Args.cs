@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using iSukces.Code;
+using iSukces.Code.Interfaces;
 
 namespace UnitGenerator
 {
@@ -23,6 +25,17 @@ namespace UnitGenerator
         public string Create<T>()
         {
             return Create(typeof(T).Name);
+        }
+        
+        public string Create<T>(ITypeNameResolver resolver)
+        {
+            return Create(resolver.GetTypeName<T>());
+        }
+        
+        public string Throw<T>(ITypeNameResolver resolver)
+        {
+            var exc = Create(resolver.GetTypeName<T>());
+            return $"throw {exc};";
         }
         
         public string CallMethod(string methodName)

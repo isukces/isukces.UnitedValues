@@ -7,20 +7,25 @@ using System.Runtime.CompilerServices;
 namespace iSukces.UnitedValues
 {
     [Serializable]
-    public partial struct KelvinTemperatureUnit : IUnit, IEquatable<KelvinTemperatureUnit>
+    public partial class KelvinTemperatureUnit : IUnit, IEquatable<KelvinTemperatureUnit>
     {
         /// <summary>
         /// creates instance of KelvinTemperatureUnit
         /// </summary>
         /// <param name="unitName">name of unit</param>
-        public KelvinTemperatureUnit(string unitName)
+        public KelvinTemperatureUnit([JetBrains.Annotations.NotNull] string unitName)
         {
+            unitName = unitName?.Trim();
+            if (unitName is null)
+                throw new NullReferenceException(nameof(unitName));
+            if (string.IsNullOrWhiteSpace(unitName))
+                throw new ArgumentException(nameof(unitName));
             UnitName = unitName.TrimToNull();
         }
 
         public bool Equals(KelvinTemperatureUnit other)
         {
-            return String.Equals(UnitName, other.UnitName);
+            return String.Equals(UnitName, other?.UnitName);
         }
 
         public override bool Equals(object obj)

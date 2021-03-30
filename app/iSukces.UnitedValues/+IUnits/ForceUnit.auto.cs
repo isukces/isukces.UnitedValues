@@ -7,20 +7,25 @@ using System.Runtime.CompilerServices;
 namespace iSukces.UnitedValues
 {
     [Serializable]
-    public partial struct ForceUnit : IUnit, IEquatable<ForceUnit>
+    public partial class ForceUnit : IUnit, IEquatable<ForceUnit>
     {
         /// <summary>
         /// creates instance of ForceUnit
         /// </summary>
         /// <param name="unitName">name of unit</param>
-        public ForceUnit(string unitName)
+        public ForceUnit([JetBrains.Annotations.NotNull] string unitName)
         {
+            unitName = unitName?.Trim();
+            if (unitName is null)
+                throw new NullReferenceException(nameof(unitName));
+            if (string.IsNullOrWhiteSpace(unitName))
+                throw new ArgumentException(nameof(unitName));
             UnitName = unitName.TrimToNull();
         }
 
         public bool Equals(ForceUnit other)
         {
-            return String.Equals(UnitName, other.UnitName);
+            return String.Equals(UnitName, other?.UnitName);
         }
 
         public override bool Equals(object obj)

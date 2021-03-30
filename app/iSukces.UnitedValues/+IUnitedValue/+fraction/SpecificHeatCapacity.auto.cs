@@ -41,14 +41,14 @@ namespace iSukces.UnitedValues
 
         public bool Equals(SpecificHeatCapacity other)
         {
-            return Value == other.Value && Unit.Equals(other.Unit);
+            return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
         }
 
         public bool Equals(IUnitedValue<SpecificHeatCapacityUnit> other)
         {
             if (other is null)
                 return false;
-            return Value == other.Value && Unit.Equals(other.Unit);
+            return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
         }
 
         public override bool Equals(object other)
@@ -65,7 +65,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
+                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
             }
         }
 

@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial struct MassDetlaKelvinUnit : IProductUnit<MassUnit, KelvinTemperatureUnit>, IEquatable<MassDetlaKelvinUnit>
+    public partial class MassDetlaKelvinUnit : IProductUnit<MassUnit, KelvinTemperatureUnit>, IEquatable<MassDetlaKelvinUnit>
     {
         /// <summary>
         /// creates instance of MassDetlaKelvinUnit

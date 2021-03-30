@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
+using JetBrains.Annotations;
 
 namespace UnitGenerator
 {
@@ -49,12 +51,63 @@ namespace UnitGenerator
 
         protected void Add_Constructor(params ConstructorParameterInfo[] items)
         {
-            var code = new CsCodeWriter();
-            var m    = Target.AddConstructor("creates instance of " + Target.Name);
+            var target = Target;
+            var code   = new CsCodeWriter();
+            var m      = target.AddConstructor("creates instance of " + target.Name);
             foreach (var i in items)
             {
-                code.WriteLine(string.Format("{0} = {1};", i.PropertyName, i.Expression));
-                m.AddParam(i.PropertyName.FirstLower(), i.PropertyType, i.Description);
+                var p = m.AddParam(i.PropertyName.FirstLower(), i.PropertyType, i.Description);
+
+                var flags = i.CheckNotNull;
+                if ((flags & Flags1.TrimValue) != 0)
+                {
+                    code.WriteLine("{0} = {0}?.Trim();", i.ArgName);
+                    flags &= ~Flags1.TrimValue;
+
+                    if ((flags & Flags1.NotWhitespace) != 0)
+                    {
+                        flags &= ~Flags1.NotWhitespace;
+                        flags |= ~Flags1.NotEmpty;
+                    }
+                }
+
+                if ((flags & Flags1.NotNull) != 0)
+                {
+                    flags &= ~Flags1.NotNull;
+                    p.Attributes.Add(CsAttribute.Make<NotNullAttribute>(target));
+                    var throwCode = new Args($"nameof({i.ArgName})")
+                        .Throw<NullReferenceException>(target);
+                    code.SingleLineIf($"{i.ArgName} is null", throwCode);
+                }
+                
+                if ((flags & Flags1.NotWhitespace) != 0)
+                {
+                    flags &= ~(Flags1.NotEmpty | Flags1.NotWhitespace);
+                    // var m = nameof(string.IsNullOrWhiteSpace);
+                    var throwCode = new Args($"nameof({i.ArgName})")
+                        .Throw<ArgumentException>(target);
+                    code.SingleLineIf($"string.IsNullOrWhiteSpace({i.ArgName})", throwCode);
+                    
+                    flags &= ~(Flags1.NotNullOrWhitespace | Flags1.NotNullOrEmpty);
+                }
+                
+
+                if ((flags & Flags1.NotEmpty) != 0)
+                {
+                    flags &= ~Flags1.NotEmpty;
+                    //var m = nameof(string.IsNullOrEmpty);
+                    var throwCode = new Args($"nameof({i.ArgName})")
+                        .Throw<ArgumentException>(target);
+                    code.SingleLineIf($"string.IsNullOrEmpty({i.ArgName})", throwCode);
+                    
+                    flags &= ~(Flags1.NotNullOrWhitespace | Flags1.NotNullOrEmpty);
+                     
+                }
+                
+                
+                
+
+                code.WriteAssign(i.PropertyName, i.Expression);
             }
 
             m.WithBody(code);

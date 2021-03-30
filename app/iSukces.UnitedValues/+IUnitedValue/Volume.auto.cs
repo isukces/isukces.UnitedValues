@@ -15,9 +15,11 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public Volume(decimal value, VolumeUnit unit)
+        public Volume(decimal value, [JetBrains.Annotations.NotNull] VolumeUnit unit)
         {
             Value = value;
+            if (unit is null)
+                throw new NullReferenceException(nameof(unit));
             Unit = unit;
         }
 
@@ -33,14 +35,14 @@ namespace iSukces.UnitedValues
 
         public bool Equals(Volume other)
         {
-            return Value == other.Value && Unit.Equals(other.Unit);
+            return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
         }
 
         public bool Equals(IUnitedValue<VolumeUnit> other)
         {
             if (other is null)
                 return false;
-            return Value == other.Value && Unit.Equals(other.Unit);
+            return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
         }
 
         public override bool Equals(object other)
@@ -63,7 +65,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
+                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
             }
         }
 
@@ -102,9 +104,9 @@ namespace iSukces.UnitedValues
         public static Volume operator -(Volume left, Volume right)
         {
             // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-            if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+            if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
                 return -right;
-            if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+            if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
             return new Volume(left.Value - right.Value, left.Unit);
@@ -150,9 +152,9 @@ namespace iSukces.UnitedValues
         public static Volume operator +(Volume left, Volume right)
         {
             // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-            if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit.UnitName))
+            if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
                 return right;
-            if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit.UnitName))
+            if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
                 return left;
             right = right.ConvertTo(left.Unit);
             return new Volume(left.Value + right.Value, left.Unit);

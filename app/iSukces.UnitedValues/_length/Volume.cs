@@ -39,9 +39,4 @@
             return ConvertTo(VolumeUnits.CubicMeter);
         }
     }
-
-    public partial struct VolumeUnit
-    {
-        public const string Cubic = "³";
-    }
 }

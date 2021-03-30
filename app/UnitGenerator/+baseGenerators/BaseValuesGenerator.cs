@@ -39,21 +39,22 @@ namespace UnitGenerator
 
         private void AddCommonValues_EqualsMethods(string unitTypeName)
         {
-            var compareCode =
-                $"{ValuePropName} == other.{ValuePropName} && {UnitPropName}.Equals(other.{UnitPropName})";
+            var compareCode = string.Format(
+                "{0} == other.{0} && !({1} is null) && {1}.Equals(other.{1})", 
+                ValuePropName, UnitPropName);
             Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
 
             var compareType = MakeGenericType<IUnitedValue<LengthUnit>>(Target, unitTypeName);
             Add_EqualsUniversal(compareType, true, OverridingType.None, compareCode);
 
             Add_EqualsUniversal("object", false, OverridingType.Override,
-                "other is " + compareType + " unitedValue ? Equals(unitedValue) : false");
+                $"other is {compareType} unitedValue ? Equals(unitedValue) : false");
         }
 
 
         private void AddCommonValues_GetHashCode()
         {
-            var expression = $"({ValuePropName}.GetHashCode() * 397) ^ {UnitPropName}.GetHashCode()";
+            var expression = $"({ValuePropName}.GetHashCode() * 397) ^ {UnitPropName}?.GetHashCode() ?? 0";
             Add_GetHashCode(expression);
         }
 

@@ -16,7 +16,7 @@ namespace UnitGenerator
 
         protected override void GenerateOne()
         {
-            Target.Kind = CsNamespaceMemberKind.Struct;
+            Target.Kind = CsNamespaceMemberKind.Class;
             // cl.Description = $"Reprezentuje {unit.Description} w [{unit.Unit}]";
             Add_Constructor();
             Add_ImplicitOperator();
@@ -78,7 +78,7 @@ namespace UnitGenerator
         private void Add_Equals()
         {
             var m = Target.AddMethod("Equals", "bool")
-                .WithBodyFromExpression($"String.Equals({PropertyName}, other.{PropertyName})");
+                .WithBodyFromExpression($"String.Equals({PropertyName}, other?.{PropertyName})");
             m.AddParam("other", Cfg);
         }
 
@@ -141,7 +141,8 @@ namespace UnitGenerator
             expr += ".TrimToNull()";
             return new[]
             {
-                new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit")
+                new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit",
+                    Flags1.NormalizedString)
             };
         }
 

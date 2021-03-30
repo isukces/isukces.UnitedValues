@@ -7,20 +7,25 @@ using System.Runtime.CompilerServices;
 namespace iSukces.UnitedValues
 {
     [Serializable]
-    public partial struct SquareTimeUnit : IUnit, IEquatable<SquareTimeUnit>
+    public partial class SquareTimeUnit : IUnit, IEquatable<SquareTimeUnit>
     {
         /// <summary>
         /// creates instance of SquareTimeUnit
         /// </summary>
         /// <param name="unitName">name of unit</param>
-        public SquareTimeUnit(string unitName)
+        public SquareTimeUnit([JetBrains.Annotations.NotNull] string unitName)
         {
+            unitName = unitName?.Trim();
+            if (unitName is null)
+                throw new NullReferenceException(nameof(unitName));
+            if (string.IsNullOrWhiteSpace(unitName))
+                throw new ArgumentException(nameof(unitName));
             UnitName = unitName.TrimToNull();
         }
 
         public bool Equals(SquareTimeUnit other)
         {
-            return String.Equals(UnitName, other.UnitName);
+            return String.Equals(UnitName, other?.UnitName);
         }
 
         public override bool Equals(object obj)

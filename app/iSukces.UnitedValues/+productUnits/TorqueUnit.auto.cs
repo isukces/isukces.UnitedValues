@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial struct TorqueUnit : IProductUnit<ForceUnit, LengthUnit>, IEquatable<TorqueUnit>
+    public partial class TorqueUnit : IProductUnit<ForceUnit, LengthUnit>, IEquatable<TorqueUnit>
     {
         /// <summary>
         /// creates instance of TorqueUnit

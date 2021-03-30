@@ -204,5 +204,22 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal(expected, bb.Value);
             Assert.Equal("kg", bb.Unit.UnitName);
         }
+
+        public void T10_Should_calculate_pipe_diameter()
+        {
+            var tz = CelsiusTemperature.FromDegree(130);
+            var tp = CelsiusTemperature.FromDegree(95);
+
+            // J/kh*K
+            var cpUnit = new SpecificHeatCapacityUnit(
+                EnergyUnits.Joule,
+                new MassDetlaKelvinUnit(
+                    MassUnits.Kg,
+                    KelvinTemperatureUnits.Degree)
+            );
+            var cp = new SpecificHeatCapacity(4211, cpUnit);
+            
+            // var q = Power 
+        }
     }
 }

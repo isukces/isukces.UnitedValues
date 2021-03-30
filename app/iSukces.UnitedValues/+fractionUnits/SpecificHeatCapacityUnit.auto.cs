@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial struct SpecificHeatCapacityUnit : IFractionalUnit<EnergyUnit, MassDetlaKelvinUnit>, IEquatable<SpecificHeatCapacityUnit>
+    public partial class SpecificHeatCapacityUnit : IFractionalUnit<EnergyUnit, MassDetlaKelvinUnit>, IEquatable<SpecificHeatCapacityUnit>
     {
         /// <summary>
         /// creates instance of SpecificHeatCapacityUnit
