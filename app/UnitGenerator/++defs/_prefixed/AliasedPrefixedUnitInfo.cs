@@ -1,8 +1,8 @@
 namespace UnitGenerator
 {
-    public class DerivedUnitDefinition : DerivedUnitItem, IDerivedUnitDefinition
+    public class AliasedPrefixedUnitInfo : PrefixedUnitInfo, IRelatedUnitDefinition
     {
-        public DerivedUnitDefinition(
+        public AliasedPrefixedUnitInfo(
             string fieldName,
             string unitShortCode,
             string scaleFactor,

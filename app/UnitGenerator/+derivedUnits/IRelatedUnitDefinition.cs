@@ -1,6 +1,6 @@
 namespace UnitGenerator
 {
-    public interface IDerivedUnitDefinition
+    public interface IRelatedUnitDefinition
     {
         string FieldName           { get; }
         string UnitShortCode       { get; }

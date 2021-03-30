@@ -3,7 +3,7 @@ using iSukces.UnitedValues;
 namespace UnitGenerator
 {
     /// <summary>
-    ///     After adding new item update also units in <see cref="DerivedUnitGeneratorDefs.GetAllItems">GetAllItems</see>
+    ///     After adding new item update also units in <see cref="RelatedUnitGeneratorDefs.GetAllItems">GetAllItems</see>
     /// </summary>
     public class BasicUnitDefs
     {

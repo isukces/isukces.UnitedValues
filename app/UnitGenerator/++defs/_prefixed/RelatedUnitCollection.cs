@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace UnitGenerator
 {
-    public class DerivedUnitCollection
+    public class RelatedUnitCollection
     {
-        public DerivedUnitCollection(IReadOnlyList<DerivedUnit> items)
+        public RelatedUnitCollection(IReadOnlyList<RelatedUnit> items)
         {
             Items       = items;
             _dictionary = items.ToDictionary(a => a.Name, a => a);
         }
 
 
-        public DerivedUnit ByName(string name)
+        public RelatedUnit ByName(string name)
         {
             if (_dictionary.TryGetValue(name, out var x))
                 return x;
@@ -25,7 +25,7 @@ namespace UnitGenerator
             var myInfo = FindByUnitName(unitName);
             if (myInfo is null)
                 return null;
-            var other  = new Dictionary<int, DerivedUnit>();
+            var other  = new Dictionary<int, RelatedUnit>();
 
             var powerOneUnit = myInfo.Power == 1
                 ? new TypesGroup(myInfo.Name)
@@ -56,9 +56,9 @@ namespace UnitGenerator
             return new Result(myInfo, other);
         }
 
-        private DerivedUnit FindByUnitName(string unitName)
+        private RelatedUnit FindByUnitName(string unitName)
         {
-            DerivedUnit myInfo = null;
+            RelatedUnit myInfo = null;
 
             foreach (var i in Items)
             {
@@ -74,20 +74,20 @@ namespace UnitGenerator
             return myInfo;
         }
 
-        public IReadOnlyList<DerivedUnit> Items { get; }
-        private readonly Dictionary<string, DerivedUnit> _dictionary;
+        public IReadOnlyList<RelatedUnit> Items { get; }
+        private readonly Dictionary<string, RelatedUnit> _dictionary;
 
 
         public class Result
         {
-            public Result(DerivedUnit myInfo, Dictionary<int, DerivedUnit> other)
+            public Result(RelatedUnit myInfo, Dictionary<int, RelatedUnit> other)
             {
                 MyInfo = myInfo;
                 Other  = other;
             }
 
-            public DerivedUnit                  MyInfo { get; }
-            public Dictionary<int, DerivedUnit> Other  { get; }
+            public RelatedUnit                  MyInfo { get; }
+            public Dictionary<int, RelatedUnit> Other  { get; }
         }
     }
 }

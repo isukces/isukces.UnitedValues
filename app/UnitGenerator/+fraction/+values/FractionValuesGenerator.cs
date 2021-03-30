@@ -49,7 +49,7 @@ namespace UnitGenerator
             if (commonUnits.Length == 0) return;
             foreach (var i in commonUnits)
             {
-                var u = new Dy(i.TargetPropertyName,
+                var u = new RelatedUnitInfo(i.TargetPropertyName,
                     i.GetUnitName(),
                     i.TargetPropertyName);
                 BasicUnitValuesGenerator.Add_FromMethods(

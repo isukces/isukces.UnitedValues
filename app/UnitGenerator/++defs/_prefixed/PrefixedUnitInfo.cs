@@ -1,6 +1,6 @@
 namespace UnitGenerator
 {
-    public class DerivedUnitItem : Dy
+    public class PrefixedUnitInfo : RelatedUnitInfo
     {
         /// <summary>
         /// </summary>
@@ -8,7 +8,7 @@ namespace UnitGenerator
         /// <param name="unitShortCode"></param>
         /// <param name="scaleFactor"></param>
         /// <param name="fromMethodNameSufix"></param>
-        public DerivedUnitItem(string fieldName, string unitShortCode, decimal scaleFactor, string fromMethodNameSufix = null)
+        public PrefixedUnitInfo(string fieldName, string unitShortCode, decimal scaleFactor, string fromMethodNameSufix = null)
             : base(fieldName, unitShortCode, fromMethodNameSufix)
         {
             ScaleFactor = scaleFactor.CsEncode();
@@ -20,7 +20,7 @@ namespace UnitGenerator
         /// <param name="unitShortCode"></param>
         /// <param name="scaleFactor"></param>
         /// <param name="fromMethodNameSufix"></param>
-        public DerivedUnitItem(string fieldName, string unitShortCode, string scaleFactor, string fromMethodNameSufix = null)
+        public PrefixedUnitInfo(string fieldName, string unitShortCode, string scaleFactor, string fromMethodNameSufix = null)
             : base(fieldName, unitShortCode, fromMethodNameSufix)
         {
             ScaleFactor = scaleFactor;

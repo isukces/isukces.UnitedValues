@@ -13,7 +13,7 @@ namespace UnitGenerator
         }
 
         public static void Add_FromMethods(string valueTypeName, TypesGroup types, CsClass target,
-            IDerivedUnitDefinition u)
+            IRelatedUnitDefinition u)
         {
             foreach (var inputType in "decimal,double,int,long".Split(','))
             {
@@ -207,7 +207,7 @@ namespace UnitGenerator
 
         private void Add_FromMethods()
         {
-            var tmp = DerivedUnitGeneratorDefs.All;
+            var tmp = RelatedUnitGeneratorDefs.All;
             var d   = tmp.ByName(Cfg.UnitTypes.Value);
 
             if (d is null) return;

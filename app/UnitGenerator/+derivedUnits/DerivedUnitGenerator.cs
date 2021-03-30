@@ -6,7 +6,7 @@ using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
-    public class DerivedUnitGenerator : BaseGenerator<DerivedUnit>
+    public class DerivedUnitGenerator : BaseGenerator<RelatedUnit>
     {
         public DerivedUnitGenerator(string output, string nameSpace)
             : base(output, nameSpace)
@@ -27,7 +27,7 @@ namespace UnitGenerator
             m.AddParam<UnitExchangeFactors>("factors", Target);
         }
 
-        protected override string GetTypename(DerivedUnit cfg)
+        protected override string GetTypename(RelatedUnit cfg)
         {
             return cfg.Name + "Units";
         }

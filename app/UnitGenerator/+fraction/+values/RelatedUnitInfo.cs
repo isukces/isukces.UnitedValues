@@ -2,9 +2,9 @@ using iSukces.Code;
 
 namespace UnitGenerator
 {
-    public class Dy : IDerivedUnitDefinition
+    public class RelatedUnitInfo : IRelatedUnitDefinition
     {
-        public Dy(string fieldName, string unitShortCode, string fromMethodNameSufix)
+        public RelatedUnitInfo(string fieldName, string unitShortCode, string fromMethodNameSufix)
         {
             unitShortCode       = unitShortCode?.Trim();
             fieldName           = fieldName.CoalesceNullOrWhiteSpace(unitShortCode);
