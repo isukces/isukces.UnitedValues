@@ -9,6 +9,12 @@ namespace iSukces.UnitedValues
     {
         public void Add(IUnit unit, int power)
         {
+            if (unit is IDerivedDecomposableUnit d)
+            {
+                var gg = d.GetBasicUnit();
+                Add(gg.Unit, gg.Power * power);
+                return;
+            }
             var key = new Key(unit.GetType(), unit.UnitName);
             for (var index = 0; index < _sink.Count; index++)
             {
