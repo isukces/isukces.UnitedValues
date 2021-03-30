@@ -37,7 +37,7 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypes.Unit, null, "unit")
+                    Cfg.UnitTypes.Unit.TypeName, null, "unit")
             };
         }
 
@@ -49,7 +49,7 @@ namespace UnitGenerator
 
         protected override string GetTypename(ProductUnit cfg)
         {
-            return Cfg.UnitTypes.Value;
+            return Cfg.UnitTypes.Value.ValueTypeName;
         }
 
         protected override void PrepareFile(CsFile file)

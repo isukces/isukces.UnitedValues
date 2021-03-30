@@ -23,15 +23,16 @@ namespace UnitGenerator
             }
             else
             {
-                var tt = Cfg.UnitTypes;
-                Target.BaseClass = new Args(tt.Value, tt.Unit).MakeGenericType("AbstractUnitJsonConverter");
+                var tt         = Cfg.UnitTypes;
+                var valueTypeName = tt.Value.ValueTypeName;
+                Target.BaseClass = new Args(valueTypeName, tt.Unit.TypeName).MakeGenericType("AbstractUnitJsonConverter");
                 {
                     var cw = new CsCodeWriter();
                     cw.WriteLine("unit = unit?.Trim();");
                     cw.WriteLine(
                         $"return new {tt.Value}(value, string.IsNullOrEmpty(unit) ? {tt.Value}.BaseUnit : new {tt.Unit}(unit));");
 
-                    var m = Target.AddMethod("Make", tt.Value)
+                    var m = Target.AddMethod("Make", valueTypeName)
                         .WithOverride()
                         .WithVisibility(Visibilities.Protected)
                         .WithBody(cw);
@@ -39,7 +40,7 @@ namespace UnitGenerator
                     m.AddParam("unit", "string");
                 }
                 {
-                    var m = Target.AddMethod("Parse", tt.Value)
+                    var m = Target.AddMethod("Parse", valueTypeName)
                         .WithOverride()
                         .WithVisibility(Visibilities.Protected)
                         .WithBodyFromExpression(tt.Value + ".Parse(txt)");

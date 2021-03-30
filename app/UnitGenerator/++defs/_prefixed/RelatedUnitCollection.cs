@@ -13,14 +13,14 @@ namespace UnitGenerator
         }
 
 
-        public RelatedUnit ByName(string name)
+        public RelatedUnit ByName(XValueTypeName name)
         {
             if (_dictionary.TryGetValue(name, out var x))
                 return x;
             return null;
         }
 
-        public Result GetPowers(string unitName)
+        public Result GetPowers(XUnitTypeName unitName)
         {
             var myInfo = FindByUnitName(unitName);
             if (myInfo is null)
@@ -56,7 +56,7 @@ namespace UnitGenerator
             return new Result(myInfo, other);
         }
 
-        private RelatedUnit FindByUnitName(string unitName)
+        private RelatedUnit FindByUnitName(XUnitTypeName unitName)
         {
             RelatedUnit myInfo = null;
 
@@ -75,7 +75,7 @@ namespace UnitGenerator
         }
 
         public IReadOnlyList<RelatedUnit> Items { get; }
-        private readonly Dictionary<string, RelatedUnit> _dictionary;
+        private readonly Dictionary<XValueTypeName, RelatedUnit> _dictionary;
 
 
         public class Result

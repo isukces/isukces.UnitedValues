@@ -20,7 +20,7 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypes.Unit, null, "unit")
+                    Cfg.UnitTypes.Unit.GetTypename(), null, "unit")
             };
         }
 
@@ -39,7 +39,7 @@ namespace UnitGenerator
 
         protected override string GetTypename(FractionUnit cfg)
         {
-            return Cfg.UnitTypes.Value;
+            return Cfg.UnitTypes.Value.ValueTypeName;
         }
 
         protected override void Add_FromMethods()

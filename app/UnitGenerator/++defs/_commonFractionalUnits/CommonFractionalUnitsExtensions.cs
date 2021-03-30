@@ -22,11 +22,11 @@ namespace UnitGenerator
             return unitName;
         }
 
-        private static string GetUnitname(string typeName, string fieldName)
+        private static string GetUnitname(XUnitContainerTypeName typeName, string fieldName)
         {
             try
             {
-                var type  = typeof(LengthUnit).Assembly.GetTypes().Single(q => q.Name == typeName);
+                var type  = typeof(LengthUnit).Assembly.GetTypes().Single(q => q.Name == typeName.TypeName);
                 var field = type.GetField(fieldName);
                 var value = field.GetValue(null);
                 return ((IUnitNameContainer)value).UnitName;

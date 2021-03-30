@@ -38,7 +38,7 @@ namespace UnitGenerator
             get
             {
                 // .Is<LinearDensity, Length, PlanarDensity>("/")
-                var a = new Args(Left.Value, Right.Value, Result.Value).MakeGenericType(".Is");
+                var a = new Args(Left.Value.ValueTypeName, Right.Value.ValueTypeName, Result.Value.ValueTypeName).MakeGenericType(".Is");
                 var b = new Args(Oper.CsEncode()).CallMethod(a);
                 return b;
             }

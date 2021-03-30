@@ -11,18 +11,20 @@ namespace UnitGenerator
         /// <param name="value">Name of type that contains value and unit i.e. Length</param>
         /// <param name="unit">Name of type that represents unit i.e. LengthUnit</param>
         /// <param name="container">Name of static type that contains fields with known unit names i.e. LengthUnits</param>
-        public TypesGroup(string value, string unit = null, string container = null)
+        public TypesGroup(XValueTypeName value, XUnitTypeName unit = null, XUnitContainerTypeName container = null)
         {
-            value = value?.TrimToNull();
             Value = value ?? throw new ArgumentException(nameof(value));
 
-            var isDeltaValue = Value.StartsWith("Delta", StringComparison.Ordinal);
-            ValueKind = isDeltaValue ? Kind.Delta : Kind.Normal;
-            var valueNoDelta = isDeltaValue ? Value.Substring(5) : Value;
-
-            Unit      = unit?.TrimToNull() ?? valueNoDelta + "Unit";
-            Container = container?.TrimToNull() ?? Unit + "s";
+            ValueKind = Value.Kind;
+            Unit      = unit ?? value.ToUnitTypeName();
+            Container = container ?? Unit.ToUnitContainerTypeName();
         }
+
+        public TypesGroup(string value)
+            : this(new XValueTypeName(value))
+        {
+        }
+
 
         public static bool operator ==(TypesGroup left, TypesGroup right)
         {
@@ -63,7 +65,7 @@ namespace UnitGenerator
 
         public bool IsValue<T>()
         {
-            return typeof(T).Name == Value;
+            return typeof(T).Name == Value.ValueTypeName;
         }
 
         public override string ToString()
@@ -72,28 +74,22 @@ namespace UnitGenerator
                 $"ValueTypeName={Value}, UnitTypeName={Unit}, UnitContainerTypeName={Container}";
         }
 
-        public Kind ValueKind { get; }
+        public UnitNameKind ValueKind { get; }
 
 
         /// <summary>
         ///     Name of type that contains value and unit i.e. Length
         /// </summary>
-        public string Value { get; }
+        public XValueTypeName Value { get; }
 
         /// <summary>
         ///     Name of type that represents unit i.e. LengthUnit
         /// </summary>
-        public string Unit { get; }
+        public XUnitTypeName Unit { get; }
 
         /// <summary>
         ///     Name of static type that contains fields with known unit names i.e. LengthUnits
         /// </summary>
-        public string Container { get; }
-    }
-
-    public enum Kind
-    {
-        Normal,
-        Delta
+        public XUnitContainerTypeName Container { get; }
     }
 }

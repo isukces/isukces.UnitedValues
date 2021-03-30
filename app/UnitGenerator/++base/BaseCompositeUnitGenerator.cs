@@ -24,14 +24,14 @@ namespace UnitGenerator
             foreach (var i in GetImplementedInterfaces())
                 Target.ImplementedInterfaces.Add(i);
 
-            var name = new Args(Cfg.UnitTypes.Unit).MakeGenericType("IEquatable");
+            var name = new Args(Cfg.UnitTypes.Unit.TypeName).MakeGenericType("IEquatable");
             Target.ImplementedInterfaces.Add(name);
 
             var pi = new[]
             {
-                new ConstructorParameterInfo(_info.FirstPropertyName, _info.First.Unit, null,
+                new ConstructorParameterInfo(_info.FirstPropertyName, _info.First.Unit.TypeName, null,
                     _info.FirstPropertyName.Decamelize().ToLower()),
-                new ConstructorParameterInfo(_info.SecondPropertyName, _info.Second.Unit, null,
+                new ConstructorParameterInfo(_info.SecondPropertyName, _info.Second.Unit.TypeName, null,
                     _info.SecondPropertyName.Decamelize().ToLower())
             };
             Add_Constructor(pi);
@@ -101,9 +101,9 @@ namespace UnitGenerator
             var cw = Ext.Create(GetType());
             var e  = new Args(_info.FirstPropertyName, "newUnit").Create(Target.Name);
             cw.WriteLine($"return {e};");
-            Target.AddMethod("With" + _info.SecondPropertyName, Cfg.UnitTypes.Unit)
+            Target.AddMethod("With" + _info.SecondPropertyName, Cfg.UnitTypes.Unit.TypeName)
                 .WithBody(cw)
-                .AddParam("newUnit", _info.Second.Unit);
+                .AddParam("newUnit", _info.Second.Unit.TypeName);
         }
 
         private void Add_WithSecond()
@@ -111,9 +111,9 @@ namespace UnitGenerator
             var cw = Ext.Create(GetType());
             var e  = new Args("newUnit", _info.SecondPropertyName).Create(Target.Name);
             cw.WriteLine($"return {e};");
-            Target.AddMethod($"With{_info.FirstPropertyName}", Cfg.UnitTypes.Unit)
+            Target.AddMethod($"With{_info.FirstPropertyName}", Cfg.UnitTypes.Unit.TypeName)
                 .WithBody(cw)
-                .AddParam("newUnit", _info.First.Unit);
+                .AddParam("newUnit", _info.First.Unit.TypeName);
         }
 
         private CompositeUnitGeneratorInfo _info;

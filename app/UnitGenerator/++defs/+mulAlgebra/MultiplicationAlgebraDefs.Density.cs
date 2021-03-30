@@ -23,8 +23,10 @@ namespace UnitGenerator
                 {
                     var cc = args.Result;
                     cc.SetComment();
-                    Scenario_Mul_Basic_Fract<PlanarDensityUnit, LinearDensityUnit>(cc, nameof(Area),
-                        nameof(Length));
+                    Scenario_Mul_Basic_Fract<PlanarDensityUnit, LinearDensityUnit>(
+                        cc, 
+                        nameof(Area),
+                        new XValueTypeName(nameof(Length)));
                     args.Handled = true;
                     return;
                 }
@@ -80,7 +82,9 @@ namespace UnitGenerator
                     var input = args.Result;
                     input.SetComment();
                     Scenario_Mul_Basic_Fract<DensityUnit, LinearDensityUnit>(
-                        input, nameof(Volume), nameof(Length));
+                        input,
+                        nameof(Volume), 
+                        new XValueTypeName(nameof(Length)));
                     args.Handled = true;
                     return;
                 }
@@ -111,7 +115,9 @@ namespace UnitGenerator
                     var input = args.Result;
                     input.SetComment();
                     Scenario_Mul_Basic_Fract<DensityUnit, PlanarDensityUnit>(
-                        input, nameof(Volume), nameof(Area));
+                        input, 
+                        nameof(Volume), 
+                        new XValueTypeName(nameof(Area)));
                     args.Handled = true;
                     return;
                 }

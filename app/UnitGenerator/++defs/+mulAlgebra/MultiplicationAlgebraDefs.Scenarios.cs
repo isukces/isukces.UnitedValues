@@ -8,7 +8,7 @@ namespace UnitGenerator
         private static void Scenario_Mul_Basic_Fract<THigh, TResult>(
             OperatorCodeBuilderInput input,
             string rightDenominator,
-            [CanBeNull] string resultDenominator)
+            [CanBeNull] XValueTypeName resultDenominator)
         {
             var v1 = resultDenominator?.FirstLower() + "Unit";
             var v2 = rightDenominator.FirstLower() + "Unit";

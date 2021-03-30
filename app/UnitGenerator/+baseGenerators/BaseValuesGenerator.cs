@@ -2,6 +2,7 @@ using System;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
+using UnitGenerator.Local;
 
 namespace UnitGenerator
 {
@@ -19,11 +20,15 @@ namespace UnitGenerator
             cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({names.Value}));");
             cs.WriteLine(
                 $"return new {names.Value}(parseResult.Value, new {names.Unit}(parseResult.UnitName));");
-            Target.AddMethod("Round", names.Value)
+            Target.AddMethod("Round", names.Value.ValueTypeName)
                 .WithBodyFromExpression("new " + names.Value + "(Math.Round(Value, decimalPlaces), Unit)")
                 .AddParam<int>("decimalPlaces", Target);
         }
-        
+
+        protected void AddCommonValues_PropertiesAndConstructor(ITypeNameProvider unitTypeName)
+        {
+            AddCommonValues_PropertiesAndConstructor(unitTypeName.GetTypename());
+        }
         protected void AddCommonValues_PropertiesAndConstructor(string unitTypeName)
         {
             Add_Properties(GetConstructorProperties());

@@ -10,9 +10,13 @@ namespace UnitGenerator
     /// </summary>
     public sealed class RelatedUnit
     {
-        public RelatedUnit(string name)
+        public RelatedUnit(XValueTypeName name)
         {
             Name = name;
+        }
+        public RelatedUnit(string name)
+        {
+            Name = new XValueTypeName(name);
         }
 
 
@@ -73,7 +77,7 @@ namespace UnitGenerator
                 new PrefixedUnitInfo("NauticalMile", "nm", 1852m, "NauticalMiles")
             };
 
-            return WithPowerDerivedUnits(power, g, "Length,Area,Volume".Split(','));
+            return WithPowerDerivedUnits(power, g, XValueTypeName.FromSplit(',', "Length,Area,Volume"));
         }
 
         public RelatedUnit WithPrefixedUnit(string unitShortName, string fieldName,
@@ -120,10 +124,11 @@ namespace UnitGenerator
                 new PrefixedUnitInfo("Hour", "h", 3600, "Hours"),
             };
 
-            return WithPowerDerivedUnits(power, g, "Time,SquareTime".Split(','));
+            var values = XValueTypeName.FromSplit(',', "Time,SquareTime");
+            return WithPowerDerivedUnits(power, g, values);
         }
 
-        private RelatedUnit WithPowerDerivedUnits(int power, PrefixedUnitInfo[] items, string[] values)
+        private RelatedUnit WithPowerDerivedUnits(int power, PrefixedUnitInfo[] items, XValueTypeName[] values)
         {
             Power = power;
             if (power != 1)
@@ -159,7 +164,7 @@ namespace UnitGenerator
 
         public int Power { get; set; } = 1;
 
-        public string Name { get; }
+        public XValueTypeName Name { get; }
 
         public List<AliasedPrefixedUnitInfo> Units           { get; } = new List<AliasedPrefixedUnitInfo>();
         public List<PrefixRelation>          PrefixRelations { get; } = new List<PrefixRelation>();

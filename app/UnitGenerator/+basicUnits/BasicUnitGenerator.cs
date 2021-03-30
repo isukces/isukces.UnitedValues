@@ -8,7 +8,7 @@ using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
-    public class BasicUnitGenerator : BaseGenerator<string>
+    public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
     {
         public BasicUnitGenerator(string output, string nameSpace)
             : base(output, nameSpace)
@@ -39,9 +39,9 @@ namespace UnitGenerator
         }
 
 
-        protected override string GetTypename(string cfg)
+        protected override string GetTypename(XUnitTypeName cfg)
         {
-            return cfg;
+            return cfg.GetTypename();
         }
 
         protected override void PrepareFile(CsFile file)
@@ -71,7 +71,7 @@ namespace UnitGenerator
                 var code = "GlobalUnitRegistry.Relations.GetOrThrow<" + Target.Name + ", " + targetUnit.Unit +
                            ">(this)";
                 cw.WriteReturn(code);
-                var m = Target.AddMethod("Get" + targetUnit.Unit, targetUnit.Unit).WithBody(cw);
+                var m = Target.AddMethod("Get" + targetUnit.Unit.TypeName, targetUnit.Unit.GetTypename()).WithBody(cw);
                 m.WithAggressiveInlining(Target);
             }
         }
@@ -129,7 +129,7 @@ namespace UnitGenerator
         {
             var m = Target.AddMethod("Equals", "bool")
                 .WithBodyFromExpression($"String.Equals({PropertyName}, other?.{PropertyName})");
-            m.AddParam("other", Cfg);
+            m.AddParam("other", Cfg.GetTypename());
         }
 
         private void Add_EqualsOverride()
@@ -176,7 +176,7 @@ namespace UnitGenerator
         {
             string GetExpressionPlus()
             {
-                switch (Cfg)
+                switch (Cfg.TypeName)
                 {
                     case "AreaUnit":
                         return @"?.Replace('2', '²')";

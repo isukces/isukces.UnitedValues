@@ -9,7 +9,7 @@ namespace UnitGenerator
             Items = items;
         }
 
-        public CommonFractionalUnit[] GetBy(string namesUnit)
+        public CommonFractionalUnit[] GetBy(XUnitTypeName namesUnit)
         {
             return Items.Where(a => a.Type.Unit == namesUnit).ToArray();
         }

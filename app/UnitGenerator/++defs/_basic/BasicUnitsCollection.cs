@@ -19,7 +19,7 @@ namespace UnitGenerator
         }
 
         [CanBeNull]
-        public BasicUnit GetDeltaByUnit(string unit)
+        public BasicUnit GetDeltaByUnit(XUnitTypeName unit)
         {
             if (!_dict.TryGetValue(unit, out var item))
                 return null;
@@ -28,8 +28,8 @@ namespace UnitGenerator
 
         public IReadOnlyList<BasicUnit> Items { get; }
 
-        public IReadOnlyList<string> DistinctNames { get; }
-        private readonly Dictionary<string, BasicUnitsCollectionItem> _dict;
+        public XUnitTypeName[] DistinctNames { get; }
+        private readonly Dictionary<XUnitTypeName, BasicUnitsCollectionItem> _dict;
     }
 
     internal class BasicUnitsCollectionItem
@@ -41,7 +41,7 @@ namespace UnitGenerator
 
         public BasicUnit GetDeltaByUnit()
         {
-            return Items.FirstOrDefault(a => a.UnitTypes.ValueKind == Kind.Delta);
+            return Items.FirstOrDefault(a => a.UnitTypes.ValueKind == UnitNameKind.Delta);
         }
 
         public BasicUnit[] Items { get; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using UnitGenerator.Local;
 
 namespace UnitGenerator
 {
@@ -22,7 +23,13 @@ namespace UnitGenerator
         private static void Main(string[] args)
         {
             var projectRoot = FindProjectRootDirectory();
-            var basePath    = Path.Combine(projectRoot.FullName, "app", "iSukces.UnitedValues");
+            var basePath   = Path.Combine(projectRoot.FullName, "app", "UnitGenerator");
+            KeysGeneratorRunner.Run(basePath);
+
+            
+            basePath = Path.Combine(projectRoot.FullName, "app", "iSukces.UnitedValues");
+            
+
             var nameSpace   = "iSukces.UnitedValues";
 
             BasicUnitValuesGeneratorRunner.Run(basePath, nameSpace);

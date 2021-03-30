@@ -26,7 +26,7 @@ namespace UnitGenerator
             );
             var tResult = p.Result.Value;
 
-            var expression = args.Create(tResult);
+            var expression = args.Create(tResult.ValueTypeName);
             cw.WriteLine($"return {expression};");
             return cw;
         }
@@ -78,7 +78,7 @@ namespace UnitGenerator
             var cw = Ext.Create<MultiplyAlgebraGenerator>();
             cw.WriteLine("// scenario C");
 
-            void Add(string srcUnit, string targetUnit, string variable)
+            void Add(XUnitTypeName srcUnit, XUnitTypeName targetUnit, string variable)
             {
                 var line1 =
                     $"var {variable} = GlobalUnitRegistry.Relations.GetOrThrow<{srcUnit}, {targetUnit}>({p.LeftMethodArgumentName}.Unit);";
@@ -188,8 +188,8 @@ namespace UnitGenerator
         private void CreateOperator(TypesGroup left, TypesGroup right, TypesGroup result, string op,
             bool areRelatedUnits, NullableArguments nullableArguments, OperatorHints operatorHints)
         {
-            var leftValue  = left.Value;
-            var rightValue = right.Value;
+            var leftValue  = left.Value.ValueTypeName;
+            var rightValue = right.Value.ValueTypeName;
             if ((nullableArguments & NullableArguments.Left) != 0)
                 leftValue += "?";
             if ((nullableArguments & NullableArguments.Right) != 0)
@@ -201,12 +201,12 @@ namespace UnitGenerator
 
             if (_done.TryGetValue(operatorGenerationKey, out var resultType))
             {
-                if (resultType != tResult)
+                if (resultType != tResult.ValueTypeName)
                     throw new NotSupportedException();
                 return;
             }
 
-            _done[operatorGenerationKey] = tResult;
+            _done[operatorGenerationKey] = tResult.ValueTypeName;
 
             var info = op == "/" ? OperatorInfo.Div : OperatorInfo.Mul;
 

@@ -19,7 +19,9 @@ namespace UnitGenerator
         {
             if (targetPropertyName is null)
                 targetPropertyName = $"{counterUnit}sPer{denominatorUnit}s";
-            return new CommonFractionalUnit(new TypesGroup(typeof(T).Name), counterUnit, denominatorUnit,
+            var typeName = new XValueTypeName(typeof(T).Name);
+            
+            return new CommonFractionalUnit(new TypesGroup(typeName), counterUnit, denominatorUnit,
                 targetPropertyName);
         }
 

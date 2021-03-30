@@ -29,8 +29,8 @@ namespace UnitGenerator
                 if (a4 is null) return new Args(arguments);
 
                 return new Args(
-                    new Args(arguments).Create(a4.CounterUnit.Unit),
-                    new Args(ArrayItemCode(ref columnIndex)).Create(a4.DenominatorUnit.Unit)
+                    new Args(arguments).Create(a4.CounterUnit.Unit.TypeName),
+                    new Args(ArrayItemCode(ref columnIndex)).Create(a4.DenominatorUnit.Unit.TypeName)
                 );
             }
 
@@ -66,7 +66,7 @@ namespace UnitGenerator
             // cw.WriteLine("var denominatorUnit = new " + GenInfo.Second.Unit + "(units[1]);");
             cw.WriteLine(ReturnValue($"new {Target.Name}(r.Value, counterUnit, denominatorUnit)"));
 
-            var m = Target.AddMethod("Parse", GenInfo.Result.Value)
+            var m = Target.AddMethod("Parse", GenInfo.Result.Value.ValueTypeName)
                 .WithStatic()
                 .WithBody(cw);
             m.AddParam("value", "string");
@@ -108,8 +108,8 @@ namespace UnitGenerator
             var m = Target.AddConstructor()
                 .WithBody(cw);
             m.AddParam(ValuePropName.FirstLower(), ValuePropertyType);
-            m.AddParam(f, GenInfo.First.Unit);
-            m.AddParam(s, GenInfo.Second.Unit);
+            m.AddParam(f, GenInfo.First.Unit.GetTypename());
+            m.AddParam(s, GenInfo.Second.Unit.GetTypename());
         }
 
         private void Add_ClassAttributes()
@@ -134,7 +134,7 @@ namespace UnitGenerator
 
             Target.AddMethod("ConvertTo", Target.Name)
                 .WithBody(cw)
-                .AddParam("newUnit", GenInfo.Result.Unit);
+                .AddParam("newUnit", GenInfo.Result.Unit.GetTypename());
         }
 
         private void Add_GetBaseUnitValue()
@@ -164,9 +164,9 @@ namespace UnitGenerator
             cw.WriteLine("var resultUnit = Unit.With" + GenInfo.FirstPropertyName + "(newUnit);");
             cw.WriteLine($"return new {valueType}(oldFactor / newFactor * Value, resultUnit);");
 
-            Target.AddMethod("With" + GenInfo.FirstPropertyName, GenInfo.Result.Value)
+            Target.AddMethod("With" + GenInfo.FirstPropertyName, GenInfo.Result.Value.ValueTypeName)
                 .WithBody(cw)
-                .AddParam("newUnit", GenInfo.First.Unit);
+                .AddParam("newUnit", GenInfo.First.Unit.GetTypename());
         }
 
         private void Add_WithDenominatorUnit()
@@ -180,9 +180,9 @@ namespace UnitGenerator
             cw.WriteLine("var resultUnit = Unit.With" + GenInfo.SecondPropertyName + "(newUnit);");
             cw.WriteLine($"return new {valueType}(newFactor / oldFactor * Value, resultUnit);");
 
-            Target.AddMethod("With" + GenInfo.SecondPropertyName + "", GenInfo.Result.Value)
+            Target.AddMethod("With" + GenInfo.SecondPropertyName + "", GenInfo.Result.Value.ValueTypeName)
                 .WithBody(cw)
-                .AddParam("newUnit", GenInfo.Second.Unit);
+                .AddParam("newUnit", GenInfo.Second.Unit.GetTypename());
         }
 
         protected CompositeUnitGeneratorInfo GenInfo { get; private set; }

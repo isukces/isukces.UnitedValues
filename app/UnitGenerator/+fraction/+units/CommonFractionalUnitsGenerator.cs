@@ -18,7 +18,7 @@ namespace UnitGenerator
         {
             foreach (var item in collection.Items)
             {
-                var cl = GetClass(item.Type.Container);
+                var cl = GetClass(item.Type.Container.GetTypename());
                 cl.AddComment(item.ToString());
 
                 FractionUnit fuDefinition = null;
@@ -29,7 +29,7 @@ namespace UnitGenerator
                 var p2 = fuDefinition.DenominatorUnit.Container + "." + item.DenominatorUnit;
 
                 var x = new Args(p1, p2).Create(item.Type.Unit);
-                var f = cl.AddField(item.TargetPropertyName, item.Type.Unit)
+                var f = cl.AddField(item.TargetPropertyName, item.Type.Unit.GetTypename())
                     .WithStatic()
                     .WithIsReadOnly()
                     .WithConstValue(x);

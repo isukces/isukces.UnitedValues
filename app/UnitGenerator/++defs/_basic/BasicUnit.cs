@@ -6,7 +6,7 @@ namespace UnitGenerator
     {
         public BasicUnit(string valueTypeName, string mainUnit, bool isComparable)
         {
-            UnitTypes    = new TypesGroup(valueTypeName);
+            UnitTypes    = new TypesGroup(new XValueTypeName(valueTypeName));
             IsComparable = isComparable;
             BaseUnit     = UnitTypes.Container + "." + mainUnit.Trim();
         }

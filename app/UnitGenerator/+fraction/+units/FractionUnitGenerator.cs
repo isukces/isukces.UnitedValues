@@ -12,7 +12,7 @@ namespace UnitGenerator
 
         protected override IEnumerable<string> GetImplementedInterfaces()
         {
-            var name = new Args(Cfg.CounterUnit.Unit, Cfg.DenominatorUnit.Unit)
+            var name = new Args(Cfg.CounterUnit.Unit.GetTypename(), Cfg.DenominatorUnit.Unit.GetTypename())
                 .MakeGenericType(nameof(IFractionalUnit));
             return new[] {name};
         }
@@ -34,7 +34,7 @@ namespace UnitGenerator
 
         protected override string GetTypename(FractionUnit cfg)
         {
-            return Cfg.UnitTypes.Unit;
+            return Cfg.UnitTypes.Unit.GetTypename();
         }
     }
 }

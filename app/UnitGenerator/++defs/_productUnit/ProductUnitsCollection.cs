@@ -11,13 +11,13 @@ namespace UnitGenerator
             _d    = items.ToDictionary(a => a.UnitTypes.Value, a => a);
         }
 
-        public ProductUnit ByValueTypeName(string valueTypeName)
+        public ProductUnit ByValueTypeName(XValueTypeName valueTypeName)
         {
             _d.TryGetValue(valueTypeName, out var tmp);
             return tmp;
         }
 
         public IReadOnlyList<ProductUnit> Items { get; }
-        private readonly Dictionary<string, ProductUnit> _d;
+        private readonly Dictionary<XValueTypeName, ProductUnit> _d;
     }
 }

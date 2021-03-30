@@ -5,6 +5,7 @@ using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
 using JetBrains.Annotations;
+using UnitGenerator.Local;
 
 namespace UnitGenerator
 {
@@ -14,6 +15,11 @@ namespace UnitGenerator
         {
             _output    = output;
             _nameSpace = nameSpace;
+        }
+
+        protected static string MakeGenericType<TGenericType>(ITypeNameResolver reslve, ITypeNameProvider arg)
+        {
+            return MakeGenericType<TGenericType>(reslve, arg.GetTypename());
         }
 
         protected static string MakeGenericType<TGenericType>(ITypeNameResolver reslve, string arg)
@@ -79,7 +85,7 @@ namespace UnitGenerator
                         .Throw<NullReferenceException>(target);
                     code.SingleLineIf($"{i.ArgName} is null", throwCode);
                 }
-                
+
                 if ((flags & Flags1.NotWhitespace) != 0)
                 {
                     flags &= ~(Flags1.NotEmpty | Flags1.NotWhitespace);
@@ -87,10 +93,9 @@ namespace UnitGenerator
                     var throwCode = new Args($"nameof({i.ArgName})")
                         .Throw<ArgumentException>(target);
                     code.SingleLineIf($"string.IsNullOrWhiteSpace({i.ArgName})", throwCode);
-                    
+
                     flags &= ~(Flags1.NotNullOrWhitespace | Flags1.NotNullOrEmpty);
                 }
-                
 
                 if ((flags & Flags1.NotEmpty) != 0)
                 {
@@ -99,13 +104,9 @@ namespace UnitGenerator
                     var throwCode = new Args($"nameof({i.ArgName})")
                         .Throw<ArgumentException>(target);
                     code.SingleLineIf($"string.IsNullOrEmpty({i.ArgName})", throwCode);
-                    
+
                     flags &= ~(Flags1.NotNullOrWhitespace | Flags1.NotNullOrEmpty);
-                     
                 }
-                
-                
-                
 
                 code.WriteAssign(i.PropertyName, i.Expression);
             }

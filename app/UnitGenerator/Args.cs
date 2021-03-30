@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
+using UnitGenerator.Local;
 
 namespace UnitGenerator
 {
@@ -20,6 +21,11 @@ namespace UnitGenerator
         public string Create(string constructedTypeName)
         {
             return $"new {constructedTypeName}({ToString()})";
+        }
+        
+        public string Create(ITypeNameProvider constructedTypeName)
+        {
+            return Create(constructedTypeName.GetTypename());
         }
         
         public string Create<T>()

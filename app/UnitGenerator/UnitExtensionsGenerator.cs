@@ -23,14 +23,14 @@ namespace UnitGenerator
                 cw.SingleLineIf("items is null", ReturnValue(Cfg.UnitTypes.Value + ".Zero"));
 
                 actions(cw);
-                var m = Target.AddMethod("Sum", Cfg.UnitTypes.Value)
+                var m = Target.AddMethod("Sum", Cfg.UnitTypes.Value.ValueTypeName)
                     .WithStatic()
                     .WithBody(cw);
                 m.AddParam("items", MakeGenericType<IEnumerable<int>>(Target, itemType)).UseThis = true;
                 return m;
             }
 
-            Add1(Cfg.UnitTypes.Value, cw =>
+            Add1(Cfg.UnitTypes.Value.ValueTypeName, cw =>
             {
                 cw.WriteLine("var c = items.ToArray();");
                 cw.SingleLineIf("c.Length == 0", ReturnValue(Cfg.UnitTypes.Value + ".Zero"));
@@ -58,7 +58,7 @@ namespace UnitGenerator
 
         protected override string GetTypename(BasicUnit cfg)
         {
-            return cfg.UnitTypes.Value + "Extensions";
+            return cfg.UnitTypes.Value.GetExtensions();
         }
 
         protected override void PrepareFile(CsFile file)
