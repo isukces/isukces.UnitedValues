@@ -21,10 +21,17 @@ namespace iSukces.UnitedValues
         public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
         {
             // generator : FractionUnitGenerator.Add_Decompose
+            return new[]
+            {
+                new DecomposableUnitItem(CounterUnit, 1),
+                new DecomposableUnitItem(DenominatorUnit, -1)
+            };
+            /*
             var decomposer = new UnitDecomposer();
             decomposer.Add(CounterUnit, 1);
             decomposer.Add(DenominatorUnit, -1);
             return decomposer.Items;
+            */
         }
 
         public bool Equals(LinearDensityUnit other)

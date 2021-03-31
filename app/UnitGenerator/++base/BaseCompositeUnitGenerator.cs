@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Linq;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
@@ -64,16 +64,32 @@ namespace UnitGenerator
                 .MakeGenericType(Target.GetTypeName<IReadOnlyList<int>>(), true);
 
             var cs = Ext.Create(GetType());
-            cs.WriteLine("var decomposer = new UnitDecomposer();");
-            foreach (var item in items)
-                cs.WriteLine("decomposer.Add({0}, {1});", item.Propertyname, item.Power.CsEncode());
-            cs.WriteReturn("decomposer.Items");
+            {
+                // creates code
+                var codeItems = new DecomposeExpressionFinder(typeof(Length).Assembly).GetCodeItems(items, Target.Name);
+                if (codeItems != null)
+                {
+                    var initCodes = codeItems.Select(a => a.Init).Where(a => !string.IsNullOrWhiteSpace(a));
+                    foreach (var i in initCodes) 
+                        cs.WriteLine(i);
+                    cs.WriteLine(new Args(codeItems.Select(a=>a.Expression).ToArray()).ReturnArray().Code);
+                    cs.WriteLine("/*");
+                }
 
-            var m = Target.AddMethod(nameof(IDecomposableUnit.Decompose), type);
-            m.WithBody(cs);
+                cs.WriteLine("var decomposer = new UnitDecomposer();");
+                foreach (var item in items)
+                    cs.WriteLine("decomposer.Add({0}, {1});", item.Propertyname, item.Power.CsEncode());
+                cs.WriteReturn("decomposer.Items");
+                
+                if (codeItems != null)
+                    cs.WriteLine("*/");
+                var m = Target.AddMethod(nameof(IDecomposableUnit.Decompose), type);
+                m.WithBody(cs);
+            }
 
             Target.ImplementedInterfaces.Add(nameof(IDecomposableUnit));
         }
+
 
         private void Add_Equals()
         {
@@ -132,24 +148,5 @@ namespace UnitGenerator
 
         public string         StringSeparator { get; }
         public NameAndPower[] Items           { get; }
-    }
-
-    [ImmutableObject(true)]
-    public class NameAndPower
-    {
-        public NameAndPower(string propertyname, int power)
-        {
-            Propertyname = propertyname;
-            Power        = power;
-        }
-
-        public override string ToString()
-        {
-            return $"Propertyname={Propertyname}, Power={Power}";
-        }
-
-        public string Propertyname { get; }
-
-        public int Power { get; }
     }
 }

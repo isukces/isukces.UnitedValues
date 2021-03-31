@@ -21,10 +21,18 @@ namespace iSukces.UnitedValues
         public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
         {
             // generator : FractionUnitGenerator.Add_Decompose
+            var denominatorUnit = DenominatorUnit.GetBasicUnit();
+            return new[]
+            {
+                new DecomposableUnitItem(CounterUnit, 1),
+                new DecomposableUnitItem(denominatorUnit.Unit, -denominatorUnit.Power)
+            };
+            /*
             var decomposer = new UnitDecomposer();
             decomposer.Add(CounterUnit, 1);
             decomposer.Add(DenominatorUnit, -1);
             return decomposer.Items;
+            */
         }
 
         public bool Equals(PressureUnit other)

@@ -95,6 +95,7 @@ namespace UnitGenerator
                 var cs = Ext.Create(GetType());
                 if (basicUnit is null)
                 {
+                     
                     cs.WriteLine("var decomposer = new UnitDecomposer();");
                     cs.WriteLine("decomposer.Add(this, 1);");
                     cs.WriteReturn("decomposer.Items");

@@ -21,10 +21,17 @@ namespace iSukces.UnitedValues
         public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
         {
             // generator : ProductUnitGenerator.Add_Decompose
+            return new[]
+            {
+                new DecomposableUnitItem(LeftUnit, 1),
+                new DecomposableUnitItem(RightUnit, 1)
+            };
+            /*
             var decomposer = new UnitDecomposer();
             decomposer.Add(LeftUnit, 1);
             decomposer.Add(RightUnit, 1);
             return decomposer.Items;
+            */
         }
 
         public bool Equals(MassDetlaKelvinUnit other)

@@ -19,9 +19,10 @@ namespace iSukces.UnitedValues
             where T1 : IUnit
             where T2 : IUnit
         {
-            var t1 = typeof(T1);
-            var t2 = typeof(T2);
-            _rd[new Key(t1, t2, a.UnitName)] = b;
+            var t1  = typeof(T1);
+            var t2  = typeof(T2);
+            var key = new Key(t1, t2, a.UnitName);
+            _rd[key] = b;
         }
 
 
@@ -84,7 +85,7 @@ namespace iSukces.UnitedValues
             public override bool Equals(object obj)
             {
                 if (ReferenceEquals(null, obj)) return false;
-                return obj is Key && Equals((Key)obj);
+                return obj is Key key && Equals(key);
             }
 
 

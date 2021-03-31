@@ -11,6 +11,7 @@ namespace iSukces.UnitedValues
 
             AreaUnits.Register(Relations);
             VolumeUnits.Register(Relations);
+            SquareTimeUnits.Register(Relations);
 
             foreach (var i in typeof(GlobalUnitRegistry).Assembly.GetTypes())
             {

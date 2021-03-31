@@ -205,7 +205,20 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal("kg", bb.Unit.UnitName);
         }
 
-        public void T10_Should_calculate_pipe_diameter()
+        [Fact]
+        public void T10_should_decompose()
+        {
+            var d = new DensityUnit(MassUnits.Gram, VolumeUnits.CubicFeet);
+            var g = d.Decompose();
+            Assert.Equal(2, g.Count);
+            Assert.Equal(MassUnits.Gram, (MassUnit)g[0].Unit);
+            Assert.Equal(1, g[0].Power);
+            Assert.Equal(LengthUnits.Feet, (LengthUnit)g[1].Unit);
+            Assert.Equal(-3, g[1].Power);
+        }
+
+        [Fact]
+        public void T11_Should_calculate_pipe_diameter()
         {
             var tz = CelsiusTemperature.FromDegree(130);
             var tp = CelsiusTemperature.FromDegree(95);
