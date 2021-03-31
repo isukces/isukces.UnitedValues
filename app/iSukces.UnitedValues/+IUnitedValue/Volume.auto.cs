@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public Volume(decimal value, [JetBrains.Annotations.NotNull] VolumeUnit unit)
+        public Volume(decimal value, VolumeUnit unit)
         {
             Value = value;
             if (unit is null)

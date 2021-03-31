@@ -14,6 +14,22 @@ namespace iSukces.UnitedValues
             factors.RegisterMany(All);
         }
 
+        public static AreaUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+        {
+            // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
+            if (unitName is null)
+                throw new NullReferenceException(nameof(unitName));
+            unitName = unitName.Trim();
+            if (unitName.Length == 0)
+                throw new ArgumentException(nameof(unitName));
+            foreach (var i in All)
+            {
+                if (unitName == i.UnitName)
+                    return i.Unit;
+            }
+            return new AreaUnit(unitName);
+        }
+
         internal static void Register(UnitRelationsDictionary dict)
         {
             dict.AddRelated<AreaUnit, LengthUnit>(SquareMeter, LengthUnits.Meter);
@@ -67,29 +83,53 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public static readonly UnitDefinition<AreaUnit> SquareMeter = new UnitDefinition<AreaUnit>("m²", 1m);
+        private static readonly AreaUnit SquareMeterAreaUnit = new AreaUnit(LengthUnits.Meter);
 
-        public static readonly UnitDefinition<AreaUnit> SquareKm = new UnitDefinition<AreaUnit>("km²", 1000m * 1000m);
+        public static readonly UnitDefinition<AreaUnit> SquareMeter = new UnitDefinition<AreaUnit>(SquareMeterAreaUnit, 1m);
 
-        public static readonly UnitDefinition<AreaUnit> SquareDm = new UnitDefinition<AreaUnit>("dm²", 0.1m * 0.1m);
+        private static readonly AreaUnit SquareKmAreaUnit = new AreaUnit(LengthUnits.Km);
 
-        public static readonly UnitDefinition<AreaUnit> SquareCm = new UnitDefinition<AreaUnit>("cm²", 0.01m * 0.01m);
+        public static readonly UnitDefinition<AreaUnit> SquareKm = new UnitDefinition<AreaUnit>(SquareKmAreaUnit, 1000m * 1000m);
 
-        public static readonly UnitDefinition<AreaUnit> SquareMm = new UnitDefinition<AreaUnit>("mm²", 0.001m * 0.001m);
+        private static readonly AreaUnit SquareDmAreaUnit = new AreaUnit(LengthUnits.Dm);
 
-        public static readonly UnitDefinition<AreaUnit> SquareInch = new UnitDefinition<AreaUnit>("inch²", 0.0254m * 0.0254m);
+        public static readonly UnitDefinition<AreaUnit> SquareDm = new UnitDefinition<AreaUnit>(SquareDmAreaUnit, 0.1m * 0.1m);
 
-        public static readonly UnitDefinition<AreaUnit> SquareFeet = new UnitDefinition<AreaUnit>("ft²", 0.3048m * 0.3048m);
+        private static readonly AreaUnit SquareCmAreaUnit = new AreaUnit(LengthUnits.Cm);
 
-        public static readonly UnitDefinition<AreaUnit> SquareYard = new UnitDefinition<AreaUnit>("yd²", 0.9144m * 0.9144m);
+        public static readonly UnitDefinition<AreaUnit> SquareCm = new UnitDefinition<AreaUnit>(SquareCmAreaUnit, 0.01m * 0.01m);
 
-        public static readonly UnitDefinition<AreaUnit> SquareFurlong = new UnitDefinition<AreaUnit>("fg²", 201.1680m * 201.1680m);
+        private static readonly AreaUnit SquareMmAreaUnit = new AreaUnit(LengthUnits.Mm);
 
-        public static readonly UnitDefinition<AreaUnit> SquareFathom = new UnitDefinition<AreaUnit>("fh²", 1.8288m * 1.8288m);
+        public static readonly UnitDefinition<AreaUnit> SquareMm = new UnitDefinition<AreaUnit>(SquareMmAreaUnit, 0.001m * 0.001m);
 
-        public static readonly UnitDefinition<AreaUnit> SquareMile = new UnitDefinition<AreaUnit>("mil²", 1609.344m * 1609.344m);
+        private static readonly AreaUnit SquareInchAreaUnit = new AreaUnit(LengthUnits.Inch);
 
-        public static readonly UnitDefinition<AreaUnit> SquareNauticalMile = new UnitDefinition<AreaUnit>("nm²", 1852m * 1852m);
+        public static readonly UnitDefinition<AreaUnit> SquareInch = new UnitDefinition<AreaUnit>(SquareInchAreaUnit, 0.0254m * 0.0254m);
+
+        private static readonly AreaUnit SquareFeetAreaUnit = new AreaUnit(LengthUnits.Feet);
+
+        public static readonly UnitDefinition<AreaUnit> SquareFeet = new UnitDefinition<AreaUnit>(SquareFeetAreaUnit, 0.3048m * 0.3048m);
+
+        private static readonly AreaUnit SquareYardAreaUnit = new AreaUnit(LengthUnits.Yard);
+
+        public static readonly UnitDefinition<AreaUnit> SquareYard = new UnitDefinition<AreaUnit>(SquareYardAreaUnit, 0.9144m * 0.9144m);
+
+        private static readonly AreaUnit SquareFurlongAreaUnit = new AreaUnit(LengthUnits.Furlong);
+
+        public static readonly UnitDefinition<AreaUnit> SquareFurlong = new UnitDefinition<AreaUnit>(SquareFurlongAreaUnit, 201.1680m * 201.1680m);
+
+        private static readonly AreaUnit SquareFathomAreaUnit = new AreaUnit(LengthUnits.Fathom);
+
+        public static readonly UnitDefinition<AreaUnit> SquareFathom = new UnitDefinition<AreaUnit>(SquareFathomAreaUnit, 1.8288m * 1.8288m);
+
+        private static readonly AreaUnit SquareMileAreaUnit = new AreaUnit(LengthUnits.Mile);
+
+        public static readonly UnitDefinition<AreaUnit> SquareMile = new UnitDefinition<AreaUnit>(SquareMileAreaUnit, 1609.344m * 1609.344m);
+
+        private static readonly AreaUnit SquareNauticalMileAreaUnit = new AreaUnit(LengthUnits.NauticalMile);
+
+        public static readonly UnitDefinition<AreaUnit> SquareNauticalMile = new UnitDefinition<AreaUnit>(SquareNauticalMileAreaUnit, 1852m * 1852m);
 
     }
 }

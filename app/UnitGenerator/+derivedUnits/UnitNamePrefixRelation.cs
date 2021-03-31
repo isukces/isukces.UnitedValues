@@ -1,8 +1,8 @@
 namespace UnitGenerator
 {
-    public class PrefixRelation
+    public class UnitNamePrefixRelation
     {
-        public PrefixRelation(string other, string my, string myUnitContainer, string otherUnitContainer)
+        public UnitNamePrefixRelation(string other, string my, string myUnitContainer, string otherUnitContainer)
         {
             Other              = other;
             My                 = my;

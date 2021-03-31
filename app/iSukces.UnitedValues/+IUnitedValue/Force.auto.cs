@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public Force(decimal value, [JetBrains.Annotations.NotNull] ForceUnit unit)
+        public Force(decimal value, ForceUnit unit)
         {
             Value = value;
             if (unit is null)

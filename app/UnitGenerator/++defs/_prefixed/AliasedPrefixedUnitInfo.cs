@@ -4,7 +4,7 @@ namespace UnitGenerator
     {
         public AliasedPrefixedUnitInfo(
             string fieldName,
-            string unitShortCode,
+            UnitShortCodeSource unitShortCode,
             string scaleFactor,
             string fromMethodNameSufix,
             TypeCodeAliases aliases)

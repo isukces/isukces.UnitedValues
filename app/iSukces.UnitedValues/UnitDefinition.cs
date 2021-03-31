@@ -3,17 +3,19 @@ using System.Collections.Generic;
 
 namespace iSukces.UnitedValues
 {
-    public struct UnitDefinition<TUnit> : IUnitNameContainer
+    public struct UnitDefinition<TUnit>//: IUnitNameContainer
         where TUnit : IUnit
     {
-        public UnitDefinition(string unitName, decimal multiplication, params string[] aliases)
+        public UnitDefinition(TUnit unit, decimal multiplication, params string[] aliases)
         {
-            UnitName       = unitName;
+            UnitName       = unit.UnitName;
+            Unit      = unit;
             Multiplication = multiplication;
             Aliases        = aliases ?? new string[0];
         }
 
         public string   UnitName       { get; }
+        public TUnit    Unit           { get; }
         public decimal  Multiplication { get; }
         public string[] Aliases        { get; }
     }

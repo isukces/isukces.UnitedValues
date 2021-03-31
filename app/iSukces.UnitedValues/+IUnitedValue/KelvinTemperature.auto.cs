@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public KelvinTemperature(decimal value, [JetBrains.Annotations.NotNull] KelvinTemperatureUnit unit)
+        public KelvinTemperature(decimal value, KelvinTemperatureUnit unit)
         {
             Value = value;
             if (unit is null)

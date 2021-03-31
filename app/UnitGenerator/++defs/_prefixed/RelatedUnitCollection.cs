@@ -20,7 +20,7 @@ namespace UnitGenerator
             return null;
         }
 
-        public Result GetPowers(XUnitTypeName unitName)
+        public RelatedUnitsFamily GetPowers(XUnitTypeName unitName)
         {
             var myInfo = FindByUnitName(unitName);
             if (myInfo is null)
@@ -53,7 +53,7 @@ namespace UnitGenerator
                 other[i.Power] = i;
             }
 
-            return new Result(myInfo, other);
+            return new RelatedUnitsFamily(myInfo, other);
         }
 
         private RelatedUnit FindByUnitName(XUnitTypeName unitName)
@@ -76,18 +76,5 @@ namespace UnitGenerator
 
         public IReadOnlyList<RelatedUnit> Items { get; }
         private readonly Dictionary<XValueTypeName, RelatedUnit> _dictionary;
-
-
-        public class Result
-        {
-            public Result(RelatedUnit myInfo, Dictionary<int, RelatedUnit> other)
-            {
-                MyInfo = myInfo;
-                Other  = other;
-            }
-
-            public RelatedUnit                  MyInfo { get; }
-            public Dictionary<int, RelatedUnit> Other  { get; }
-        }
     }
 }

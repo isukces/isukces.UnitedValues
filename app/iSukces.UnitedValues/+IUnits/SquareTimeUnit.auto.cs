@@ -13,14 +13,28 @@ namespace iSukces.UnitedValues
         /// creates instance of SquareTimeUnit
         /// </summary>
         /// <param name="unitName">name of unit</param>
-        public SquareTimeUnit([JetBrains.Annotations.NotNull] string unitName)
+        public SquareTimeUnit(string unitName)
         {
-            unitName = unitName?.Trim();
             if (unitName is null)
                 throw new NullReferenceException(nameof(unitName));
-            if (string.IsNullOrWhiteSpace(unitName))
+            unitName = unitName.Trim();
+            if (unitName.Length == 0)
                 throw new ArgumentException(nameof(unitName));
-            UnitName = unitName.TrimToNull();
+            UnitName = unitName;
+        }
+
+        /// <summary>
+        /// creates instance of SquareTimeUnit
+        /// </summary>
+        /// <param name="baseUnit">based on</param>
+        /// <param name="unitName">name of unit</param>
+        public SquareTimeUnit(TimeUnit baseUnit, string unitName = null)
+        {
+            if (baseUnit is null)
+                throw new NullReferenceException(nameof(baseUnit));
+            BaseUnit = baseUnit;
+            unitName = unitName?.Trim();
+            UnitName = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "²" : unitName;
         }
 
         public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
@@ -98,13 +112,18 @@ namespace iSukces.UnitedValues
         /// <param name="src"></param>
         public static implicit operator SquareTimeUnit(UnitDefinition<SquareTimeUnit> src)
         {
-            return new SquareTimeUnit(src.UnitName);
+            return src.Unit;
         }
 
         /// <summary>
         /// name of unit
         /// </summary>
         public string UnitName { get; }
+
+        /// <summary>
+        /// based on
+        /// </summary>
+        public TimeUnit BaseUnit { get; }
 
     }
 }

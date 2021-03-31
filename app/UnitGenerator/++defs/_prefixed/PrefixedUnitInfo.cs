@@ -8,7 +8,7 @@ namespace UnitGenerator
         /// <param name="unitShortCode"></param>
         /// <param name="scaleFactor"></param>
         /// <param name="fromMethodNameSufix"></param>
-        public PrefixedUnitInfo(string fieldName, string unitShortCode, decimal scaleFactor, string fromMethodNameSufix = null)
+        public PrefixedUnitInfo(string fieldName, UnitShortCodeSource unitShortCode, decimal scaleFactor, string fromMethodNameSufix = null)
             : base(fieldName, unitShortCode, fromMethodNameSufix)
         {
             ScaleFactor = scaleFactor.CsEncode();
@@ -20,7 +20,19 @@ namespace UnitGenerator
         /// <param name="unitShortCode"></param>
         /// <param name="scaleFactor"></param>
         /// <param name="fromMethodNameSufix"></param>
-        public PrefixedUnitInfo(string fieldName, string unitShortCode, string scaleFactor, string fromMethodNameSufix = null)
+        public PrefixedUnitInfo(string fieldName, string unitShortCode, decimal scaleFactor, string fromMethodNameSufix = null)
+            : base(fieldName, UnitShortCodeSource.MakeDirect(unitShortCode), fromMethodNameSufix)
+        {
+            ScaleFactor = scaleFactor.CsEncode();
+        }
+        
+        /// <summary>
+        /// </summary>
+        /// <param name="fieldName">static field name that holds unit name</param>
+        /// <param name="unitShortCode"></param>
+        /// <param name="scaleFactor"></param>
+        /// <param name="fromMethodNameSufix"></param>
+        public PrefixedUnitInfo(string fieldName, UnitShortCodeSource unitShortCode, string scaleFactor, string fromMethodNameSufix = null)
             : base(fieldName, unitShortCode, fromMethodNameSufix)
         {
             ScaleFactor = scaleFactor;

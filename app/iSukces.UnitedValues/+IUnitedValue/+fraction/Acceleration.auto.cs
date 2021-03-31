@@ -137,36 +137,36 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
-        /// creates acceleration from value in m/s²
+        /// creates acceleration from value in /
         /// </summary>
-        /// <param name="value">Acceleration value in m/s²</param>
+        /// <param name="value">Acceleration value in /</param>
         public static Acceleration FromMetersPerSquareSeconds(decimal value)
         {
             return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
         }
 
         /// <summary>
-        /// creates acceleration from value in m/s²
+        /// creates acceleration from value in /
         /// </summary>
-        /// <param name="value">Acceleration value in m/s²</param>
+        /// <param name="value">Acceleration value in /</param>
         public static Acceleration FromMetersPerSquareSeconds(double value)
         {
             return new Acceleration((decimal)value, AccelerationUnits.MetersPerSquareSeconds);
         }
 
         /// <summary>
-        /// creates acceleration from value in m/s²
+        /// creates acceleration from value in /
         /// </summary>
-        /// <param name="value">Acceleration value in m/s²</param>
+        /// <param name="value">Acceleration value in /</param>
         public static Acceleration FromMetersPerSquareSeconds(int value)
         {
             return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
         }
 
         /// <summary>
-        /// creates acceleration from value in m/s²
+        /// creates acceleration from value in /
         /// </summary>
-        /// <param name="value">Acceleration value in m/s²</param>
+        /// <param name="value">Acceleration value in /</param>
         public static Acceleration FromMetersPerSquareSeconds(long value)
         {
             return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);

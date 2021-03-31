@@ -14,6 +14,22 @@ namespace iSukces.UnitedValues
             factors.RegisterMany(All);
         }
 
+        public static MassUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+        {
+            // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
+            if (unitName is null)
+                throw new NullReferenceException(nameof(unitName));
+            unitName = unitName.Trim();
+            if (unitName.Length == 0)
+                throw new ArgumentException(nameof(unitName));
+            foreach (var i in All)
+            {
+                if (unitName == i.UnitName)
+                    return i.Unit;
+            }
+            return new MassUnit(unitName);
+        }
+
         /// <summary>
         /// All known mass units
         /// </summary>
@@ -30,11 +46,17 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public static readonly UnitDefinition<MassUnit> Kg = new UnitDefinition<MassUnit>("kg", 1m);
+        private static readonly MassUnit KgMassUnit = new MassUnit("kg");
 
-        public static readonly UnitDefinition<MassUnit> Tone = new UnitDefinition<MassUnit>("t", 1000m, "tone", "tons");
+        public static readonly UnitDefinition<MassUnit> Kg = new UnitDefinition<MassUnit>(KgMassUnit, 1m);
 
-        public static readonly UnitDefinition<MassUnit> Gram = new UnitDefinition<MassUnit>("g", 0.001m, "gram", "grams");
+        private static readonly MassUnit ToneMassUnit = new MassUnit("t");
+
+        public static readonly UnitDefinition<MassUnit> Tone = new UnitDefinition<MassUnit>(ToneMassUnit, 1000m, "tone", "tons");
+
+        private static readonly MassUnit GramMassUnit = new MassUnit("g");
+
+        public static readonly UnitDefinition<MassUnit> Gram = new UnitDefinition<MassUnit>(GramMassUnit, 0.001m, "gram", "grams");
 
     }
 }

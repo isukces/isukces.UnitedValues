@@ -13,14 +13,28 @@ namespace iSukces.UnitedValues
         /// creates instance of VolumeUnit
         /// </summary>
         /// <param name="unitName">name of unit</param>
-        public VolumeUnit([JetBrains.Annotations.NotNull] string unitName)
+        public VolumeUnit(string unitName)
         {
-            unitName = unitName?.Trim();
             if (unitName is null)
                 throw new NullReferenceException(nameof(unitName));
-            if (string.IsNullOrWhiteSpace(unitName))
+            unitName = unitName.Trim();
+            if (unitName.Length == 0)
                 throw new ArgumentException(nameof(unitName));
-            UnitName = unitName?.Replace('3', '³').TrimToNull();
+            UnitName = unitName?.Replace('3', '³');
+        }
+
+        /// <summary>
+        /// creates instance of VolumeUnit
+        /// </summary>
+        /// <param name="baseUnit">based on</param>
+        /// <param name="unitName">name of unit</param>
+        public VolumeUnit(LengthUnit baseUnit, string unitName = null)
+        {
+            if (baseUnit is null)
+                throw new NullReferenceException(nameof(baseUnit));
+            BaseUnit = baseUnit;
+            unitName = unitName?.Trim();
+            UnitName = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "³" : unitName;
         }
 
         public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
@@ -105,13 +119,18 @@ namespace iSukces.UnitedValues
         /// <param name="src"></param>
         public static implicit operator VolumeUnit(UnitDefinition<VolumeUnit> src)
         {
-            return new VolumeUnit(src.UnitName);
+            return src.Unit;
         }
 
         /// <summary>
         /// name of unit
         /// </summary>
         public string UnitName { get; }
+
+        /// <summary>
+        /// based on
+        /// </summary>
+        public LengthUnit BaseUnit { get; }
 
     }
 }

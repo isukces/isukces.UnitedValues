@@ -11,9 +11,9 @@ namespace UnitGenerator
         }
 
 
-        protected override ConstructorParameterInfo[] GetConstructorProperties()
+        protected override Col1 GetConstructorProperties()
         {
-            return new[]
+            return new Col1(new[]
             {
                 new ConstructorParameterInfo(ValuePropName,
                     ValuePropertyType,
@@ -21,7 +21,7 @@ namespace UnitGenerator
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
                     Cfg.UnitTypes.Unit.GetTypename(), null, "unit")
-            };
+            });
         }
 
 
@@ -50,7 +50,7 @@ namespace UnitGenerator
             foreach (var i in commonUnits)
             {
                 var u = new RelatedUnitInfo(i.TargetPropertyName,
-                    i.GetUnitName(),
+                    UnitShortCodeSource.MakeDirect(i.GetUnitName()),
                     i.TargetPropertyName);
                 BasicUnitValuesGenerator.Add_FromMethods(
                     i.Type.Value,

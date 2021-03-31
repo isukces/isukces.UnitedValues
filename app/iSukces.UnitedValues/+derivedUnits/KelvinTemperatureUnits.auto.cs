@@ -14,6 +14,22 @@ namespace iSukces.UnitedValues
             factors.RegisterMany(All);
         }
 
+        public static KelvinTemperatureUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+        {
+            // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
+            if (unitName is null)
+                throw new NullReferenceException(nameof(unitName));
+            unitName = unitName.Trim();
+            if (unitName.Length == 0)
+                throw new ArgumentException(nameof(unitName));
+            foreach (var i in All)
+            {
+                if (unitName == i.UnitName)
+                    return i.Unit;
+            }
+            return new KelvinTemperatureUnit(unitName);
+        }
+
         /// <summary>
         /// All known kelvinTemperature units
         /// </summary>
@@ -28,7 +44,9 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public static readonly UnitDefinition<KelvinTemperatureUnit> Degree = new UnitDefinition<KelvinTemperatureUnit>("K", 1m);
+        private static readonly KelvinTemperatureUnit DegreeKelvinTemperatureUnit = new KelvinTemperatureUnit("K");
+
+        public static readonly UnitDefinition<KelvinTemperatureUnit> Degree = new UnitDefinition<KelvinTemperatureUnit>(DegreeKelvinTemperatureUnit, 1m);
 
     }
 }

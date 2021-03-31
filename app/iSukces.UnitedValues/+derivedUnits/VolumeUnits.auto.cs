@@ -14,6 +14,22 @@ namespace iSukces.UnitedValues
             factors.RegisterMany(All);
         }
 
+        public static VolumeUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+        {
+            // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
+            if (unitName is null)
+                throw new NullReferenceException(nameof(unitName));
+            unitName = unitName.Trim();
+            if (unitName.Length == 0)
+                throw new ArgumentException(nameof(unitName));
+            foreach (var i in All)
+            {
+                if (unitName == i.UnitName)
+                    return i.Unit;
+            }
+            return new VolumeUnit(unitName);
+        }
+
         internal static void Register(UnitRelationsDictionary dict)
         {
             dict.AddRelated<VolumeUnit, LengthUnit>(CubicMeter, LengthUnits.Meter);
@@ -91,29 +107,53 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public static readonly UnitDefinition<VolumeUnit> CubicMeter = new UnitDefinition<VolumeUnit>("m³", 1m);
+        private static readonly VolumeUnit CubicMeterVolumeUnit = new VolumeUnit(LengthUnits.Meter);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicKm = new UnitDefinition<VolumeUnit>("km³", 1000m * 1000m * 1000m);
+        public static readonly UnitDefinition<VolumeUnit> CubicMeter = new UnitDefinition<VolumeUnit>(CubicMeterVolumeUnit, 1m);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicDm = new UnitDefinition<VolumeUnit>("dm³", 0.1m * 0.1m * 0.1m);
+        private static readonly VolumeUnit CubicKmVolumeUnit = new VolumeUnit(LengthUnits.Km);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicCm = new UnitDefinition<VolumeUnit>("cm³", 0.01m * 0.01m * 0.01m);
+        public static readonly UnitDefinition<VolumeUnit> CubicKm = new UnitDefinition<VolumeUnit>(CubicKmVolumeUnit, 1000m * 1000m * 1000m);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicMm = new UnitDefinition<VolumeUnit>("mm³", 0.001m * 0.001m * 0.001m);
+        private static readonly VolumeUnit CubicDmVolumeUnit = new VolumeUnit(LengthUnits.Dm);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicInch = new UnitDefinition<VolumeUnit>("inch³", 0.0254m * 0.0254m * 0.0254m);
+        public static readonly UnitDefinition<VolumeUnit> CubicDm = new UnitDefinition<VolumeUnit>(CubicDmVolumeUnit, 0.1m * 0.1m * 0.1m);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicFeet = new UnitDefinition<VolumeUnit>("ft³", 0.3048m * 0.3048m * 0.3048m);
+        private static readonly VolumeUnit CubicCmVolumeUnit = new VolumeUnit(LengthUnits.Cm);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicYard = new UnitDefinition<VolumeUnit>("yd³", 0.9144m * 0.9144m * 0.9144m);
+        public static readonly UnitDefinition<VolumeUnit> CubicCm = new UnitDefinition<VolumeUnit>(CubicCmVolumeUnit, 0.01m * 0.01m * 0.01m);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicFurlong = new UnitDefinition<VolumeUnit>("fg³", 201.1680m * 201.1680m * 201.1680m);
+        private static readonly VolumeUnit CubicMmVolumeUnit = new VolumeUnit(LengthUnits.Mm);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicFathom = new UnitDefinition<VolumeUnit>("fh³", 1.8288m * 1.8288m * 1.8288m);
+        public static readonly UnitDefinition<VolumeUnit> CubicMm = new UnitDefinition<VolumeUnit>(CubicMmVolumeUnit, 0.001m * 0.001m * 0.001m);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicMile = new UnitDefinition<VolumeUnit>("mil³", 1609.344m * 1609.344m * 1609.344m);
+        private static readonly VolumeUnit CubicInchVolumeUnit = new VolumeUnit(LengthUnits.Inch);
 
-        public static readonly UnitDefinition<VolumeUnit> CubicNauticalMile = new UnitDefinition<VolumeUnit>("nm³", 1852m * 1852m * 1852m);
+        public static readonly UnitDefinition<VolumeUnit> CubicInch = new UnitDefinition<VolumeUnit>(CubicInchVolumeUnit, 0.0254m * 0.0254m * 0.0254m);
+
+        private static readonly VolumeUnit CubicFeetVolumeUnit = new VolumeUnit(LengthUnits.Feet);
+
+        public static readonly UnitDefinition<VolumeUnit> CubicFeet = new UnitDefinition<VolumeUnit>(CubicFeetVolumeUnit, 0.3048m * 0.3048m * 0.3048m);
+
+        private static readonly VolumeUnit CubicYardVolumeUnit = new VolumeUnit(LengthUnits.Yard);
+
+        public static readonly UnitDefinition<VolumeUnit> CubicYard = new UnitDefinition<VolumeUnit>(CubicYardVolumeUnit, 0.9144m * 0.9144m * 0.9144m);
+
+        private static readonly VolumeUnit CubicFurlongVolumeUnit = new VolumeUnit(LengthUnits.Furlong);
+
+        public static readonly UnitDefinition<VolumeUnit> CubicFurlong = new UnitDefinition<VolumeUnit>(CubicFurlongVolumeUnit, 201.1680m * 201.1680m * 201.1680m);
+
+        private static readonly VolumeUnit CubicFathomVolumeUnit = new VolumeUnit(LengthUnits.Fathom);
+
+        public static readonly UnitDefinition<VolumeUnit> CubicFathom = new UnitDefinition<VolumeUnit>(CubicFathomVolumeUnit, 1.8288m * 1.8288m * 1.8288m);
+
+        private static readonly VolumeUnit CubicMileVolumeUnit = new VolumeUnit(LengthUnits.Mile);
+
+        public static readonly UnitDefinition<VolumeUnit> CubicMile = new UnitDefinition<VolumeUnit>(CubicMileVolumeUnit, 1609.344m * 1609.344m * 1609.344m);
+
+        private static readonly VolumeUnit CubicNauticalMileVolumeUnit = new VolumeUnit(LengthUnits.NauticalMile);
+
+        public static readonly UnitDefinition<VolumeUnit> CubicNauticalMile = new UnitDefinition<VolumeUnit>(CubicNauticalMileVolumeUnit, 1852m * 1852m * 1852m);
 
     }
 }

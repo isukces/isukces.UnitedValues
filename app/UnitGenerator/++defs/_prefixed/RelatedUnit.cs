@@ -14,11 +14,11 @@ namespace UnitGenerator
         {
             Name = name;
         }
+
         public RelatedUnit(string name)
         {
             Name = new XValueTypeName(name);
         }
-
 
         private static string Mul(int power, string x)
         {
@@ -44,19 +44,9 @@ namespace UnitGenerator
             }
         }
 
-        private static string Suffix(int power)
+        public override string ToString()
         {
-            switch (power)
-            {
-                case 1:
-                    return null;
-                case 2:
-                    return AreaUnits.SquareSign;
-                case 3:
-                    return "³";
-                default:
-                    throw new NotSupportedException();
-            }
+            return $"{Name} = {PowerOne.Value}^{Power}";
         }
 
         public RelatedUnit WithLengths(int power)
@@ -93,7 +83,7 @@ namespace UnitGenerator
                         fromMethodNameSufix = aliases.NamePlural.FirstUpper();
             }
 
-            var info = new AliasedPrefixedUnitInfo(fieldName, unitShortName, multiplicator.CsEncode(),
+            var info = new AliasedPrefixedUnitInfo(fieldName, UnitShortCodeSource.MakeDirect(unitShortName),   multiplicator.CsEncode(),
                 fromMethodNameSufix, aliases);
             Units.Add(info);
             return this;
@@ -133,14 +123,15 @@ namespace UnitGenerator
             Power = power;
             if (power != 1)
                 PowerOne = new TypesGroup(values[0]);
-            var unitSuffix     = Suffix(power);
+            
             var propertyPrefix = Prefix(power);
 
             foreach (var i in items)
             {
                 var fromMethodNameSufix = i.FromMethodNameSufix.AddPrefix(propertyPrefix);
+                var unitShortCodeSource  = UnitShortCodeSource.MakePower(i.UnitShortCode, power);
                 var q = new AliasedPrefixedUnitInfo(propertyPrefix + i.FieldName,
-                    i.UnitShortCode + unitSuffix,
+                    unitShortCodeSource,
                     Mul(power, i.ScaleFactor), fromMethodNameSufix, null);
                 Units.Add(q);
             }
@@ -150,7 +141,7 @@ namespace UnitGenerator
             {
                 var otherUnitContainer = values[i - 1] + "Unit";
                 var myUnitContainer    = values[power - 1] + "Unit";
-                var relation = new PrefixRelation(
+                var relation = new UnitNamePrefixRelation(
                     Prefix(i), Prefix(power),
                     myUnitContainer, otherUnitContainer);
                 PrefixRelations.Add(relation);
@@ -167,6 +158,6 @@ namespace UnitGenerator
         public XValueTypeName Name { get; }
 
         public List<AliasedPrefixedUnitInfo> Units           { get; } = new List<AliasedPrefixedUnitInfo>();
-        public List<PrefixRelation>          PrefixRelations { get; } = new List<PrefixRelation>();
+        public List<UnitNamePrefixRelation>          PrefixRelations { get; } = new List<UnitNamePrefixRelation>();
     }
 }

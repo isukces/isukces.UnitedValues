@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public Area(decimal value, [JetBrains.Annotations.NotNull] AreaUnit unit)
+        public Area(decimal value, AreaUnit unit)
         {
             Value = value;
             if (unit is null)

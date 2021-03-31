@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public Length(decimal value, [JetBrains.Annotations.NotNull] LengthUnit unit)
+        public Length(decimal value, LengthUnit unit)
         {
             Value = value;
             if (unit is null)

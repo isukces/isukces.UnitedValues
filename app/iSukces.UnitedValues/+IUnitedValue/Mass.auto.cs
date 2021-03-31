@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public Mass(decimal value, [JetBrains.Annotations.NotNull] MassUnit unit)
+        public Mass(decimal value, MassUnit unit)
         {
             Value = value;
             if (unit is null)

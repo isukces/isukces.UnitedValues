@@ -8,7 +8,7 @@ namespace iSukces.UnitedValues
     public partial class AccelerationUnits
     {
         /// <summary>
-        /// represents acceleration unit 'm/s²'
+        /// represents acceleration unit '/'
         /// </summary>
         public static readonly AccelerationUnit MetersPerSquareSeconds = new AccelerationUnit(LengthUnits.Meter, SquareTimeUnits.SquareSecond);
 

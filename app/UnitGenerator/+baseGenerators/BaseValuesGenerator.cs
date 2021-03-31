@@ -39,7 +39,7 @@ namespace UnitGenerator
             AddCommonValues_EqualsMethods(unitTypeName);
         }
 
-        protected abstract ConstructorParameterInfo[] GetConstructorProperties();
+        protected abstract Col1 GetConstructorProperties();
 
 
         private void AddCommonValues_EqualsMethods(string unitTypeName)

@@ -13,14 +13,14 @@ namespace iSukces.UnitedValues
         /// creates instance of TimeUnit
         /// </summary>
         /// <param name="unitName">name of unit</param>
-        public TimeUnit([JetBrains.Annotations.NotNull] string unitName)
+        public TimeUnit(string unitName)
         {
-            unitName = unitName?.Trim();
             if (unitName is null)
                 throw new NullReferenceException(nameof(unitName));
-            if (string.IsNullOrWhiteSpace(unitName))
+            unitName = unitName.Trim();
+            if (unitName.Length == 0)
                 throw new ArgumentException(nameof(unitName));
-            UnitName = unitName.TrimToNull();
+            UnitName = unitName;
         }
 
         public bool Equals(TimeUnit other)
@@ -85,7 +85,7 @@ namespace iSukces.UnitedValues
         /// <param name="src"></param>
         public static implicit operator TimeUnit(UnitDefinition<TimeUnit> src)
         {
-            return new TimeUnit(src.UnitName);
+            return src.Unit;
         }
 
         /// <summary>

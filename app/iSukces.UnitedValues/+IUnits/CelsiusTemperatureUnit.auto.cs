@@ -13,14 +13,14 @@ namespace iSukces.UnitedValues
         /// creates instance of CelsiusTemperatureUnit
         /// </summary>
         /// <param name="unitName">name of unit</param>
-        public CelsiusTemperatureUnit([JetBrains.Annotations.NotNull] string unitName)
+        public CelsiusTemperatureUnit(string unitName)
         {
-            unitName = unitName?.Trim();
             if (unitName is null)
                 throw new NullReferenceException(nameof(unitName));
-            if (string.IsNullOrWhiteSpace(unitName))
+            unitName = unitName.Trim();
+            if (unitName.Length == 0)
                 throw new ArgumentException(nameof(unitName));
-            UnitName = unitName.TrimToNull();
+            UnitName = unitName;
         }
 
         public bool Equals(CelsiusTemperatureUnit other)
@@ -78,7 +78,7 @@ namespace iSukces.UnitedValues
         /// <param name="src"></param>
         public static implicit operator CelsiusTemperatureUnit(UnitDefinition<CelsiusTemperatureUnit> src)
         {
-            return new CelsiusTemperatureUnit(src.UnitName);
+            return src.Unit;
         }
 
         /// <summary>

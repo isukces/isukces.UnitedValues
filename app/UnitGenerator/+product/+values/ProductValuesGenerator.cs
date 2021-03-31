@@ -28,9 +28,9 @@ namespace UnitGenerator
             Add_SerializeToJson();
         }
 
-        protected override ConstructorParameterInfo[] GetConstructorProperties()
+        protected override Col1 GetConstructorProperties()
         {
-            return new[]
+            return new Col1(new[]
             {
                 new ConstructorParameterInfo(ValuePropName,
                     ValuePropertyType,
@@ -38,7 +38,7 @@ namespace UnitGenerator
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
                     Cfg.UnitTypes.Unit.TypeName, null, "unit")
-            };
+            });
         }
 
         protected override CompositeUnitGeneratorInfo GetInfo()

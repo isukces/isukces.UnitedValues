@@ -55,17 +55,23 @@ namespace UnitGenerator
             }
         }
 
-        protected void Add_Constructor(params ConstructorParameterInfo[] items)
+        protected void Add_Constructor(Col1 col)
         {
             var target = Target;
             var code   = new CsCodeWriter();
             var m      = target.AddConstructor("creates instance of " + target.Name);
-            foreach (var i in items)
+            var c      = col.Writer1.Code;
+            if (!string.IsNullOrEmpty(c))
+                code.WriteLine(c);
+            foreach (var i in col.Items)
             {
-                var p = m.AddParam(i.PropertyName.FirstLower(), i.PropertyType, i.Description);
+                var flags = i.CheckingFlags;
+                code.CheckArgument(i.ArgName, flags.ConvertToArgChecking(), Target);
+                var p     = m.AddParam(i.PropertyName.FirstLower(), i.PropertyType, i.Description);
+                if ((flags & Flags1.Optional) != 0)
+                    p.ConstValue = "null";
 
-                var flags = i.CheckNotNull;
-                if ((flags & Flags1.TrimValue) != 0)
+                /*if ((flags & Flags1.TrimValue) != 0)
                 {
                     code.WriteLine("{0} = {0}?.Trim();", i.ArgName);
                     flags &= ~Flags1.TrimValue;
@@ -73,20 +79,20 @@ namespace UnitGenerator
                     if ((flags & Flags1.NotWhitespace) != 0)
                     {
                         flags &= ~Flags1.NotWhitespace;
-                        flags |= ~Flags1.NotEmpty;
+                        flags |= Flags1.NotEmpty;
                     }
-                }
+                }*/
 
-                if ((flags & Flags1.NotNull) != 0)
+                /*if ((flags & Flags1.NotNull) != 0)
                 {
                     flags &= ~Flags1.NotNull;
                     p.Attributes.Add(CsAttribute.Make<NotNullAttribute>(target));
                     var throwCode = new Args($"nameof({i.ArgName})")
                         .Throw<NullReferenceException>(target);
                     code.SingleLineIf($"{i.ArgName} is null", throwCode);
-                }
+                }*/
 
-                if ((flags & Flags1.NotWhitespace) != 0)
+                /*if ((flags & Flags1.NotWhitespace) != 0)
                 {
                     flags &= ~(Flags1.NotEmpty | Flags1.NotWhitespace);
                     // var m = nameof(string.IsNullOrWhiteSpace);
@@ -106,10 +112,15 @@ namespace UnitGenerator
                     code.SingleLineIf($"string.IsNullOrEmpty({i.ArgName})", throwCode);
 
                     flags &= ~(Flags1.NotNullOrWhitespace | Flags1.NotNullOrEmpty);
-                }
+                }*/
 
-                code.WriteAssign(i.PropertyName, i.Expression);
+                if ((flags & Flags1.DoNotAssignProperty) == 0)
+                    code.WriteAssign(i.PropertyName, i.Expression);
             }
+
+            c = col.Writer2.Code;
+            if (!string.IsNullOrEmpty(c))
+                code.WriteLine(c);
 
             m.WithBody(code);
         }
@@ -147,9 +158,14 @@ namespace UnitGenerator
         }
 
 
-        protected void Add_Properties(params ConstructorParameterInfo[] items)
+        protected void Add_Properties(Col1 c)
         {
-            foreach (var i in items) Add_Property(i.PropertyName, i.PropertyType, i.Description);
+            foreach (var i in c.Items)
+            {
+                if ((i.CheckingFlags & Flags1.DoNotCreateProperty) != 0)
+                    continue;
+                Add_Property(i.PropertyName, i.PropertyType, i.Description);
+            }
         }
 
         protected void Add_Property(string name, string type, string description)

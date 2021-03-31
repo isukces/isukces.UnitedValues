@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public SquareTime(decimal value, [JetBrains.Annotations.NotNull] SquareTimeUnit unit)
+        public SquareTime(decimal value, SquareTimeUnit unit)
         {
             Value = value;
             if (unit is null)

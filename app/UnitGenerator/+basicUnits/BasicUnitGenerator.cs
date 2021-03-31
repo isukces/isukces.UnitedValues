@@ -17,9 +17,13 @@ namespace UnitGenerator
 
         protected override void GenerateOne()
         {
+            Related = RelatedUnitGeneratorDefs.All.GetPowers(Cfg);
+
+
             Target.Kind = CsNamespaceMemberKind.Class;
             // cl.Description = $"Reprezentuje {unit.Description} w [{unit.Unit}]";
             Add_Constructor();
+            Add_Property();
             Add_ImplicitOperator();
             AddCommon_EqualityOperators();
             Add_Equals();
@@ -27,7 +31,7 @@ namespace UnitGenerator
             Add_GetHashCode();
             Add_ToString(PropertyName);
             Add_IEquatableEquals();
-            Add_Property();
+
 
             Target.ImplementedInterfaces.Add(Target.Owner.GetTypeName<IUnit>());
             var t = MakeGenericType<IEquatable<int>>(Target.Owner, Cfg);
@@ -52,7 +56,10 @@ namespace UnitGenerator
 
         private void Add_Constructor()
         {
-            Add_Constructor(GetConstructorProperties());
+            Add_Constructor(GetConstructorProperties(0));
+            var c2 = GetConstructorProperties(1);
+            if (c2 != null)
+                Add_Constructor(c2);
         }
 
         private void Add_ConvertOtherPower()
@@ -78,15 +85,9 @@ namespace UnitGenerator
 
         private void Add_Decompose()
         {
-            var infos = RelatedUnitGeneratorDefs.All;
-            var tmp   = infos.GetPowers(Cfg);
-            if (tmp?.MyInfo is null || tmp.Other.Count == 0)
+            if (!Related.IsPower2OrHigher)
                 return;
-            if (tmp.MyInfo.Power < 2)
-                return;
-            var basicUnit = tmp.Other.Where(a => a.Key == 1)
-                .Select(a => a.Value)
-                .SingleOrDefault();
+            var basicUnit = BaseUnit;
 
             {
                 var type = new Args(Target.GetTypeName<DecomposableUnitItem>())
@@ -95,10 +96,10 @@ namespace UnitGenerator
                 var cs = Ext.Create(GetType());
                 if (basicUnit is null)
                 {
-                     
-                    cs.WriteLine("var decomposer = new UnitDecomposer();");
+                    throw new NotSupportedException();
+                    /*cs.WriteLine("var decomposer = new UnitDecomposer();");
                     cs.WriteLine("decomposer.Add(this, 1);");
-                    cs.WriteReturn("decomposer.Items");
+                    cs.WriteReturn("decomposer.Items");*/
                 }
                 else
                 {
@@ -110,18 +111,31 @@ namespace UnitGenerator
 
                 Target.ImplementedInterfaces.Add(nameof(IDecomposableUnit));
             }
-            if (basicUnit != null)
+            // if (basicUnit != null)
             {
                 var resultType = Target.GetTypeName<DecomposableUnitItem>();
                 var cs         = Ext.Create(GetType());
                 cs.WriteAssign("tmp", "Get" + basicUnit.Name + "Unit()", true);
-                var args = new Args("tmp", tmp.MyInfo.Power.CsEncode()).Create(resultType);
+                var args = new Args("tmp", Related.MyInfo.Power.CsEncode()).Create(resultType);
                 cs.WriteReturn(args);
 
                 var m = Target.AddMethod(nameof(IDerivedDecomposableUnit.GetBasicUnit), resultType);
                 m.WithBody(cs);
 
                 Target.ImplementedInterfaces.Add(nameof(IDerivedDecomposableUnit));
+            }
+        }
+
+        private RelatedUnit BaseUnit
+        {
+            get
+            {
+                if (Related.Other.Count == 0)
+                    return null;
+                var basicUnit = Related.Other.Where(a => a.Key == 1)
+                    .Select(a => a.Value)
+                    .SingleOrDefault();
+                return basicUnit;
             }
         }
 
@@ -163,17 +177,22 @@ namespace UnitGenerator
 
         private void Add_ImplicitOperator()
         {
-            var pa = MakeGenericType<UnitDefinition<IUnit>>(Target, Cfg);
-            Add_ImplicitOperator(pa, Target.Name, $"new {Cfg}(src.{PropertyName})");
+            var pa   = MakeGenericType<UnitDefinition<IUnit>>(Target, Cfg);
+            // var expr = $"new {Cfg}(src.{PropertyName})";
+            var expr = "src.Unit";
+            Add_ImplicitOperator(pa, Target.Name, expr);
         }
 
         private void Add_Property()
         {
-            Add_Properties(GetConstructorProperties());
+            Add_Properties(GetConstructorProperties(0));
+            var c = GetConstructorProperties(1);
+            if (c != null)
+                Add_Properties(c);
         }
 
 
-        private ConstructorParameterInfo[] GetConstructorProperties()
+        private Col1 GetConstructorProperties(int nr)
         {
             string GetExpressionPlus()
             {
@@ -189,14 +208,40 @@ namespace UnitGenerator
             }
 
             var expr = PropertyName.FirstLower() + GetExpressionPlus();
-            expr += ".TrimToNull()";
-            return new[]
+            if (nr == 1)
             {
-                new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit",
-                    Flags1.NormalizedString)
-            };
+                if (!Related.IsPower2OrHigher)
+                    return null;
+                var a= new[]
+                {
+                    new ConstructorParameterInfo("BaseUnit", Related.MyInfo.PowerOne.Unit.TypeName, null, "based on",
+                        Flags1.NotNull),
+                    new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit",
+                        Flags1.Optional|Flags1.DoNotAssignProperty|Flags1.DoNotCreateProperty)
+                };
+                var h         = new Col1(a);
+                var powerChar = Ext.GetPowerSuffix(Related.MyInfo.Power);
+                h.Writer2.WriteLine("unitName = unitName?.Trim();");
+                h.Writer2.WriteLine(PropertyName + " = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "+powerChar.CsEncode()+" : unitName;");
+                return h;
+            }
+
+            {
+                var b = new[]
+                {
+                    new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit",
+                        Flags1.NormalizedString)
+                };
+                return new Col1(b);
+            }
         }
+
+
+        private RelatedUnitsFamily Related { get; set; }
+
 
         private const string PropertyName = nameof(IUnitNameContainer.UnitName);
     }
+
+ 
 }

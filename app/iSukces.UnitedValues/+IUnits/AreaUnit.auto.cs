@@ -13,14 +13,28 @@ namespace iSukces.UnitedValues
         /// creates instance of AreaUnit
         /// </summary>
         /// <param name="unitName">name of unit</param>
-        public AreaUnit([JetBrains.Annotations.NotNull] string unitName)
+        public AreaUnit(string unitName)
         {
-            unitName = unitName?.Trim();
             if (unitName is null)
                 throw new NullReferenceException(nameof(unitName));
-            if (string.IsNullOrWhiteSpace(unitName))
+            unitName = unitName.Trim();
+            if (unitName.Length == 0)
                 throw new ArgumentException(nameof(unitName));
-            UnitName = unitName?.Replace('2', '²').TrimToNull();
+            UnitName = unitName?.Replace('2', '²');
+        }
+
+        /// <summary>
+        /// creates instance of AreaUnit
+        /// </summary>
+        /// <param name="baseUnit">based on</param>
+        /// <param name="unitName">name of unit</param>
+        public AreaUnit(LengthUnit baseUnit, string unitName = null)
+        {
+            if (baseUnit is null)
+                throw new NullReferenceException(nameof(baseUnit));
+            BaseUnit = baseUnit;
+            unitName = unitName?.Trim();
+            UnitName = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "²" : unitName;
         }
 
         public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
@@ -105,13 +119,18 @@ namespace iSukces.UnitedValues
         /// <param name="src"></param>
         public static implicit operator AreaUnit(UnitDefinition<AreaUnit> src)
         {
-            return new AreaUnit(src.UnitName);
+            return src.Unit;
         }
 
         /// <summary>
         /// name of unit
         /// </summary>
         public string UnitName { get; }
+
+        /// <summary>
+        /// based on
+        /// </summary>
+        public LengthUnit BaseUnit { get; }
 
     }
 }

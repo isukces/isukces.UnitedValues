@@ -4,10 +4,10 @@ namespace UnitGenerator
 {
     public class RelatedUnitInfo : IRelatedUnitDefinition
     {
-        public RelatedUnitInfo(string fieldName, string unitShortCode, string fromMethodNameSufix)
+        public RelatedUnitInfo(string fieldName, UnitShortCodeSource unitShortCode, string fromMethodNameSufix)
         {
-            unitShortCode       = unitShortCode?.Trim();
-            fieldName           = fieldName.CoalesceNullOrWhiteSpace(unitShortCode);
+            // unitShortCode       = unitShortCode?.Trim();
+            fieldName           = fieldName.CoalesceNullOrWhiteSpace(unitShortCode. EffectiveValue);
             FieldName           = fieldName.Trim().FirstUpper();
             UnitShortCode       = unitShortCode;
             FromMethodNameSufix = fromMethodNameSufix;
@@ -20,7 +20,7 @@ namespace UnitGenerator
 
         public string FieldName { get; }
 
-        public string UnitShortCode { get; }
+        public UnitShortCodeSource UnitShortCode { get; }
 
         public string FromMethodNameSufix { get; }
     }

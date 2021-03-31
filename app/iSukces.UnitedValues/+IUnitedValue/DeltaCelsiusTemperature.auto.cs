@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public DeltaCelsiusTemperature(decimal value, [JetBrains.Annotations.NotNull] CelsiusTemperatureUnit unit)
+        public DeltaCelsiusTemperature(decimal value, CelsiusTemperatureUnit unit)
         {
             Value = value;
             if (unit is null)

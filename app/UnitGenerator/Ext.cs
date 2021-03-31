@@ -5,11 +5,76 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
+using iSukces.UnitedValues;
 
 namespace UnitGenerator
 {
     public static class Ext
     {
+        public static void CheckArgument(this CsCodeWriter code, string argName, ArgChecking flags,
+            ITypeNameResolver resolver)
+        {
+            if (flags == ArgChecking.None)
+                return;
+
+            var canBeNull     = true;
+            var argNameToRead = argName + "?";
+            if ((flags & ArgChecking.NotNull) != 0)
+            {
+                var throwCode = new Args($"nameof({argName})")
+                    .Throw<NullReferenceException>(resolver);
+                code.SingleLineIf($"{argName} is null", throwCode);
+                canBeNull     = false;
+                argNameToRead = argName;
+            }
+            
+            if ((flags & ArgChecking.TrimValue) != 0)
+            {
+                code.WriteLine("{0} = {1}.Trim();", argName, argNameToRead);
+                flags   &= ~ArgChecking.TrimValue;
+
+                if ((flags & ArgChecking.NotWhitespace) != 0)
+                {
+                    flags &= ~ArgChecking.NotWhitespace;
+                    flags |= ArgChecking.NotEmpty;
+                }
+            }
+
+            if ((flags & ArgChecking.NotNull) != 0 && canBeNull)
+            {
+                flags &= ~ArgChecking.NotNull;
+                //p.Attributes.Add(CsAttribute.Make<NotNullAttribute>(target));
+                var throwCode = new Args($"nameof({argName})")
+                    .Throw<NullReferenceException>(resolver);
+                code.SingleLineIf($"{argName} is null", throwCode);
+            }
+
+            if ((flags & ArgChecking.NotWhitespace) != 0)
+            {
+                flags &= ~(ArgChecking.NotEmpty | ArgChecking.NotWhitespace);
+                // var m = nameof(string.IsNullOrWhiteSpace);
+                var throwCode = new Args($"nameof({argName})")
+                    .Throw<ArgumentException>(resolver);
+                code.SingleLineIf($"string.IsNullOrWhiteSpace({argName})", throwCode);
+
+                flags &= ~(ArgChecking.NotNullOrWhitespace | ArgChecking.NotNullOrEmpty);
+            }
+
+            if ((flags & ArgChecking.NotEmpty) != 0)
+            {
+                flags &= ~ArgChecking.NotEmpty;
+                var throwCode = new Args($"nameof({argName})")
+                    .Throw<ArgumentException>(resolver);
+                var condition =
+                    canBeNull
+                        ? $"string.IsNullOrEmpty({argName})"
+                        : $"{argName}.Length == 0";
+                
+                code.SingleLineIf(condition, throwCode);
+
+            }
+        }
+
         public static CsMethod AddOperator(this CsClass cl, string operatorName, Args arg, string resultType = null)
         {
             resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name);
@@ -68,6 +133,21 @@ namespace UnitGenerator
             return multiplicator.ToString(CultureInfo.InvariantCulture);
         }
 
+        public static string GetPowerSuffix(int power)
+        {
+            switch (power)
+            {
+                case 1:
+                    return null;
+                case 2:
+                    return AreaUnits.SquareSign;
+                case 3:
+                    return "³";
+                default:
+                    throw new NotSupportedException();
+            }
+        }
+
         public static TValue[] GetStaticFieldsValues<THost, TValue>()
         {
             var l            = new List<TValue>();
@@ -106,17 +186,49 @@ namespace UnitGenerator
             return cw;
         }
 
-        public static CodeWriter WriteAssign(this CodeWriter cw, string variable, string value, bool addVar=false)
+        public static CodeWriter WriteAssign(this CodeWriter cw, string variable, string value, bool addVar = false)
         {
-            var code= (addVar?"var ":"")+variable + " = " + value + ";";
+            var code = (addVar ? "var " : "") + variable + " = " + value + ";";
             cw.WriteLine(code);
             return cw;
         }
-        
+
         public static CodeWriter WriteReturn(this CodeWriter cw, string code)
         {
             cw.WriteLine($"return {code};");
             return cw;
         }
+
+        public static ArgChecking ConvertToArgChecking(this Flags1 flags)
+        {
+            var r = ArgChecking.None;
+            if ((flags & Flags1.NotNull) != 0)
+                r |= ArgChecking.NotNull;
+            if ((flags & Flags1.NotEmpty) != 0)
+                r |= ArgChecking.NotEmpty;
+            if ((flags & Flags1.NotWhitespace) != 0)
+                r |= ArgChecking.NotWhitespace;
+            if ((flags & Flags1.TrimValue) != 0)
+                r |= ArgChecking.TrimValue;
+            
+            return r;
+        }
+    }
+
+
+    [Flags]
+    public enum ArgChecking
+    {
+        None,
+        NotNull = 1,
+        NotEmpty = 2,
+        NotWhitespace = 4,
+        TrimValue = 8,
+
+
+        NotNullOrWhitespace = NotNull | NotWhitespace,
+        NotNullOrEmpty = NotNull | NotEmpty,
+
+        NormalizedString = NotNull | NotNullOrWhitespace | TrimValue,
     }
 }

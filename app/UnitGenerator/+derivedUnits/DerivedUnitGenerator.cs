@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
+using JetBrains.Annotations;
 
 namespace UnitGenerator
 {
@@ -15,11 +15,36 @@ namespace UnitGenerator
 
         protected override void GenerateOne()
         {
+            Related         = RelatedUnitGeneratorDefs.All.GetPowers(Cfg.Name.ToUnitTypeName());
             Target.IsStatic = true;
             Add_AllProperty();
             Add_Properties();
             Add_Register();
+            Add_RegisterUnitExchangeFactors();
+            Add_TryRecoverUnitFromName();
+        }
 
+        private void Add_TryRecoverUnitFromName()
+        {
+            var cw = Ext.Create(GetType());
+
+            const ArgChecking flags = ArgChecking.NormalizedString;
+            cw.CheckArgument("unitName", flags, Target);
+            cw.Open("foreach (var i in All)");
+            cw.SingleLineIf("unitName == i.UnitName", "return i.Unit;");
+            cw.Close();
+
+            var resultTypeName = Cfg.Name.ToUnitTypeName().GetTypename();
+            cw.WriteReturn(new Args("unitName").Create(resultTypeName));
+            var m = Target.AddMethod("TryRecoverUnitFromName", resultTypeName)
+                .WithStatic()
+                .WithBody(cw);
+            var p = m.AddParam("unitName", "string");
+            p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
+        }
+
+        private void Add_RegisterUnitExchangeFactors()
+        {
             Target.WithAttributeFromName(nameof(UnitsContainerAttribute));
             var m = Target.AddMethod("RegisterUnitExchangeFactors", "void")
                 .WithStatic()
@@ -27,9 +52,10 @@ namespace UnitGenerator
             m.AddParam<UnitExchangeFactors>("factors", Target);
         }
 
+
         protected override string GetTypename(RelatedUnit cfg)
         {
-            return cfg.Name + "Units";
+            return cfg.Name.ToUnitTypeName().ToUnitContainerTypeName().TypeName;
         }
 
         protected override void PrepareFile(CsFile file)
@@ -58,28 +84,45 @@ namespace UnitGenerator
                 .WithOwnGetter(cw.Code)
                 .Description = $"All known {Cfg.Name.FirstLower()} units";
         }
-        
+
         private void Add_Properties()
         {
             foreach (var i in Cfg.Units)
             {
-                var type = new Args(Cfg.Name + "Unit").MakeGenericType("UnitDefinition");
-                var args = new[]
+                var unitTypeName = Cfg.Name.ToUnitTypeName().GetTypename();
+
+                var n2 = i.FieldName + unitTypeName;
                 {
-                    i.UnitShortCode.CsEncode(),
-                    i.ScaleFactor
-                };
+                    var args       = i.UnitShortCode.GetCreationArgs(Related);
+                    var constValue = args.Create(unitTypeName);
 
-                if (i.Aliases != null)
-                    args = i.Aliases.Plus(args);
+                    Target.AddField(n2, unitTypeName)
+                        .WithIsReadOnly()
+                        .WithVisibility(Visibilities.Private)
+                        .WithConstValue(constValue)
+                        .WithStatic();
+                }
+                {
+                    var args = new[]
+                    {
+                        n2,
+                        i.ScaleFactor
+                    };
 
-                // public static readonly UnitDefinition<LengthUnit> Km
-                // = new UnitDefinition<LengthUnit>("km", 1000m);
-                var value = new Args(args).Create(type);
-                Target.AddField(i.FieldName, type)
-                    .WithIsReadOnly()
-                    .WithStatic()
-                    .WithConstValue(value);
+                    if (i.Aliases != null)
+                        args = i.Aliases.Plus(args);
+
+                    var unitDefinitionType = new Args(unitTypeName)
+                        .MakeGenericType("UnitDefinition");
+
+                    // public static readonly UnitDefinition<LengthUnit> Km
+                    // = new UnitDefinition<LengthUnit>("km", 1000m);
+                    var value = new Args(args).Create(unitDefinitionType);
+                    Target.AddField(i.FieldName, unitDefinitionType)
+                        .WithIsReadOnly()
+                        .WithStatic()
+                        .WithConstValue(value);
+                }
             }
         }
 
@@ -106,5 +149,7 @@ namespace UnitGenerator
                 .WithVisibility(Visibilities.Internal)
                 .AddParam<UnitRelationsDictionary>("dict", Target);
         }
+
+        public RelatedUnitsFamily Related { get; set; }
     }
 }

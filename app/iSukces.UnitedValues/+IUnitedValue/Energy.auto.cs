@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
-        public Energy(decimal value, [JetBrains.Annotations.NotNull] EnergyUnit unit)
+        public Energy(decimal value, EnergyUnit unit)
         {
             Value = value;
             if (unit is null)

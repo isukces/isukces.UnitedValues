@@ -23,7 +23,7 @@ namespace UnitGenerator
 
                 var args = new Args(arg, types.Container + "." + u.FieldName)
                     .Create(target.Name);
-                var valueIn           = $" value in {u.UnitShortCode}";
+                var valueIn           = $" value in {u.UnitShortCode.EffectiveValue}";
                 var methodName        = "From" + u.FromMethodNameSufix.CoalesceNullOrWhiteSpace(u.FieldName);
                 var methodDescription = $"creates {types.Value.FirstLower()} from{valueIn}";
                 var m = target.AddMethod(methodName, target.Name, methodDescription)
@@ -58,9 +58,9 @@ namespace UnitGenerator
         }
 
 
-        protected override ConstructorParameterInfo[] GetConstructorProperties()
+        protected override Col1 GetConstructorProperties()
         {
-            return new[]
+            return new Col1(new[]
             {
                 new ConstructorParameterInfo(ValuePropName,
                     ValuePropertyType,
@@ -68,7 +68,7 @@ namespace UnitGenerator
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
                     Cfg.UnitTypes.Unit.GetTypename(), null, "unit", Flags1.NotNull)
-            };
+            });
         }
 
         protected override string GetTypename(BasicUnit cfg)

@@ -34,8 +34,9 @@ namespace UnitGenerator
                 new ConstructorParameterInfo(_info.SecondPropertyName, _info.Second.Unit.TypeName, null,
                     _info.SecondPropertyName.Decamelize().ToLower())
             };
-            Add_Constructor(pi);
-            Add_Properties(pi);
+            var col1 = new Col1(pi);
+            Add_Constructor(col1);
+            Add_Properties(col1);
             Add_UnitNameProperty();
             Add_Equals();
             Add_GetHashCode(
