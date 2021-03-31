@@ -18,6 +18,8 @@ namespace UnitGenerator
                 Add_Length_PlanarDensity_LinearDensity(c);
                 Add_PlanarDensity_Length_Density(c);
                 Add_LinearDensity_Area_Density(c);
+                Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity(c);
+                
 
                 c.WithDiv<Force, Area, Pressure>();
                 c.WithDiv<Force, Length, LinearForce>();

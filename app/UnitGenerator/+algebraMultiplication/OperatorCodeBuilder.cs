@@ -1,3 +1,4 @@
+using System;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
 
@@ -10,10 +11,16 @@ namespace UnitGenerator
             _input = input;
         }
 
-        public void WriteCode(CodeWriter cw)
+        public void WriteCode(CsCodeWriter cw)
         {
             if (!string.IsNullOrEmpty(_input.Comment))
                 cw.WriteLine("// " + _input.Comment);
+            if (_input.Throw)
+            {
+                cw.WriteLine("// " + _input.OperatorParameters.DebugIs);
+                cw.WriteLine("throw new " + nameof(NotImplementedException) + "();");
+                return;
+            }
             var right = OperatorParameters.RightMethodArgumentName;
             var left  = OperatorParameters.LeftMethodArgumentName;
 

@@ -7,14 +7,28 @@ namespace iSukces.UnitedValues
 {
     public sealed class UnitDecomposer
     {
+        private void Add(DecomposableUnitItem item, int power)
+        {
+            Add(item.Unit, item.Power * power);
+        }
+
         public void Add(IUnit unit, int power)
         {
             if (unit is IDerivedDecomposableUnit d)
             {
                 var gg = d.GetBasicUnit();
-                Add(gg.Unit, gg.Power * power);
+                Add(gg, power);
                 return;
             }
+
+            if (unit is IDecomposableUnit x)
+            {
+                var dec = x.Decompose();
+                for (var index = 0; index < dec.Count; index++) 
+                    Add(dec[index], power);
+                return;
+            }
+
             var key = new Key(unit.GetType(), unit.UnitName);
             for (var index = 0; index < _sink.Count; index++)
             {

@@ -21,5 +21,8 @@
       <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Scenarios.cs">
         <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
       </Compile>
+      <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.SpecificHeatCapacity.cs">
+        <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

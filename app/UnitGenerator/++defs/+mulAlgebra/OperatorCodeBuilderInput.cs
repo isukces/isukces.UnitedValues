@@ -29,6 +29,11 @@ namespace UnitGenerator
         }
 
 
+        public void ConvertRight<T>(params string[] a)
+        {
+            var type = new Args(a).Create<T>();
+            ConvertRight(type);
+        }
         public void ConvertRight(string targetType)
         {
             RightValue = $"{OperatorParameters.RightMethodArgumentName}.ConvertTo({targetType})";
@@ -62,6 +67,12 @@ namespace UnitGenerator
 #endif
         }
 
+        public void SetThrow([CallerMemberName] string member = null)
+        {
+            Throw   = true;
+            Comment = "Fill method " + member;
+        }
+
         public void WithResultUnit<T>(params string[] a)
         {
             a          = a.Select(Replace).ToArray();
@@ -76,6 +87,7 @@ namespace UnitGenerator
         public List<VarDefinition> Vars { get; } = new List<VarDefinition>();
 
         public string Comment { get; set; }
+        public bool   Throw   { get; set; }
 
         private static readonly Regex ReplaceRegex =
             new Regex(ReplaceFilter, RegexOptions.Multiline | RegexOptions.Compiled);

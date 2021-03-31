@@ -46,7 +46,10 @@ namespace UnitGenerator
 
         public static readonly FractionUnit MassStream
             = FractionUnit.Make<MassStream, Mass, Time>();
+        
 
+        public static readonly FractionUnit EnergyMassDensity
+            = FractionUnit.Make<Energy, Mass>(nameof(EnergyMassDensity));
 
         private static FractionUnitsCollection _allFractionUnitses;
 
