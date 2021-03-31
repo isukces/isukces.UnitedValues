@@ -88,7 +88,7 @@ namespace iSukces.UnitedValues
             // scenario D3
             var linearDensityUnit = linearDensity.Unit;
             var lengthConverted = length.ConvertTo(linearDensityUnit.DenominatorUnit);
-            var value = lengthConverted.Value * linearDensity.Value;
+            var value = linearDensity.Value * lengthConverted.Value;
             return new Mass(value, linearDensityUnit.CounterUnit);
         }
 
@@ -183,7 +183,7 @@ namespace iSukces.UnitedValues
             var areaUnit = length.Unit.GetAreaUnit();
             var x3 = new PlanarDensityUnit(rightArgumentUnit.CounterUnit, areaUnit);
             var planarDensityConverted = planarDensity.ConvertTo(x3);
-            var value = planarDensityConverted.Value * length.Value;
+            var value = length.Value * planarDensityConverted.Value;
             return new LinearDensity(value, new LinearDensityUnit(rightArgumentUnit.CounterUnit, length.Unit));
         }
 
@@ -199,7 +199,7 @@ namespace iSukces.UnitedValues
             // scenario with hint
             var lengthUnit = planarDensity.Unit.DenominatorUnit.GetLengthUnit();
             var lengthConverted = length.ConvertTo(lengthUnit);
-            var value = lengthConverted.Value * planarDensity.Value;
+            var value = planarDensity.Value * lengthConverted.Value;
             return new LinearDensity(value, new LinearDensityUnit(planarDensity.Unit.CounterUnit, lengthUnit));
         }
 
@@ -295,7 +295,7 @@ namespace iSukces.UnitedValues
             var volumeUnit = length.Unit.GetVolumeUnit();
             var x3 = new DensityUnit(rightArgumentUnit.CounterUnit, volumeUnit);
             var densityConverted = density.ConvertTo(x3);
-            var value = densityConverted.Value * length.Value;
+            var value = length.Value * densityConverted.Value;
             return new PlanarDensity(value, new PlanarDensityUnit(rightArgumentUnit.CounterUnit, areaUnit));
         }
 
@@ -312,7 +312,7 @@ namespace iSukces.UnitedValues
             var areaUnit = density.Unit.DenominatorUnit.GetAreaUnit();
             var lengthUnit = density.Unit.DenominatorUnit.GetLengthUnit();
             var lengthConverted = length.ConvertTo(lengthUnit);
-            var value = lengthConverted.Value * density.Value;
+            var value = density.Value * lengthConverted.Value;
             return new PlanarDensity(value, new PlanarDensityUnit(density.Unit.CounterUnit, areaUnit));
         }
 
@@ -421,7 +421,7 @@ namespace iSukces.UnitedValues
             // scenario D3
             var linearForceUnit = linearForce.Unit;
             var lengthConverted = length.ConvertTo(linearForceUnit.DenominatorUnit);
-            var value = lengthConverted.Value * linearForce.Value;
+            var value = linearForce.Value * lengthConverted.Value;
             return new Force(value, linearForceUnit.CounterUnit);
         }
 

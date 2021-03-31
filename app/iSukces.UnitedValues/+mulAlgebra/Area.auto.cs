@@ -143,7 +143,7 @@ namespace iSukces.UnitedValues
             // scenario D3
             var planarDensityUnit = planarDensity.Unit;
             var areaConverted = area.ConvertTo(planarDensityUnit.DenominatorUnit);
-            var value = areaConverted.Value * planarDensity.Value;
+            var value = planarDensity.Value * areaConverted.Value;
             return new Mass(value, planarDensityUnit.CounterUnit);
         }
 
@@ -239,7 +239,7 @@ namespace iSukces.UnitedValues
             var volumeUnit = area.Unit.GetVolumeUnit();
             var x3 = new DensityUnit(rightArgumentUnit.CounterUnit, volumeUnit);
             var densityConverted = density.ConvertTo(x3);
-            var value = densityConverted.Value * area.Value;
+            var value = area.Value * densityConverted.Value;
             return new LinearDensity(value, new LinearDensityUnit(rightArgumentUnit.CounterUnit, lengthUnit));
         }
 
@@ -256,7 +256,7 @@ namespace iSukces.UnitedValues
             var lengthUnit = density.Unit.DenominatorUnit.GetLengthUnit();
             var areaUnit = density.Unit.DenominatorUnit.GetAreaUnit();
             var areaConverted = area.ConvertTo(areaUnit);
-            var value = areaConverted.Value * density.Value;
+            var value = density.Value * areaConverted.Value;
             return new LinearDensity(value, new LinearDensityUnit(density.Unit.CounterUnit, lengthUnit));
         }
 
@@ -365,7 +365,7 @@ namespace iSukces.UnitedValues
             // scenario D3
             var pressureUnit = pressure.Unit;
             var areaConverted = area.ConvertTo(pressureUnit.DenominatorUnit);
-            var value = areaConverted.Value * pressure.Value;
+            var value = pressure.Value * areaConverted.Value;
             return new Force(value, pressureUnit.CounterUnit);
         }
 

@@ -19,7 +19,7 @@ namespace iSukces.UnitedValues
             var lu = linearDensity.Unit;
             var areaUnit = lu.DenominatorUnit.GetAreaUnit();
             var lengthConverted = length.ConvertTo(lu.DenominatorUnit);
-            var value = lengthConverted.Value * linearDensity.Value;
+            var value = linearDensity.Value / lengthConverted.Value;
             return new PlanarDensity(value, new PlanarDensityUnit(lu.CounterUnit, areaUnit));
         }
 
@@ -36,7 +36,7 @@ namespace iSukces.UnitedValues
             var areaUnit = lu.DenominatorUnit.GetAreaUnit();
             var x = new PlanarDensityUnit(lu.CounterUnit, areaUnit);
             var planarDensityConverted = planarDensity.ConvertTo(x);
-            var value = planarDensityConverted.Value * linearDensity.Value;
+            var value = linearDensity.Value / planarDensityConverted.Value;
             return new Length(value, lu.DenominatorUnit);
             // scenario F1
         }

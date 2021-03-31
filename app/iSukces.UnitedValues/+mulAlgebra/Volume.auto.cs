@@ -33,7 +33,7 @@ namespace iSukces.UnitedValues
             // scenario D3
             var densityUnit = density.Unit;
             var volumeConverted = volume.ConvertTo(densityUnit.DenominatorUnit);
-            var value = volumeConverted.Value * density.Value;
+            var value = density.Value * volumeConverted.Value;
             return new Mass(value, densityUnit.CounterUnit);
         }
 

@@ -25,7 +25,7 @@ namespace UnitGenerator
                 cw.WriteAssign(right, RightValue, true);
             }
 
-            cw.WriteAssign("value", $"{right}.Value * {left}.Value", true);
+            cw.WriteAssign("value", $"{left}.Value {OperatorParameters.Oper} {right}.Value", true);
 
             var code = new Args("value", ResultUnit).Create(OperatorParameters.Result.Value.ValueTypeName);
             cw.WriteReturn(code);
