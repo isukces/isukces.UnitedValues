@@ -16,7 +16,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // SpecificHeatCapacity operator /(EnergyMassDensity energyMassDensity, DeltaKelvinTemperature deltaKelvinTemperature)
             // scenario with hint
-            // .Is<EnergyMassDensity, DeltaKelvinTemperature, SpecificHeatCapacity>("/")
+            // hint location Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity, line 63
             var lu = energyMassDensity.Unit;
             var temperatureUnit = new KelvinTemperatureUnit(null);
             var u2 = new MassDetlaKelvinUnit(lu.DenominatorUnit, deltaKelvinTemperature.Unit);
@@ -33,7 +33,7 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
-            // .Is<EnergyMassDensity, SpecificHeatCapacity, DeltaKelvinTemperature>("/")
+            // hint location Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity, line 76
             var lu = energyMassDensity.Unit;
             var ru = specificHeatCapacity.Unit;
             var rud = ru.DenominatorUnit;

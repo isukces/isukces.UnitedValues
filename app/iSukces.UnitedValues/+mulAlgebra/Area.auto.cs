@@ -234,6 +234,7 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
+            // hint location Add_LinearDensity_Area_Density, line 83
             var rightArgumentUnit = density.Unit;
             var lengthUnit = area.Unit.GetLengthUnit();
             var volumeUnit = area.Unit.GetVolumeUnit();
@@ -253,6 +254,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // LinearDensity operator *(Density density, Area area)
             // scenario with hint
+            // hint location Add_LinearDensity_Area_Density, line 74
             var lengthUnit = density.Unit.DenominatorUnit.GetLengthUnit();
             var areaUnit = density.Unit.DenominatorUnit.GetAreaUnit();
             var areaConverted = area.ConvertTo(areaUnit);

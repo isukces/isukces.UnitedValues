@@ -16,6 +16,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // PlanarDensity operator /(LinearDensity linearDensity, Length length)
             // scenario with hint
+            // hint location Add_Length_PlanarDensity_LinearDensity, line 37
             var lu = linearDensity.Unit;
             var areaUnit = lu.DenominatorUnit.GetAreaUnit();
             var lengthConverted = length.ConvertTo(lu.DenominatorUnit);
@@ -32,6 +33,7 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
+            // hint location Add_Length_PlanarDensity_LinearDensity, line 49
             var lu = linearDensity.Unit;
             var areaUnit = lu.DenominatorUnit.GetAreaUnit();
             var x = new PlanarDensityUnit(lu.CounterUnit, areaUnit);

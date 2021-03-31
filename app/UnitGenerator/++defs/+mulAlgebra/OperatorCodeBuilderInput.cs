@@ -1,4 +1,4 @@
-#define _ADD_COMMENT
+#define ADD_COMMENT
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -60,6 +60,8 @@ namespace UnitGenerator
                 if (args.Input.Is<EnergyMassDensity, DeltaKelvinTemperature, SpecificHeatCapacity>("/")) {
                   
                     var cc = args.Result;
+                    cc.SetComment();
+
                     cc.AddVariable("lu", "$(left).Unit");
                     cc.AddVariable("temperatureUnit", "new KelvinTemperatureUnit(null)");
                     cc.AddVariable("u2", "new MassDetlaKelvinUnit(lu.DenominatorUnit, $(right).Unit)");
@@ -71,6 +73,7 @@ namespace UnitGenerator
                 if (args.Input.Is<EnergyMassDensity, SpecificHeatCapacity, DeltaKelvinTemperature>("/"))
                 {
                     var cc = args.Result;
+                    cc.SetComment();
                     cc.AddVariable("lu", "$(left).Unit");
                     cc.AddVariable("ru", "$(right).Unit");
                     cc.AddVariable("rud", "ru.DenominatorUnit");
@@ -87,17 +90,12 @@ namespace UnitGenerator
                 if (args.Input.Is<SpecificHeatCapacity, DeltaKelvinTemperature, EnergyMassDensity>("*"))
                 {
                     var cc = args.Result;
+                    cc.SetComment();
                     cc.AddVariable("lu", "$(left).Unit");
                     cc.AddVariable("ru", "$(right).Unit");
-                    /*cc.AddVariable("rud", "ru.DenominatorUnit");
-
-                    cc.AddVariable("tmp", new Args("lu.DenominatorUnit", "rud.RightUnit").Create<MassDetlaKelvinUnit>());
-                    cc.AddVariable("rightConvertedUnit", new Args("lu.CounterUnit", "tmp").Create<SpecificHeatCapacityUnit>());
-                    cc.ConvertRight("rightConvertedUnit");
-                    cc.ResultUnit = "ru.DenominatorUnit.RightUnit";*/
-                    // cc.ConvertRight<EnergyMassDensityUnit>("lu.CounterUnit", "lu.DenominatorUnit.LeftUnit");
-                    cc.ConvertRight("lu.DenominatorUnit.RightUnit");
-                    cc.WithResultUnit<EnergyMassDensityUnit>("lu.CounterUnit", "lu.DenominatorUnit.LeftUnit");
+                    cc.AddVariable("lDenominatorUnit", "lu.DenominatorUnit");
+                    cc.ConvertRight("lDenominatorUnit.RightUnit");
+                    cc.WithResultUnit<EnergyMassDensityUnit>("lu.CounterUnit", "lDenominatorUnit.LeftUnit");
                     args.Handled  = true;
                     
                     return;
@@ -105,11 +103,13 @@ namespace UnitGenerator
                 if (args.Input.Is<DeltaKelvinTemperature, SpecificHeatCapacity, EnergyMassDensity>("*")) {
                   
                     var cc = args.Result;
+                    cc.SetComment();
                     cc.AddVariable("ru", "$(right).Unit");
+                    cc.AddVariable("rCounterUnit", "ru.CounterUnit");
                     cc.AddVariable("lu", "$(left).Unit");
                     cc.AddVariable("tmp", new Args("ru.DenominatorUnit.LeftUnit", "lu").Create<MassDetlaKelvinUnit>());
-                    cc.WithResultUnit<EnergyMassDensityUnit>("ru.CounterUnit", "ru.DenominatorUnit.LeftUnit");
-                    cc.ConvertRight<SpecificHeatCapacityUnit>("ru.CounterUnit", "tmp");
+                    cc.WithResultUnit<EnergyMassDensityUnit>("rCounterUnit", "ru.DenominatorUnit.LeftUnit");
+                    cc.ConvertRight<SpecificHeatCapacityUnit>("rCounterUnit", "tmp");
                     args.Handled = true;
                     return;
                 }
@@ -118,10 +118,7 @@ namespace UnitGenerator
                 {
                     var cc = args.Result;
                     args.Handled = true;
-
                     cc.SetThrow();
-                    
-                    return;
                 }
                 // throw new NotSupportedException("args.Input" + args.Input.DebugIs);
             };
