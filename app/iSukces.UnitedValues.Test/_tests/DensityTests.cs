@@ -217,22 +217,5 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal(-3, g[1].Power);
         }
 
-        [Fact]
-        public void T11_Should_calculate_pipe_diameter()
-        {
-            var tz = CelsiusTemperature.FromDegree(130);
-            var tp = CelsiusTemperature.FromDegree(95);
-
-            // J/kh*K
-            var cpUnit = new SpecificHeatCapacityUnit(
-                EnergyUnits.Joule,
-                new MassDetlaKelvinUnit(
-                    MassUnits.Kg,
-                    KelvinTemperatureUnits.Degree)
-            );
-            var cp = new SpecificHeatCapacity(4211, cpUnit);
-            
-            // var q = Power 
-        }
     }
 }

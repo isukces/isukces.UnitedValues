@@ -85,7 +85,7 @@ namespace UnitGenerator
 
         private void Add_Decompose()
         {
-            if (!Related.IsPower2OrHigher)
+            if (Related is null || !Related.IsPower2OrHigher)
                 return;
             var basicUnit = BaseUnit;
 
@@ -210,7 +210,7 @@ namespace UnitGenerator
             var expr = PropertyName.FirstLower() + GetExpressionPlus();
             if (nr == 1)
             {
-                if (!Related.IsPower2OrHigher)
+                if (Related is null || !Related.IsPower2OrHigher)
                     return null;
                 var a= new[]
                 {

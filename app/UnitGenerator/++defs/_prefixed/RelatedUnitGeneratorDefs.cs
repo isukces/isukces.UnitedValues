@@ -21,6 +21,10 @@ namespace UnitGenerator
                 new RelatedUnit(nameof(Force))
                     .WithPrefixedUnit("N", "Newton", 1)
                     .WithPrefixedUnits("N", "Newton", CommonPrefixes.Kilo | CommonPrefixes.Mega | CommonPrefixes.Mili),
+                
+                new RelatedUnit(nameof(Power))
+                    .WithPrefixedUnit("W", "Watt", 1)
+                    .WithPrefixedUnits("W", "Watt", CommonPrefixes.Kilo | CommonPrefixes.Mega  | CommonPrefixes.Giga | CommonPrefixes.Mili),
 
                 new RelatedUnit(nameof(Time)).WithTime(1),
                 new RelatedUnit(nameof(SquareTime)).WithTime(2),

@@ -48,8 +48,10 @@ namespace UnitGenerator
             DeltaKelvinTemperature = new BasicUnit(nameof(DeltaKelvinTemperature), "Degree", true);
 
         
-        private static readonly BasicUnit
-            Energy = new BasicUnit(nameof(Energy), "Joule", true);
+        private static readonly BasicUnit Energy = new BasicUnit(nameof(Energy), "Joule", true);
+        
+        
+        private static readonly BasicUnit Power = new BasicUnit(nameof(Power), "Watt", true);
 
 
         private static BasicUnitsCollection _all;
