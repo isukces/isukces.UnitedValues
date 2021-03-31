@@ -1,5 +1,6 @@
 // ReSharper disable All
 // generator: UnitExtensionsGenerator
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

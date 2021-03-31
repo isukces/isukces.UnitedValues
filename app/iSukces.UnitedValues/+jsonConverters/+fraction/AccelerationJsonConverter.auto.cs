@@ -1,7 +1,9 @@
 // ReSharper disable All
 // generator: UnitJsonConverterGenerator
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace iSukces.UnitedValues

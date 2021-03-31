@@ -210,6 +210,8 @@ namespace UnitGenerator
         {
             file.AddImportNamespace("System");
             file.AddImportNamespace("System.Globalization");
+            file.AddImportNamespace("System.Collections.Generic");
+            file.AddImportNamespace("JetBrains.Annotations");
         }
 
         protected string ReturnValue(string expression)

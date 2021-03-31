@@ -1,6 +1,8 @@
 // ReSharper disable All
 // generator: FractionUnitGenerator
+using JetBrains.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace iSukces.UnitedValues
@@ -18,7 +20,7 @@ namespace iSukces.UnitedValues
             DenominatorUnit = denominatorUnit;
         }
 
-        public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
+        public IReadOnlyList<DecomposableUnitItem> Decompose()
         {
             // generator : FractionUnitGenerator.Add_Decompose
             var decomposer = new UnitDecomposer();

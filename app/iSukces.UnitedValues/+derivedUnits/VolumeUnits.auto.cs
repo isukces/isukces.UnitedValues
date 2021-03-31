@@ -1,5 +1,6 @@
 // ReSharper disable All
 // generator: DerivedUnitGenerator
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,7 +15,7 @@ namespace iSukces.UnitedValues
             factors.RegisterMany(All);
         }
 
-        public static VolumeUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+        public static VolumeUnit TryRecoverUnitFromName([NotNull] string unitName)
         {
             // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
             if (unitName is null)

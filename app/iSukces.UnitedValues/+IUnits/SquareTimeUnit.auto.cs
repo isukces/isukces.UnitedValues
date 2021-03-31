@@ -1,6 +1,8 @@
 // ReSharper disable All
 // generator: BasicUnitGenerator
+using JetBrains.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
@@ -37,7 +39,7 @@ namespace iSukces.UnitedValues
             UnitName = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "²" : unitName;
         }
 
-        public System.Collections.Generic.IReadOnlyList<DecomposableUnitItem> Decompose()
+        public IReadOnlyList<DecomposableUnitItem> Decompose()
         {
             // generator : BasicUnitGenerator.Add_Decompose
             return new[] { GetBasicUnit() };

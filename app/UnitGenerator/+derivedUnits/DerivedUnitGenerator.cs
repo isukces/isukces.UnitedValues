@@ -23,6 +23,7 @@ namespace UnitGenerator
             Add_RegisterUnitExchangeFactors();
             Add_TryRecoverUnitFromName();
         }
+        
 
         private void Add_TryRecoverUnitFromName()
         {
@@ -57,13 +58,7 @@ namespace UnitGenerator
         {
             return cfg.Name.ToUnitTypeName().ToUnitContainerTypeName().TypeName;
         }
-
-        protected override void PrepareFile(CsFile file)
-        {
-            base.PrepareFile(file);
-            file.AddImportNamespace("System.Collections.Generic");
-        }
-
+        
         private void Add_AllProperty()
         {
             var cw = new CsCodeWriter();
