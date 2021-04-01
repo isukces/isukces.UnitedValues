@@ -45,7 +45,7 @@ namespace iSukces.UnitedValues
             }
         }
 
-        private static readonly CelsiusTemperatureUnit DegreeCelsiusTemperatureUnit = new CelsiusTemperatureUnit("°C");
+        internal static readonly CelsiusTemperatureUnit DegreeCelsiusTemperatureUnit = new CelsiusTemperatureUnit("°C");
 
         public static readonly UnitDefinition<CelsiusTemperatureUnit> Degree = new UnitDefinition<CelsiusTemperatureUnit>(DegreeCelsiusTemperatureUnit, 1m);
 

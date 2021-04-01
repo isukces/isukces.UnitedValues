@@ -1,3 +1,4 @@
+using System.Linq;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
@@ -61,17 +62,9 @@ namespace UnitGenerator
         
         private void Add_AllProperty()
         {
-            var cw = new CsCodeWriter();
-            cw.Open("return new []");
-            var max = Cfg.Units.Count - 1;
-            for (var index = 0; index <= max; index++)
-            {
-                var i = Cfg.Units[index];
-                cw.WriteLine(i.FieldName + (index < max ? "," : ""));
-            }
-
-            cw.DecIndent();
-            cw.WriteLine("};");
+            var cw    = new CsCodeWriter();
+            var array = new Args(Cfg.Units.Select(q => q.FieldName).ToArray());
+            array.CreateArray(cw, "return ");
             Target.AddProperty("All", "IReadOnlyList<UnitDefinition<" + Cfg.Name + "Unit>>")
                 .WithIsPropertyReadOnly()
                 .WithNoEmitField()
@@ -93,7 +86,7 @@ namespace UnitGenerator
 
                     Target.AddField(n2, unitTypeName)
                         .WithIsReadOnly()
-                        .WithVisibility(Visibilities.Private)
+                        .WithVisibility(Visibilities.Internal)
                         .WithConstValue(constValue)
                         .WithStatic();
                 }

@@ -56,51 +56,51 @@ namespace iSukces.UnitedValues
             }
         }
 
-        private static readonly LengthUnit MeterLengthUnit = new LengthUnit("m");
+        internal static readonly LengthUnit MeterLengthUnit = new LengthUnit("m");
 
         public static readonly UnitDefinition<LengthUnit> Meter = new UnitDefinition<LengthUnit>(MeterLengthUnit, 1m);
 
-        private static readonly LengthUnit KmLengthUnit = new LengthUnit("km");
+        internal static readonly LengthUnit KmLengthUnit = new LengthUnit("km");
 
         public static readonly UnitDefinition<LengthUnit> Km = new UnitDefinition<LengthUnit>(KmLengthUnit, 1000m);
 
-        private static readonly LengthUnit DmLengthUnit = new LengthUnit("dm");
+        internal static readonly LengthUnit DmLengthUnit = new LengthUnit("dm");
 
         public static readonly UnitDefinition<LengthUnit> Dm = new UnitDefinition<LengthUnit>(DmLengthUnit, 0.1m);
 
-        private static readonly LengthUnit CmLengthUnit = new LengthUnit("cm");
+        internal static readonly LengthUnit CmLengthUnit = new LengthUnit("cm");
 
         public static readonly UnitDefinition<LengthUnit> Cm = new UnitDefinition<LengthUnit>(CmLengthUnit, 0.01m);
 
-        private static readonly LengthUnit MmLengthUnit = new LengthUnit("mm");
+        internal static readonly LengthUnit MmLengthUnit = new LengthUnit("mm");
 
         public static readonly UnitDefinition<LengthUnit> Mm = new UnitDefinition<LengthUnit>(MmLengthUnit, 0.001m);
 
-        private static readonly LengthUnit InchLengthUnit = new LengthUnit("inch");
+        internal static readonly LengthUnit InchLengthUnit = new LengthUnit("inch");
 
         public static readonly UnitDefinition<LengthUnit> Inch = new UnitDefinition<LengthUnit>(InchLengthUnit, 0.0254m);
 
-        private static readonly LengthUnit FeetLengthUnit = new LengthUnit("ft");
+        internal static readonly LengthUnit FeetLengthUnit = new LengthUnit("ft");
 
         public static readonly UnitDefinition<LengthUnit> Feet = new UnitDefinition<LengthUnit>(FeetLengthUnit, 0.3048m);
 
-        private static readonly LengthUnit YardLengthUnit = new LengthUnit("yd");
+        internal static readonly LengthUnit YardLengthUnit = new LengthUnit("yd");
 
         public static readonly UnitDefinition<LengthUnit> Yard = new UnitDefinition<LengthUnit>(YardLengthUnit, 0.9144m);
 
-        private static readonly LengthUnit FurlongLengthUnit = new LengthUnit("fg");
+        internal static readonly LengthUnit FurlongLengthUnit = new LengthUnit("fg");
 
         public static readonly UnitDefinition<LengthUnit> Furlong = new UnitDefinition<LengthUnit>(FurlongLengthUnit, 201.1680m);
 
-        private static readonly LengthUnit FathomLengthUnit = new LengthUnit("fh");
+        internal static readonly LengthUnit FathomLengthUnit = new LengthUnit("fh");
 
         public static readonly UnitDefinition<LengthUnit> Fathom = new UnitDefinition<LengthUnit>(FathomLengthUnit, 1.8288m);
 
-        private static readonly LengthUnit MileLengthUnit = new LengthUnit("mil");
+        internal static readonly LengthUnit MileLengthUnit = new LengthUnit("mil");
 
         public static readonly UnitDefinition<LengthUnit> Mile = new UnitDefinition<LengthUnit>(MileLengthUnit, 1609.344m);
 
-        private static readonly LengthUnit NauticalMileLengthUnit = new LengthUnit("nm");
+        internal static readonly LengthUnit NauticalMileLengthUnit = new LengthUnit("nm");
 
         public static readonly UnitDefinition<LengthUnit> NauticalMile = new UnitDefinition<LengthUnit>(NauticalMileLengthUnit, 1852m);
 

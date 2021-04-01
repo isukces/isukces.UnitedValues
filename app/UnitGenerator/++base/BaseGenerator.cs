@@ -164,13 +164,23 @@ namespace UnitGenerator
             {
                 if ((i.CheckingFlags & Flags1.DoNotCreateProperty) != 0)
                     continue;
-                Add_Property(i.PropertyName, i.PropertyType, i.Description);
+                var p = Add_Property(i.PropertyName, i.PropertyType, i.Description);
+                if ((i.CheckingFlags & Flags1.NotNull) != 0)
+                {
+                    if (Target.Kind==CsNamespaceMemberKind.Class)
+                     if ((i.CheckingFlags & Flags1.AddNotNullAttributeToPropertyIfPossible) != 0)
+                        p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
+                    
+                    if ((i.CheckingFlags & Flags1.PropertyCanBeNull) != 0)
+                        p.WithAttribute(CsAttribute.Make<CanBeNullAttribute>(Target));
+                }
+
             }
         }
 
-        protected void Add_Property(string name, string type, string description)
+        protected CsProperty Add_Property(string name, string type, string description)
         {
-            Target.AddProperty(name, type)
+            return Target.AddProperty(name, type)
                 .WithDescription(description)
                 .WithNoEmitField()
                 .WithMakeAutoImplementIfPossible()

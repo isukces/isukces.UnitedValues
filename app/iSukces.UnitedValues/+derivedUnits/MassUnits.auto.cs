@@ -47,15 +47,15 @@ namespace iSukces.UnitedValues
             }
         }
 
-        private static readonly MassUnit KgMassUnit = new MassUnit("kg");
+        internal static readonly MassUnit KgMassUnit = new MassUnit("kg");
 
         public static readonly UnitDefinition<MassUnit> Kg = new UnitDefinition<MassUnit>(KgMassUnit, 1m);
 
-        private static readonly MassUnit ToneMassUnit = new MassUnit("t");
+        internal static readonly MassUnit ToneMassUnit = new MassUnit("t");
 
         public static readonly UnitDefinition<MassUnit> Tone = new UnitDefinition<MassUnit>(ToneMassUnit, 1000m, "tone", "tons");
 
-        private static readonly MassUnit GramMassUnit = new MassUnit("g");
+        internal static readonly MassUnit GramMassUnit = new MassUnit("g");
 
         public static readonly UnitDefinition<MassUnit> Gram = new UnitDefinition<MassUnit>(GramMassUnit, 0.001m, "gram", "grams");
 

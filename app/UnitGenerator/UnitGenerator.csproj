@@ -25,4 +25,12 @@
         <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
       </Compile>
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="+inversed" />
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c">
+        <HintPath>..\..\..\..\..\..\Users\piotr\AppData\Local\JetBrains\Toolbox\apps\Rider\ch-0\203.7717.10\lib\ReSharperHost\TestRunner\net461\NLog.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 </Project>

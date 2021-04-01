@@ -54,43 +54,43 @@ namespace iSukces.UnitedValues
             }
         }
 
-        private static readonly EnergyUnit JouleEnergyUnit = new EnergyUnit("J");
+        internal static readonly EnergyUnit JouleEnergyUnit = new EnergyUnit("J");
 
         public static readonly UnitDefinition<EnergyUnit> Joule = new UnitDefinition<EnergyUnit>(JouleEnergyUnit, 1m);
 
-        private static readonly EnergyUnit KiloJouleEnergyUnit = new EnergyUnit("kJ");
+        internal static readonly EnergyUnit KiloJouleEnergyUnit = new EnergyUnit("kJ");
 
         public static readonly UnitDefinition<EnergyUnit> KiloJoule = new UnitDefinition<EnergyUnit>(KiloJouleEnergyUnit, 1000m);
 
-        private static readonly EnergyUnit MegaJouleEnergyUnit = new EnergyUnit("MJ");
+        internal static readonly EnergyUnit MegaJouleEnergyUnit = new EnergyUnit("MJ");
 
         public static readonly UnitDefinition<EnergyUnit> MegaJoule = new UnitDefinition<EnergyUnit>(MegaJouleEnergyUnit, 1000000m);
 
-        private static readonly EnergyUnit GigaJouleEnergyUnit = new EnergyUnit("GJ");
+        internal static readonly EnergyUnit GigaJouleEnergyUnit = new EnergyUnit("GJ");
 
         public static readonly UnitDefinition<EnergyUnit> GigaJoule = new UnitDefinition<EnergyUnit>(GigaJouleEnergyUnit, 1000000000m);
 
-        private static readonly EnergyUnit WattHourEnergyUnit = new EnergyUnit("Wh");
+        internal static readonly EnergyUnit WattHourEnergyUnit = new EnergyUnit("Wh");
 
         public static readonly UnitDefinition<EnergyUnit> WattHour = new UnitDefinition<EnergyUnit>(WattHourEnergyUnit, 3600m);
 
-        private static readonly EnergyUnit KiloWattHourEnergyUnit = new EnergyUnit("kWh");
+        internal static readonly EnergyUnit KiloWattHourEnergyUnit = new EnergyUnit("kWh");
 
         public static readonly UnitDefinition<EnergyUnit> KiloWattHour = new UnitDefinition<EnergyUnit>(KiloWattHourEnergyUnit, 3600000m);
 
-        private static readonly EnergyUnit MegaWattHourEnergyUnit = new EnergyUnit("MWh");
+        internal static readonly EnergyUnit MegaWattHourEnergyUnit = new EnergyUnit("MWh");
 
         public static readonly UnitDefinition<EnergyUnit> MegaWattHour = new UnitDefinition<EnergyUnit>(MegaWattHourEnergyUnit, 3600000000m);
 
-        private static readonly EnergyUnit GigaWattHourEnergyUnit = new EnergyUnit("GWh");
+        internal static readonly EnergyUnit GigaWattHourEnergyUnit = new EnergyUnit("GWh");
 
         public static readonly UnitDefinition<EnergyUnit> GigaWattHour = new UnitDefinition<EnergyUnit>(GigaWattHourEnergyUnit, 3600000000000m);
 
-        private static readonly EnergyUnit CalorieEnergyUnit = new EnergyUnit("cal");
+        internal static readonly EnergyUnit CalorieEnergyUnit = new EnergyUnit("cal");
 
         public static readonly UnitDefinition<EnergyUnit> Calorie = new UnitDefinition<EnergyUnit>(CalorieEnergyUnit, 4.1855m);
 
-        private static readonly EnergyUnit KiloCalorieEnergyUnit = new EnergyUnit("kcal");
+        internal static readonly EnergyUnit KiloCalorieEnergyUnit = new EnergyUnit("kcal");
 
         public static readonly UnitDefinition<EnergyUnit> KiloCalorie = new UnitDefinition<EnergyUnit>(KiloCalorieEnergyUnit, 4185.5m);
 

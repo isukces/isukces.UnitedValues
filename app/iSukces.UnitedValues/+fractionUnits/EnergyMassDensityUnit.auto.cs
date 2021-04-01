@@ -23,7 +23,7 @@ namespace iSukces.UnitedValues
         public IReadOnlyList<DecomposableUnitItem> Decompose()
         {
             // generator : FractionUnitGenerator.Add_Decompose
-            return new[]
+            return new []
             {
                 new DecomposableUnitItem(CounterUnit, 1),
                 new DecomposableUnitItem(DenominatorUnit, -1)

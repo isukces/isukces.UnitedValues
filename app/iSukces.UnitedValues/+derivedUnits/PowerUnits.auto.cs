@@ -49,23 +49,23 @@ namespace iSukces.UnitedValues
             }
         }
 
-        private static readonly PowerUnit WattPowerUnit = new PowerUnit("W");
+        internal static readonly PowerUnit WattPowerUnit = new PowerUnit("W");
 
         public static readonly UnitDefinition<PowerUnit> Watt = new UnitDefinition<PowerUnit>(WattPowerUnit, 1m);
 
-        private static readonly PowerUnit KiloWattPowerUnit = new PowerUnit("kW");
+        internal static readonly PowerUnit KiloWattPowerUnit = new PowerUnit("kW");
 
         public static readonly UnitDefinition<PowerUnit> KiloWatt = new UnitDefinition<PowerUnit>(KiloWattPowerUnit, 1000m);
 
-        private static readonly PowerUnit MegaWattPowerUnit = new PowerUnit("MW");
+        internal static readonly PowerUnit MegaWattPowerUnit = new PowerUnit("MW");
 
         public static readonly UnitDefinition<PowerUnit> MegaWatt = new UnitDefinition<PowerUnit>(MegaWattPowerUnit, 1000000m);
 
-        private static readonly PowerUnit GigaWattPowerUnit = new PowerUnit("GW");
+        internal static readonly PowerUnit GigaWattPowerUnit = new PowerUnit("GW");
 
         public static readonly UnitDefinition<PowerUnit> GigaWatt = new UnitDefinition<PowerUnit>(GigaWattPowerUnit, 1000000000m);
 
-        private static readonly PowerUnit MiliWattPowerUnit = new PowerUnit("mW");
+        internal static readonly PowerUnit MiliWattPowerUnit = new PowerUnit("mW");
 
         public static readonly UnitDefinition<PowerUnit> MiliWatt = new UnitDefinition<PowerUnit>(MiliWattPowerUnit, 0.001m);
 

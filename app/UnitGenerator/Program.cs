@@ -42,6 +42,10 @@ namespace UnitGenerator
             MultiplyAlgebraGeneratorRunner.Run(basePath, nameSpace);
             ProductUnitGeneratorRunner.Run(basePath, nameSpace);
 
+            
+            
+            InversedUnitGeneratorRunner.Run(basePath, nameSpace);
+            InversedValuesGeneratorRunner.Run(basePath, nameSpace);
             Console.WriteLine("Done");
         }
     }

@@ -161,6 +161,16 @@ namespace iSukces.UnitedValues
             return left.Value / right.Value;
         }
 
+        /// <summary>
+        /// implements / operator
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="value"></param>
+        public static InversedDeltaKelvinTemperature operator /(decimal number, DeltaKelvinTemperature value)
+        {
+            return new InversedDeltaKelvinTemperature(number / value.Value, InversedKelvinTemperatureUnits.GetInversedKelvinTemperatureUnit(value.Unit));
+        }
+
         public static DeltaKelvinTemperature operator +(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
         {
             // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus

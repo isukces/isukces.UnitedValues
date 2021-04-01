@@ -45,7 +45,7 @@ namespace iSukces.UnitedValues
             }
         }
 
-        private static readonly KelvinTemperatureUnit DegreeKelvinTemperatureUnit = new KelvinTemperatureUnit("K");
+        internal static readonly KelvinTemperatureUnit DegreeKelvinTemperatureUnit = new KelvinTemperatureUnit("K");
 
         public static readonly UnitDefinition<KelvinTemperatureUnit> Degree = new UnitDefinition<KelvinTemperatureUnit>(DegreeKelvinTemperatureUnit, 1m);
 

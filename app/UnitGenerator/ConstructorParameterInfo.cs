@@ -11,10 +11,10 @@ namespace UnitGenerator
         public ConstructorParameterInfo(string propertyName, string propertyType, string expression, string description,
             Flags1 checkingFlags = Flags1.None)
         {
-            PropertyName = propertyName;
-            PropertyType = propertyType;
-            Expression   = expression ?? GetExpr(propertyName, propertyType);
-            Description  = description;
+            PropertyName  = propertyName;
+            PropertyType  = propertyType;
+            Expression    = expression ?? GetExpr(propertyName, propertyType);
+            Description   = description;
             CheckingFlags = checkingFlags;
         }
 
@@ -40,12 +40,12 @@ namespace UnitGenerator
 
         public string Expression { get; }
 
-        public string Description  { get; }
+        public string Description   { get; }
         public Flags1 CheckingFlags { get; }
     }
 
     [Flags]
-    public enum Flags1:uint
+    public enum Flags1 : uint
     {
         None = 0,
         NotNull = 1,
@@ -55,11 +55,14 @@ namespace UnitGenerator
         Optional = 16,
         DoNotCreateProperty = 32,
         DoNotAssignProperty = 64,
+        AddNotNullAttributeToPropertyIfPossible = 128,
+        PropertyCanBeNull = 256,
 
         NotNullOrWhitespace = NotNull | NotWhitespace,
         NotNullOrEmpty = NotNull | NotEmpty,
 
-        NormalizedString = NotNull | NotNullOrWhitespace | TrimValue,
+        NormalizedString = NotNull | NotNullOrWhitespace | TrimValue
+        
     }
 
     public class Col1

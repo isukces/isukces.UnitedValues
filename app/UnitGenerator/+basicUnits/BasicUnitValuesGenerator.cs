@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
@@ -46,6 +47,7 @@ namespace UnitGenerator
             AddCommonValues_PropertiesAndConstructor(Cfg.UnitTypes.Unit);
 
             Add_Properties();
+            // throw new Exception("Unable to find multiplication for unit " + Unit);
             Add_GetBaseUnitValue();
             Add_Parse();
             Add_Round(Cfg.UnitTypes);
@@ -55,6 +57,7 @@ namespace UnitGenerator
             Add_Algebra_PlusMinus();
             Add_ConvertTo();
             Add_FromMethods();
+            Add_NumberDiv();
         }
 
 
@@ -80,12 +83,6 @@ namespace UnitGenerator
         {
             base.PrepareFile(file);
             file.AddImportNamespace("Newtonsoft.Json");
-        }
-
-        private void Add_Algebra_MinusUnary()
-        {
-            Target.AddOperator("-", new Args("-value.Value", "value.Unit"))
-                .AddParam("value", Target.Name);
         }
 
 
@@ -217,17 +214,22 @@ namespace UnitGenerator
                 Add_FromMethods(Cfg.UnitTypes.Value, Cfg.UnitTypes, Target, u);
         }
 
-
-        private void Add_GetBaseUnitValue()
+        private void Add_NumberDiv()
         {
-            var cs = Ext.Create<BasicUnitValuesGenerator>();
-            cs.SingleLineIf("Unit.Equals(BaseUnit)", ReturnValue("Value"));
-            cs.WriteLine("var factor = GlobalUnitRegistry.Factors.Get(Unit);");
-            cs.SingleLineIf("!(factor is null)", ReturnValue("Value * factor.Value"));
-            cs.WriteLine("throw new Exception(\"Unable to find multiplication for unit \" + Unit);");
-            Target.AddMethod("GetBaseUnitValue", ValuePropertyType)
-                .WithBody(cs);
+            var q = InversedUnitDefs.All.Items.SingleOrDefault(a =>
+            {
+                var t = Cfg.UnitTypes.Value;
+                var w = a.Source.Value;
+                return t == w;
+            });
+            if (q is null) return;
+            var invTypes             = q.Target;
+            var resultUnit = invTypes.Container.GetTypename() + ".Get" + invTypes.Unit.GetTypename()
+                             + "(value.Unit)";
+            Target.AddOperator("/", new Args("number / value.Value", resultUnit), invTypes.Value.GetTypename())
+                .WithLeftRightArguments(ValuePropertyType, Target.Name, "number", "value");
         }
+
 
         private void Add_Parse()
         {
@@ -246,7 +248,7 @@ namespace UnitGenerator
             Target.AddField("BaseUnit", Cfg.UnitTypes.Unit.GetTypename())
                 .WithStatic()
                 .WithIsReadOnly()
-                .WithConstValue(Cfg.BaseUnit);
+                .WithConstValue(Cfg.BaseUnit.ToString());
             Target.AddField("Zero", Cfg.UnitTypes.Value.ValueTypeName)
                 .WithStatic()
                 .WithIsReadOnly()

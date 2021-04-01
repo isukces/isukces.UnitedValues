@@ -60,6 +60,7 @@ namespace iSukces.UnitedValues
 
         public decimal GetBaseUnitValue()
         {
+            // generator : FractionValuesGenerator.Add_GetBaseUnitValue
             throw new System.NotImplementedException();
         }
 

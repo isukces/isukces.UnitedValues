@@ -60,6 +60,7 @@ namespace iSukces.UnitedValues
 
         public decimal GetBaseUnitValue()
         {
+            // generator : ProductValuesGenerator.Add_GetBaseUnitValue
             throw new System.NotImplementedException();
         }
 

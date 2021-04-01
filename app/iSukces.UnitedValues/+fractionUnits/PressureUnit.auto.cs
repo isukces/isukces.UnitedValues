@@ -24,7 +24,7 @@ namespace iSukces.UnitedValues
         {
             // generator : FractionUnitGenerator.Add_Decompose
             var denominatorUnit = DenominatorUnit.GetBasicUnit();
-            return new[]
+            return new []
             {
                 new DecomposableUnitItem(CounterUnit, 1),
                 new DecomposableUnitItem(denominatorUnit.Unit, -denominatorUnit.Power)

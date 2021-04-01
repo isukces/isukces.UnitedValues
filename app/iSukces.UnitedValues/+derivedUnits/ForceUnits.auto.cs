@@ -48,19 +48,19 @@ namespace iSukces.UnitedValues
             }
         }
 
-        private static readonly ForceUnit NewtonForceUnit = new ForceUnit("N");
+        internal static readonly ForceUnit NewtonForceUnit = new ForceUnit("N");
 
         public static readonly UnitDefinition<ForceUnit> Newton = new UnitDefinition<ForceUnit>(NewtonForceUnit, 1m);
 
-        private static readonly ForceUnit KiloNewtonForceUnit = new ForceUnit("kN");
+        internal static readonly ForceUnit KiloNewtonForceUnit = new ForceUnit("kN");
 
         public static readonly UnitDefinition<ForceUnit> KiloNewton = new UnitDefinition<ForceUnit>(KiloNewtonForceUnit, 1000m);
 
-        private static readonly ForceUnit MegaNewtonForceUnit = new ForceUnit("MN");
+        internal static readonly ForceUnit MegaNewtonForceUnit = new ForceUnit("MN");
 
         public static readonly UnitDefinition<ForceUnit> MegaNewton = new UnitDefinition<ForceUnit>(MegaNewtonForceUnit, 1000000m);
 
-        private static readonly ForceUnit MiliNewtonForceUnit = new ForceUnit("mN");
+        internal static readonly ForceUnit MiliNewtonForceUnit = new ForceUnit("mN");
 
         public static readonly UnitDefinition<ForceUnit> MiliNewton = new UnitDefinition<ForceUnit>(MiliNewtonForceUnit, 0.001m);
 

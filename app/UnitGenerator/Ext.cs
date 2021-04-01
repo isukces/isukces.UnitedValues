@@ -213,6 +213,18 @@ namespace UnitGenerator
             
             return r;
         }
+
+        public static void Throw<T>(this CsCodeWriter cs, params string[] arguments)
+        {
+            var exception    = new Args(arguments).Create<T>();
+            var code = $"throw {exception};";
+            cs.WriteLine(code);
+        }
+
+        public static void SingleLineIfReturn(this CsCodeWriter cs, string condition, string result)
+        {
+            cs.SingleLineIf(condition, "return " + result + ";");
+        }
     }
 
 

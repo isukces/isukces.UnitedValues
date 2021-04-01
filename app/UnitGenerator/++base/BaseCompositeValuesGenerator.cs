@@ -1,4 +1,5 @@
 using iSukces.Code;
+using iSukces.Code.AutoCode;
 using iSukces.Code.Interfaces;
 
 namespace UnitGenerator
@@ -137,11 +138,10 @@ namespace UnitGenerator
                 .AddParam("newUnit", GenInfo.Result.Unit.GetTypename());
         }
 
-        private void Add_GetBaseUnitValue()
+        protected override void Add_GetBaseUnitValue()
         {
-            var cw = new CsCodeWriter();
+            var cw = Ext.Create(GetType());
             cw.WriteLine("throw new System.NotImplementedException();");
-
             Target.AddMethod("GetBaseUnitValue", ValuePropertyType).WithBody(cw);
         }
 

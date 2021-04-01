@@ -1,5 +1,6 @@
 using System;
 using iSukces.Code;
+using iSukces.Code.AutoCode;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
 using UnitGenerator.Local;
@@ -12,8 +13,27 @@ namespace UnitGenerator
         {
         }
 
-        
-        
+        protected void Add_Algebra_MinusUnary()
+        {
+            Target.AddOperator("-", new Args("-value.Value", "value.Unit"))
+                .AddParam("value", Target.Name);
+        }
+
+
+        protected virtual void Add_GetBaseUnitValue()
+        {
+            var cs = Ext.Create<BasicUnitValuesGenerator>();
+            cs.SingleLineIf("Unit.Equals(BaseUnit)", ReturnValue("Value"));
+            cs.WriteLine("var factor = GlobalUnitRegistry.Factors.Get(Unit);");
+            cs.SingleLineIf("!(factor is null)", ReturnValue("Value * factor.Value"));
+            var exceptionMessage = new CsExpression("Unable to find multiplication for unit ".CsEncode())
+                                   + new CsExpression("Unit");
+
+            cs.Throw<Exception>(exceptionMessage.ToString());
+            Target.AddMethod("GetBaseUnitValue", ValuePropertyType)
+                .WithBody(cs);
+        }
+
         protected void Add_Round(TypesGroup names)
         {
             var cs = Ext.Create<BasicUnitValuesGenerator>();
@@ -29,6 +49,7 @@ namespace UnitGenerator
         {
             AddCommonValues_PropertiesAndConstructor(unitTypeName.GetTypename());
         }
+
         protected void AddCommonValues_PropertiesAndConstructor(string unitTypeName)
         {
             Add_Properties(GetConstructorProperties());
@@ -45,7 +66,7 @@ namespace UnitGenerator
         private void AddCommonValues_EqualsMethods(string unitTypeName)
         {
             var compareCode = string.Format(
-                "{0} == other.{0} && !({1} is null) && {1}.Equals(other.{1})", 
+                "{0} == other.{0} && !({1} is null) && {1}.Equals(other.{1})",
                 ValuePropName, UnitPropName);
             Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
 

@@ -4,11 +4,21 @@ namespace UnitGenerator
 {
     public class BasicUnit : IUnitInfo
     {
+        public override string ToString()
+        {
+            return BaseUnit.ToString();
+        }
+
+        public string BaseUnitField
+        {
+            get { return BaseUnit.Field; }
+        }
+
         public BasicUnit(string valueTypeName, string mainUnit, bool isComparable)
         {
             UnitTypes    = new TypesGroup(new XValueTypeName(valueTypeName));
             IsComparable = isComparable;
-            BaseUnit     = UnitTypes.Container + "." + mainUnit.Trim();
+            BaseUnit     = new TypeAndFieldName(UnitTypes.Container.GetTypename(), mainUnit);
         }
 
 
@@ -22,7 +32,7 @@ namespace UnitGenerator
         /// <summary>
         ///     Base unit name (also property name in *Units class i.e. Newton
         /// </summary>
-        public string BaseUnit { get; }
+        public TypeAndFieldName BaseUnit { get; }
 
         public IEnumerable<string> Interfaces
         {

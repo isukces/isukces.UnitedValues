@@ -47,15 +47,15 @@ namespace iSukces.UnitedValues
             }
         }
 
-        private static readonly TimeUnit SecondTimeUnit = new TimeUnit("s");
+        internal static readonly TimeUnit SecondTimeUnit = new TimeUnit("s");
 
         public static readonly UnitDefinition<TimeUnit> Second = new UnitDefinition<TimeUnit>(SecondTimeUnit, 1m);
 
-        private static readonly TimeUnit MinuteTimeUnit = new TimeUnit("min");
+        internal static readonly TimeUnit MinuteTimeUnit = new TimeUnit("min");
 
         public static readonly UnitDefinition<TimeUnit> Minute = new UnitDefinition<TimeUnit>(MinuteTimeUnit, 60m);
 
-        private static readonly TimeUnit HourTimeUnit = new TimeUnit("h");
+        internal static readonly TimeUnit HourTimeUnit = new TimeUnit("h");
 
         public static readonly UnitDefinition<TimeUnit> Hour = new UnitDefinition<TimeUnit>(HourTimeUnit, 3600m);
 

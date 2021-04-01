@@ -57,15 +57,15 @@ namespace iSukces.UnitedValues
             }
         }
 
-        private static readonly SquareTimeUnit SquareSecondSquareTimeUnit = new SquareTimeUnit(TimeUnits.Second);
+        internal static readonly SquareTimeUnit SquareSecondSquareTimeUnit = new SquareTimeUnit(TimeUnits.Second);
 
         public static readonly UnitDefinition<SquareTimeUnit> SquareSecond = new UnitDefinition<SquareTimeUnit>(SquareSecondSquareTimeUnit, 1m);
 
-        private static readonly SquareTimeUnit SquareMinuteSquareTimeUnit = new SquareTimeUnit(TimeUnits.Minute);
+        internal static readonly SquareTimeUnit SquareMinuteSquareTimeUnit = new SquareTimeUnit(TimeUnits.Minute);
 
         public static readonly UnitDefinition<SquareTimeUnit> SquareMinute = new UnitDefinition<SquareTimeUnit>(SquareMinuteSquareTimeUnit, 60m * 60m);
 
-        private static readonly SquareTimeUnit SquareHourSquareTimeUnit = new SquareTimeUnit(TimeUnits.Hour);
+        internal static readonly SquareTimeUnit SquareHourSquareTimeUnit = new SquareTimeUnit(TimeUnits.Hour);
 
         public static readonly UnitDefinition<SquareTimeUnit> SquareHour = new UnitDefinition<SquareTimeUnit>(SquareHourSquareTimeUnit, 3600m * 3600m);
 
