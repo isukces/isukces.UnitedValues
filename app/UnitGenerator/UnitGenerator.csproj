@@ -15,9 +15,6 @@
       <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Density.cs">
-        <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
-      </Compile>
       <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Scenarios.cs">
         <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
       </Compile>

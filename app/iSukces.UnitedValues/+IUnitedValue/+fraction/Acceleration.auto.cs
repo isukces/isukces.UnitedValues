@@ -182,7 +182,7 @@ namespace iSukces.UnitedValues
         public static Acceleration Parse(string value)
         {
             // generator : FractionValuesGenerator.Add_Parse
-            throw new NotImplementedException("Not implemented yet");
+            throw new NotImplementedException("Not implemented due to unknown split method name.");
         }
 
         /// <summary>

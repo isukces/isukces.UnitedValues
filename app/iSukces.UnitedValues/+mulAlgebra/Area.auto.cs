@@ -234,14 +234,15 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
-            // hint location Add_LinearDensity_Area_Density, line 83
-            var rightArgumentUnit = density.Unit;
-            var lengthUnit = area.Unit.GetLengthUnit();
-            var volumeUnit = area.Unit.GetVolumeUnit();
-            var x3 = new DensityUnit(rightArgumentUnit.CounterUnit, volumeUnit);
-            var densityConverted = density.ConvertTo(x3);
+            // .Is<Area, Density, LinearDensity>("*")
+            var densityUnit = density.Unit;
+            var tmp1 = densityUnit.CounterUnit;
+            var areaUnit = area.Unit;
+            var targetRightUnit = new DensityUnit(tmp1, areaUnit.GetVolumeUnit());
+            var resultUnit = new LinearDensityUnit(tmp1, areaUnit.GetLengthUnit());
+            var densityConverted = density.ConvertTo(targetRightUnit);
             var value = area.Value * densityConverted.Value;
-            return new LinearDensity(value, new LinearDensityUnit(rightArgumentUnit.CounterUnit, lengthUnit));
+            return new LinearDensity(value, resultUnit);
         }
 
         /// <summary>
@@ -254,12 +255,13 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // LinearDensity operator *(Density density, Area area)
             // scenario with hint
-            // hint location Add_LinearDensity_Area_Density, line 74
-            var lengthUnit = density.Unit.DenominatorUnit.GetLengthUnit();
-            var areaUnit = density.Unit.DenominatorUnit.GetAreaUnit();
-            var areaConverted = area.ConvertTo(areaUnit);
+            // .Is<Density, Area, LinearDensity>("*")
+            var densityUnit = density.Unit;
+            var tmp1 = densityUnit.DenominatorUnit;
+            var resultUnit = new LinearDensityUnit(densityUnit.CounterUnit, tmp1.GetLengthUnit());
+            var areaConverted = area.ConvertTo(tmp1.GetAreaUnit());
             var value = density.Value * areaConverted.Value;
-            return new LinearDensity(value, new LinearDensityUnit(density.Unit.CounterUnit, lengthUnit));
+            return new LinearDensity(value, resultUnit);
         }
 
         /// <summary>

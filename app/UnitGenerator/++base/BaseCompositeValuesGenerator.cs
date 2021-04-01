@@ -52,7 +52,7 @@ namespace UnitGenerator
 
             var cw = Ext.Create(GetType());
             if (string.IsNullOrEmpty(splitMethodName))
-                cw.WithThrowNotImplementedException();
+                cw.WithThrowNotImplementedException("Not implemented due to unknown split method name.");
             else
             {
                 cw.SingleLineIf("string.IsNullOrEmpty(value)",

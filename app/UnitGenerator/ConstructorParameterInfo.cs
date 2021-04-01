@@ -9,13 +9,14 @@ namespace UnitGenerator
     public class ConstructorParameterInfo
     {
         public ConstructorParameterInfo(string propertyName, string propertyType, string expression, string description,
-            Flags1 checkingFlags = Flags1.None)
+            Flags1 checkingFlags = Flags1.None, Action<CsProperty> propertyCreated = null)
         {
-            PropertyName  = propertyName;
-            PropertyType  = propertyType;
-            Expression    = expression ?? GetExpr(propertyName, propertyType);
-            Description   = description;
-            CheckingFlags = checkingFlags;
+            PropertyName         = propertyName;
+            PropertyType         = propertyType;
+            Expression           = expression ?? GetExpr(propertyName, propertyType);
+            Description          = description;
+            CheckingFlags        = checkingFlags;
+            PropertyCreated = propertyCreated;
         }
 
         private static string GetExpr(string propertyName, string propertyType)
@@ -40,8 +41,9 @@ namespace UnitGenerator
 
         public string Expression { get; }
 
-        public string Description   { get; }
-        public Flags1 CheckingFlags { get; }
+        public string             Description     { get; }
+        public Flags1             CheckingFlags   { get; }
+        public Action<CsProperty> PropertyCreated { get; }
     }
 
     [Flags]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using iSukces.Code;
@@ -11,6 +12,28 @@ namespace UnitGenerator
 {
     public static class Ext
     {
+        public static void AddBlaAttribute(this IAttributable attributable, ITypeNameResolver resolver, RelatedUnitSourceUsage flag)
+        {
+            var argument    = resolver.GetEnumValueCode(flag);
+            var csAttribute = new CsAttribute(nameof(RelatedUnitSourceAttribute)).WithArgumentCode(argument);
+            attributable.WithAttribute(csAttribute);
+        }
+
+        public static CsMethod AddOperator(this CsClass cl, string operatorName, Args arg, string resultType = null)
+        {
+            resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name);
+            var code = arg.Create(resultType);
+            return cl.AddMethod(operatorName, resultType, "implements " + operatorName + " operator")
+                .WithBodyFromExpression(code);
+        }
+
+        public static string AddPrefix(this string txt, string prefix)
+        {
+            if (string.IsNullOrWhiteSpace(txt))
+                return null;
+            return prefix + txt;
+        }
+
         public static void CheckArgument(this CsCodeWriter code, string argName, ArgChecking flags,
             ITypeNameResolver resolver)
         {
@@ -27,11 +50,11 @@ namespace UnitGenerator
                 canBeNull     = false;
                 argNameToRead = argName;
             }
-            
+
             if ((flags & ArgChecking.TrimValue) != 0)
             {
                 code.WriteLine("{0} = {1}.Trim();", argName, argNameToRead);
-                flags   &= ~ArgChecking.TrimValue;
+                flags &= ~ArgChecking.TrimValue;
 
                 if ((flags & ArgChecking.NotWhitespace) != 0)
                 {
@@ -69,25 +92,9 @@ namespace UnitGenerator
                     canBeNull
                         ? $"string.IsNullOrEmpty({argName})"
                         : $"{argName}.Length == 0";
-                
+
                 code.SingleLineIf(condition, throwCode);
-
             }
-        }
-
-        public static CsMethod AddOperator(this CsClass cl, string operatorName, Args arg, string resultType = null)
-        {
-            resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name);
-            var code = arg.Create(resultType);
-            return cl.AddMethod(operatorName, resultType, "implements " + operatorName + " operator")
-                .WithBodyFromExpression(code);
-        }
-
-        public static string AddPrefix(this string txt, string prefix)
-        {
-            if (string.IsNullOrWhiteSpace(txt))
-                return null;
-            return prefix + txt;
         }
 
         public static string CoalesceNullOrWhiteSpace(this string a, string b)
@@ -95,6 +102,21 @@ namespace UnitGenerator
             if (string.IsNullOrWhiteSpace(a))
                 return b;
             return a;
+        }
+
+        public static ArgChecking ConvertToArgChecking(this Flags1 flags)
+        {
+            var r = ArgChecking.None;
+            if ((flags & Flags1.NotNull) != 0)
+                r |= ArgChecking.NotNull;
+            if ((flags & Flags1.NotEmpty) != 0)
+                r |= ArgChecking.NotEmpty;
+            if ((flags & Flags1.NotWhitespace) != 0)
+                r |= ArgChecking.NotWhitespace;
+            if ((flags & Flags1.TrimValue) != 0)
+                r |= ArgChecking.TrimValue;
+
+            return r;
         }
 
 
@@ -158,6 +180,24 @@ namespace UnitGenerator
             return l.ToArray();
         }
 
+        public static bool Implements<T>(this Type type)
+        {
+            var i = type.GetInterfaces();
+            return i.Any(q => q == typeof(T));
+        }
+
+        public static void SingleLineIfReturn(this CsCodeWriter cs, string condition, string result)
+        {
+            cs.SingleLineIf(condition, "return " + result + ";");
+        }
+
+        public static void Throw<T>(this CsCodeWriter cs, params string[] arguments)
+        {
+            var exception = new Args(arguments).Create<T>();
+            var code      = $"throw {exception};";
+            cs.WriteLine(code);
+        }
+
         public static CsMethod WithBodyFromAssignment(this CsMethod method, string variable, string code)
         {
             method.Body = $"{variable} = {code};";
@@ -179,9 +219,12 @@ namespace UnitGenerator
             return method;
         }
 
-        public static CsCodeWriter WithThrowNotImplementedException(this CsCodeWriter cw)
+        public static CsCodeWriter WithThrowNotImplementedException(this CsCodeWriter cw, string message = null)
         {
-            const string code = @"throw new NotImplementedException(""Not implemented yet"");";
+            if (string.IsNullOrEmpty(message))
+                message = "Not implemented yet";
+            message = message.CsEncode();
+            var code = $"throw new NotImplementedException({message});";
             cw.WriteLine(code);
             return cw;
         }
@@ -197,33 +240,6 @@ namespace UnitGenerator
         {
             cw.WriteLine($"return {code};");
             return cw;
-        }
-
-        public static ArgChecking ConvertToArgChecking(this Flags1 flags)
-        {
-            var r = ArgChecking.None;
-            if ((flags & Flags1.NotNull) != 0)
-                r |= ArgChecking.NotNull;
-            if ((flags & Flags1.NotEmpty) != 0)
-                r |= ArgChecking.NotEmpty;
-            if ((flags & Flags1.NotWhitespace) != 0)
-                r |= ArgChecking.NotWhitespace;
-            if ((flags & Flags1.TrimValue) != 0)
-                r |= ArgChecking.TrimValue;
-            
-            return r;
-        }
-
-        public static void Throw<T>(this CsCodeWriter cs, params string[] arguments)
-        {
-            var exception    = new Args(arguments).Create<T>();
-            var code = $"throw {exception};";
-            cs.WriteLine(code);
-        }
-
-        public static void SingleLineIfReturn(this CsCodeWriter cs, string condition, string result)
-        {
-            cs.SingleLineIf(condition, "return " + result + ";");
         }
     }
 

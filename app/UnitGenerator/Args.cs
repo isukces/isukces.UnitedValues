@@ -65,6 +65,12 @@ namespace UnitGenerator
                 type = type.Split('<')[0];
             return $"{type}<{ToString()}>";
         }
+        public string MakeGenericTypeMethodCall(string methodName, params string [] args)
+        {
+            var call1 = MakeGenericType(methodName);
+            var a     = new Args(args);
+            return a.CallMethod(call1);
+        }
 
         public CsCodeWriter ReturnArray()
         {

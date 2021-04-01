@@ -75,11 +75,13 @@ namespace UnitGenerator
                 if (Cfg == targetUnit.Unit)
                     continue;
                 var cw = Ext.Create<BasicUnitGenerator>();
-                var code = "GlobalUnitRegistry.Relations.GetOrThrow<" + Target.Name + ", " + targetUnit.Unit +
-                           ">(this)";
+                var code = new Args(Target.Name, targetUnit.Unit.GetTypename())
+                    .MakeGenericTypeMethodCall("GlobalUnitRegistry.Relations.GetOrThrow", "this");
                 cw.WriteReturn(code);
                 var m = Target.AddMethod("Get" + targetUnit.Unit.TypeName, targetUnit.Unit.GetTypename()).WithBody(cw);
                 m.WithAggressiveInlining(Target);
+                
+                m.AddBlaAttribute(Target, RelatedUnitSourceUsage.ProvidesRelatedUnit);
             }
         }
 
@@ -215,7 +217,11 @@ namespace UnitGenerator
                 var a= new[]
                 {
                     new ConstructorParameterInfo("BaseUnit", Related.MyInfo.PowerOne.Unit.TypeName, null, "based on",
-                        Flags1.NotNull),
+                        Flags1.NotNull,
+                        property =>
+                        {
+                            property.AddBlaAttribute(Target, RelatedUnitSourceUsage.DoNotUse);
+                        }),
                     new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit",
                         Flags1.Optional|Flags1.DoNotAssignProperty|Flags1.DoNotCreateProperty)
                 };

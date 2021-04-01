@@ -63,6 +63,7 @@ namespace iSukces.UnitedValues
             }
         }
 
+        [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit)]
         public KelvinTemperatureUnit GetKelvinTemperatureUnit()
         {
             // generator : InversedUnitGenerator.AddGetBaseUnit

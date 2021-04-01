@@ -37,6 +37,7 @@ namespace iSukces.UnitedValues
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit)]
         public AreaUnit GetAreaUnit()
         {
             // generator : BasicUnitGenerator.Add_ConvertOtherPower
@@ -49,6 +50,7 @@ namespace iSukces.UnitedValues
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit)]
         public VolumeUnit GetVolumeUnit()
         {
             // generator : BasicUnitGenerator.Add_ConvertOtherPower

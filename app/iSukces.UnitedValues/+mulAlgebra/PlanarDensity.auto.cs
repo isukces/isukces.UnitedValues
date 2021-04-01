@@ -15,8 +15,14 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // Density operator /(PlanarDensity planarDensity, Length length)
-            // scenario D2
-            throw new NotImplementedException("Not implemented yet");
+            // scenario with hint
+            // .Is<PlanarDensity, Length, Density>("/")
+            var planarDensityUnit = planarDensity.Unit;
+            var tmp1 = planarDensityUnit.DenominatorUnit;
+            var resultUnit = new DensityUnit(planarDensityUnit.CounterUnit, tmp1.GetVolumeUnit());
+            var lengthConverted = length.ConvertTo(tmp1.GetLengthUnit());
+            var value = planarDensity.Value / lengthConverted.Value;
+            return new Density(value, resultUnit);
         }
 
         /// <summary>
@@ -27,8 +33,15 @@ namespace iSukces.UnitedValues
         public static Length operator /(PlanarDensity planarDensity, Density density)
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
-            // scenario F2
-            throw new NotImplementedException("Not implemented yet");
+            // scenario with hint
+            // .Is<PlanarDensity, Density, Length>("/")
+            var planarDensityUnit = planarDensity.Unit;
+            var tmp1 = planarDensityUnit.DenominatorUnit;
+            var targetRightUnit = new DensityUnit(planarDensityUnit.CounterUnit, tmp1.GetVolumeUnit());
+            var densityConverted = density.ConvertTo(targetRightUnit);
+            var value = planarDensity.Value / densityConverted.Value;
+            return new Length(value, tmp1.GetLengthUnit());
+            // scenario F1
         }
 
         /// <summary>

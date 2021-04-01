@@ -79,6 +79,7 @@ namespace UnitGenerator
             cw.WithThrowNotImplementedException();
             var m = Target.AddMethod("Get" + resultType, resultType)
                 .WithBody(cw);
+            m.AddBlaAttribute(Target, RelatedUnitSourceUsage.ProvidesRelatedUnit);
         }
 
         private Col1 GetPropertiesInfo(int nr)

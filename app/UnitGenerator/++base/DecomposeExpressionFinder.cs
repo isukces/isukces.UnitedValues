@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using iSukces.Code;
 using iSukces.UnitedValues;
@@ -11,12 +9,12 @@ namespace UnitGenerator
     {
         public DecomposeExpressionFinder(Assembly assembly)
         {
-            _assembly = assembly;
+            _clrTypesResolver = new ClrTypesResolver(assembly);
         }
 
         public Element[] GetCodeItems(NameAndPower[] items, string targetName)
         {
-            if (!Types.TryGetValue(targetName, out var reflected))
+            if (!_clrTypesResolver.TryGetValue(targetName, out var reflected))
                 return null;
             var elements = new Element[items.Length];
             for (var index = 0; index < items.Length; index++)
@@ -37,7 +35,7 @@ namespace UnitGenerator
             var pt = p?.PropertyType;
             if (pt is null)
                 return null;
-            if (!Types.TryGetValue(pt.Name.Substring(0, pt.Name.Length - 4), out var reflected3))
+            if (!_clrTypesResolver.TryGetValue(pt.Name.Substring(0, pt.Name.Length - 4), out var reflected3))
                 return null;
 
             var fieldInfo = reflected3.GetField("BaseUnit");
@@ -70,10 +68,8 @@ namespace UnitGenerator
             }
 
             if (el is IDecomposableUnit)
-            {
                 // probably return null
                 throw new NotImplementedException();
-            }
 
             return new Element
             {
@@ -82,23 +78,8 @@ namespace UnitGenerator
             };
         }
 
-        private IReadOnlyDictionary<string, Type> Types
-        {
-            get
-            {
-                if (_types is null)
-                {
-                    var types = _assembly.GetExportedTypes();
-                    _types = types.ToDictionary(a => a.Name, a => a);
-                }
+        private readonly ClrTypesResolver _clrTypesResolver;
 
-                return _types;
-            }
-        }
-
-        private IReadOnlyDictionary<string, Type> _types;
-
-        private readonly Assembly _assembly;
 
         public class Element
         {

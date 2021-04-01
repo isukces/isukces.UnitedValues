@@ -16,12 +16,13 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // PlanarDensity operator /(LinearDensity linearDensity, Length length)
             // scenario with hint
-            // hint location Add_Length_PlanarDensity_LinearDensity, line 37
-            var lu = linearDensity.Unit;
-            var areaUnit = lu.DenominatorUnit.GetAreaUnit();
-            var lengthConverted = length.ConvertTo(lu.DenominatorUnit);
+            // .Is<LinearDensity, Length, PlanarDensity>("/")
+            var linearDensityUnit = linearDensity.Unit;
+            var tmp1 = linearDensityUnit.DenominatorUnit;
+            var resultUnit = new PlanarDensityUnit(linearDensityUnit.CounterUnit, tmp1.GetAreaUnit());
+            var lengthConverted = length.ConvertTo(tmp1);
             var value = linearDensity.Value / lengthConverted.Value;
-            return new PlanarDensity(value, new PlanarDensityUnit(lu.CounterUnit, areaUnit));
+            return new PlanarDensity(value, resultUnit);
         }
 
         /// <summary>
@@ -33,13 +34,13 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
-            // hint location Add_Length_PlanarDensity_LinearDensity, line 49
-            var lu = linearDensity.Unit;
-            var areaUnit = lu.DenominatorUnit.GetAreaUnit();
-            var x = new PlanarDensityUnit(lu.CounterUnit, areaUnit);
-            var planarDensityConverted = planarDensity.ConvertTo(x);
+            // .Is<LinearDensity, PlanarDensity, Length>("/")
+            var linearDensityUnit = linearDensity.Unit;
+            var tmp1 = linearDensityUnit.DenominatorUnit;
+            var targetRightUnit = new PlanarDensityUnit(linearDensityUnit.CounterUnit, tmp1.GetAreaUnit());
+            var planarDensityConverted = planarDensity.ConvertTo(targetRightUnit);
             var value = linearDensity.Value / planarDensityConverted.Value;
-            return new Length(value, lu.DenominatorUnit);
+            return new Length(value, tmp1);
             // scenario F1
         }
 
@@ -130,8 +131,14 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // Density operator /(LinearDensity linearDensity, Area area)
-            // scenario D2
-            throw new NotImplementedException("Not implemented yet");
+            // scenario with hint
+            // .Is<LinearDensity, Area, Density>("/")
+            var linearDensityUnit = linearDensity.Unit;
+            var tmp1 = linearDensityUnit.DenominatorUnit;
+            var resultUnit = new DensityUnit(linearDensityUnit.CounterUnit, tmp1.GetVolumeUnit());
+            var areaConverted = area.ConvertTo(tmp1.GetAreaUnit());
+            var value = linearDensity.Value / areaConverted.Value;
+            return new Density(value, resultUnit);
         }
 
         /// <summary>
@@ -142,8 +149,15 @@ namespace iSukces.UnitedValues
         public static Area operator /(LinearDensity linearDensity, Density density)
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
-            // scenario F2
-            throw new NotImplementedException("Not implemented yet");
+            // scenario with hint
+            // .Is<LinearDensity, Density, Area>("/")
+            var linearDensityUnit = linearDensity.Unit;
+            var tmp1 = linearDensityUnit.DenominatorUnit;
+            var targetRightUnit = new DensityUnit(linearDensityUnit.CounterUnit, tmp1.GetVolumeUnit());
+            var densityConverted = density.ConvertTo(targetRightUnit);
+            var value = linearDensity.Value / densityConverted.Value;
+            return new Area(value, tmp1.GetAreaUnit());
+            // scenario F1
         }
 
         /// <summary>

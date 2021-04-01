@@ -42,6 +42,7 @@ namespace iSukces.UnitedValues
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit)]
         public SquareTimeUnit GetSquareTimeUnit()
         {
             // generator : BasicUnitGenerator.Add_ConvertOtherPower

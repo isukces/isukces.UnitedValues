@@ -85,11 +85,13 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // Mass operator *(LinearDensity linearDensity, Length length)
-            // scenario D3
+            // scenario with hint
+            // .Is<LinearDensity, Length, Mass>("*")
             var linearDensityUnit = linearDensity.Unit;
             var lengthConverted = length.ConvertTo(linearDensityUnit.DenominatorUnit);
             var value = linearDensity.Value * lengthConverted.Value;
             return new Mass(value, linearDensityUnit.CounterUnit);
+            // scenario D1
         }
 
         /// <summary>
@@ -179,13 +181,15 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
-            // hint location Add_Length_PlanarDensity_LinearDensity, line 25
-            var rightArgumentUnit = planarDensity.Unit;
-            var areaUnit = length.Unit.GetAreaUnit();
-            var x3 = new PlanarDensityUnit(rightArgumentUnit.CounterUnit, areaUnit);
-            var planarDensityConverted = planarDensity.ConvertTo(x3);
+            // .Is<Length, PlanarDensity, LinearDensity>("*")
+            var planarDensityUnit = planarDensity.Unit;
+            var tmp1 = planarDensityUnit.CounterUnit;
+            var lengthUnit = length.Unit;
+            var targetRightUnit = new PlanarDensityUnit(tmp1, lengthUnit.GetAreaUnit());
+            var resultUnit = new LinearDensityUnit(tmp1, lengthUnit);
+            var planarDensityConverted = planarDensity.ConvertTo(targetRightUnit);
             var value = length.Value * planarDensityConverted.Value;
-            return new LinearDensity(value, new LinearDensityUnit(rightArgumentUnit.CounterUnit, length.Unit));
+            return new LinearDensity(value, resultUnit);
         }
 
         /// <summary>
@@ -198,11 +202,14 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // LinearDensity operator *(PlanarDensity planarDensity, Length length)
             // scenario with hint
-            // hint location Add_Length_PlanarDensity_LinearDensity, line 16
-            var lengthUnit = planarDensity.Unit.DenominatorUnit.GetLengthUnit();
-            var lengthConverted = length.ConvertTo(lengthUnit);
+            // .Is<PlanarDensity, Length, LinearDensity>("*")
+            var planarDensityUnit = planarDensity.Unit;
+            var tmp1 = planarDensityUnit.DenominatorUnit;
+            var tmp2 = tmp1.GetLengthUnit();
+            var resultUnit = new LinearDensityUnit(planarDensityUnit.CounterUnit, tmp2);
+            var lengthConverted = length.ConvertTo(tmp2);
             var value = planarDensity.Value * lengthConverted.Value;
-            return new LinearDensity(value, new LinearDensityUnit(planarDensity.Unit.CounterUnit, lengthUnit));
+            return new LinearDensity(value, resultUnit);
         }
 
         /// <summary>
@@ -292,14 +299,15 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
-            // hint location Add_PlanarDensity_Length_Density, line 116
-            var rightArgumentUnit = density.Unit;
-            var areaUnit = length.Unit.GetAreaUnit();
-            var volumeUnit = length.Unit.GetVolumeUnit();
-            var x3 = new DensityUnit(rightArgumentUnit.CounterUnit, volumeUnit);
-            var densityConverted = density.ConvertTo(x3);
+            // .Is<Length, Density, PlanarDensity>("*")
+            var densityUnit = density.Unit;
+            var tmp1 = densityUnit.CounterUnit;
+            var lengthUnit = length.Unit;
+            var targetRightUnit = new DensityUnit(tmp1, lengthUnit.GetVolumeUnit());
+            var resultUnit = new PlanarDensityUnit(tmp1, lengthUnit.GetAreaUnit());
+            var densityConverted = density.ConvertTo(targetRightUnit);
             var value = length.Value * densityConverted.Value;
-            return new PlanarDensity(value, new PlanarDensityUnit(rightArgumentUnit.CounterUnit, areaUnit));
+            return new PlanarDensity(value, resultUnit);
         }
 
         /// <summary>
@@ -312,12 +320,13 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // PlanarDensity operator *(Density density, Length length)
             // scenario with hint
-            // hint location Add_PlanarDensity_Length_Density, line 106
-            var areaUnit = density.Unit.DenominatorUnit.GetAreaUnit();
-            var lengthUnit = density.Unit.DenominatorUnit.GetLengthUnit();
-            var lengthConverted = length.ConvertTo(lengthUnit);
+            // .Is<Density, Length, PlanarDensity>("*")
+            var densityUnit = density.Unit;
+            var tmp1 = densityUnit.DenominatorUnit;
+            var resultUnit = new PlanarDensityUnit(densityUnit.CounterUnit, tmp1.GetAreaUnit());
+            var lengthConverted = length.ConvertTo(tmp1.GetLengthUnit());
             var value = density.Value * lengthConverted.Value;
-            return new PlanarDensity(value, new PlanarDensityUnit(density.Unit.CounterUnit, areaUnit));
+            return new PlanarDensity(value, resultUnit);
         }
 
         /// <summary>
