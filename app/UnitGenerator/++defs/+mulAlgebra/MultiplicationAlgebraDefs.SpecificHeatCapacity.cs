@@ -60,12 +60,15 @@ namespace UnitGenerator
                 if (args.Input.Is<EnergyMassDensity, DeltaKelvinTemperature, SpecificHeatCapacity>("/")) {
                   
                     var cc = args.Result;
+                    cc.SetThrow();
+                    /*
                     cc.SetComment();
 
                     cc.AddVariable("lu", "$(left).Unit");
                     cc.AddVariable("temperatureUnit", "new KelvinTemperatureUnit(null)");
                     cc.AddVariable("u2", "new MassDetlaKelvinUnit(lu.DenominatorUnit, $(right).Unit)");
                     cc.WithResultUnit<SpecificHeatCapacityUnit>("lu.CounterUnit", "u2");
+                    */
                     args.Handled = true;
                     return;
                 }
@@ -74,6 +77,8 @@ namespace UnitGenerator
                 {
                     var cc = args.Result;
                     cc.SetComment();
+                    cc.SetThrow();
+                    /*
                     cc.AddVariable("lu", "$(left).Unit");
                     cc.AddVariable("ru", "$(right).Unit");
                     cc.AddVariable("rud", "ru.DenominatorUnit");
@@ -82,6 +87,7 @@ namespace UnitGenerator
                     cc.AddVariable("rightConvertedUnit", new Args("lu.CounterUnit", "tmp").Create<SpecificHeatCapacityUnit>());
                     cc.ConvertRight("rightConvertedUnit");
                     cc.ResultUnit = "ru.DenominatorUnit.RightUnit";
+                    */
                     args.Handled = true;
                     
                     return;
@@ -97,7 +103,8 @@ namespace UnitGenerator
                     cc.ConvertRight("lDenominatorUnit.RightUnit");
                     cc.WithResultUnit<EnergyMassDensityUnit>("lu.CounterUnit", "lDenominatorUnit.LeftUnit");
                     args.Handled  = true;
-                    
+
+                    cc.SetThrow();
                     return;
                 }
                 if (args.Input.Is<DeltaKelvinTemperature, SpecificHeatCapacity, EnergyMassDensity>("*")) {

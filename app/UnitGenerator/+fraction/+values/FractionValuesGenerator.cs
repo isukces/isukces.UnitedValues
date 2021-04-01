@@ -33,7 +33,8 @@ namespace UnitGenerator
         protected override void Add_Parse()
         {
             const string splitMethodName = nameof(Common) + "." + nameof(Common.SplitUnitNameBySlash);
-            Add_Parse(splitMethodName);
+            //Add_Parse(splitMethodName);
+            Add_Parse(null);
         }
 
 

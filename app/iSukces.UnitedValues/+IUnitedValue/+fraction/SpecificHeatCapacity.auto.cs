@@ -23,7 +23,7 @@ namespace iSukces.UnitedValues
             Unit = unit;
         }
 
-        public SpecificHeatCapacity(decimal value, EnergyUnit counterUnit, MassDetlaKelvinUnit denominatorUnit)
+        public SpecificHeatCapacity(decimal value, EnergyMassDensityUnit counterUnit, KelvinTemperatureUnit denominatorUnit)
         {
             Value = value;
             Unit = new SpecificHeatCapacityUnit(counterUnit, denominatorUnit);
@@ -34,8 +34,8 @@ namespace iSukces.UnitedValues
             // generator : FractionValuesGenerator.Add_ConvertTo
             if (Unit.Equals(newUnit))
                 return this;
-            var a = new Energy(Value, Unit.CounterUnit);
-            var b = new MassDetlaKelvin(1, Unit.DenominatorUnit);
+            var a = new EnergyMassDensity(Value, Unit.CounterUnit);
+            var b = new KelvinTemperature(1, Unit.DenominatorUnit);
             a = a.ConvertTo(newUnit.CounterUnit);
             b = b.ConvertTo(newUnit.DenominatorUnit);
             return new SpecificHeatCapacity(a.Value / b.Value, newUnit);
@@ -95,7 +95,7 @@ namespace iSukces.UnitedValues
             return this.ToStringFormat(format, provider);
         }
 
-        public SpecificHeatCapacity WithCounterUnit(EnergyUnit newUnit)
+        public SpecificHeatCapacity WithCounterUnit(EnergyMassDensityUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithCounterUnit
             var oldUnit = Unit.CounterUnit;
@@ -107,7 +107,7 @@ namespace iSukces.UnitedValues
             return new SpecificHeatCapacity(oldFactor / newFactor * Value, resultUnit);
         }
 
-        public SpecificHeatCapacity WithDenominatorUnit(MassDetlaKelvinUnit newUnit)
+        public SpecificHeatCapacity WithDenominatorUnit(KelvinTemperatureUnit newUnit)
         {
             // generator : FractionValuesGenerator.Add_WithDenominatorUnit
             var oldUnit = Unit.DenominatorUnit;
@@ -142,15 +142,7 @@ namespace iSukces.UnitedValues
         public static SpecificHeatCapacity Parse(string value)
         {
             // generator : FractionValuesGenerator.Add_Parse
-            if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException(nameof(value));
-            var r = CommonParse.Parse(value, typeof(SpecificHeatCapacity));
-            var units = Common.SplitUnitNameBySlash(r.UnitName);
-            if (units.Length != 3)
-                throw new Exception($"{r.UnitName} is not valid SpecificHeatCapacity unit");
-            var counterUnit = new EnergyUnit(units[0]);
-            var denominatorUnit = new MassDetlaKelvinUnit(new MassUnit(units[1]), new KelvinTemperatureUnit(units[2]));
-            return new SpecificHeatCapacity(r.Value, counterUnit, denominatorUnit);
+            throw new NotImplementedException("Not implemented yet");
         }
 
         /// <summary>

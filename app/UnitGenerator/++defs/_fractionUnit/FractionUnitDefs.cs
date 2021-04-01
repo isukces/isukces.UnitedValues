@@ -54,7 +54,11 @@ namespace UnitGenerator
         private static FractionUnitsCollection _allFractionUnitses;
 
 
+        /*
         public static readonly FractionUnit SpecificHeatCapacity
             = FractionUnit.Make<SpecificHeatCapacity, Energy, MassDetlaKelvin>();
+    */
+        public static readonly FractionUnit SpecificHeatCapacity
+            = FractionUnit.Make<SpecificHeatCapacity, EnergyMassDensity, KelvinTemperature>();
     }
 }

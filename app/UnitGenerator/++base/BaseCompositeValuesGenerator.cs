@@ -51,21 +51,26 @@ namespace UnitGenerator
             }
 
             var cw = Ext.Create(GetType());
-            cw.SingleLineIf("string.IsNullOrEmpty(value)",
-                "throw new ArgumentNullException(nameof(value));");
+            if (string.IsNullOrEmpty(splitMethodName))
+                cw.WithThrowNotImplementedException();
+            else
+            {
+                cw.SingleLineIf("string.IsNullOrEmpty(value)",
+                    "throw new ArgumentNullException(nameof(value));");
 
-            cw.WriteLine("var r = CommonParse.Parse(value, typeof(" + Target.Name + "));");
+                cw.WriteLine("var r = CommonParse.Parse(value, typeof(" + Target.Name + "));");
 
-            cw.WriteLine("var units = " + splitMethodName + "(r.UnitName);");
-            var sum = mianownik.Arguments.Length + licznik.Arguments.Length;
-            cw.SingleLineIf("units.Length != " + sum.CsEncode(),
-                "throw new Exception($\"{r.UnitName} is not valid " + Target.Name + " unit\");");
+                cw.WriteLine("var units = " + splitMethodName + "(r.UnitName);");
+                var sum = mianownik.Arguments.Length + licznik.Arguments.Length;
+                cw.SingleLineIf("units.Length != " + sum.CsEncode(),
+                    "throw new Exception($\"{r.UnitName} is not valid " + Target.Name + " unit\");");
 
-            cw.WriteAssign("counterUnit", new Args("units[0]").Create(GenInfo.First.Unit), true);
-            //cw.WriteLine("var counterUnit = new " + GenInfo.First.Unit + "(units[0]);");
-            cw.WriteAssign("denominatorUnit", mianownik.Create(GenInfo.Second.Unit), true);
-            // cw.WriteLine("var denominatorUnit = new " + GenInfo.Second.Unit + "(units[1]);");
-            cw.WriteLine(ReturnValue($"new {Target.Name}(r.Value, counterUnit, denominatorUnit)"));
+                cw.WriteAssign("counterUnit", new Args("units[0]").Create(GenInfo.First.Unit), true);
+                //cw.WriteLine("var counterUnit = new " + GenInfo.First.Unit + "(units[0]);");
+                cw.WriteAssign("denominatorUnit", mianownik.Create(GenInfo.Second.Unit), true);
+                // cw.WriteLine("var denominatorUnit = new " + GenInfo.Second.Unit + "(units[1]);");
+                cw.WriteLine(ReturnValue($"new {Target.Name}(r.Value, counterUnit, denominatorUnit)"));
+            }
 
             var m = Target.AddMethod("Parse", GenInfo.Result.Value.ValueTypeName)
                 .WithStatic()

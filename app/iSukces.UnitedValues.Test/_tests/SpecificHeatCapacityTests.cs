@@ -7,8 +7,8 @@ namespace iSukces.UnitedValues.Test
         [Fact]
         public void T01_Should_decompose_SpecificHeatCapacity_unit()
         {
-            var specificHeatCapacity = new SpecificHeatCapacity(50, EnergyUnits.Joule,
-                new MassDetlaKelvinUnit(MassUnits.Kg, KelvinTemperatureUnits.Degree));
+            var specificHeatCapacity = new SpecificHeatCapacity(50,
+                EnergyUnits.Joule, MassUnits.Kg, KelvinTemperatureUnits.Degree);
             var dec = specificHeatCapacity.Unit.Decompose();
             Assert.Equal(3, dec.Count);
             Assert.Equal("J", dec[0].ToString());
@@ -21,21 +21,21 @@ namespace iSukces.UnitedValues.Test
         {
             // public static DeltaKelvinTemperature operator /(EnergyMassDensity energyMassDensity, SpecificHeatCapacity specificHeatCapacity)
             var energyMassDensity = new EnergyMassDensity(200, EnergyUnits.Joule, MassUnits.Kg);
-            var specificHeatCapacity = new SpecificHeatCapacity(50, EnergyUnits.Joule,
-                new MassDetlaKelvinUnit(MassUnits.Kg, KelvinTemperatureUnits.Degree));
+            var specificHeatCapacity = new SpecificHeatCapacity(50,
+                EnergyUnits.Joule, MassUnits.Kg, KelvinTemperatureUnits.Degree);
 
             var d = energyMassDensity / specificHeatCapacity;
             Assert.Equal(4, d.Value);
             Assert.Equal("K", d.Unit.UnitName);
         }
-        
+
         [Fact]
         public void T02b_Should_div_EnergyMassDensity_by_SpecificHeatCapacity()
         {
             // public static DeltaKelvinTemperature operator /(EnergyMassDensity energyMassDensity, SpecificHeatCapacity specificHeatCapacity)
             var energyMassDensity = new EnergyMassDensity(200, EnergyUnits.KiloJoule, MassUnits.Kg);
             var specificHeatCapacity = new SpecificHeatCapacity(50, EnergyUnits.Joule,
-                new MassDetlaKelvinUnit(MassUnits.Kg, KelvinTemperatureUnits.Degree));
+                MassUnits.Kg, KelvinTemperatureUnits.Degree);
 
             var d = energyMassDensity / specificHeatCapacity;
             Assert.Equal(4000, d.Value);

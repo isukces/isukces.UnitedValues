@@ -142,15 +142,7 @@ namespace iSukces.UnitedValues
         public static Pressure Parse(string value)
         {
             // generator : FractionValuesGenerator.Add_Parse
-            if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException(nameof(value));
-            var r = CommonParse.Parse(value, typeof(Pressure));
-            var units = Common.SplitUnitNameBySlash(r.UnitName);
-            if (units.Length != 2)
-                throw new Exception($"{r.UnitName} is not valid Pressure unit");
-            var counterUnit = new ForceUnit(units[0]);
-            var denominatorUnit = new AreaUnit(units[1]);
-            return new Pressure(r.Value, counterUnit, denominatorUnit);
+            throw new NotImplementedException("Not implemented yet");
         }
 
         /// <summary>

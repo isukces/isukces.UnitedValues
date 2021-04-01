@@ -7,14 +7,14 @@ using System.Globalization;
 
 namespace iSukces.UnitedValues
 {
-    public partial class SpecificHeatCapacityUnit : IFractionalUnit<EnergyUnit, MassDetlaKelvinUnit>, IEquatable<SpecificHeatCapacityUnit>, IDecomposableUnit
+    public partial class SpecificHeatCapacityUnit : IFractionalUnit<EnergyMassDensityUnit, KelvinTemperatureUnit>, IEquatable<SpecificHeatCapacityUnit>, IDecomposableUnit
     {
         /// <summary>
         /// creates instance of SpecificHeatCapacityUnit
         /// </summary>
         /// <param name="counterUnit">counter unit</param>
         /// <param name="denominatorUnit">denominator unit</param>
-        public SpecificHeatCapacityUnit(EnergyUnit counterUnit, MassDetlaKelvinUnit denominatorUnit)
+        public SpecificHeatCapacityUnit(EnergyMassDensityUnit counterUnit, KelvinTemperatureUnit denominatorUnit)
         {
             CounterUnit = counterUnit;
             DenominatorUnit = denominatorUnit;
@@ -55,13 +55,13 @@ namespace iSukces.UnitedValues
             return UnitName;
         }
 
-        public SpecificHeatCapacityUnit WithCounterUnit(EnergyUnit newUnit)
+        public SpecificHeatCapacityUnit WithCounterUnit(EnergyMassDensityUnit newUnit)
         {
             // generator : FractionUnitGenerator.Add_WithSecond
             return new SpecificHeatCapacityUnit(newUnit, DenominatorUnit);
         }
 
-        public SpecificHeatCapacityUnit WithDenominatorUnit(MassDetlaKelvinUnit newUnit)
+        public SpecificHeatCapacityUnit WithDenominatorUnit(KelvinTemperatureUnit newUnit)
         {
             // generator : FractionUnitGenerator.Add_WithFirst
             return new SpecificHeatCapacityUnit(CounterUnit, newUnit);
@@ -90,12 +90,12 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// counter unit
         /// </summary>
-        public EnergyUnit CounterUnit { get; }
+        public EnergyMassDensityUnit CounterUnit { get; }
 
         /// <summary>
         /// denominator unit
         /// </summary>
-        public MassDetlaKelvinUnit DenominatorUnit { get; }
+        public KelvinTemperatureUnit DenominatorUnit { get; }
 
         public string UnitName
         {

@@ -16,12 +16,9 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // SpecificHeatCapacity operator /(EnergyMassDensity energyMassDensity, DeltaKelvinTemperature deltaKelvinTemperature)
             // scenario with hint
-            // hint location Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity, line 63
-            var lu = energyMassDensity.Unit;
-            var temperatureUnit = new KelvinTemperatureUnit(null);
-            var u2 = new MassDetlaKelvinUnit(lu.DenominatorUnit, deltaKelvinTemperature.Unit);
-            var value = energyMassDensity.Value / deltaKelvinTemperature.Value;
-            return new SpecificHeatCapacity(value, new SpecificHeatCapacityUnit(lu.CounterUnit, u2));
+            // Fill method Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity
+            // .Is<EnergyMassDensity, DeltaKelvinTemperature, SpecificHeatCapacity>("/")
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -33,15 +30,9 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
-            // hint location Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity, line 76
-            var lu = energyMassDensity.Unit;
-            var ru = specificHeatCapacity.Unit;
-            var rud = ru.DenominatorUnit;
-            var tmp = new MassDetlaKelvinUnit(lu.DenominatorUnit, rud.RightUnit);
-            var rightConvertedUnit = new SpecificHeatCapacityUnit(lu.CounterUnit, tmp);
-            var specificHeatCapacityConverted = specificHeatCapacity.ConvertTo(rightConvertedUnit);
-            var value = energyMassDensity.Value / specificHeatCapacityConverted.Value;
-            return new DeltaKelvinTemperature(value, ru.DenominatorUnit.RightUnit);
+            // Fill method Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity
+            // .Is<EnergyMassDensity, SpecificHeatCapacity, DeltaKelvinTemperature>("/")
+            throw new NotImplementedException();
             // scenario F1
         }
 

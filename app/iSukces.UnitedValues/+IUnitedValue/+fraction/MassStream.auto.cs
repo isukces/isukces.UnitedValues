@@ -142,15 +142,7 @@ namespace iSukces.UnitedValues
         public static MassStream Parse(string value)
         {
             // generator : FractionValuesGenerator.Add_Parse
-            if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException(nameof(value));
-            var r = CommonParse.Parse(value, typeof(MassStream));
-            var units = Common.SplitUnitNameBySlash(r.UnitName);
-            if (units.Length != 2)
-                throw new Exception($"{r.UnitName} is not valid MassStream unit");
-            var counterUnit = new MassUnit(units[0]);
-            var denominatorUnit = new TimeUnit(units[1]);
-            return new MassStream(r.Value, counterUnit, denominatorUnit);
+            throw new NotImplementedException("Not implemented yet");
         }
 
         /// <summary>

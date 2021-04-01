@@ -142,15 +142,7 @@ namespace iSukces.UnitedValues
         public static PlanarDensity Parse(string value)
         {
             // generator : FractionValuesGenerator.Add_Parse
-            if (string.IsNullOrEmpty(value))
-                throw new ArgumentNullException(nameof(value));
-            var r = CommonParse.Parse(value, typeof(PlanarDensity));
-            var units = Common.SplitUnitNameBySlash(r.UnitName);
-            if (units.Length != 2)
-                throw new Exception($"{r.UnitName} is not valid PlanarDensity unit");
-            var counterUnit = new MassUnit(units[0]);
-            var denominatorUnit = new AreaUnit(units[1]);
-            return new PlanarDensity(r.Value, counterUnit, denominatorUnit);
+            throw new NotImplementedException("Not implemented yet");
         }
 
         /// <summary>

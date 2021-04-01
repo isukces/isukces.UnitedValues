@@ -14,15 +14,11 @@ namespace iSukces.UnitedValues
         public static EnergyMassDensity operator *(DeltaKelvinTemperature deltaKelvinTemperature, SpecificHeatCapacity specificHeatCapacity)
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
-            // scenario with hint
-            // hint location Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity, line 106
-            var ru = specificHeatCapacity.Unit;
-            var rCounterUnit = ru.CounterUnit;
-            var lu = deltaKelvinTemperature.Unit;
-            var tmp = new MassDetlaKelvinUnit(ru.DenominatorUnit.LeftUnit, lu);
-            var specificHeatCapacityConverted = specificHeatCapacity.ConvertTo(new SpecificHeatCapacityUnit(rCounterUnit, tmp));
+            // scenario B
+            var unit = new SpecificHeatCapacityUnit(specificHeatCapacity.Unit.CounterUnit, deltaKelvinTemperature.Unit);
+            var specificHeatCapacityConverted    = specificHeatCapacity.WithDenominatorUnit(deltaKelvinTemperature.Unit);
             var value = deltaKelvinTemperature.Value * specificHeatCapacityConverted.Value;
-            return new EnergyMassDensity(value, new EnergyMassDensityUnit(rCounterUnit, ru.DenominatorUnit.LeftUnit));
+            return new EnergyMassDensity(value, specificHeatCapacity.Unit.CounterUnit);
         }
 
         /// <summary>
@@ -35,13 +31,10 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // EnergyMassDensity operator *(SpecificHeatCapacity specificHeatCapacity, DeltaKelvinTemperature deltaKelvinTemperature)
             // scenario with hint
-            // hint location Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity, line 93
-            var lu = specificHeatCapacity.Unit;
-            var ru = deltaKelvinTemperature.Unit;
-            var lDenominatorUnit = lu.DenominatorUnit;
-            var deltaKelvinTemperatureConverted = deltaKelvinTemperature.ConvertTo(lDenominatorUnit.RightUnit);
-            var value = specificHeatCapacity.Value * deltaKelvinTemperatureConverted.Value;
-            return new EnergyMassDensity(value, new EnergyMassDensityUnit(lu.CounterUnit, lDenominatorUnit.LeftUnit));
+            // Fill method Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity
+            // .Is<SpecificHeatCapacity, DeltaKelvinTemperature, EnergyMassDensity>("*")
+            throw new NotImplementedException();
+            // scenario D1
         }
 
         /// <summary>
