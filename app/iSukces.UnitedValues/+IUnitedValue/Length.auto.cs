@@ -203,6 +203,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in cm</param>
         public static Length FromCentimeters(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Cm);
         }
 
@@ -212,6 +213,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in cm</param>
         public static Length FromCentimeters(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Cm);
         }
 
@@ -221,6 +223,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in cm</param>
         public static Length FromCentimeters(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Cm);
         }
 
@@ -230,6 +233,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in cm</param>
         public static Length FromCentimeters(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Cm);
         }
 
@@ -239,6 +243,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in dm</param>
         public static Length FromDecimeters(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Dm);
         }
 
@@ -248,6 +253,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in dm</param>
         public static Length FromDecimeters(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Dm);
         }
 
@@ -257,6 +263,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in dm</param>
         public static Length FromDecimeters(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Dm);
         }
 
@@ -266,6 +273,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in dm</param>
         public static Length FromDecimeters(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Dm);
         }
 
@@ -275,6 +283,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in fh</param>
         public static Length FromFathom(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Fathom);
         }
 
@@ -284,6 +293,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in fh</param>
         public static Length FromFathom(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Fathom);
         }
 
@@ -293,6 +303,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in fh</param>
         public static Length FromFathom(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Fathom);
         }
 
@@ -302,6 +313,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in fh</param>
         public static Length FromFathom(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Fathom);
         }
 
@@ -311,6 +323,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in ft</param>
         public static Length FromFoot(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Feet);
         }
 
@@ -320,6 +333,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in ft</param>
         public static Length FromFoot(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Feet);
         }
 
@@ -329,6 +343,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in ft</param>
         public static Length FromFoot(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Feet);
         }
 
@@ -338,6 +353,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in ft</param>
         public static Length FromFoot(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Feet);
         }
 
@@ -347,6 +363,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in fg</param>
         public static Length FromFurlongs(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Furlong);
         }
 
@@ -356,6 +373,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in fg</param>
         public static Length FromFurlongs(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Furlong);
         }
 
@@ -365,6 +383,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in fg</param>
         public static Length FromFurlongs(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Furlong);
         }
 
@@ -374,6 +393,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in fg</param>
         public static Length FromFurlongs(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Furlong);
         }
 
@@ -383,6 +403,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in inch</param>
         public static Length FromInches(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Inch);
         }
 
@@ -392,6 +413,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in inch</param>
         public static Length FromInches(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Inch);
         }
 
@@ -401,6 +423,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in inch</param>
         public static Length FromInches(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Inch);
         }
 
@@ -410,6 +433,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in inch</param>
         public static Length FromInches(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Inch);
         }
 
@@ -419,6 +443,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in km</param>
         public static Length FromKilometers(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Km);
         }
 
@@ -428,6 +453,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in km</param>
         public static Length FromKilometers(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Km);
         }
 
@@ -437,6 +463,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in km</param>
         public static Length FromKilometers(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Km);
         }
 
@@ -446,6 +473,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in km</param>
         public static Length FromKilometers(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Km);
         }
 
@@ -455,6 +483,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in m</param>
         public static Length FromMeter(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Meter);
         }
 
@@ -464,6 +493,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in m</param>
         public static Length FromMeter(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Meter);
         }
 
@@ -473,6 +503,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in m</param>
         public static Length FromMeter(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Meter);
         }
 
@@ -482,6 +513,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in m</param>
         public static Length FromMeter(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Meter);
         }
 
@@ -491,6 +523,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in mil</param>
         public static Length FromMiles(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Mile);
         }
 
@@ -500,6 +533,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in mil</param>
         public static Length FromMiles(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Mile);
         }
 
@@ -509,6 +543,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in mil</param>
         public static Length FromMiles(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Mile);
         }
 
@@ -518,6 +553,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in mil</param>
         public static Length FromMiles(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Mile);
         }
 
@@ -527,6 +563,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in mm</param>
         public static Length FromMilimeters(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Mm);
         }
 
@@ -536,6 +573,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in mm</param>
         public static Length FromMilimeters(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Mm);
         }
 
@@ -545,6 +583,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in mm</param>
         public static Length FromMilimeters(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Mm);
         }
 
@@ -554,6 +593,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in mm</param>
         public static Length FromMilimeters(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Mm);
         }
 
@@ -563,6 +603,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in nm</param>
         public static Length FromNauticalMiles(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.NauticalMile);
         }
 
@@ -572,6 +613,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in nm</param>
         public static Length FromNauticalMiles(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.NauticalMile);
         }
 
@@ -581,6 +623,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in nm</param>
         public static Length FromNauticalMiles(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.NauticalMile);
         }
 
@@ -590,6 +633,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in nm</param>
         public static Length FromNauticalMiles(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.NauticalMile);
         }
 
@@ -599,6 +643,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in yd</param>
         public static Length FromYards(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Yard);
         }
 
@@ -608,6 +653,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in yd</param>
         public static Length FromYards(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length((decimal)value, LengthUnits.Yard);
         }
 
@@ -617,6 +663,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in yd</param>
         public static Length FromYards(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Yard);
         }
 
@@ -626,6 +673,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Length value in yd</param>
         public static Length FromYards(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Length(value, LengthUnits.Yard);
         }
 

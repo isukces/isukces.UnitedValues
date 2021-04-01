@@ -197,6 +197,46 @@ namespace iSukces.UnitedValues
             return left.CompareTo(right) >= 0;
         }
 
+        /// <summary>
+        /// creates deltaCelsiusTemperature from value in ----
+        /// </summary>
+        /// <param name="value">DeltaCelsiusTemperature value in ----</param>
+        public static DeltaCelsiusTemperature FromDegree(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new DeltaCelsiusTemperature(value, CelsiusTemperatureUnits.Degree);
+        }
+
+        /// <summary>
+        /// creates deltaCelsiusTemperature from value in ----
+        /// </summary>
+        /// <param name="value">DeltaCelsiusTemperature value in ----</param>
+        public static DeltaCelsiusTemperature FromDegree(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new DeltaCelsiusTemperature((decimal)value, CelsiusTemperatureUnits.Degree);
+        }
+
+        /// <summary>
+        /// creates deltaCelsiusTemperature from value in ----
+        /// </summary>
+        /// <param name="value">DeltaCelsiusTemperature value in ----</param>
+        public static DeltaCelsiusTemperature FromDegree(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new DeltaCelsiusTemperature(value, CelsiusTemperatureUnits.Degree);
+        }
+
+        /// <summary>
+        /// creates deltaCelsiusTemperature from value in ----
+        /// </summary>
+        /// <param name="value">DeltaCelsiusTemperature value in ----</param>
+        public static DeltaCelsiusTemperature FromDegree(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new DeltaCelsiusTemperature(value, CelsiusTemperatureUnits.Degree);
+        }
+
         public static DeltaCelsiusTemperature Parse(string value)
         {
             // generator : BasicUnitValuesGenerator.Add_Parse

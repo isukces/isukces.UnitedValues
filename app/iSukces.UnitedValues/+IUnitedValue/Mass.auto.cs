@@ -203,6 +203,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in g</param>
         public static Mass FromGrams(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass(value, MassUnits.Gram);
         }
 
@@ -212,6 +213,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in g</param>
         public static Mass FromGrams(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass((decimal)value, MassUnits.Gram);
         }
 
@@ -221,6 +223,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in g</param>
         public static Mass FromGrams(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass(value, MassUnits.Gram);
         }
 
@@ -230,6 +233,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in g</param>
         public static Mass FromGrams(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass(value, MassUnits.Gram);
         }
 
@@ -239,6 +243,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in kg</param>
         public static Mass FromKg(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass(value, MassUnits.Kg);
         }
 
@@ -248,6 +253,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in kg</param>
         public static Mass FromKg(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass((decimal)value, MassUnits.Kg);
         }
 
@@ -257,6 +263,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in kg</param>
         public static Mass FromKg(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass(value, MassUnits.Kg);
         }
 
@@ -266,6 +273,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in kg</param>
         public static Mass FromKg(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass(value, MassUnits.Kg);
         }
 
@@ -275,6 +283,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in t</param>
         public static Mass FromTons(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass(value, MassUnits.Tone);
         }
 
@@ -284,6 +293,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in t</param>
         public static Mass FromTons(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass((decimal)value, MassUnits.Tone);
         }
 
@@ -293,6 +303,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in t</param>
         public static Mass FromTons(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass(value, MassUnits.Tone);
         }
 
@@ -302,6 +313,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Mass value in t</param>
         public static Mass FromTons(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Mass(value, MassUnits.Tone);
         }
 

@@ -214,6 +214,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">CelsiusTemperature value in °C</param>
         public static CelsiusTemperature FromDegree(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new CelsiusTemperature(value, CelsiusTemperatureUnits.Degree);
         }
 
@@ -223,6 +224,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">CelsiusTemperature value in °C</param>
         public static CelsiusTemperature FromDegree(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new CelsiusTemperature((decimal)value, CelsiusTemperatureUnits.Degree);
         }
 
@@ -232,6 +234,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">CelsiusTemperature value in °C</param>
         public static CelsiusTemperature FromDegree(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new CelsiusTemperature(value, CelsiusTemperatureUnits.Degree);
         }
 
@@ -241,6 +244,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">CelsiusTemperature value in °C</param>
         public static CelsiusTemperature FromDegree(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new CelsiusTemperature(value, CelsiusTemperatureUnits.Degree);
         }
 

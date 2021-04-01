@@ -203,6 +203,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in cal</param>
         public static Energy FromCalorie(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.Calorie);
         }
 
@@ -212,6 +213,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in cal</param>
         public static Energy FromCalorie(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.Calorie);
         }
 
@@ -221,6 +223,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in cal</param>
         public static Energy FromCalorie(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.Calorie);
         }
 
@@ -230,6 +233,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in cal</param>
         public static Energy FromCalorie(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.Calorie);
         }
 
@@ -239,6 +243,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in GJ</param>
         public static Energy FromGigaJoule(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.GigaJoule);
         }
 
@@ -248,6 +253,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in GJ</param>
         public static Energy FromGigaJoule(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.GigaJoule);
         }
 
@@ -257,6 +263,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in GJ</param>
         public static Energy FromGigaJoule(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.GigaJoule);
         }
 
@@ -266,6 +273,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in GJ</param>
         public static Energy FromGigaJoule(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.GigaJoule);
         }
 
@@ -275,6 +283,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in GWh</param>
         public static Energy FromGigaWattHour(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.GigaWattHour);
         }
 
@@ -284,6 +293,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in GWh</param>
         public static Energy FromGigaWattHour(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.GigaWattHour);
         }
 
@@ -293,6 +303,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in GWh</param>
         public static Energy FromGigaWattHour(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.GigaWattHour);
         }
 
@@ -302,6 +313,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in GWh</param>
         public static Energy FromGigaWattHour(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.GigaWattHour);
         }
 
@@ -311,6 +323,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in J</param>
         public static Energy FromJoule(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.Joule);
         }
 
@@ -320,6 +333,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in J</param>
         public static Energy FromJoule(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.Joule);
         }
 
@@ -329,6 +343,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in J</param>
         public static Energy FromJoule(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.Joule);
         }
 
@@ -338,6 +353,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in J</param>
         public static Energy FromJoule(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.Joule);
         }
 
@@ -347,6 +363,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kcal</param>
         public static Energy FromKiloCalorie(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.KiloCalorie);
         }
 
@@ -356,6 +373,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kcal</param>
         public static Energy FromKiloCalorie(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.KiloCalorie);
         }
 
@@ -365,6 +383,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kcal</param>
         public static Energy FromKiloCalorie(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.KiloCalorie);
         }
 
@@ -374,6 +393,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kcal</param>
         public static Energy FromKiloCalorie(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.KiloCalorie);
         }
 
@@ -383,6 +403,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kJ</param>
         public static Energy FromKiloJoule(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.KiloJoule);
         }
 
@@ -392,6 +413,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kJ</param>
         public static Energy FromKiloJoule(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.KiloJoule);
         }
 
@@ -401,6 +423,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kJ</param>
         public static Energy FromKiloJoule(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.KiloJoule);
         }
 
@@ -410,6 +433,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kJ</param>
         public static Energy FromKiloJoule(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.KiloJoule);
         }
 
@@ -419,6 +443,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kWh</param>
         public static Energy FromKiloWattHour(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.KiloWattHour);
         }
 
@@ -428,6 +453,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kWh</param>
         public static Energy FromKiloWattHour(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.KiloWattHour);
         }
 
@@ -437,6 +463,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kWh</param>
         public static Energy FromKiloWattHour(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.KiloWattHour);
         }
 
@@ -446,6 +473,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in kWh</param>
         public static Energy FromKiloWattHour(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.KiloWattHour);
         }
 
@@ -455,6 +483,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in MJ</param>
         public static Energy FromMegaJoule(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.MegaJoule);
         }
 
@@ -464,6 +493,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in MJ</param>
         public static Energy FromMegaJoule(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.MegaJoule);
         }
 
@@ -473,6 +503,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in MJ</param>
         public static Energy FromMegaJoule(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.MegaJoule);
         }
 
@@ -482,6 +513,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in MJ</param>
         public static Energy FromMegaJoule(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.MegaJoule);
         }
 
@@ -491,6 +523,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in MWh</param>
         public static Energy FromMegaWattHour(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.MegaWattHour);
         }
 
@@ -500,6 +533,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in MWh</param>
         public static Energy FromMegaWattHour(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.MegaWattHour);
         }
 
@@ -509,6 +543,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in MWh</param>
         public static Energy FromMegaWattHour(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.MegaWattHour);
         }
 
@@ -518,6 +553,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in MWh</param>
         public static Energy FromMegaWattHour(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.MegaWattHour);
         }
 
@@ -527,6 +563,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in Wh</param>
         public static Energy FromWattHour(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.WattHour);
         }
 
@@ -536,6 +573,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in Wh</param>
         public static Energy FromWattHour(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy((decimal)value, EnergyUnits.WattHour);
         }
 
@@ -545,6 +583,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in Wh</param>
         public static Energy FromWattHour(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.WattHour);
         }
 
@@ -554,6 +593,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Energy value in Wh</param>
         public static Energy FromWattHour(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Energy(value, EnergyUnits.WattHour);
         }
 

@@ -168,6 +168,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in cm²</param>
         public static Area FromSquareCentimeters(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareCm);
         }
 
@@ -177,6 +178,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in cm²</param>
         public static Area FromSquareCentimeters(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareCm);
         }
 
@@ -186,6 +188,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in cm²</param>
         public static Area FromSquareCentimeters(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareCm);
         }
 
@@ -195,6 +198,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in cm²</param>
         public static Area FromSquareCentimeters(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareCm);
         }
 
@@ -204,6 +208,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in dm²</param>
         public static Area FromSquareDecimeters(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareDm);
         }
 
@@ -213,6 +218,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in dm²</param>
         public static Area FromSquareDecimeters(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareDm);
         }
 
@@ -222,6 +228,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in dm²</param>
         public static Area FromSquareDecimeters(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareDm);
         }
 
@@ -231,6 +238,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in dm²</param>
         public static Area FromSquareDecimeters(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareDm);
         }
 
@@ -240,6 +248,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in fh²</param>
         public static Area FromSquareFathom(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareFathom);
         }
 
@@ -249,6 +258,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in fh²</param>
         public static Area FromSquareFathom(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareFathom);
         }
 
@@ -258,6 +268,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in fh²</param>
         public static Area FromSquareFathom(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareFathom);
         }
 
@@ -267,6 +278,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in fh²</param>
         public static Area FromSquareFathom(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareFathom);
         }
 
@@ -276,6 +288,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in ft²</param>
         public static Area FromSquareFoot(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareFeet);
         }
 
@@ -285,6 +298,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in ft²</param>
         public static Area FromSquareFoot(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareFeet);
         }
 
@@ -294,6 +308,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in ft²</param>
         public static Area FromSquareFoot(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareFeet);
         }
 
@@ -303,6 +318,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in ft²</param>
         public static Area FromSquareFoot(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareFeet);
         }
 
@@ -312,6 +328,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in fg²</param>
         public static Area FromSquareFurlongs(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareFurlong);
         }
 
@@ -321,6 +338,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in fg²</param>
         public static Area FromSquareFurlongs(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareFurlong);
         }
 
@@ -330,6 +348,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in fg²</param>
         public static Area FromSquareFurlongs(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareFurlong);
         }
 
@@ -339,6 +358,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in fg²</param>
         public static Area FromSquareFurlongs(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareFurlong);
         }
 
@@ -348,6 +368,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in inch²</param>
         public static Area FromSquareInches(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareInch);
         }
 
@@ -357,6 +378,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in inch²</param>
         public static Area FromSquareInches(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareInch);
         }
 
@@ -366,6 +388,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in inch²</param>
         public static Area FromSquareInches(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareInch);
         }
 
@@ -375,6 +398,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in inch²</param>
         public static Area FromSquareInches(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareInch);
         }
 
@@ -384,6 +408,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in km²</param>
         public static Area FromSquareKilometers(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareKm);
         }
 
@@ -393,6 +418,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in km²</param>
         public static Area FromSquareKilometers(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareKm);
         }
 
@@ -402,6 +428,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in km²</param>
         public static Area FromSquareKilometers(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareKm);
         }
 
@@ -411,6 +438,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in km²</param>
         public static Area FromSquareKilometers(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareKm);
         }
 
@@ -420,6 +448,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in m²</param>
         public static Area FromSquareMeter(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareMeter);
         }
 
@@ -429,6 +458,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in m²</param>
         public static Area FromSquareMeter(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareMeter);
         }
 
@@ -438,6 +468,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in m²</param>
         public static Area FromSquareMeter(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareMeter);
         }
 
@@ -447,6 +478,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in m²</param>
         public static Area FromSquareMeter(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareMeter);
         }
 
@@ -456,6 +488,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in mil²</param>
         public static Area FromSquareMiles(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareMile);
         }
 
@@ -465,6 +498,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in mil²</param>
         public static Area FromSquareMiles(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareMile);
         }
 
@@ -474,6 +508,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in mil²</param>
         public static Area FromSquareMiles(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareMile);
         }
 
@@ -483,6 +518,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in mil²</param>
         public static Area FromSquareMiles(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareMile);
         }
 
@@ -492,6 +528,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in mm²</param>
         public static Area FromSquareMilimeters(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareMm);
         }
 
@@ -501,6 +538,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in mm²</param>
         public static Area FromSquareMilimeters(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareMm);
         }
 
@@ -510,6 +548,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in mm²</param>
         public static Area FromSquareMilimeters(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareMm);
         }
 
@@ -519,6 +558,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in mm²</param>
         public static Area FromSquareMilimeters(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareMm);
         }
 
@@ -528,6 +568,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in nm²</param>
         public static Area FromSquareNauticalMiles(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareNauticalMile);
         }
 
@@ -537,6 +578,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in nm²</param>
         public static Area FromSquareNauticalMiles(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareNauticalMile);
         }
 
@@ -546,6 +588,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in nm²</param>
         public static Area FromSquareNauticalMiles(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareNauticalMile);
         }
 
@@ -555,6 +598,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in nm²</param>
         public static Area FromSquareNauticalMiles(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareNauticalMile);
         }
 
@@ -564,6 +608,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in yd²</param>
         public static Area FromSquareYards(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareYard);
         }
 
@@ -573,6 +618,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in yd²</param>
         public static Area FromSquareYards(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area((decimal)value, AreaUnits.SquareYard);
         }
 
@@ -582,6 +628,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in yd²</param>
         public static Area FromSquareYards(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareYard);
         }
 
@@ -591,6 +638,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Area value in yd²</param>
         public static Area FromSquareYards(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Area(value, AreaUnits.SquareYard);
         }
 

@@ -214,6 +214,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">KelvinTemperature value in K</param>
         public static KelvinTemperature FromDegree(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new KelvinTemperature(value, KelvinTemperatureUnits.Degree);
         }
 
@@ -223,6 +224,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">KelvinTemperature value in K</param>
         public static KelvinTemperature FromDegree(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new KelvinTemperature((decimal)value, KelvinTemperatureUnits.Degree);
         }
 
@@ -232,6 +234,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">KelvinTemperature value in K</param>
         public static KelvinTemperature FromDegree(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new KelvinTemperature(value, KelvinTemperatureUnits.Degree);
         }
 
@@ -241,6 +244,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">KelvinTemperature value in K</param>
         public static KelvinTemperature FromDegree(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new KelvinTemperature(value, KelvinTemperatureUnits.Degree);
         }
 

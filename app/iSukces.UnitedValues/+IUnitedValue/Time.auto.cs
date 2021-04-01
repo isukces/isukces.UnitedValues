@@ -203,6 +203,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in h</param>
         public static Time FromHours(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time(value, TimeUnits.Hour);
         }
 
@@ -212,6 +213,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in h</param>
         public static Time FromHours(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time((decimal)value, TimeUnits.Hour);
         }
 
@@ -221,6 +223,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in h</param>
         public static Time FromHours(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time(value, TimeUnits.Hour);
         }
 
@@ -230,6 +233,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in h</param>
         public static Time FromHours(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time(value, TimeUnits.Hour);
         }
 
@@ -239,6 +243,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in min</param>
         public static Time FromMinutes(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time(value, TimeUnits.Minute);
         }
 
@@ -248,6 +253,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in min</param>
         public static Time FromMinutes(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time((decimal)value, TimeUnits.Minute);
         }
 
@@ -257,6 +263,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in min</param>
         public static Time FromMinutes(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time(value, TimeUnits.Minute);
         }
 
@@ -266,6 +273,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in min</param>
         public static Time FromMinutes(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time(value, TimeUnits.Minute);
         }
 
@@ -275,6 +283,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in s</param>
         public static Time FromSecond(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time(value, TimeUnits.Second);
         }
 
@@ -284,6 +293,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in s</param>
         public static Time FromSecond(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time((decimal)value, TimeUnits.Second);
         }
 
@@ -293,6 +303,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in s</param>
         public static Time FromSecond(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time(value, TimeUnits.Second);
         }
 
@@ -302,6 +313,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Time value in s</param>
         public static Time FromSecond(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Time(value, TimeUnits.Second);
         }
 

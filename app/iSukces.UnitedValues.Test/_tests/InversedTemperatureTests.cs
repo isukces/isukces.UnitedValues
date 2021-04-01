@@ -8,7 +8,7 @@ namespace iSukces.UnitedValues.Test
         public void T01_should_inverse_Kelvin()
         {
             var c = new DeltaKelvinTemperature(10, KelvinTemperatureUnits.Degree);
-
+            c = DeltaKelvinTemperature.FromDegree(10);
             Assert.Equal("10K", c.ToString());
             var d = 1 / c;
 

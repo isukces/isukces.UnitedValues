@@ -145,6 +145,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Acceleration value in /</param>
         public static Acceleration FromMetersPerSquareSeconds(decimal value)
         {
+            // generator : FractionValuesGenerator.Add_FromMethods
             return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
         }
 
@@ -154,6 +155,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Acceleration value in /</param>
         public static Acceleration FromMetersPerSquareSeconds(double value)
         {
+            // generator : FractionValuesGenerator.Add_FromMethods
             return new Acceleration((decimal)value, AccelerationUnits.MetersPerSquareSeconds);
         }
 
@@ -163,6 +165,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Acceleration value in /</param>
         public static Acceleration FromMetersPerSquareSeconds(int value)
         {
+            // generator : FractionValuesGenerator.Add_FromMethods
             return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
         }
 
@@ -172,6 +175,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Acceleration value in /</param>
         public static Acceleration FromMetersPerSquareSeconds(long value)
         {
+            // generator : FractionValuesGenerator.Add_FromMethods
             return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
         }
 

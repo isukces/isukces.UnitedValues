@@ -168,6 +168,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in cm³</param>
         public static Volume FromCubicCentimeters(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicCm);
         }
 
@@ -177,6 +178,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in cm³</param>
         public static Volume FromCubicCentimeters(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicCm);
         }
 
@@ -186,6 +188,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in cm³</param>
         public static Volume FromCubicCentimeters(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicCm);
         }
 
@@ -195,6 +198,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in cm³</param>
         public static Volume FromCubicCentimeters(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicCm);
         }
 
@@ -204,6 +208,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in dm³</param>
         public static Volume FromCubicDecimeters(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicDm);
         }
 
@@ -213,6 +218,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in dm³</param>
         public static Volume FromCubicDecimeters(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicDm);
         }
 
@@ -222,6 +228,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in dm³</param>
         public static Volume FromCubicDecimeters(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicDm);
         }
 
@@ -231,6 +238,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in dm³</param>
         public static Volume FromCubicDecimeters(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicDm);
         }
 
@@ -240,6 +248,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in fh³</param>
         public static Volume FromCubicFathom(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicFathom);
         }
 
@@ -249,6 +258,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in fh³</param>
         public static Volume FromCubicFathom(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicFathom);
         }
 
@@ -258,6 +268,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in fh³</param>
         public static Volume FromCubicFathom(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicFathom);
         }
 
@@ -267,6 +278,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in fh³</param>
         public static Volume FromCubicFathom(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicFathom);
         }
 
@@ -276,6 +288,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in ft³</param>
         public static Volume FromCubicFoot(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicFeet);
         }
 
@@ -285,6 +298,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in ft³</param>
         public static Volume FromCubicFoot(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicFeet);
         }
 
@@ -294,6 +308,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in ft³</param>
         public static Volume FromCubicFoot(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicFeet);
         }
 
@@ -303,6 +318,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in ft³</param>
         public static Volume FromCubicFoot(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicFeet);
         }
 
@@ -312,6 +328,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in fg³</param>
         public static Volume FromCubicFurlongs(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicFurlong);
         }
 
@@ -321,6 +338,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in fg³</param>
         public static Volume FromCubicFurlongs(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicFurlong);
         }
 
@@ -330,6 +348,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in fg³</param>
         public static Volume FromCubicFurlongs(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicFurlong);
         }
 
@@ -339,6 +358,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in fg³</param>
         public static Volume FromCubicFurlongs(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicFurlong);
         }
 
@@ -348,6 +368,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in inch³</param>
         public static Volume FromCubicInches(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicInch);
         }
 
@@ -357,6 +378,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in inch³</param>
         public static Volume FromCubicInches(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicInch);
         }
 
@@ -366,6 +388,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in inch³</param>
         public static Volume FromCubicInches(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicInch);
         }
 
@@ -375,6 +398,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in inch³</param>
         public static Volume FromCubicInches(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicInch);
         }
 
@@ -384,6 +408,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in km³</param>
         public static Volume FromCubicKilometers(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicKm);
         }
 
@@ -393,6 +418,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in km³</param>
         public static Volume FromCubicKilometers(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicKm);
         }
 
@@ -402,6 +428,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in km³</param>
         public static Volume FromCubicKilometers(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicKm);
         }
 
@@ -411,6 +438,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in km³</param>
         public static Volume FromCubicKilometers(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicKm);
         }
 
@@ -420,6 +448,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in m³</param>
         public static Volume FromCubicMeter(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicMeter);
         }
 
@@ -429,6 +458,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in m³</param>
         public static Volume FromCubicMeter(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicMeter);
         }
 
@@ -438,6 +468,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in m³</param>
         public static Volume FromCubicMeter(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicMeter);
         }
 
@@ -447,6 +478,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in m³</param>
         public static Volume FromCubicMeter(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicMeter);
         }
 
@@ -456,6 +488,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in mil³</param>
         public static Volume FromCubicMiles(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicMile);
         }
 
@@ -465,6 +498,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in mil³</param>
         public static Volume FromCubicMiles(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicMile);
         }
 
@@ -474,6 +508,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in mil³</param>
         public static Volume FromCubicMiles(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicMile);
         }
 
@@ -483,6 +518,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in mil³</param>
         public static Volume FromCubicMiles(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicMile);
         }
 
@@ -492,6 +528,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in mm³</param>
         public static Volume FromCubicMilimeters(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicMm);
         }
 
@@ -501,6 +538,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in mm³</param>
         public static Volume FromCubicMilimeters(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicMm);
         }
 
@@ -510,6 +548,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in mm³</param>
         public static Volume FromCubicMilimeters(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicMm);
         }
 
@@ -519,6 +558,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in mm³</param>
         public static Volume FromCubicMilimeters(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicMm);
         }
 
@@ -528,6 +568,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in nm³</param>
         public static Volume FromCubicNauticalMiles(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicNauticalMile);
         }
 
@@ -537,6 +578,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in nm³</param>
         public static Volume FromCubicNauticalMiles(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicNauticalMile);
         }
 
@@ -546,6 +588,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in nm³</param>
         public static Volume FromCubicNauticalMiles(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicNauticalMile);
         }
 
@@ -555,6 +598,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in nm³</param>
         public static Volume FromCubicNauticalMiles(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicNauticalMile);
         }
 
@@ -564,6 +608,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in yd³</param>
         public static Volume FromCubicYards(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicYard);
         }
 
@@ -573,6 +618,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in yd³</param>
         public static Volume FromCubicYards(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume((decimal)value, VolumeUnits.CubicYard);
         }
 
@@ -582,6 +628,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in yd³</param>
         public static Volume FromCubicYards(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicYard);
         }
 
@@ -591,6 +638,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Volume value in yd³</param>
         public static Volume FromCubicYards(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Volume(value, VolumeUnits.CubicYard);
         }
 

@@ -203,6 +203,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in h²</param>
         public static SquareTime FromSquareHours(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime(value, SquareTimeUnits.SquareHour);
         }
 
@@ -212,6 +213,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in h²</param>
         public static SquareTime FromSquareHours(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime((decimal)value, SquareTimeUnits.SquareHour);
         }
 
@@ -221,6 +223,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in h²</param>
         public static SquareTime FromSquareHours(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime(value, SquareTimeUnits.SquareHour);
         }
 
@@ -230,6 +233,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in h²</param>
         public static SquareTime FromSquareHours(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime(value, SquareTimeUnits.SquareHour);
         }
 
@@ -239,6 +243,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in min²</param>
         public static SquareTime FromSquareMinutes(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime(value, SquareTimeUnits.SquareMinute);
         }
 
@@ -248,6 +253,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in min²</param>
         public static SquareTime FromSquareMinutes(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime((decimal)value, SquareTimeUnits.SquareMinute);
         }
 
@@ -257,6 +263,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in min²</param>
         public static SquareTime FromSquareMinutes(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime(value, SquareTimeUnits.SquareMinute);
         }
 
@@ -266,6 +273,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in min²</param>
         public static SquareTime FromSquareMinutes(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime(value, SquareTimeUnits.SquareMinute);
         }
 
@@ -275,6 +283,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in s²</param>
         public static SquareTime FromSquareSecond(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime(value, SquareTimeUnits.SquareSecond);
         }
 
@@ -284,6 +293,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in s²</param>
         public static SquareTime FromSquareSecond(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime((decimal)value, SquareTimeUnits.SquareSecond);
         }
 
@@ -293,6 +303,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in s²</param>
         public static SquareTime FromSquareSecond(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime(value, SquareTimeUnits.SquareSecond);
         }
 
@@ -302,6 +313,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">SquareTime value in s²</param>
         public static SquareTime FromSquareSecond(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new SquareTime(value, SquareTimeUnits.SquareSecond);
         }
 

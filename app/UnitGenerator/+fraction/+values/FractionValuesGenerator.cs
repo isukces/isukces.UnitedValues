@@ -46,13 +46,17 @@ namespace UnitGenerator
         {
             var collection  = CommonFractionalUnitDefs.All;
             var commonUnits = collection.GetBy(Cfg.UnitTypes.Unit);
-            if (commonUnits.Length == 0) return;
+            if (commonUnits.Length == 0)
+            {
+                return;
+            }
             foreach (var i in commonUnits)
             {
                 var u = new RelatedUnitInfo(i.TargetPropertyName,
                     UnitShortCodeSource.MakeDirect(i.GetUnitName()),
                     i.TargetPropertyName);
                 BasicUnitValuesGenerator.Add_FromMethods(
+                    GetType(),
                     i.Type.Value,
                     i.Type,
                     Target,

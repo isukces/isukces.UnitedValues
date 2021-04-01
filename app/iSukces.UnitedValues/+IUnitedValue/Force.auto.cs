@@ -203,6 +203,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in kN</param>
         public static Force FromKiloNewton(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.KiloNewton);
         }
 
@@ -212,6 +213,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in kN</param>
         public static Force FromKiloNewton(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force((decimal)value, ForceUnits.KiloNewton);
         }
 
@@ -221,6 +223,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in kN</param>
         public static Force FromKiloNewton(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.KiloNewton);
         }
 
@@ -230,6 +233,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in kN</param>
         public static Force FromKiloNewton(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.KiloNewton);
         }
 
@@ -239,6 +243,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in MN</param>
         public static Force FromMegaNewton(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.MegaNewton);
         }
 
@@ -248,6 +253,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in MN</param>
         public static Force FromMegaNewton(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force((decimal)value, ForceUnits.MegaNewton);
         }
 
@@ -257,6 +263,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in MN</param>
         public static Force FromMegaNewton(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.MegaNewton);
         }
 
@@ -266,6 +273,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in MN</param>
         public static Force FromMegaNewton(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.MegaNewton);
         }
 
@@ -275,6 +283,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in mN</param>
         public static Force FromMiliNewton(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.MiliNewton);
         }
 
@@ -284,6 +293,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in mN</param>
         public static Force FromMiliNewton(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force((decimal)value, ForceUnits.MiliNewton);
         }
 
@@ -293,6 +303,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in mN</param>
         public static Force FromMiliNewton(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.MiliNewton);
         }
 
@@ -302,6 +313,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in mN</param>
         public static Force FromMiliNewton(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.MiliNewton);
         }
 
@@ -311,6 +323,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in N</param>
         public static Force FromNewton(decimal value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.Newton);
         }
 
@@ -320,6 +333,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in N</param>
         public static Force FromNewton(double value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force((decimal)value, ForceUnits.Newton);
         }
 
@@ -329,6 +343,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in N</param>
         public static Force FromNewton(int value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.Newton);
         }
 
@@ -338,6 +353,7 @@ namespace iSukces.UnitedValues
         /// <param name="value">Force value in N</param>
         public static Force FromNewton(long value)
         {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
             return new Force(value, ForceUnits.Newton);
         }
 

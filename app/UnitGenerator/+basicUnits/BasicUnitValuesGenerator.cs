@@ -13,7 +13,7 @@ namespace UnitGenerator
         {
         }
 
-        public static void Add_FromMethods(XValueTypeName valueTypeName,
+        public static  void Add_FromMethods(Type t, XValueTypeName valueTypeName,
             TypesGroup types, CsClass target, IRelatedUnitDefinition u)
         {
             foreach (var inputType in "decimal,double,int,long".Split(','))
@@ -27,9 +27,13 @@ namespace UnitGenerator
                 var valueIn           = $" value in {u.UnitShortCode.EffectiveValue}";
                 var methodName        = "From" + u.FromMethodNameSufix.CoalesceNullOrWhiteSpace(u.FieldName);
                 var methodDescription = $"creates {types.Value.FirstLower()} from{valueIn}";
+
+                var cw = Ext.Create(t);
+                cw.WriteReturn(args);
                 var m = target.AddMethod(methodName, target.Name, methodDescription)
                     .WithStatic()
-                    .WithBodyFromExpression(args);
+                    .WithBody(cw);
+                    //.WithBodyFromExpression(args);
                 m.AddParam("value", inputType).Description = string.Format("{0}{1}", valueTypeName, valueIn);
             }
         }
@@ -209,9 +213,20 @@ namespace UnitGenerator
             var tmp = RelatedUnitGeneratorDefs.All;
             var d   = tmp.ByName(Cfg.UnitTypes.Value);
 
-            if (d is null) return;
+            if (d is null)
+            {
+                IRelatedUnitDefinition u = new RelatedUnitInfo(
+                    Cfg.BaseUnit.Field,
+                    UnitShortCodeSource.MakeDirect("----"),
+                    Cfg.BaseUnit.Field);
+                Add_FromMethods(GetType(), Cfg.UnitTypes.Value, Cfg.UnitTypes, Target, u);
+                return;
+            }
+
+            if (d.Units is null || d.Units.Count == 0)
+                return;
             foreach (var u in d.Units)
-                Add_FromMethods(Cfg.UnitTypes.Value, Cfg.UnitTypes, Target, u);
+                Add_FromMethods(GetType(), Cfg.UnitTypes.Value, Cfg.UnitTypes, Target, u);
         }
 
         private void Add_NumberDiv()

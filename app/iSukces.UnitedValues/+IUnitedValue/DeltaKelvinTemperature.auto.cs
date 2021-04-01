@@ -207,6 +207,46 @@ namespace iSukces.UnitedValues
             return left.CompareTo(right) >= 0;
         }
 
+        /// <summary>
+        /// creates deltaKelvinTemperature from value in ----
+        /// </summary>
+        /// <param name="value">DeltaKelvinTemperature value in ----</param>
+        public static DeltaKelvinTemperature FromDegree(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new DeltaKelvinTemperature(value, KelvinTemperatureUnits.Degree);
+        }
+
+        /// <summary>
+        /// creates deltaKelvinTemperature from value in ----
+        /// </summary>
+        /// <param name="value">DeltaKelvinTemperature value in ----</param>
+        public static DeltaKelvinTemperature FromDegree(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new DeltaKelvinTemperature((decimal)value, KelvinTemperatureUnits.Degree);
+        }
+
+        /// <summary>
+        /// creates deltaKelvinTemperature from value in ----
+        /// </summary>
+        /// <param name="value">DeltaKelvinTemperature value in ----</param>
+        public static DeltaKelvinTemperature FromDegree(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new DeltaKelvinTemperature(value, KelvinTemperatureUnits.Degree);
+        }
+
+        /// <summary>
+        /// creates deltaKelvinTemperature from value in ----
+        /// </summary>
+        /// <param name="value">DeltaKelvinTemperature value in ----</param>
+        public static DeltaKelvinTemperature FromDegree(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new DeltaKelvinTemperature(value, KelvinTemperatureUnits.Degree);
+        }
+
         public static DeltaKelvinTemperature Parse(string value)
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
