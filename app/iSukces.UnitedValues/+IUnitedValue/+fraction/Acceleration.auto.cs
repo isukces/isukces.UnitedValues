@@ -140,9 +140,9 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
-        /// creates acceleration from value in /
+        /// creates acceleration from value in m/s²
         /// </summary>
-        /// <param name="value">Acceleration value in /</param>
+        /// <param name="value">Acceleration value in m/s²</param>
         public static Acceleration FromMetersPerSquareSeconds(decimal value)
         {
             // generator : FractionValuesGenerator.Add_FromMethods
@@ -150,9 +150,9 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
-        /// creates acceleration from value in /
+        /// creates acceleration from value in m/s²
         /// </summary>
-        /// <param name="value">Acceleration value in /</param>
+        /// <param name="value">Acceleration value in m/s²</param>
         public static Acceleration FromMetersPerSquareSeconds(double value)
         {
             // generator : FractionValuesGenerator.Add_FromMethods
@@ -160,9 +160,9 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
-        /// creates acceleration from value in /
+        /// creates acceleration from value in m/s²
         /// </summary>
-        /// <param name="value">Acceleration value in /</param>
+        /// <param name="value">Acceleration value in m/s²</param>
         public static Acceleration FromMetersPerSquareSeconds(int value)
         {
             // generator : FractionValuesGenerator.Add_FromMethods
@@ -170,9 +170,9 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
-        /// creates acceleration from value in /
+        /// creates acceleration from value in m/s²
         /// </summary>
-        /// <param name="value">Acceleration value in /</param>
+        /// <param name="value">Acceleration value in m/s²</param>
         public static Acceleration FromMetersPerSquareSeconds(long value)
         {
             // generator : FractionValuesGenerator.Add_FromMethods

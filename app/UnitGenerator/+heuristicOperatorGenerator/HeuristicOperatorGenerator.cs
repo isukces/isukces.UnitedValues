@@ -36,10 +36,13 @@ namespace UnitGenerator
             return varName;
         }
 
+ 
+
         private ICodeSource Construct(XUnitTypeName unit)
         {
             if (!_resolver.TryGetValue(unit.GetTypename(), out var type1))
                 throw new NotImplementedException();
+ 
 
             ValueOfSomeTypeExpression[] sources;
 
@@ -61,7 +64,8 @@ namespace UnitGenerator
                 if (sources.Any())
                 {
                     var src = sources[0];
-                    return new ExpressionCodeSource(src.Path?.Path, src.Root == ValueOfSomeTypeExpressionRoot.Left);
+                    return new ExpressionCodeSource(src.Expression,
+                        src.Root == ValueOfSomeTypeExpressionRoot.Left);
                 }
 
                 return null;
@@ -69,84 +73,73 @@ namespace UnitGenerator
 
             var ccc = constr[0];
 
-            var list    = new List<ValueOfSomeTypeExpression>();
-        
-            foreach (var i in ccc.GetParameters())
-            {
-                var type = i.ParameterType;
-                sources = typesDict.GetTypeSources(type);
-                ValueOfSomeTypeExpression el = sources[0];
-                if (el.Root == ValueOfSomeTypeExpressionRoot.Right)
-                {
-                    // try to construct;
-                    var constructed = Construct(new XUnitTypeName(type.Name));
-                    if (constructed.DependsOnLeftArgument)
-                    {
-                        // hasLeft = true;
-                       // el      = constructed.Code;
-                    }
-                }
-           
-                list.Add(el);
-            }
+ 
+            var list = typesDict.FindParameters(ccc, t=>Construct(new XUnitTypeName(t.Name)), out var hasLeft);
 
-            var hasLeft = list.Any(q => q.Root == ValueOfSomeTypeExpressionRoot.Left);
+            // var hasLeft = list.Any(q => q.Root == ValueOfSomeTypeExpressionRoot.Left);
             if (!hasLeft)
             {
                 sources = typesDict.GetTypeSources(type1);
                 if (sources.Any())
                 {
                     var src = sources[0];
-                    return new ExpressionCodeSource(src.Path?.Path, src.Root == ValueOfSomeTypeExpressionRoot.Left);
+                    return new ExpressionCodeSource(src.Expression,
+                        src.Root == ValueOfSomeTypeExpressionRoot.Left);
                 }
 
                 throw new NotImplementedException();
             }
 
-            var aaa = list.Select(a => a.Path.Path).ToArray();
-            return new LazyConstructor(unit.GetTypename(), aaa, true);
+            return MethodCallCodeSource.MakeFromConstructor(unit, list, true);
         }
 
         private void Scan(ValueOfSomeTypeExpressionRoot root, XUnitTypeName x, Kind2 kind, ExpressionPath path = null)
         {
             if (!_resolver.TryGetValue(x.GetTypename(), out var type))
                 throw new NotImplementedException();
-            var info1 = new ValueOfSomeTypeExpression(root, type, path, kind);
+            var info1 = new ValueOfSomeTypeExpression(root, type, new TreeExpression(path, null, kind), kind);
             _sink.Add(info1);
             if (kind != Kind2.Property)
                 return;
             foreach (var propInfo in type.GetProperties())
             {
-                var bla = propInfo.GetCustomAttribute<RelatedUnitSourceAttribute>();
-                if (bla != null && bla.Usage ==RelatedUnitSourceUsage.DoNotUse)
+                var attribute = propInfo.GetCustomAttribute<RelatedUnitSourceAttribute>();
+                if (attribute != null && attribute.Usage == RelatedUnitSourceUsage.DoNotUse)
                     continue;
-                var pt  = propInfo.PropertyType;
+                var pt = propInfo.PropertyType;
                 if (!pt.Implements<IUnit>()) continue;
                 Scan(root, new XUnitTypeName(propInfo.PropertyType.Name), kind, path + propInfo.Name);
             }
-            foreach (var methodInfo in type.GetMethods(BindingFlags.Instance| BindingFlags.Public))
+
+            foreach (var methodInfo in type.GetMethods(BindingFlags.Instance | BindingFlags.Public))
             {
-                var bla = methodInfo.GetCustomAttribute<RelatedUnitSourceAttribute>();
-                if (bla is null || (bla.Usage & RelatedUnitSourceUsage.ProvidesRelatedUnit) ==0)
+                var at = methodInfo.GetCustomAttribute<RelatedUnitSourceAttribute>();
+                if (at is null || (at.Usage & RelatedUnitSourceUsage.ProvidesRelatedUnit) == 0)
                     continue;
                 var returnType = methodInfo.ReturnType;
                 if (!returnType.Implements<IUnit>())
                     throw new Exception("Should return IUnit");
-                if (methodInfo.GetParameters().Length!=0)
+                if (methodInfo.GetParameters().Length != 0)
                     throw new Exception("Should be parameterles");
-                Scan(root, new XUnitTypeName(returnType.Name), Kind2.Method, path + $"{methodInfo.Name}()");
+                Scan(root, new XUnitTypeName(returnType.Name), Kind2.Method, path + $"{methodInfo.Name}");
             }
+
 
         }
 
         private void TryCreateInternal()
         {
+            if (_args.Input.Is<PlanarDensity, Length, LinearDensity>("*"))
+                Debug.Write("");
+
             var cc = _args.Input;
             var lu = cc.LeftMethodArgumentName + ".Unit";
             var ru = cc.RightMethodArgumentName + ".Unit";
 
-            Scan(ValueOfSomeTypeExpressionRoot.Left, cc.Left.Unit, Kind2.Property, (ExpressionPath)lu);
-            Scan(ValueOfSomeTypeExpressionRoot.Right, cc.Right.Unit, Kind2.Property, (ExpressionPath)ru);
+            Scan(ValueOfSomeTypeExpressionRoot.Left, cc.Left.Unit, Kind2.Property, ExpressionPath.FromSplit(lu));
+            Scan(ValueOfSomeTypeExpressionRoot.Right, cc.Right.Unit, Kind2.Property, ExpressionPath.FromSplit(ru));
+
+            _conversionMethodScanner = ConversionMethodScanner.Scan(_resolver.Assembly);
 
             var reductor = new ExpressionsReductor(n =>
             {
@@ -160,14 +153,44 @@ namespace UnitGenerator
             if (convertType.Code == ru)
                 convertType = null;
             else
-                convertType.AddTo(reductor);
+                reductor.AddAny(convertType);
+                // convertType.AddToDeleteMe(reductor);
 
-            var result = Construct(cc.Result.Unit);
-            result.AddTo(reductor);
+            ICodeSource result = Construct(cc.Result.Unit);
 
-            var dict = reductor.GetReduced();
-            convertType?.Reduce(dict);
-            result.Reduce(dict);
+            Func<string> addExtraValueMultiplication = null;
+            ICodeSource G1()
+            {
+                if (!_resolver.TryGetValue(cc.Result.Unit.TypeName, out var type1))
+                    throw new NotImplementedException();
+                if (_conversionMethodScanner.Dictionary.TryGetValue(type1, out var list))
+                {
+                    var typesDict = TypeFinder.Make(_sink);
+                    foreach (var i in list)
+                    {
+                        var aaa = typesDict.FindParameters(i, null, out var hl);
+                        return  MethodCallCodeSource.Make(i, aaa, hl);
+                    }
+                }
+
+                return null;
+            }
+            if (result is null)
+            {
+                result = G1();
+                if (result != null)
+                {
+                    addExtraValueMultiplication = () => { return result.Code + "." + nameof(IUnitDefinition.Multiplication); };
+                }
+            }
+            reductor.AddAny(result);
+            //result.AddToDeleteMe(reductor);
+            reductor.ReduceExpressions();
+            if (addExtraValueMultiplication != null)
+            {
+                reductor.ForceReduce(new ExpressionPath(result));
+            }
+
 
             // =============================
             if (result.Code == "specificHeatCapacity.Unit.DenominatorUnit")
@@ -176,7 +199,7 @@ namespace UnitGenerator
             {
                 case null:
                     break;
-                case LazyConstructor _:
+                case MethodCallCodeSource _:
                     _args.Result.ConvertRight(AddVariable(convertType.Code, "targetRightUnit"));
                     break;
                 default:
@@ -184,16 +207,19 @@ namespace UnitGenerator
                     break;
             }
 
-            if (result is LazyConstructor)
+            if (result is MethodCallCodeSource)
                 _args.Result.ResultUnit = AddVariable(result.Code, "resultUnit");
             else
                 _args.Result.ResultUnit = result.Code;
+            if (addExtraValueMultiplication != null)
+                _args.Result.ResultMultiplication = addExtraValueMultiplication();
         }
 
         private int _varNumber;
         private readonly OperatorHints.CreateOperatorCodeEventArgs _args;
         private readonly ClrTypesResolver _resolver;
         private readonly List<ValueOfSomeTypeExpression> _sink = new List<ValueOfSomeTypeExpression>();
+        private ConversionMethodScanner _conversionMethodScanner;
     }
 
     public enum ValueOfSomeTypeExpressionRoot

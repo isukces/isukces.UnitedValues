@@ -80,8 +80,8 @@ namespace UnitGenerator
                 cw.WriteReturn(code);
                 var m = Target.AddMethod("Get" + targetUnit.Unit.TypeName, targetUnit.Unit.GetTypename()).WithBody(cw);
                 m.WithAggressiveInlining(Target);
-                
-                m.AddBlaAttribute(Target, RelatedUnitSourceUsage.ProvidesRelatedUnit);
+
+                m.AddRelatedUnitSourceAttribute(Target, RelatedUnitSourceUsage.ProvidesRelatedUnit, 10);
             }
         }
 
@@ -220,7 +220,7 @@ namespace UnitGenerator
                         Flags1.NotNull,
                         property =>
                         {
-                            property.AddBlaAttribute(Target, RelatedUnitSourceUsage.DoNotUse);
+                            property.AddRelatedUnitSourceAttribute(Target, RelatedUnitSourceUsage.DoNotUse, 0);
                         }),
                     new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit",
                         Flags1.Optional|Flags1.DoNotAssignProperty|Flags1.DoNotCreateProperty)

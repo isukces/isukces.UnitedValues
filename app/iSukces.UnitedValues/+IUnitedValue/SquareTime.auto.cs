@@ -238,6 +238,46 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
+        /// creates squareTime from value in ms²
+        /// </summary>
+        /// <param name="value">SquareTime value in ms²</param>
+        public static SquareTime FromSquareMiliSecond(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new SquareTime(value, SquareTimeUnits.SquareMiliSecond);
+        }
+
+        /// <summary>
+        /// creates squareTime from value in ms²
+        /// </summary>
+        /// <param name="value">SquareTime value in ms²</param>
+        public static SquareTime FromSquareMiliSecond(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new SquareTime((decimal)value, SquareTimeUnits.SquareMiliSecond);
+        }
+
+        /// <summary>
+        /// creates squareTime from value in ms²
+        /// </summary>
+        /// <param name="value">SquareTime value in ms²</param>
+        public static SquareTime FromSquareMiliSecond(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new SquareTime(value, SquareTimeUnits.SquareMiliSecond);
+        }
+
+        /// <summary>
+        /// creates squareTime from value in ms²
+        /// </summary>
+        /// <param name="value">SquareTime value in ms²</param>
+        public static SquareTime FromSquareMiliSecond(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new SquareTime(value, SquareTimeUnits.SquareMiliSecond);
+        }
+
+        /// <summary>
         /// creates squareTime from value in min²
         /// </summary>
         /// <param name="value">SquareTime value in min²</param>

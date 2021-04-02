@@ -35,10 +35,11 @@ namespace iSukces.UnitedValues
             // .Is<EnergyMassDensity, SpecificHeatCapacity, DeltaKelvinTemperature>("/")
             var energyMassDensityUnit = energyMassDensity.Unit;
             var specificHeatCapacityUnit = specificHeatCapacity.Unit;
-            var targetRightUnit = new SpecificHeatCapacityUnit(energyMassDensityUnit.CounterUnit, energyMassDensityUnit.DenominatorUnit, specificHeatCapacityUnit.DenominatorUnit);
+            var tmp1 = specificHeatCapacityUnit.DenominatorUnit;
+            var targetRightUnit = new SpecificHeatCapacityUnit(energyMassDensityUnit.CounterUnit, energyMassDensityUnit.DenominatorUnit, tmp1);
             var specificHeatCapacityConverted = specificHeatCapacity.ConvertTo(targetRightUnit);
             var value = energyMassDensity.Value / specificHeatCapacityConverted.Value;
-            return new DeltaKelvinTemperature(value, specificHeatCapacityUnit.DenominatorUnit);
+            return new DeltaKelvinTemperature(value, tmp1);
             // scenario F1
         }
 

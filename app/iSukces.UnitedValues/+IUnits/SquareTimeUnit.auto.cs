@@ -69,7 +69,7 @@ namespace iSukces.UnitedValues
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit)]
+        [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit, 10)]
         public TimeUnit GetTimeUnit()
         {
             // generator : BasicUnitGenerator.Add_ConvertOtherPower

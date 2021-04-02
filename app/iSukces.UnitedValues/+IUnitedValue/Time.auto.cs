@@ -238,6 +238,46 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
+        /// creates time from value in ms
+        /// </summary>
+        /// <param name="value">Time value in ms</param>
+        public static Time FromMiliSecond(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Time(value, TimeUnits.MiliSecond);
+        }
+
+        /// <summary>
+        /// creates time from value in ms
+        /// </summary>
+        /// <param name="value">Time value in ms</param>
+        public static Time FromMiliSecond(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Time((decimal)value, TimeUnits.MiliSecond);
+        }
+
+        /// <summary>
+        /// creates time from value in ms
+        /// </summary>
+        /// <param name="value">Time value in ms</param>
+        public static Time FromMiliSecond(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Time(value, TimeUnits.MiliSecond);
+        }
+
+        /// <summary>
+        /// creates time from value in ms
+        /// </summary>
+        /// <param name="value">Time value in ms</param>
+        public static Time FromMiliSecond(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Time(value, TimeUnits.MiliSecond);
+        }
+
+        /// <summary>
         /// creates time from value in min
         /// </summary>
         /// <param name="value">Time value in min</param>

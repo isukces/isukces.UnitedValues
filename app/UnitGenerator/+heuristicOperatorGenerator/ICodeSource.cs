@@ -2,11 +2,15 @@ using System.Collections.Generic;
 
 namespace UnitGenerator
 {
-    interface ICodeSource
+    public interface ICodeSource1
     {
         string Code { get; }
-        void AddTo(ExpressionsReductor reductor);
-        void Reduce(ExpressionsReductor.ReductionResult dict);
+        
+
+    }
+    interface ICodeSource:ICodeSource1
+    {
+   
         
         bool DependsOnLeftArgument { get; }
     }

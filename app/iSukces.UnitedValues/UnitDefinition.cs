@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace iSukces.UnitedValues
 {
-    public struct UnitDefinition<TUnit>//: IUnitNameContainer
+    public struct UnitDefinition<TUnit>: IUnitDefinition
         where TUnit : IUnit
     {
         public UnitDefinition(TUnit unit, decimal multiplication, params string[] aliases)

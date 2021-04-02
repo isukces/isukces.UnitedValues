@@ -109,6 +109,7 @@ namespace UnitGenerator
         {
             var g = new[]
             {
+                new PrefixedUnitInfo("MiliSecond", "ms", 0.001m),
                 new PrefixedUnitInfo("Second", "s", 1m),
                 new PrefixedUnitInfo("Minute", "min", 60, "Minutes"),
                 new PrefixedUnitInfo("Hour", "h", 3600, "Hours"),

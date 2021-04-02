@@ -19,7 +19,7 @@ namespace iSukces.UnitedValues
             // .Is<LinearDensity, Length, PlanarDensity>("/")
             var linearDensityUnit = linearDensity.Unit;
             var tmp1 = linearDensityUnit.DenominatorUnit;
-            var resultUnit = new PlanarDensityUnit(linearDensityUnit.CounterUnit, tmp1.GetAreaUnit());
+            var resultUnit = new PlanarDensityUnit(linearDensityUnit.CounterUnit, linearDensityUnit.DenominatorUnit.GetAreaUnit());
             var lengthConverted = length.ConvertTo(tmp1);
             var value = linearDensity.Value / lengthConverted.Value;
             return new PlanarDensity(value, resultUnit);

@@ -140,11 +140,13 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // Mass operator *(PlanarDensity planarDensity, Area area)
-            // scenario D3
+            // scenario with hint
+            // .Is<PlanarDensity, Area, Mass>("*")
             var planarDensityUnit = planarDensity.Unit;
             var areaConverted = area.ConvertTo(planarDensityUnit.DenominatorUnit);
             var value = planarDensity.Value * areaConverted.Value;
             return new Mass(value, planarDensityUnit.CounterUnit);
+            // scenario D1
         }
 
         /// <summary>

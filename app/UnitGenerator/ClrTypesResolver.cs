@@ -9,7 +9,7 @@ namespace UnitGenerator
     {
         public ClrTypesResolver(Assembly assembly)
         {
-            _assembly = assembly;
+            Assembly = assembly;
         }
 
         public bool TryGetValue(string name, out Type o)
@@ -23,7 +23,7 @@ namespace UnitGenerator
             {
                 if (_types is null)
                 {
-                    var types = _assembly.GetExportedTypes();
+                    var types = Assembly.GetExportedTypes();
                     _types = types.ToDictionary(a => a.Name, a => a);
                 }
 
@@ -33,6 +33,6 @@ namespace UnitGenerator
 
         private IReadOnlyDictionary<string, Type> _types;
 
-        private readonly Assembly _assembly;
+        public  Assembly Assembly { get; }
     }
 }

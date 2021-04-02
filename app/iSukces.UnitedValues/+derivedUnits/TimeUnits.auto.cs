@@ -40,12 +40,17 @@ namespace iSukces.UnitedValues
             {
                 return new []
                 {
+                    MiliSecond,
                     Second,
                     Minute,
                     Hour
                 };
             }
         }
+
+        internal static readonly TimeUnit MiliSecondTimeUnit = new TimeUnit("ms");
+
+        public static readonly UnitDefinition<TimeUnit> MiliSecond = new UnitDefinition<TimeUnit>(MiliSecondTimeUnit, 0.001m);
 
         internal static readonly TimeUnit SecondTimeUnit = new TimeUnit("s");
 

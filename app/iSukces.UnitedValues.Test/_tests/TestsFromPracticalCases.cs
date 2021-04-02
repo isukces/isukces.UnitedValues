@@ -19,12 +19,12 @@ namespace iSukces.UnitedValues.Test
                     KelvinTemperatureUnits.Degree);
             var cp = new SpecificHeatCapacity(4211, cpUnit);
 
-            var q = Power.FromKiloWatt(300);
+            Power q = Power.FromKiloWatt(300);
             Assert.Equal("300kW", q.ToString());
 
             var td = tz - tp;
 
-            var a = cp * td;
+            EnergyMassDensity a = cp * td;
             Assert.Equal("147385J/kg", a.ToString());
 
             var newUnit = new EnergyMassDensityUnit(

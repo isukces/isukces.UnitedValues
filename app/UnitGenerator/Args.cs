@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using iSukces.Code;
@@ -11,6 +12,11 @@ namespace UnitGenerator
         public Args(params string[] arguments)
         {
             Arguments = arguments;
+        }
+        
+        public static Args Make<T>(IEnumerable<T> arguments, Func<T,string> map)
+        {
+            return new Args(arguments.Select(map).ToArray());
         }
 
         public Args(IEnumerable<string> args)

@@ -7,34 +7,35 @@ namespace UnitGenerator
     /// </summary>
     public class ValueOfSomeTypeExpression
     {
-        public ValueOfSomeTypeExpression(ValueOfSomeTypeExpressionRoot root, Type type, ExpressionPath path,
+        public ValueOfSomeTypeExpression(ValueOfSomeTypeExpressionRoot root, Type type, TreeExpression path,
             Kind2 kind2)
         {
             Root  = root;
             Type  = type;
-            Path  = path;
+            Expression  = path;
             Kind2 = kind2;
         }
 
         public override string ToString()
         {
-            return $"{Path} => {Type.Name}";
+            return $"{Expression} => {Type.Name}";
         }
 
-        public ValueOfSomeTypeExpression WithPath(ExpressionPath newPath)
+        public ValueOfSomeTypeExpression WithExpression(TreeExpression newPath)
         {
             return new ValueOfSomeTypeExpression(Root, Type, newPath, Kind2);
         }
 
         public ValueOfSomeTypeExpressionRoot Root  { get; }
         public Type                          Type  { get; }
-        public ExpressionPath                Path  { get; }
+        public TreeExpression                Expression  { get; }
         public Kind2                         Kind2 { get; }
     }
 
     public enum Kind2
     {
         Method,
+        Constructor,
         Property
     }
 }

@@ -30,11 +30,13 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // Mass operator *(Density density, Volume volume)
-            // scenario D3
+            // scenario with hint
+            // .Is<Density, Volume, Mass>("*")
             var densityUnit = density.Unit;
             var volumeConverted = volume.ConvertTo(densityUnit.DenominatorUnit);
             var value = density.Value * volumeConverted.Value;
             return new Mass(value, densityUnit.CounterUnit);
+            // scenario D1
         }
 
         /// <summary>

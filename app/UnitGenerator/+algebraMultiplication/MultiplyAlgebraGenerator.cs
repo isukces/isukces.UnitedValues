@@ -260,6 +260,16 @@ namespace UnitGenerator
                     if (rightFraction != null)
                         return CreateCodeForRightFractionValue(rightFraction, ppp);
 
+                    {
+                        var cw = Ext.Create<Self>();
+
+                        if (TryHint(ppp, cw))
+                        {
+                            cw.WriteLine("// scenario F3");
+                            return cw;
+                        }
+ 
+                    }
                     return CreateCodeForFractionalResult(ppp);
                 }
 

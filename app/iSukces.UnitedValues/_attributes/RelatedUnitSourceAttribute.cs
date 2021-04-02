@@ -5,12 +5,16 @@ namespace iSukces.UnitedValues
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
     public class RelatedUnitSourceAttribute : Attribute
     {
-        public RelatedUnitSourceAttribute(RelatedUnitSourceUsage usage = RelatedUnitSourceUsage.Default)
+        public RelatedUnitSourceAttribute(RelatedUnitSourceUsage usage = RelatedUnitSourceUsage.Default,
+            int sortOrder=10)
         {
-            Usage = usage;
+            Usage     = usage;
+            SortOrder = sortOrder;
         }
 
         public RelatedUnitSourceUsage Usage { get; }
+        
+        public int SortOrder { get; }
     }
 
     [Flags]

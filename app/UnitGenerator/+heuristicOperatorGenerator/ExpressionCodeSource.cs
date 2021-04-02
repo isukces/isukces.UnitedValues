@@ -2,26 +2,36 @@ using System.Collections.Generic;
 
 namespace UnitGenerator
 {
-    internal class ExpressionCodeSource : ICodeSource
+    internal class ExpressionCodeSource : ICodeSource, IReducable
     {
-        public ExpressionCodeSource(string code, bool dependsOnLeftArgument)
+        public ExpressionCodeSource(TreeExpression treeCode, bool dependsOnLeftArgument)
         {
-            Code                       = code;
+            TreeCode              = treeCode;
             DependsOnLeftArgument = dependsOnLeftArgument;
         }
 
-        public void AddTo(ExpressionsReductor reductor)
+        /*
+        public void AddToDeleteMe(ExpressionsReductor reductor)
         {
-            reductor.Add(Code);
+            TreeCode.AddToDeleteMe(reductor);
+        }
+        */
+
+        public IEnumerable<ExpressionPath> GetUsedExpressions()
+        {
+            return TreeCode.GetUsedExpressions();
         }
 
-        public void Reduce(ExpressionsReductor.ReductionResult dict)
+        public void UpdateFromReduction(ExpressionPath expression, string varName)
         {
-            Code = dict.Reduce(Code);
+            TreeCode.UpdateFromReduction(expression, varName);
         }
+
+
+        public TreeExpression TreeCode { get; }
 
         public bool DependsOnLeftArgument { get; }
 
-        public string Code { get; set; }
+        public string Code => TreeCode.Code;
     }
 }

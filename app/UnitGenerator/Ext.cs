@@ -12,13 +12,6 @@ namespace UnitGenerator
 {
     public static class Ext
     {
-        public static void AddBlaAttribute(this IAttributable attributable, ITypeNameResolver resolver, RelatedUnitSourceUsage flag)
-        {
-            var argument    = resolver.GetEnumValueCode(flag);
-            var csAttribute = new CsAttribute(nameof(RelatedUnitSourceAttribute)).WithArgumentCode(argument);
-            attributable.WithAttribute(csAttribute);
-        }
-
         public static CsMethod AddOperator(this CsClass cl, string operatorName, Args arg, string resultType = null)
         {
             resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name);
@@ -32,6 +25,17 @@ namespace UnitGenerator
             if (string.IsNullOrWhiteSpace(txt))
                 return null;
             return prefix + txt;
+        }
+
+        public static void AddRelatedUnitSourceAttribute(this IAttributable attributable, ITypeNameResolver resolver,
+            RelatedUnitSourceUsage flag, int sortOrder)
+        {
+            var argument = resolver.GetEnumValueCode(flag);
+            var csAttribute = new CsAttribute(nameof(RelatedUnitSourceAttribute))
+                .WithArgumentCode(argument);
+            if (flag != RelatedUnitSourceUsage.DoNotUse)
+                csAttribute.WithArgument(sortOrder);
+            attributable.WithAttribute(csAttribute);
         }
 
         public static void CheckArgument(this CsCodeWriter code, string argName, ArgChecking flags,

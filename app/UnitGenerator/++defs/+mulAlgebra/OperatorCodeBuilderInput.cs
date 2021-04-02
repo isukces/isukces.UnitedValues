@@ -86,8 +86,9 @@ namespace UnitGenerator
 
         public List<VarDefinition> Vars { get; } = new List<VarDefinition>();
 
-        public string Comment { get; set; }
-        public bool   Throw   { get; set; }
+        public string Comment  { get; set; }
+        public bool   Throw    { get; set; }
+        public string ResultMultiplication { get; set; }
 
         private static readonly Regex ReplaceRegex =
             new Regex(ReplaceFilter, RegexOptions.Multiline | RegexOptions.Compiled);

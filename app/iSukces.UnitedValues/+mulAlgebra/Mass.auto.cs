@@ -13,9 +13,13 @@ namespace iSukces.UnitedValues
         /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
         public static LinearDensity operator /(Mass mass, Length length)
         {
-            // generator : MultiplyAlgebraGenerator.CreateCodeForFractionalResult
-            // scenario E
-            return new LinearDensity(mass.Value / length.Value, mass.Unit, length.Unit);
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // .Is<Mass, Length, LinearDensity>("/")
+            var resultUnit = new LinearDensityUnit(mass.Unit, length.Unit);
+            var value = mass.Value / length.Value;
+            return new LinearDensity(value, resultUnit);
+            // scenario F3
         }
 
         /// <summary>
@@ -119,9 +123,13 @@ namespace iSukces.UnitedValues
         /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
         public static PlanarDensity operator /(Mass mass, Area area)
         {
-            // generator : MultiplyAlgebraGenerator.CreateCodeForFractionalResult
-            // scenario E
-            return new PlanarDensity(mass.Value / area.Value, mass.Unit, area.Unit);
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // .Is<Mass, Area, PlanarDensity>("/")
+            var resultUnit = new PlanarDensityUnit(mass.Unit, area.Unit);
+            var value = mass.Value / area.Value;
+            return new PlanarDensity(value, resultUnit);
+            // scenario F3
         }
 
         /// <summary>
@@ -225,9 +233,13 @@ namespace iSukces.UnitedValues
         /// <param name="volume">a divisor (denominator) - a value which dividend is divided by</param>
         public static Density operator /(Mass mass, Volume volume)
         {
-            // generator : MultiplyAlgebraGenerator.CreateCodeForFractionalResult
-            // scenario E
-            return new Density(mass.Value / volume.Value, mass.Unit, volume.Unit);
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // .Is<Mass, Volume, Density>("/")
+            var resultUnit = new DensityUnit(mass.Unit, volume.Unit);
+            var value = mass.Value / volume.Value;
+            return new Density(value, resultUnit);
+            // scenario F3
         }
 
         /// <summary>

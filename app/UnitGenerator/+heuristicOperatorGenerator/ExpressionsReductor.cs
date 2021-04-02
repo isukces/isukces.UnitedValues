@@ -4,7 +4,13 @@ using System.Linq;
 
 namespace UnitGenerator
 {
-    internal class ExpressionsReductor
+    public interface IReducable
+    {
+        IEnumerable<ExpressionPath> GetUsedExpressions();
+        void UpdateFromReduction(ExpressionPath expression, string varName);
+    }
+    
+    public class ExpressionsReductor
     {
         public ExpressionsReductor(Func<string, string> addVariable)
         {
@@ -12,90 +18,88 @@ namespace UnitGenerator
         }
 
 
-        private static string GetReduceExpression(ExpressionPath[] arguments)
+        private static ExpressionPath GetExpressionForReducing(IReducable[] arguments)
         {
-            var maxDots = arguments.Select(a => a.Dots).Max();
-            for (var dots = 1; dots < maxDots; dots++)
+            var expressions = arguments.SelectMany(a =>
             {
-                var tmpDotsCount = dots;
-                var grouppedExpressions = KeyWithCount
-                    .MakeList(arguments, a => a.GetByDotsCounts(tmpDotsCount));
-                var expressionToReduce = grouppedExpressions.Where(a => a.Count > 1).ToArray();
-                if (expressionToReduce.Length > 0)
-                    return expressionToReduce[0].Key;
+                var g = a.GetUsedExpressions().ToArray();
+                return g;
+            }).ToArray();
+            if (expressions.Any())
+            {
+                var maxDots = expressions.Select(a => a.Dots).Max();
+                for (var dots = 1; dots <= maxDots; dots++)
+                {
+                    var tmpDotsCount = dots;
+                    var grouppedExpressions = KeyWithCount
+                        .MakeList(expressions, a => a.GetByDotsCounts(tmpDotsCount));
+                    var expressionToReduce = grouppedExpressions.Where(a => a.Count > 1).ToArray();
+                    if (expressionToReduce.Length > 0)
+                        return expressionToReduce[0].Key;
+                }
             }
 
-            var methodReductor = KeyWithCount.MakeList(arguments, q =>
+            var methodReductor = KeyWithCount.MakeList(expressions, q =>
             {
-                var path = q.Path;
-                return path.EndsWith("()", StringComparison.Ordinal) ? path : null;
+                if (q.LooksLikeMethodCall)
+                    return q;
+                return null;
             });
             if (methodReductor.Length > 0)
                 return methodReductor[0].Key;
             return null;
         }
 
-
-        public void Add(string expression)
+        public void AddAny(object e)
+        {
+            switch (e)
+            {
+                case null:
+                    return;
+                case IReducable r:
+                    Add(r);
+                    break;
+                default:
+                    break;
+            }
+        }
+        public void Add(IReducable expression)
         {
             _expressions.Add(expression);
         }
 
-        public ReductionResult GetReduced()
+        public void ReduceExpressions()
         {
-            var runAgain              = true;
-            var reducedArray          = _expressions.Select(a => (ExpressionPath)a).ToArray();
-            while (runAgain) runAgain = ReduceSinglePass(reducedArray);
-
-            var dictionary = new Dictionary<string, string>();
-            for (var index = 0; index < _expressions.Count; index++)
+            var reducedArray = _expressions.ToArray();
+            while (true)
             {
-                var source  = _expressions[index];
-                var resuced = reducedArray[index].Path;
-                dictionary[source] = resuced;
+                var expression = GetExpressionForReducing(reducedArray);
+                if (expression is null)
+                    return;
+                ReduceOne(reducedArray, expression);
             }
-
-            return new ReductionResult(dictionary);
         }
 
-        private bool ReduceSinglePass(ExpressionPath[] arguments)
+
+
+        private void ReduceOne(IReducable[] arguments, ExpressionPath expression)
         {
-            var expression = GetReduceExpression(arguments);
-            if (expression is null)
-                return false;
-            var varName1 = AddVariable(expression);
+            var varName = AddVariable(expression.Code);
             for (var index = 0; index < arguments.Length; index++)
             {
-                var text = arguments[index].Path;
-                if (text == expression)
-                    arguments[index] = (ExpressionPath)varName1;
-                else if (text.StartsWith(expression + ".", StringComparison.Ordinal))
-                    arguments[index] = (ExpressionPath)(varName1 + text.Substring(expression.Length));
+                var src = arguments[index];
+                src.UpdateFromReduction(expression, varName);
             }
-
-            return true;
         }
 
         private Func<string, string> AddVariable { get; }
 
-        private readonly List<string> _expressions = new List<string>();
+        private readonly List<IReducable> _expressions = new List<IReducable>();
 
-
-        internal class ReductionResult
+        public void ForceReduce(ExpressionPath expression)
         {
-            public ReductionResult(IReadOnlyDictionary<string, string> dictionary)
-            {
-                _dictionary = dictionary;
-            }
-
-            public string Reduce(string x)
-            {
-                if (_dictionary.TryGetValue(x, out var y))
-                    return y;
-                return x;
-            }
-
-            private readonly IReadOnlyDictionary<string, string> _dictionary;
+            var reducedArray = _expressions.ToArray();
+            ReduceOne(reducedArray, expression);
         }
     }
 }

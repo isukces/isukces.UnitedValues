@@ -33,6 +33,8 @@ namespace iSukces.UnitedValues
 
         internal static void Register(UnitRelationsDictionary dict)
         {
+            dict.AddRelated<SquareTimeUnit, TimeUnit>(SquareMiliSecond, TimeUnits.MiliSecond);
+            dict.AddRelated<TimeUnit, SquareTimeUnit>(TimeUnits.MiliSecond, SquareMiliSecond);
             dict.AddRelated<SquareTimeUnit, TimeUnit>(SquareSecond, TimeUnits.Second);
             dict.AddRelated<TimeUnit, SquareTimeUnit>(TimeUnits.Second, SquareSecond);
             dict.AddRelated<SquareTimeUnit, TimeUnit>(SquareMinute, TimeUnits.Minute);
@@ -50,12 +52,17 @@ namespace iSukces.UnitedValues
             {
                 return new []
                 {
+                    SquareMiliSecond,
                     SquareSecond,
                     SquareMinute,
                     SquareHour
                 };
             }
         }
+
+        internal static readonly SquareTimeUnit SquareMiliSecondSquareTimeUnit = new SquareTimeUnit(TimeUnits.MiliSecond);
+
+        public static readonly UnitDefinition<SquareTimeUnit> SquareMiliSecond = new UnitDefinition<SquareTimeUnit>(SquareMiliSecondSquareTimeUnit, 0.001m * 0.001m);
 
         internal static readonly SquareTimeUnit SquareSecondSquareTimeUnit = new SquareTimeUnit(TimeUnits.Second);
 
