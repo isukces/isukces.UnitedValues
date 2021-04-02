@@ -12,17 +12,11 @@ namespace UnitGenerator
             hints.CreateOperatorCode += (sender, args) =>
             {
                 args.Result.Comment = args.Input.DebugIs;
-                CreateHeuristicCode(args);
+                AlgebraDefUtils.CreateHeuristicCode(args);
                 args.Handled = true;
             };
           
             c.WithDiv<EnergyMassDensity, DeltaKelvinTemperature, SpecificHeatCapacity>(hints);
-        }
-
-        private static void CreateHeuristicCode(OperatorHints.CreateOperatorCodeEventArgs args)
-        {
-            var clrTypesResolver = new ClrTypesResolver(typeof(Length).Assembly);
-            HeuristicOperatorGenerator.TryCreate(args, clrTypesResolver);
         }
     }
 }

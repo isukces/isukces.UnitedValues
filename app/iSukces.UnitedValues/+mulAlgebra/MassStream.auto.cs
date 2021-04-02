@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
-            // Fill method Definition
+            // Fill method HandleCreateOperatorCode
             // .Is<EnergyMassDensity, MassStream, Power>("*")
             throw new NotImplementedException();
             // scenario F1
@@ -30,7 +30,7 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
-            // Fill method Definition
+            // Fill method HandleCreateOperatorCode
             // .Is<MassStream, EnergyMassDensity, Power>("*")
             throw new NotImplementedException();
             // scenario F1

@@ -32,7 +32,7 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
-            // Fill method Definition
+            // Fill method HandleCreateOperatorCode
             // .Is<Power, MassStream, EnergyMassDensity>("/")
             throw new NotImplementedException();
         }
