@@ -33,13 +33,19 @@ namespace UnitGenerator
                 cw.WriteAssign(right, RightValue, true);
             }
 
-            var value = $"{left}.Value {OperatorParameters.Oper} {right}.Value";
-            if (!string.IsNullOrEmpty(_input.ResultMultiplication))
-                value += " * " + _input.ResultMultiplication;
-            cw.WriteAssign("value", value, true);
+            if (string.IsNullOrEmpty(_input.UseReturnExpression))
+            {
+                var value = string.IsNullOrEmpty(_input.UseValueExpression)
+                    ? $"{left}.Value {OperatorParameters.Oper} {right}.Value"
+                    : _input.UseValueExpression;
+                if (!string.IsNullOrEmpty(_input.ResultMultiplication))
+                    value += " * " + _input.ResultMultiplication;
+                cw.WriteAssign("value", value, true);
 
-            var code = new Args("value", ResultUnit).Create(OperatorParameters.Result.Value.ValueTypeName);
-            cw.WriteReturn(code);
+                var code = new Args("value", ResultUnit).Create(OperatorParameters.Result.Value.ValueTypeName);
+                cw.WriteReturn(code);
+            } else
+                cw.WriteReturn(_input.UseReturnExpression);
         }
 
         private OperatorParamsBase OperatorParameters => _input.OperatorParameters;

@@ -15,9 +15,12 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
-            // Fill method Definition
             // .Is<Time, Power, Energy>("*")
-            throw new NotImplementedException();
+            var timeValue = time.GetBaseUnitValue();
+            var powerValue = power.GetBaseUnitValue();
+            var basicEnergy = timeValue * powerValue;
+            var value = basicEnergy;
+            return new Energy(value, EnergyUnits.Joule);
             // scenario F3
         }
 
@@ -30,9 +33,13 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
-            // Fill method Definition
             // .Is<Power, Time, Energy>("*")
-            throw new NotImplementedException();
+            var x = 4;
+            var powerValue = power.GetBaseUnitValue();
+            var timeValue = time.GetBaseUnitValue();
+            var basicEnergy = powerValue * timeValue;
+            var value = basicEnergy;
+            return new Energy(value, EnergyUnits.Joule);
             // scenario F3
         }
 

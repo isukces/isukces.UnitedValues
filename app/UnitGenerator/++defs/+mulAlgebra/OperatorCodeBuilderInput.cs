@@ -34,6 +34,7 @@ namespace UnitGenerator
             var type = new Args(a).Create<T>();
             ConvertRight(type);
         }
+
         public void ConvertRight(string targetType)
         {
             RightValue = $"{OperatorParameters.RightMethodArgumentName}.ConvertTo({targetType})";
@@ -86,9 +87,13 @@ namespace UnitGenerator
 
         public List<VarDefinition> Vars { get; } = new List<VarDefinition>();
 
-        public string Comment  { get; set; }
-        public bool   Throw    { get; set; }
+        public string Comment              { get; set; }
+        public bool   Throw                { get; set; }
         public string ResultMultiplication { get; set; }
+
+        public string UseValueExpression { get; set; }
+
+        public string UseReturnExpression { get; set; }
 
         private static readonly Regex ReplaceRegex =
             new Regex(ReplaceFilter, RegexOptions.Multiline | RegexOptions.Compiled);

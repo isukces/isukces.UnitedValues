@@ -14,17 +14,17 @@ namespace iSukces.UnitedValues.Test
 
             // J/kg*K
             var cpUnit = new SpecificHeatCapacityUnit(
-                    EnergyUnits.Joule,
-                    MassUnits.Kg,
-                    KelvinTemperatureUnits.Degree);
+                EnergyUnits.Joule,
+                MassUnits.Kg,
+                KelvinTemperatureUnits.Degree);
             var cp = new SpecificHeatCapacity(4211, cpUnit);
 
-            Power q = Power.FromKiloWatt(300);
-            Assert.Equal("300kW", q.ToString());
+            var power = Power.FromKiloWatt(300);
+            Assert.Equal("300kW", power.ToString());
 
             var td = tz - tp;
 
-            EnergyMassDensity a = cp * td;
+            var a = cp * td;
             Assert.Equal("147385J/kg", a.ToString());
 
             var newUnit = new EnergyMassDensityUnit(
@@ -38,7 +38,10 @@ namespace iSukces.UnitedValues.Test
                 var a1 = td * cp;
                 Assert.Equal("147385J/kg", a1.ToString());
             }
-            // var m = q / a;
+            var m = power / a;
         }
+
+
+     
     }
 }

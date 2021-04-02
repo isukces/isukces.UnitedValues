@@ -5,8 +5,7 @@ namespace UnitGenerator
     public class OperatorParamsBase
     {
         public OperatorParamsBase(TypesGroup left, TypesGroup right, TypesGroup result, string leftMethodArgumentName,
-            string rightMethodArgumentName,
-            string oper)
+            string rightMethodArgumentName, string oper)
         {
             Left                    = left;
             Right                   = right;

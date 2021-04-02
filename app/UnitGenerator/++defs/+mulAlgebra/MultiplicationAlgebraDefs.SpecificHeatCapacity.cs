@@ -21,8 +21,8 @@ namespace UnitGenerator
 
         private static void CreateHeuristicCode(OperatorHints.CreateOperatorCodeEventArgs args)
         {
-            HeuristicOperatorGenerator
-                .TryCreate(args, new ClrTypesResolver(typeof(Length).Assembly));
+            var clrTypesResolver = new ClrTypesResolver(typeof(Length).Assembly);
+            HeuristicOperatorGenerator.TryCreate(args, clrTypesResolver);
         }
     }
 }
