@@ -29,10 +29,10 @@ namespace UnitGenerator
                 Def_Energy_Time_Power.Setup(c);
                 Def_Power_EnergyMassDensity_MassStream.Setup(c);
 
-                {
-                    c.WithDiv<MassStream, Density, VolumeStream>(hints);
-                    c.WithDiv<Length, Time, Velocity>(hints);
-                }
+                c.WithDiv<MassStream, Density, VolumeStream>(hints);
+                c.WithDiv<Length, Time, Velocity>(hints);
+
+                c.WithDiv<VolumeStream, Area, Velocity>(hints);
                 return c;
             }
         }

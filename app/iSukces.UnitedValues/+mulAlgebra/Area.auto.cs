@@ -454,6 +454,123 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="velocity">rigth factor (multiplier)</param>
+        public static VolumeStream operator *(Area area, Velocity velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+            // scenario with hint
+            // .Is<Area, Velocity, VolumeStream>("*")
+            var areaUnit = area.Unit;
+            var velocityUnit = velocity.Unit;
+            var tmp1 = velocityUnit.DenominatorUnit;
+            var targetRightUnit = new VelocityUnit(areaUnit.GetLengthUnit(), tmp1);
+            var resultUnit = new VolumeStreamUnit(areaUnit.GetVolumeUnit(), tmp1);
+            var velocityConverted = velocity.ConvertTo(targetRightUnit);
+            var value = area.Value * velocityConverted.Value;
+            return new VolumeStream(value, resultUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="velocity">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static VolumeStream operator *(Velocity velocity, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
+            // VolumeStream operator *(Velocity velocity, Area area)
+            // scenario with hint
+            // .Is<Velocity, Area, VolumeStream>("*")
+            var velocityUnit = velocity.Unit;
+            var tmp1 = velocityUnit.CounterUnit;
+            var resultUnit = new VolumeStreamUnit(tmp1.GetVolumeUnit(), velocityUnit.DenominatorUnit);
+            var areaConverted = area.ConvertTo(tmp1.GetAreaUnit());
+            var value = velocity.Value * areaConverted.Value;
+            return new VolumeStream(value, resultUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="velocity">rigth factor (multiplier)</param>
+        public static VolumeStream? operator *(Area? area, Velocity velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null)
+                return null;
+            return area.Value * velocity;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="velocity">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static VolumeStream? operator *(Velocity? velocity, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (velocity is null)
+                return null;
+            return velocity.Value * area;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="velocity">rigth factor (multiplier)</param>
+        public static VolumeStream? operator *(Area area, Velocity? velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (velocity is null)
+                return null;
+            return area * velocity.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="velocity">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static VolumeStream? operator *(Velocity velocity, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null)
+                return null;
+            return velocity * area.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="area">left factor (multiplicand)</param>
+        /// <param name="velocity">rigth factor (multiplier)</param>
+        public static VolumeStream? operator *(Area? area, Velocity? velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null || velocity is null)
+                return null;
+            return area.Value * velocity.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="velocity">left factor (multiplicand)</param>
+        /// <param name="area">rigth factor (multiplier)</param>
+        public static VolumeStream? operator *(Velocity? velocity, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (velocity is null || area is null)
+                return null;
+            return velocity.Value * area.Value;
+        }
+
+        /// <summary>
         /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
         /// </summary>
         /// <param name="area">a dividend (counter) - a value that is being divided</param>
