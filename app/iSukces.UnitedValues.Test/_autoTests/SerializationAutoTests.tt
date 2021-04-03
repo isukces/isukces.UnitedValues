@@ -128,7 +128,7 @@ namespace iSukces.UnitedValues.Test
                 case "SquareTime":
                     return Make("SquareSecond | s² , SquareHour | h²");
                 case "Mass":
-                    return Make("Kg | kg , Ounce | oz");
+                    return Make("Kg | kg , Ounce | oz , Pound | lbs");
                 case "Energy":
                     return Make("Joule | J");
                 case "Force":

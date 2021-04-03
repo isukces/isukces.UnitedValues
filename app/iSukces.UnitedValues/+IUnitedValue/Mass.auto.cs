@@ -318,6 +318,46 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
+        /// creates mass from value in lbs
+        /// </summary>
+        /// <param name="value">Mass value in lbs</param>
+        public static Mass FromPound(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass(value, MassUnits.Pound);
+        }
+
+        /// <summary>
+        /// creates mass from value in lbs
+        /// </summary>
+        /// <param name="value">Mass value in lbs</param>
+        public static Mass FromPound(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass((decimal)value, MassUnits.Pound);
+        }
+
+        /// <summary>
+        /// creates mass from value in lbs
+        /// </summary>
+        /// <param name="value">Mass value in lbs</param>
+        public static Mass FromPound(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass(value, MassUnits.Pound);
+        }
+
+        /// <summary>
+        /// creates mass from value in lbs
+        /// </summary>
+        /// <param name="value">Mass value in lbs</param>
+        public static Mass FromPound(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass(value, MassUnits.Pound);
+        }
+
+        /// <summary>
         /// creates mass from value in t
         /// </summary>
         /// <param name="value">Mass value in t</param>

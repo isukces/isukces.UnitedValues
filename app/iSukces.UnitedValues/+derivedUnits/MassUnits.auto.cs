@@ -44,7 +44,8 @@ namespace iSukces.UnitedValues
                     Tone,
                     Gram,
                     Ounce,
-                    TroyOunce
+                    TroyOunce,
+                    Pound
                 };
             }
         }
@@ -68,6 +69,10 @@ namespace iSukces.UnitedValues
         internal static readonly MassUnit TroyOunceMassUnit = new MassUnit("oz t");
 
         public static readonly UnitDefinition<MassUnit> TroyOunce = new UnitDefinition<MassUnit>(TroyOunceMassUnit, 0.0311034768m);
+
+        internal static readonly MassUnit PoundMassUnit = new MassUnit("lbs");
+
+        public static readonly UnitDefinition<MassUnit> Pound = new UnitDefinition<MassUnit>(PoundMassUnit, 0.45359237m);
 
     }
 }

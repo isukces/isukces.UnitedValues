@@ -26,6 +26,13 @@ namespace UnitGenerator
                         info.System      = UnitSystem.Imperial;
                         // ℥
                     })
+                    .WithPrefixedUnit("lbs", "Pound", 0.45359237m, extraSettings: info =>
+                    {
+                        // https://en.wikipedia.org/wiki/Pound_(mass)
+                        // info.Description = "International troy ounce";
+                        info.System      = UnitSystem.Imperial;
+                        // ℥
+                    })
                 
                 ,
                 new RelatedUnit(nameof(Length)).WithLengths(1),
