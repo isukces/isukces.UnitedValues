@@ -23,7 +23,8 @@ using Xunit.Abstractions;
         
         new Info("MassStream", Div, "Mass", "Time"),
         new Info("PlanarDensity", Div, "Mass", "Area"),
-        new Info("Pressure", Div, "Force", "Area")
+        new Info("Pressure", Div, "Force", "Area"),
+        new Info("VolumeStream", Div, "Volume", "Time"),
     };
 #>
 

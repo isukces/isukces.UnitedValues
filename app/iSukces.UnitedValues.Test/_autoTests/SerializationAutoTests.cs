@@ -394,6 +394,61 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal(obj.Unit, deserialized.Unit);
         }
 
+        [InlineData("45.87m³/s", "45.87m³/s", "VolumeUnits.CubicMeter", "TimeUnits.Second")]
+        [InlineData("45.87m³/s", " 45.87   m³/s     ", "VolumeUnits.CubicMeter", "TimeUnits.Second")]
+        [InlineData("45.87m³/s", " 45.8700   m³/s     ", "VolumeUnits.CubicMeter", "TimeUnits.Second")]
+        [InlineData("45.87m³/s", "45.87m³/ s", "VolumeUnits.CubicMeter", "TimeUnits.Second")]
+        [InlineData("45.87m³/s", " 45.87   m³/ s     ", "VolumeUnits.CubicMeter", "TimeUnits.Second")]
+        [InlineData("45.87m³/s", " 45.8700   m³/ s     ", "VolumeUnits.CubicMeter", "TimeUnits.Second")]
+        [InlineData("45.87m³/min", "45.87m³/min", "VolumeUnits.CubicMeter", "TimeUnits.Minute")]
+        [InlineData("45.87m³/min", " 45.87   m³/min     ", "VolumeUnits.CubicMeter", "TimeUnits.Minute")]
+        [InlineData("45.87m³/min", " 45.8700   m³/min     ", "VolumeUnits.CubicMeter", "TimeUnits.Minute")]
+        [InlineData("45.87m³/min", "45.87m³/ min", "VolumeUnits.CubicMeter", "TimeUnits.Minute")]
+        [InlineData("45.87m³/min", " 45.87   m³/ min     ", "VolumeUnits.CubicMeter", "TimeUnits.Minute")]
+        [InlineData("45.87m³/min", " 45.8700   m³/ min     ", "VolumeUnits.CubicMeter", "TimeUnits.Minute")]
+        [InlineData("45.87m³/h", "45.87m³/h", "VolumeUnits.CubicMeter", "TimeUnits.Hour")]
+        [InlineData("45.87m³/h", " 45.87   m³/h     ", "VolumeUnits.CubicMeter", "TimeUnits.Hour")]
+        [InlineData("45.87m³/h", " 45.8700   m³/h     ", "VolumeUnits.CubicMeter", "TimeUnits.Hour")]
+        [InlineData("45.87m³/h", "45.87m³/ h", "VolumeUnits.CubicMeter", "TimeUnits.Hour")]
+        [InlineData("45.87m³/h", " 45.87   m³/ h     ", "VolumeUnits.CubicMeter", "TimeUnits.Hour")]
+        [InlineData("45.87m³/h", " 45.8700   m³/ h     ", "VolumeUnits.CubicMeter", "TimeUnits.Hour")]
+        [InlineData("45.87yd³/s", "45.87yd³/s", "VolumeUnits.CubicYard", "TimeUnits.Second")]
+        [InlineData("45.87yd³/s", " 45.87   yd³/s     ", "VolumeUnits.CubicYard", "TimeUnits.Second")]
+        [InlineData("45.87yd³/s", " 45.8700   yd³/s     ", "VolumeUnits.CubicYard", "TimeUnits.Second")]
+        [InlineData("45.87yd³/s", "45.87yd³/ s", "VolumeUnits.CubicYard", "TimeUnits.Second")]
+        [InlineData("45.87yd³/s", " 45.87   yd³/ s     ", "VolumeUnits.CubicYard", "TimeUnits.Second")]
+        [InlineData("45.87yd³/s", " 45.8700   yd³/ s     ", "VolumeUnits.CubicYard", "TimeUnits.Second")]
+        [InlineData("45.87yd³/min", "45.87yd³/min", "VolumeUnits.CubicYard", "TimeUnits.Minute")]
+        [InlineData("45.87yd³/min", " 45.87   yd³/min     ", "VolumeUnits.CubicYard", "TimeUnits.Minute")]
+        [InlineData("45.87yd³/min", " 45.8700   yd³/min     ", "VolumeUnits.CubicYard", "TimeUnits.Minute")]
+        [InlineData("45.87yd³/min", "45.87yd³/ min", "VolumeUnits.CubicYard", "TimeUnits.Minute")]
+        [InlineData("45.87yd³/min", " 45.87   yd³/ min     ", "VolumeUnits.CubicYard", "TimeUnits.Minute")]
+        [InlineData("45.87yd³/min", " 45.8700   yd³/ min     ", "VolumeUnits.CubicYard", "TimeUnits.Minute")]
+        [InlineData("45.87yd³/h", "45.87yd³/h", "VolumeUnits.CubicYard", "TimeUnits.Hour")]
+        [InlineData("45.87yd³/h", " 45.87   yd³/h     ", "VolumeUnits.CubicYard", "TimeUnits.Hour")]
+        [InlineData("45.87yd³/h", " 45.8700   yd³/h     ", "VolumeUnits.CubicYard", "TimeUnits.Hour")]
+        [InlineData("45.87yd³/h", "45.87yd³/ h", "VolumeUnits.CubicYard", "TimeUnits.Hour")]
+        [InlineData("45.87yd³/h", " 45.87   yd³/ h     ", "VolumeUnits.CubicYard", "TimeUnits.Hour")]
+        [InlineData("45.87yd³/h", " 45.8700   yd³/ h     ", "VolumeUnits.CubicYard", "TimeUnits.Hour")]
+        [Theory]
+        public void T09_Should_deserialize_VolumeStream(string expected, string jsonToDeserialize, string theVolumeUnits, string theTimeUnits)
+        {
+            var u1 = TestUtils.LoadUnit<VolumeUnit>(theVolumeUnits);
+            var u2 = TestUtils.LoadUnit<TimeUnit>(theTimeUnits);
+            // serialization
+            var obj = new VolumeStream(45.87m, u1, u2);
+            expected = "\"" + expected + "\"";
+            var json = JsonConvert.SerializeObject(obj);
+            _testOutputHelper.WriteLine("serialized to " + json);
+            Assert.Equal(expected, json);
+            // deserialization
+            jsonToDeserialize = "\"" + jsonToDeserialize + "\""; 
+            _testOutputHelper.WriteLine("Try deserialize " +jsonToDeserialize);
+            var deserialized = JsonConvert.DeserializeObject<VolumeStream>(jsonToDeserialize);
+            Assert.Equal(obj.Value, deserialized.Value);
+            Assert.Equal(obj.Unit, deserialized.Unit);
+        }
+
 
         private readonly ITestOutputHelper _testOutputHelper;
 	}
