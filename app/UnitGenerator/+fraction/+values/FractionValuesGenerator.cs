@@ -37,7 +37,7 @@ namespace UnitGenerator
 
             bool isBasicUnit(TypesGroup g)
             {
-                if (!_dupa.TryGetValue(g.Unit.GetTypename(), out var t)) return false;
+                if (!_resolver.TryGetValue(g.Unit.GetTypename(), out var t)) return false;
                 if (t.Implements<ICompositeUnit>())
                     return false;
                 return true;

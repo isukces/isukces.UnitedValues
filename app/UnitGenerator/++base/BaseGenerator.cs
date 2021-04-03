@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using iSukces.Code;
@@ -12,7 +11,6 @@ namespace UnitGenerator
 {
     public abstract class BaseGenerator<TDef>
     {
-        protected static ClrTypesResolver _dupa = new ClrTypesResolver(typeof(Length).Assembly);
         protected BaseGenerator(string output, string nameSpace)
         {
             _output    = output;
@@ -69,7 +67,7 @@ namespace UnitGenerator
             {
                 var flags = i.CheckingFlags;
                 code.CheckArgument(i.ArgName, flags.ConvertToArgChecking(), Target);
-                var p     = m.AddParam(i.PropertyName.FirstLower(), i.PropertyType, i.Description);
+                var p = m.AddParam(i.PropertyName.FirstLower(), i.PropertyType, i.Description);
                 if ((flags & Flags1.Optional) != 0)
                     p.ConstValue = "null";
 
@@ -169,14 +167,13 @@ namespace UnitGenerator
                 var p = Add_Property(i.PropertyName, i.PropertyType, i.Description);
                 i.PropertyCreated?.Invoke(p);
                 if ((i.CheckingFlags & Flags1.NotNull) == 0) continue;
-                
-                if (Target.Kind==CsNamespaceMemberKind.Class)
+
+                if (Target.Kind == CsNamespaceMemberKind.Class)
                     if ((i.CheckingFlags & Flags1.AddNotNullAttributeToPropertyIfPossible) != 0)
                         p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
-                    
+
                 if ((i.CheckingFlags & Flags1.PropertyCanBeNull) != 0)
                     p.WithAttribute(CsAttribute.Make<CanBeNullAttribute>(Target));
-
             }
         }
 
@@ -234,6 +231,7 @@ namespace UnitGenerator
         protected TDef Cfg { get; private set; }
 
         protected CsClass Target { get; private set; }
+        protected static ClrTypesResolver _resolver = new ClrTypesResolver(typeof(Length).Assembly);
 
         private readonly string _output;
         private readonly string _nameSpace;
