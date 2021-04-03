@@ -1,0 +1,233 @@
+<#@ template language="C#" #>
+<#@ output extension=".cs"  encoding="utf-8" #>
+<#@ assembly name="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Globalization" #>
+<#@ import namespace="System.Linq" #>
+using Newtonsoft.Json;
+using Xunit;
+using Xunit.Abstractions;
+
+<#
+    IEnumerable<Info> GetTests()
+    {
+        // public static MassStream operator *(Density density, VolumeStream volumeStream)
+        var mass = "MassUnits.Kg";
+        var volume = "VolumeUnits.CubicMeter";
+        var time = "TimeUnits.Second";
+        var tmp = new Info("*",
+            new Value(30, "new Density", mass, volume),
+            new Value(15, "new VolumeStream", volume, time),
+            new Value(-1, "new MassStream", mass, time));
+        yield return tmp;
+        yield return tmp.GetReversed();
+        yield return tmp.Div1();
+        yield return tmp.Div2();
+        // ========================================================
+        volume = "VolumeUnits.CubicInch";
+        mass = "MassUnits.Pound";
+        tmp = new Info("*",
+            new Value(30, "new Density", mass, volume),
+            new Value(15, "new VolumeStream", volume, time),
+            new Value(-1, "new MassStream", mass, time));
+        yield return tmp;
+        yield return tmp.GetReversed();
+
+
+        // ========================================================
+        const decimal poundPerTone = 1000m / 0.45359237m;
+
+        tmp = new Info("/",
+            new Value(30 * 15, "new MassStream",  "MassUnits.Tone", time),
+            new Value(30, "new Density", "MassUnits.Pound", volume),
+            new Value(-poundPerTone, "new VolumeStream", volume, time));
+        yield return tmp;
+        // ========================================================
+        const decimal poundPerKg = 1m / 0.45359237m;
+        tmp = new Info("/",
+            new Value(500, "new MassStream",  "MassUnits.Kg", time),
+            new Value(25, "new Density", "MassUnits.Pound", volume),
+            new Value(-poundPerKg, "new VolumeStream", volume, time));
+        yield return tmp;
+    }
+
+    ;
+    var nr = 0;
+#>
+
+// char test ² ąćęłńóśźż
+namespace iSukces.UnitedValues.Test
+{
+    public class DivTests
+    {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public DivTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
+        // ===================== LOOP
+<#
+    var done = new HashSet<string>();
+    foreach (var test in GetTests())
+    {
+        nr++;
+        WriteLine("");
+        if (!done.Add(test.ToString()))
+        {
+            WriteLine("// !!!!!!!!!!!!!!!!!!!! this test has already been created");
+            WriteLine("// " + test);
+        }
+#>
+        <#=
+                test.ExtraString.Length == 0 ? "" : "// " + test.ExtraString #>
+        [Fact]
+        public void T<#= nr.ToString("00") #>_should_<#= test.MetodName #>() {
+            // <#= test #>
+            <#= test.Arg1.Create("left") #>
+            <#= test.Arg2.Create("right") #>
+            <#= test.Result.Create("expected") #>
+            <#= test.CreateOperationCode("left", "right") #>
+            _testOutputHelper.WriteLine("Check if " + left + " <#= test.Oper #> " + right + " = " + expected);
+            Assert.Equal(expected.Value, result.Value, 12);
+            Assert.Equal(expected.Unit.UnitName, result.Unit.UnitName);
+        } // end of method
+<#
+    }
+#>
+    } // end of class
+} // end of namespace
+
+<#+
+    private class Value
+    {
+        public Value(decimal v, string factory, params string[] units)
+        {
+            V = v;
+            Factory = factory;
+            Units = units;
+        }
+
+        public string Create(string name, bool compact = false)
+        {
+            if (compact)
+            {
+                var l = new List<string>();
+                l.AddRange(Units.Select(a => a.Split('.').Last()));
+                return GetMethodNamePart() + "(" + string.Join(",", l) + ")";
+            }
+            else
+            {
+                var l = new List<string>
+                {
+                    V.ToString(CultureInfo.InvariantCulture) + "m"
+                };
+                l.AddRange(Units);
+                var value = Factory + "(" + string.Join(", ", l) + ")";
+                return $"var {name} = {value};";
+            }
+        }
+
+        public string GetMethodNamePart()
+        {
+            var r = Factory.Trim();
+            if (r.StartsWith("new "))
+                r = r.Substring(4).Trim();
+
+            r = r.Substring(0, 1).ToLower() + r.Substring(1);
+            return r;
+        }
+
+        public decimal V { get; }
+        public string Factory { get; }
+        public string[] Units { get; }
+    }
+
+    private class Info
+    {
+        public Info(string oper, Value arg1, Value arg2, Value result)
+        {
+            var v = oper == "*" ? arg1.V * arg2.V : arg1.V / arg2.V;
+            if (result.V == 0)
+            {
+                result = new Value(v, result.Factory, result.Units);
+            } else if (result.V < 0)
+            {
+                result = new Value(-v * result.V, result.Factory, result.Units);
+            }
+            Oper = oper;
+            Arg1 = arg1;
+            Arg2 = arg2;
+            Result = result;
+        }
+
+
+        public string CreateOperationCode(string left, string right)
+        {
+            return $"var result = {left} {Oper} {right};";
+        }
+
+        public Info Div1()
+        {
+            if (Oper == "*")
+                return new Info("/", Result, Arg1, Arg2).WithExtra("Division 1 made from multiplication");
+            throw new NotImplementedException();
+        }
+
+        public Info Div2()
+        {
+            if (Oper == "*")
+                return new Info("/", Result, Arg2, Arg1).WithExtra("Division 2 made from multiplication");
+            throw new NotImplementedException();
+        }
+
+        public Info GetReversed()
+        {
+            if (Oper == "*")
+                return new Info(Oper, Arg2, Arg1, Result).WithExtra("Reverse order multiplication");
+            return new Info(Oper, Arg1, Result, Arg2).WithExtra("Reverse div");
+        }
+
+        public override string ToString()
+        {
+            var l = new[]
+            {
+                Arg1.Create("left", true),
+                Oper,
+                Arg2.Create("rigth", true),
+                "=",
+                Result.Create("expected", true)
+            };
+            return string.Join(" ", l);
+        }
+
+        public Info WithExtra(string extraString)
+        {
+            ExtraString = (ExtraString + "  " + extraString).Trim();
+            return this;
+        }
+
+        public string Oper { get; }
+        public Value Arg1 { get; }
+        public Value Arg2 { get; }
+        public Value Result { get; }
+
+        public string MetodName
+        {
+            get
+            {
+                var l = new List<string>
+                {
+                    Oper == "*" ? "mul" : "div",
+                    Arg1.GetMethodNamePart(),
+                    "by",
+                    Arg2.GetMethodNamePart()
+                };
+                return string.Join("_", l);
+            }
+        }
+
+        public string ExtraString { get; set; } = string.Empty;
+    }
+#>

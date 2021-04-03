@@ -114,5 +114,125 @@ namespace iSukces.UnitedValues
             return massStream.Value * energyMassDensity.Value;
         }
 
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="massStream">a dividend (counter) - a value that is being divided</param>
+        /// <param name="density">a divisor (denominator) - a value which dividend is divided by</param>
+        public static VolumeStream operator /(MassStream massStream, Density density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // .Is<MassStream, Density, VolumeStream>("/")
+            var massStreamUnit = massStream.Unit;
+            var densityUnit = density.Unit;
+            var tmp1 = densityUnit.DenominatorUnit;
+            var targetRightUnit = new DensityUnit(massStreamUnit.CounterUnit, tmp1);
+            var resultUnit = new VolumeStreamUnit(tmp1, massStreamUnit.DenominatorUnit);
+            var densityConverted = density.ConvertTo(targetRightUnit);
+            var value = massStream.Value / densityConverted.Value;
+            return new VolumeStream(value, resultUnit);
+            // scenario F1
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="massStream">a dividend (counter) - a value that is being divided</param>
+        /// <param name="volumeStream">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Density operator /(MassStream massStream, VolumeStream volumeStream)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // .Is<MassStream, VolumeStream, Density>("/")
+            var volumeStreamUnit = volumeStream.Unit;
+            var tmp1 = volumeStreamUnit.CounterUnit;
+            var massStreamUnit = massStream.Unit;
+            var targetRightUnit = new VolumeStreamUnit(tmp1, massStreamUnit.DenominatorUnit);
+            var resultUnit = new DensityUnit(massStreamUnit.CounterUnit, tmp1);
+            var volumeStreamConverted = volumeStream.ConvertTo(targetRightUnit);
+            var value = massStream.Value / volumeStreamConverted.Value;
+            return new Density(value, resultUnit);
+            // scenario F1
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="massStream">a dividend (counter) - a value that is being divided</param>
+        /// <param name="density">a divisor (denominator) - a value which dividend is divided by</param>
+        public static VolumeStream? operator /(MassStream? massStream, Density density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (massStream is null)
+                return null;
+            return massStream.Value / density;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="massStream">a dividend (counter) - a value that is being divided</param>
+        /// <param name="volumeStream">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Density? operator /(MassStream? massStream, VolumeStream volumeStream)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (massStream is null)
+                return null;
+            return massStream.Value / volumeStream;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="massStream">a dividend (counter) - a value that is being divided</param>
+        /// <param name="density">a divisor (denominator) - a value which dividend is divided by</param>
+        public static VolumeStream? operator /(MassStream massStream, Density? density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (density is null)
+                return null;
+            return massStream / density.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="massStream">a dividend (counter) - a value that is being divided</param>
+        /// <param name="volumeStream">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Density? operator /(MassStream massStream, VolumeStream? volumeStream)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (volumeStream is null)
+                return null;
+            return massStream / volumeStream.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="massStream">a dividend (counter) - a value that is being divided</param>
+        /// <param name="density">a divisor (denominator) - a value which dividend is divided by</param>
+        public static VolumeStream? operator /(MassStream? massStream, Density? density)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (massStream is null || density is null)
+                return null;
+            return massStream.Value / density.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="massStream">a dividend (counter) - a value that is being divided</param>
+        /// <param name="volumeStream">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Density? operator /(MassStream? massStream, VolumeStream? volumeStream)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (massStream is null || volumeStream is null)
+                return null;
+            return massStream.Value / volumeStream.Value;
+        }
+
     }
 }

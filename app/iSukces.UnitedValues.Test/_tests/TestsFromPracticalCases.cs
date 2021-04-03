@@ -38,10 +38,18 @@ namespace iSukces.UnitedValues.Test
                 var a1 = td * cp;
                 Assert.Equal("147385J/kg", a1.ToString());
             }
+
+            // ============ mass stream
             var m = power / a;
+            Assert.Equal(7.3277470570275129762187468138m, m.Value, 10);
+            Assert.Equal("t/h", m.Unit.UnitName);
+
+            var ro = new Density(961.9m, MassUnits.Kg, VolumeUnits.CubicMeter);
+            var v  = m / ro;
+
+            Assert.Equal(7.6179925741007516126611360992m, v.Value, 10);
+            Assert.Equal("m³/h", v.Unit.UnitName);
+            
         }
-
-
-     
     }
 }

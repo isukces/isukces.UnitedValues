@@ -37,6 +37,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SerializationAutoTests.cs</LastGenOutput>
     </None>
+    <None Update="_autoTests\AutoMulDivTests.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AutoMulDivTests.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="_autoTests\AutoTests.cs">
@@ -46,6 +50,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SerializationAutoTests.tt</DependentUpon>
+    </Compile>
+    <Compile Update="_autoTests\AutoMulDivTests.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AutoMulDivTests.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
