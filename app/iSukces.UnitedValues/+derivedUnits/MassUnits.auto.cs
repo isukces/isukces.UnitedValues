@@ -42,7 +42,8 @@ namespace iSukces.UnitedValues
                 {
                     Kg,
                     Tone,
-                    Gram
+                    Gram,
+                    Ounce
                 };
             }
         }
@@ -58,6 +59,10 @@ namespace iSukces.UnitedValues
         internal static readonly MassUnit GramMassUnit = new MassUnit("g");
 
         public static readonly UnitDefinition<MassUnit> Gram = new UnitDefinition<MassUnit>(GramMassUnit, 0.001m, "gram", "grams");
+
+        internal static readonly MassUnit OunceMassUnit = new MassUnit("oz");
+
+        public static readonly UnitDefinition<MassUnit> Ounce = new UnitDefinition<MassUnit>(OunceMassUnit, 0.028349523125m);
 
     }
 }

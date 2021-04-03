@@ -1,3 +1,5 @@
+using iSukces.UnitedValues;
+
 namespace UnitGenerator
 {
     public class AliasedPrefixedUnitInfo : PrefixedUnitInfo, IRelatedUnitDefinition
@@ -19,6 +21,9 @@ namespace UnitGenerator
                 $"UnitShortName={UnitShortCode}, Multiplicator={ScaleFactor}, NameSingular={Aliases?.NameSingular}, NamePlural={Aliases?.NamePlural}";
         }
 
-        public TypeCodeAliases Aliases { get; }
+        public TypeCodeAliases Aliases     { get; }
+        
+        public string     Description { get; set; }
+        public UnitSystem System      { get; set; }
     }
 }

@@ -278,6 +278,46 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
+        /// creates mass from value in oz
+        /// </summary>
+        /// <param name="value">Mass value in oz</param>
+        public static Mass FromOunce(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass(value, MassUnits.Ounce);
+        }
+
+        /// <summary>
+        /// creates mass from value in oz
+        /// </summary>
+        /// <param name="value">Mass value in oz</param>
+        public static Mass FromOunce(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass((decimal)value, MassUnits.Ounce);
+        }
+
+        /// <summary>
+        /// creates mass from value in oz
+        /// </summary>
+        /// <param name="value">Mass value in oz</param>
+        public static Mass FromOunce(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass(value, MassUnits.Ounce);
+        }
+
+        /// <summary>
+        /// creates mass from value in oz
+        /// </summary>
+        /// <param name="value">Mass value in oz</param>
+        public static Mass FromOunce(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass(value, MassUnits.Ounce);
+        }
+
+        /// <summary>
         /// creates mass from value in t
         /// </summary>
         /// <param name="value">Mass value in t</param>

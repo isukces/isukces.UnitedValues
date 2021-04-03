@@ -71,7 +71,8 @@ namespace UnitGenerator
         }
 
         public RelatedUnit WithPrefixedUnit(string unitShortName, string fieldName,
-            decimal multiplicator, string fromMethodNameSufix = null, TypeCodeAliases aliases = null)
+            decimal multiplicator, string fromMethodNameSufix = null, TypeCodeAliases aliases = null,
+            Action<AliasedPrefixedUnitInfo> extraSettings = null)
         {
             if (aliases != null)
             {

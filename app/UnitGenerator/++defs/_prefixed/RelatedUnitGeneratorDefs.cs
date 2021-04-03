@@ -11,7 +11,23 @@ namespace UnitGenerator
                 new RelatedUnit(nameof(Mass))
                     .WithPrefixedUnit("kg", null, 1)
                     .WithPrefixedUnit("t", null, 1000, null, TypeCodeAliases.Make("tone", "tons"))
-                    .WithPrefixedUnit("g", null, 0.001m, null, TypeCodeAliases.Make("gram", "grams")),
+                    .WithPrefixedUnit("g", null, 0.001m, null, TypeCodeAliases.Make("gram", "grams"))
+                    .WithPrefixedUnit("oz", "Ounce", 0.001m * 28.349523125m, extraSettings: info =>
+                    {
+                        // https://pl.wikipedia.org/wiki/Uncja
+                        info.Description = "International ounce";
+                        info.System      = UnitSystem.Imperial;
+                        // ℥
+                    })
+                    .WithPrefixedUnit("oz t", "Troy ounce", 0.001m * 31.1034768m, extraSettings: info =>
+                    {
+                        // https://pl.wikipedia.org/wiki/Uncja
+                        info.Description = "International troy ounce";
+                        info.System      = UnitSystem.Imperial;
+                        // ℥
+                    })
+                
+                ,
                 new RelatedUnit(nameof(Length)).WithLengths(1),
                 
                 new RelatedUnit(nameof(Area)).WithLengths(2),
