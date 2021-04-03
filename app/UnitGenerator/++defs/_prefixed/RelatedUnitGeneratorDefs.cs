@@ -19,7 +19,7 @@ namespace UnitGenerator
                         info.System      = UnitSystem.Imperial;
                         // ℥
                     })
-                    .WithPrefixedUnit("oz t", "Troy ounce", 0.001m * 31.1034768m, extraSettings: info =>
+                    .WithPrefixedUnit("oz t", "TroyOunce", 0.001m * 31.1034768m, extraSettings: info =>
                     {
                         // https://pl.wikipedia.org/wiki/Uncja
                         info.Description = "International troy ounce";

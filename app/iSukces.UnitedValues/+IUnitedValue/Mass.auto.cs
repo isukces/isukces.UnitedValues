@@ -357,6 +357,46 @@ namespace iSukces.UnitedValues
             return new Mass(value, MassUnits.Tone);
         }
 
+        /// <summary>
+        /// creates mass from value in oz t
+        /// </summary>
+        /// <param name="value">Mass value in oz t</param>
+        public static Mass FromTroyOunce(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass(value, MassUnits.TroyOunce);
+        }
+
+        /// <summary>
+        /// creates mass from value in oz t
+        /// </summary>
+        /// <param name="value">Mass value in oz t</param>
+        public static Mass FromTroyOunce(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass((decimal)value, MassUnits.TroyOunce);
+        }
+
+        /// <summary>
+        /// creates mass from value in oz t
+        /// </summary>
+        /// <param name="value">Mass value in oz t</param>
+        public static Mass FromTroyOunce(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass(value, MassUnits.TroyOunce);
+        }
+
+        /// <summary>
+        /// creates mass from value in oz t
+        /// </summary>
+        /// <param name="value">Mass value in oz t</param>
+        public static Mass FromTroyOunce(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Mass(value, MassUnits.TroyOunce);
+        }
+
         public static Mass Parse(string value)
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
