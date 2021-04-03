@@ -49,6 +49,38 @@ using Xunit.Abstractions;
             new Value(25, "new Density", "MassUnits.Pound", volume),
             new Value(-poundPerKg, "new VolumeStream", volume, time));
         yield return tmp;
+        // ======================================================== Velocity SI
+        time = "TimeUnits.Second";
+        var length = "LengthUnits.Meter";
+        tmp = new Info("*",
+            new Value(12, "new Velocity",  length, time),
+            new Value(25, "new Time", time),
+            new Value(-1, "new Length", length));
+        yield return tmp;
+        yield return tmp.GetReversed();
+        yield return tmp.Div1();
+        yield return tmp.Div2();
+        
+        // ======================================================== Velocity Other
+        length = "LengthUnits.Meter";
+        var minutes_per_second = 60;
+        tmp = new Info("*",
+            new Value(12, "new Velocity",  length, "TimeUnits.Second"),
+            new Value(2, "new Time", "TimeUnits.Minute"),
+            new Value(-minutes_per_second, "new Length", length));
+        
+        yield return tmp;
+        yield return tmp.GetReversed();
+        
+        // ======================================================== Velocity Other DIV1 
+        tmp = new Info("/",
+            new Value(300, "new Length", length),
+            new Value(12, "new Velocity",  length, "TimeUnits.Minute"),
+            new Value(-1, "new Time", "TimeUnits.Minute")
+            );
+        yield return tmp;
+
+       
     }
 
     ;

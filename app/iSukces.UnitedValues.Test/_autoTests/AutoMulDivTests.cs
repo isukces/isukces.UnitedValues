@@ -120,6 +120,97 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal(expected.Value, result.Value, 12);
             Assert.Equal(expected.Unit.UnitName, result.Unit.UnitName);
         } // end of method
+
+        
+        [Fact]
+        public void T09_should_mul_velocity_by_time() {
+            // velocity(Meter,Second) * time(Second) = length(Meter)
+            var left = new Velocity(12m, LengthUnits.Meter, TimeUnits.Second);
+            var right = new Time(25m, TimeUnits.Second);
+            var expected = new Length(300m, LengthUnits.Meter);
+            var result = left * right;
+            _testOutputHelper.WriteLine("Check if " + left + " * " + right + " = " + expected);
+            Assert.Equal(expected.Value, result.Value, 12);
+            Assert.Equal(expected.Unit.UnitName, result.Unit.UnitName);
+        } // end of method
+
+        // Reverse order multiplication
+        [Fact]
+        public void T10_should_mul_time_by_velocity() {
+            // time(Second) * velocity(Meter,Second) = length(Meter)
+            var left = new Time(25m, TimeUnits.Second);
+            var right = new Velocity(12m, LengthUnits.Meter, TimeUnits.Second);
+            var expected = new Length(300m, LengthUnits.Meter);
+            var result = left * right;
+            _testOutputHelper.WriteLine("Check if " + left + " * " + right + " = " + expected);
+            Assert.Equal(expected.Value, result.Value, 12);
+            Assert.Equal(expected.Unit.UnitName, result.Unit.UnitName);
+        } // end of method
+
+        // Division 1 made from multiplication
+        [Fact]
+        public void T11_should_div_length_by_velocity() {
+            // length(Meter) / velocity(Meter,Second) = time(Second)
+            var left = new Length(300m, LengthUnits.Meter);
+            var right = new Velocity(12m, LengthUnits.Meter, TimeUnits.Second);
+            var expected = new Time(25m, TimeUnits.Second);
+            var result = left / right;
+            _testOutputHelper.WriteLine("Check if " + left + " / " + right + " = " + expected);
+            Assert.Equal(expected.Value, result.Value, 12);
+            Assert.Equal(expected.Unit.UnitName, result.Unit.UnitName);
+        } // end of method
+
+        // Division 2 made from multiplication
+        [Fact]
+        public void T12_should_div_length_by_time() {
+            // length(Meter) / time(Second) = velocity(Meter,Second)
+            var left = new Length(300m, LengthUnits.Meter);
+            var right = new Time(25m, TimeUnits.Second);
+            var expected = new Velocity(12m, LengthUnits.Meter, TimeUnits.Second);
+            var result = left / right;
+            _testOutputHelper.WriteLine("Check if " + left + " / " + right + " = " + expected);
+            Assert.Equal(expected.Value, result.Value, 12);
+            Assert.Equal(expected.Unit.UnitName, result.Unit.UnitName);
+        } // end of method
+
+        
+        [Fact]
+        public void T13_should_mul_velocity_by_time() {
+            // velocity(Meter,Second) * time(Minute) = length(Meter)
+            var left = new Velocity(12m, LengthUnits.Meter, TimeUnits.Second);
+            var right = new Time(2m, TimeUnits.Minute);
+            var expected = new Length(1440m, LengthUnits.Meter);
+            var result = left * right;
+            _testOutputHelper.WriteLine("Check if " + left + " * " + right + " = " + expected);
+            Assert.Equal(expected.Value, result.Value, 12);
+            Assert.Equal(expected.Unit.UnitName, result.Unit.UnitName);
+        } // end of method
+
+        // Reverse order multiplication
+        [Fact]
+        public void T14_should_mul_time_by_velocity() {
+            // time(Minute) * velocity(Meter,Second) = length(Meter)
+            var left = new Time(2m, TimeUnits.Minute);
+            var right = new Velocity(12m, LengthUnits.Meter, TimeUnits.Second);
+            var expected = new Length(1440m, LengthUnits.Meter);
+            var result = left * right;
+            _testOutputHelper.WriteLine("Check if " + left + " * " + right + " = " + expected);
+            Assert.Equal(expected.Value, result.Value, 12);
+            Assert.Equal(expected.Unit.UnitName, result.Unit.UnitName);
+        } // end of method
+
+        
+        [Fact]
+        public void T15_should_div_length_by_velocity() {
+            // length(Meter) / velocity(Meter,Minute) = time(Minute)
+            var left = new Length(300m, LengthUnits.Meter);
+            var right = new Velocity(12m, LengthUnits.Meter, TimeUnits.Minute);
+            var expected = new Time(25m, TimeUnits.Minute);
+            var result = left / right;
+            _testOutputHelper.WriteLine("Check if " + left + " / " + right + " = " + expected);
+            Assert.Equal(expected.Value, result.Value, 12);
+            Assert.Equal(expected.Unit.UnitName, result.Unit.UnitName);
+        } // end of method
     } // end of class
 } // end of namespace
 

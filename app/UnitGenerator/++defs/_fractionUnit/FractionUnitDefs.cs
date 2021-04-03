@@ -28,6 +28,10 @@ namespace UnitGenerator
         public static readonly FractionUnit LinearDensity
             = FractionUnit.Make<LinearDensity, Mass, Length>();
 
+ 
+        public static readonly FractionUnit Velocity
+            = FractionUnit.Make<Velocity, Length, Time>();
+
         public static readonly FractionUnit Density
             = FractionUnit.Make<Density, Mass, Volume>();
 

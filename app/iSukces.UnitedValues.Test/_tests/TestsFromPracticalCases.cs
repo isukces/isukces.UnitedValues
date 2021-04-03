@@ -49,7 +49,10 @@ namespace iSukces.UnitedValues.Test
 
             Assert.Equal(7.6179925741007516126611360992m, v.Value, 10);
             Assert.Equal("m³/h", v.Unit.UnitName);
-            
+
+            //var liquidSpeed = new Velocity(1, LengthUnits.Meter, TimeUnits.Second);
+            var liquidSpeed = Velocity.FromMeterPerSecond(1);
+
         }
     }
 }

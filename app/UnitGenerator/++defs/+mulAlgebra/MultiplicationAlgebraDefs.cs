@@ -31,6 +31,7 @@ namespace UnitGenerator
 
                 {
                     c.WithDiv<MassStream, Density, VolumeStream>(hints);
+                    c.WithDiv<Length, Time, Velocity>(hints);
                 }
                 return c;
             }

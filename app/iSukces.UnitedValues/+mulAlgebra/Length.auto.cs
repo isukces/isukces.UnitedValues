@@ -516,5 +516,115 @@ namespace iSukces.UnitedValues
             return linearForce.Value * length.Value;
         }
 
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="length">a dividend (counter) - a value that is being divided</param>
+        /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Velocity operator /(Length length, Time time)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // .Is<Length, Time, Velocity>("/")
+            var resultUnit = new VelocityUnit(length.Unit, time.Unit);
+            var value = length.Value / time.Value;
+            return new Velocity(value, resultUnit);
+            // scenario F3
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="length">a dividend (counter) - a value that is being divided</param>
+        /// <param name="velocity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Time operator /(Length length, Velocity velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+            // scenario A
+            // velocity unit will be synchronized with length unit
+            var unit = new VelocityUnit(length.Unit, velocity.Unit.DenominatorUnit);
+            var velocityConverted    = velocity.WithCounterUnit(length.Unit);
+            var value = length.Value / velocityConverted.Value;
+            return new Time(value, velocity.Unit.DenominatorUnit);
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="length">a dividend (counter) - a value that is being divided</param>
+        /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Velocity? operator /(Length? length, Time time)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null)
+                return null;
+            return length.Value / time;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="length">a dividend (counter) - a value that is being divided</param>
+        /// <param name="velocity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Time? operator /(Length? length, Velocity velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null)
+                return null;
+            return length.Value / velocity;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="length">a dividend (counter) - a value that is being divided</param>
+        /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Velocity? operator /(Length length, Time? time)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (time is null)
+                return null;
+            return length / time.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="length">a dividend (counter) - a value that is being divided</param>
+        /// <param name="velocity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Time? operator /(Length length, Velocity? velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (velocity is null)
+                return null;
+            return length / velocity.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="length">a dividend (counter) - a value that is being divided</param>
+        /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Velocity? operator /(Length? length, Time? time)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null || time is null)
+                return null;
+            return length.Value / time.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="length">a dividend (counter) - a value that is being divided</param>
+        /// <param name="velocity">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Time? operator /(Length? length, Velocity? velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null || velocity is null)
+                return null;
+            return length.Value / velocity.Value;
+        }
+
     }
 }

@@ -121,5 +121,116 @@ namespace iSukces.UnitedValues
             return power.Value * time.Value;
         }
 
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="time">left factor (multiplicand)</param>
+        /// <param name="velocity">rigth factor (multiplier)</param>
+        public static Length operator *(Time time, Velocity velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+            // scenario B
+            var unit = new VelocityUnit(velocity.Unit.CounterUnit, time.Unit);
+            var velocityConverted    = velocity.WithDenominatorUnit(time.Unit);
+            var value = time.Value * velocityConverted.Value;
+            return new Length(value, velocity.Unit.CounterUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="velocity">left factor (multiplicand)</param>
+        /// <param name="time">rigth factor (multiplier)</param>
+        public static Length operator *(Velocity velocity, Time time)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
+            // Length operator *(Velocity velocity, Time time)
+            // scenario with hint
+            // .Is<Velocity, Time, Length>("*")
+            var velocityUnit = velocity.Unit;
+            var timeConverted = time.ConvertTo(velocityUnit.DenominatorUnit);
+            var value = velocity.Value * timeConverted.Value;
+            return new Length(value, velocityUnit.CounterUnit);
+            // scenario D1
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="time">left factor (multiplicand)</param>
+        /// <param name="velocity">rigth factor (multiplier)</param>
+        public static Length? operator *(Time? time, Velocity velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (time is null)
+                return null;
+            return time.Value * velocity;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="velocity">left factor (multiplicand)</param>
+        /// <param name="time">rigth factor (multiplier)</param>
+        public static Length? operator *(Velocity? velocity, Time time)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (velocity is null)
+                return null;
+            return velocity.Value * time;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="time">left factor (multiplicand)</param>
+        /// <param name="velocity">rigth factor (multiplier)</param>
+        public static Length? operator *(Time time, Velocity? velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (velocity is null)
+                return null;
+            return time * velocity.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="velocity">left factor (multiplicand)</param>
+        /// <param name="time">rigth factor (multiplier)</param>
+        public static Length? operator *(Velocity velocity, Time? time)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (time is null)
+                return null;
+            return velocity * time.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="time">left factor (multiplicand)</param>
+        /// <param name="velocity">rigth factor (multiplier)</param>
+        public static Length? operator *(Time? time, Velocity? velocity)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (time is null || velocity is null)
+                return null;
+            return time.Value * velocity.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="velocity">left factor (multiplicand)</param>
+        /// <param name="time">rigth factor (multiplier)</param>
+        public static Length? operator *(Velocity? velocity, Time? time)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (velocity is null || time is null)
+                return null;
+            return velocity.Value * time.Value;
+        }
+
     }
 }
