@@ -142,7 +142,15 @@ namespace iSukces.UnitedValues
         public static EnergyMassDensity Parse(string value)
         {
             // generator : FractionValuesGenerator.Add_Parse
-            throw new NotImplementedException("Not implemented due to unknown split method name.");
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
+            var r = CommonParse.Parse(value, typeof(EnergyMassDensity));
+            var units = Common.SplitUnitNameBySlash(r.UnitName);
+            if (units.Length != 2)
+                throw new Exception($"{r.UnitName} is not valid EnergyMassDensity unit");
+            var counterUnit = new EnergyUnit(units[0]);
+            var denominatorUnit = new MassUnit(units[1]);
+            return new EnergyMassDensity(r.Value, counterUnit, denominatorUnit);
         }
 
         /// <summary>

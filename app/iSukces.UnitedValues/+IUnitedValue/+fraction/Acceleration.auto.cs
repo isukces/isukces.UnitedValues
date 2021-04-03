@@ -182,7 +182,15 @@ namespace iSukces.UnitedValues
         public static Acceleration Parse(string value)
         {
             // generator : FractionValuesGenerator.Add_Parse
-            throw new NotImplementedException("Not implemented due to unknown split method name.");
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
+            var r = CommonParse.Parse(value, typeof(Acceleration));
+            var units = Common.SplitUnitNameBySlash(r.UnitName);
+            if (units.Length != 2)
+                throw new Exception($"{r.UnitName} is not valid Acceleration unit");
+            var counterUnit = new LengthUnit(units[0]);
+            var denominatorUnit = new SquareTimeUnit(units[1]);
+            return new Acceleration(r.Value, counterUnit, denominatorUnit);
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using System.IO;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
+using iSukces.UnitedValues;
 using JetBrains.Annotations;
 using UnitGenerator.Local;
 
@@ -11,6 +12,7 @@ namespace UnitGenerator
 {
     public abstract class BaseGenerator<TDef>
     {
+        protected static ClrTypesResolver _dupa = new ClrTypesResolver(typeof(Length).Assembly);
         protected BaseGenerator(string output, string nameSpace)
         {
             _output    = output;

@@ -34,7 +34,21 @@ namespace UnitGenerator
         {
             const string splitMethodName = nameof(Common) + "." + nameof(Common.SplitUnitNameBySlash);
             //Add_Parse(splitMethodName);
-            Add_Parse(null);
+
+            bool isBasicUnit(TypesGroup g)
+            {
+                if (!_dupa.TryGetValue(g.Unit.GetTypename(), out var t)) return false;
+                if (t.Implements<ICompositeUnit>())
+                    return false;
+                return true;
+
+            }
+
+            if (isBasicUnit(Cfg.CounterUnit) && isBasicUnit(Cfg.DenominatorUnit))
+
+                Add_Parse(splitMethodName);
+            else
+                Add_Parse(null);
         }
 
 

@@ -1,0 +1,311 @@
+<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs"  encoding="utf-8" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="mscorlib.dll" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Globalization" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+using Newtonsoft.Json;
+using Xunit;
+using Xunit.Abstractions;
+
+<#
+
+    CreateUnit Div = x => x[0] + "/" + x[1];
+    var tests = new[]
+    {
+        new Info("Acceleration", Div, "Length", "SquareTime"),
+        new Info("Density", Div, "Mass", "Volume"),
+        new Info("EnergyMassDensity", Div, "Energy", "Mass"),
+        new Info("LinearDensity", Div, "Mass", "Length"),
+        new Info("LinearForce", Div, "Force", "Length"),
+        
+        new Info("MassStream", Div, "Mass", "Time"),
+        new Info("PlanarDensity", Div, "Mass", "Area"),
+        new Info("Pressure", Div, "Force", "Area")
+    };
+#>
+
+// char test ² ąćęłńóśźż
+
+namespace iSukces.UnitedValues.Test
+{
+    public class SerializationTests
+    {
+        public SerializationTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
+<#
+            const decimal value = 45.87m;
+            var nr = 0;
+            // =============================================
+            foreach (var test in tests)
+            {
+                nr++;
+                foreach (var q in InlineDataIteration.GetIteration(test))
+                    q.WriteInlineData(this);
+                {
+#>
+        [Theory]
+        public void T<#= nr.ToString("00") #>_Should_deserialize_<#= test.ClassName #>(string expected, string jsonToDeserialize, <#=
+                            test.CurrentCombination.GetInlideData(1) #>)
+        {
+<#
+                        var l = new List<string>();
+                        var array = test.CurrentCombination.Items;
+                        for (var index = 0; index < array.Length; index++)
+                        {
+                            var cc = array[index];
+                            var name1 = "the" + cc.Source.Split('.')[0];
+                            var typeName = cc.Source.Split('.')[0];
+                            typeName = typeName.Substring(0, typeName.Length - 1);
+                            var variable = "u" + (index + 1);
+                            WriteLine($"            var {variable} = TestUtils.LoadUnit<{typeName}>({name1});");
+                            l.Add(variable);
+                        }
+#>
+            // serialization
+            var obj = new <#= test.ClassName #>(45.87m, <#= string.Join(", ", l) #>);
+            expected = "\"" + expected + "\"";
+            var json = JsonConvert.SerializeObject(obj);
+            _testOutputHelper.WriteLine("serialized to " + json);
+            Assert.Equal(expected, json);
+            // deserialization
+            jsonToDeserialize = "\"" + jsonToDeserialize + "\""; 
+            _testOutputHelper.WriteLine("Try deserialize " +jsonToDeserialize);
+            var deserialized = JsonConvert.DeserializeObject<<#= test.ClassName #>>(jsonToDeserialize);
+            Assert.Equal(obj.Value, deserialized.Value);
+            Assert.Equal(obj.Unit, deserialized.Unit);
+        }
+
+<#
+                        //================
+                   
+                }
+            }
+#>
+
+        private readonly ITestOutputHelper _testOutputHelper;
+	}
+}
+<#+
+    public delegate string CreateUnit(string[] para);
+
+    public delegate string MapUnitInfo(UnitInfo info);
+
+    private class Info
+    {
+        public Info(string className, CreateUnit unitFactory, params string[] constructor)
+        {
+            ClassName = className;
+            UnitFactory = unitFactory;
+            Constructor = constructor;
+        }
+
+        private static UnitInfo[] GetPossible(string unit)
+        {
+            UnitInfo[] Make(string fields)
+            {
+                return fields.Split(',').Select(x =>
+                {
+                    var parts = x.Split('|');
+                    var fieldName = unit + "Units." + parts[0].Trim();
+                    return new UnitInfo(fieldName, parts[1]);
+                }).ToArray();
+            }
+
+            switch (unit)
+            {
+                case "Length":
+                    return Make("Meter | m, Yard | yd");
+                case "Area":
+                    return Make("SquareMeter | m², SquareInch | inch²");
+                case "Volume":
+                    return Make("CubicMeter | m³, CubicYard | yd³");
+                case "SquareTime":
+                    return Make("SquareSecond | s² , SquareHour | h²");
+                case "Mass":
+                    return Make("Kg | kg , Ounce | oz");
+                case "Energy":
+                    return Make("Joule | J");
+                case "Force":
+                    return Make("Newton | N");
+                case "Time":
+                    return Make("Second | s, Minute | min, Hour| h");
+                default:
+                    return Make("Unknown | xxx");
+            }
+        }
+
+        public IEnumerable<string> GetJsonsToDeserialize(decimal value)
+        {
+            var s = value.ToString(CultureInfo.InvariantCulture);
+            foreach (var i in GetUnitsWithSpaces())
+            {
+                yield return string.Format("{0}{1}", s, i);
+                yield return string.Format(" {0}   {1}     ", s, i);
+                yield return string.Format(" {0}00   {1}     ", s, i);
+            }
+        }
+
+        public List<UnitInfoCollection> GetUnitCombinations()
+        {
+            var r = new List<UnitInfoCollection>();
+            var q = new UnitInfo[Constructor.Length];
+
+            void Fill(int index)
+            {
+                if (index >= q.Length)
+                {
+                    r.Add(new UnitInfoCollection(q));
+                    return;
+                }
+                var thisLevel = GetPossible(Constructor[index]);
+                foreach (var i in thisLevel)
+                {
+                    q[index] = i;
+                    Fill(index + 1);
+                }
+            }
+
+            Fill(0);
+            return r;
+        }
+
+        public IEnumerable<string> GetUnitsWithSpaces()
+        {
+            return CurrentCombination.GetUnitsWithSpaces(UnitFactory);
+        }
+
+        public string ClassName { get; }
+        public CreateUnit UnitFactory { get; }
+        public string[] Constructor { get; }
+
+        public UnitInfoCollection CurrentCombination { get; set; }
+    }
+
+    public class UnitInfo
+    {
+        public UnitInfo(string source, string code)
+        {
+            Source = source.Trim();
+            Code = code.Trim();
+        }
+
+        public override string ToString()
+        {
+            return Source + " " + Code;
+        }
+
+        public string Source { get; }
+        public string Code { get; }
+    }
+
+    private class UnitInfoCollection
+    {
+        public UnitInfoCollection(UnitInfo[] items)
+        {
+            Items = items.ToArray();
+        }
+
+        public string GetInlideData(int version)
+        {
+            switch (version)
+            {
+                case 0:
+                    return Make(a => Quote + a.Source + Quote);
+                case 1:
+                    return Make(a => "string the" + a.Source.Split('.')[0]);
+                default:
+                    return null;
+            }
+        }
+
+        public IEnumerable<string> GetUnitsWithSpaces(CreateUnit unitFactory)
+        {
+            var info = unitFactory(Items.Select(a => a.Code).ToArray());
+            yield return info;
+            var parts = info.Split('/');
+            if (parts.Length > 1)
+            {
+                yield return string.Join("/ ", parts);
+            }
+        }
+
+        public override string ToString()
+        {
+            return Make(a => a.Code);
+        }
+
+        private string Make(MapUnitInfo map)
+        {
+            if (map == null) throw new ArgumentNullException(nameof(map));
+            return string.Join(", ", Items.Select(q => map(q)));
+        }
+
+        public UnitInfo[] Items { get; }
+
+        private const string Quote = "\"";
+    }
+
+    private class InlineDataIteration
+    {
+        public static IEnumerable<InlineDataIteration> GetIteration(Info test)
+        {
+            foreach (var i in test.GetUnitCombinations())
+            {
+                test.CurrentCombination = i;
+                var jsonsToDeserialize = test.GetJsonsToDeserialize(value).ToArray();
+                foreach (var json in jsonsToDeserialize)
+                {
+                    yield return new InlineDataIteration
+                    {
+                        ExpectedJson = jsonsToDeserialize[0],
+                        JsonToDeserialize = json,
+                        CurrentCombination = i
+                    };
+                }
+
+                /*foreach (var j in i.GetInlideData(0))
+                {
+                    yield return new InlineDataIteration
+                    {
+
+                    };
+                }*/
+            }
+        }
+
+        private static string CsEncode(string x)
+        {
+            return "\"" + x + "\"";
+        }
+
+        public UnitInfoCollection CurrentCombination { get; set; }
+
+
+        public string JsonToDeserialize { get; set; }
+
+        public string ExpectedJson { get; set; }
+
+        public string InlineData
+        {
+            get
+            {
+                var l = new List<string> {CsEncode(ExpectedJson), CsEncode(JsonToDeserialize)};
+                l.Add(CurrentCombination.GetInlideData(0));
+                return string.Join(", ", l);
+            }
+        }
+
+        private const decimal value = 45.87m;
+
+        public void WriteInlineData(TextTransformation target)
+        {
+            target.WriteLine("        [InlineData(" + InlineData + ")]");
+        }
+    }
+#>

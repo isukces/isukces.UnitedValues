@@ -25,7 +25,11 @@ namespace iSukces.UnitedValues
         decimal Multiplication { get; }
     }
 
-    public interface IFractionalUnit : IUnit
+    public interface ICompositeUnit: IUnit
+    {
+        
+    }
+    public interface IFractionalUnit : ICompositeUnit
     {
     }
 
@@ -42,7 +46,7 @@ namespace iSukces.UnitedValues
         TDenominator DenominatorUnit { get; }
     }
 
-    public interface IProductUnit : IUnit
+    public interface IProductUnit : ICompositeUnit
     {
     }
 

@@ -142,7 +142,15 @@ namespace iSukces.UnitedValues
         public static Density Parse(string value)
         {
             // generator : FractionValuesGenerator.Add_Parse
-            throw new NotImplementedException("Not implemented due to unknown split method name.");
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(value));
+            var r = CommonParse.Parse(value, typeof(Density));
+            var units = Common.SplitUnitNameBySlash(r.UnitName);
+            if (units.Length != 2)
+                throw new Exception($"{r.UnitName} is not valid Density unit");
+            var counterUnit = new MassUnit(units[0]);
+            var denominatorUnit = new VolumeUnit(units[1]);
+            return new Density(r.Value, counterUnit, denominatorUnit);
         }
 
         /// <summary>

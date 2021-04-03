@@ -23,6 +23,7 @@
       </Compile>
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="+attributes" />
       <Folder Include="+inversed" />
     </ItemGroup>
     <ItemGroup>

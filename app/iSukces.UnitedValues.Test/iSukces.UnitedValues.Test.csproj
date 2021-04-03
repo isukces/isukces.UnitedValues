@@ -33,10 +33,19 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AutoTests.cs</LastGenOutput>
     </None>
+    <None Update="_autoTests\SerializationAutoTests.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SerializationAutoTests.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="_autoTests\AutoTests.cs">
       <DependentUpon>AutoTests.tt</DependentUpon>
+    </Compile>
+    <Compile Update="_autoTests\SerializationAutoTests.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SerializationAutoTests.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
