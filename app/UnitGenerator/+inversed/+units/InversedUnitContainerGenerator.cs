@@ -47,7 +47,7 @@ namespace UnitGenerator
                 var f1Type       = unitTypeName;
 
                 var v = Cfg.Source.Container.GetTypename() + "." + i.FieldName + Cfg.Source.Unit.GetTypename();
-                v = new Args(v).Create(f1Type);
+                v = new CsArguments(v).Create(f1Type);
                 Target.AddField(f1Name, f1Type)
                     .WithStatic()
                     .WithIsReadOnly()
@@ -55,10 +55,10 @@ namespace UnitGenerator
                     .WithConstValue(v)
                     .Description = $"unit 1/{i.UnitShortCode.EffectiveValue}";
 
-                var unitDefinitionType = new Args(unitTypeName)
+                var unitDefinitionType = new CsArguments(unitTypeName)
                     .MakeGenericType("UnitDefinition");
 
-                var value = new Args(f1Name, Inverse(i.ScaleFactor)).Create(unitDefinitionType);
+                var value = new CsArguments(f1Name, Inverse(i.ScaleFactor)).Create(unitDefinitionType);
                 Target.AddField(i.FieldName, unitDefinitionType)
                     .WithIsReadOnly()
                     .WithStatic()
@@ -70,7 +70,7 @@ namespace UnitGenerator
         private void Add_StaticConstructor()
         {
             var cw    = Ext.Create(GetType());
-            var array = new Args(_relatedUnit.Units.Select(q => q.FieldName).ToArray());
+            var array = new CsArguments(_relatedUnit.Units.Select(q => q.FieldName).ToArray());
             array.CreateArray(cw, "All = ");
             var c = Target.AddConstructor().WithStatic().WithBody(cw);
 

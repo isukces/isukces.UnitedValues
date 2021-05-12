@@ -12,7 +12,7 @@ namespace UnitGenerator
 
         protected override IEnumerable<string> GetImplementedInterfaces()
         {
-            var name = new Args(Cfg.CounterUnit.Unit.GetTypename(), Cfg.DenominatorUnit.Unit.GetTypename())
+            var name = new CsArguments(Cfg.CounterUnit.Unit.GetTypename(), Cfg.DenominatorUnit.Unit.GetTypename())
                 .MakeGenericType(nameof(IProductUnit));
             return new[] {name};
         }

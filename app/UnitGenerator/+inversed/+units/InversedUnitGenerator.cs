@@ -49,7 +49,7 @@ namespace UnitGenerator
             var resultType = Target.GetTypeName<DecomposableUnitItem>();
             var cs         = Ext.Create(GetType());
             cs.WriteAssign("tmp", "Get" + basicUnit.TypeName + "()", true);
-            var args = new Args("tmp", "-1").Create(resultType);
+            var args = new CsArguments("tmp", "-1").Create(resultType);
             cs.WriteReturn(args);
 
             var m = Target.AddMethod(nameof(IDerivedDecomposableUnit.GetBasicUnit), resultType);

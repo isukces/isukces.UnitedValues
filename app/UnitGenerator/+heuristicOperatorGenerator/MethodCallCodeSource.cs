@@ -48,7 +48,7 @@ namespace UnitGenerator
             get
             {
                 if (string.IsNullOrEmpty(_override))
-                    return new Args(ConstructorArgs.Select(a => a.Code)).CallMethod(CallMethod);
+                    return new CsArguments(ConstructorArgs.Select(a => a.Code)).CallMethod(CallMethod);
                 return _override;
             }
         }

@@ -22,20 +22,20 @@ namespace UnitGenerator
                 return $"units[{(columnIndex++).CsEncode()}]";
             }
 
-            Args GetConstructorArguments(TypesGroup tg, ref int columnIndex)
+            CsArguments GetConstructorArguments(TypesGroup tg, ref int columnIndex)
             {
                 var aa        = ProductUnitDefs.All;
                 var a4        = aa.ByValueTypeName(tg.Value);
                 var arguments = ArrayItemCode(ref columnIndex);
-                if (a4 is null) return new Args(arguments);
+                if (a4 is null) return new CsArguments(arguments);
 
-                return new Args(
-                    new Args(arguments).Create(a4.CounterUnit.Unit.TypeName),
-                    new Args(ArrayItemCode(ref columnIndex)).Create(a4.DenominatorUnit.Unit.TypeName)
+                return new CsArguments(
+                    new CsArguments(arguments).Create(a4.CounterUnit.Unit.TypeName),
+                    new CsArguments(ArrayItemCode(ref columnIndex)).Create(a4.DenominatorUnit.Unit.TypeName)
                 );
             }
 
-            Args licznik, mianownik;
+            CsArguments licznik, mianownik;
             {
                 var columnIndex = 0;
                 if (Cfg is FractionUnit fu)
@@ -45,8 +45,8 @@ namespace UnitGenerator
                 }
                 else
                 {
-                    licznik   = new Args(ArrayItemCode(ref columnIndex));
-                    mianownik = new Args(ArrayItemCode(ref columnIndex));
+                    licznik   = new CsArguments(ArrayItemCode(ref columnIndex));
+                    mianownik = new CsArguments(ArrayItemCode(ref columnIndex));
                 }
             }
 
@@ -65,7 +65,7 @@ namespace UnitGenerator
                 cw.SingleLineIf("units.Length != " + sum.CsEncode(),
                     "throw new Exception($\"{r.UnitName} is not valid " + Target.Name + " unit\");");
 
-                cw.WriteAssign("counterUnit", new Args("units[0]").Create(GenInfo.First.Unit), true);
+                cw.WriteAssign("counterUnit", new CsArguments("units[0]").Create(GenInfo.First.Unit), true);
                 //cw.WriteLine("var counterUnit = new " + GenInfo.First.Unit + "(units[0]);");
                 cw.WriteAssign("denominatorUnit", mianownik.Create(GenInfo.Second.Unit), true);
                 // cw.WriteLine("var denominatorUnit = new " + GenInfo.Second.Unit + "(units[1]);");
@@ -107,7 +107,7 @@ namespace UnitGenerator
             var f    = GenInfo.FirstPropertyName.FirstLower();
             var s    = GenInfo.SecondPropertyName.FirstLower();
             var cw   = new CsCodeWriter();
-            var code = new Args(f, s).Create(GenInfo.Result.Unit);
+            var code = new CsArguments(f, s).Create(GenInfo.Result.Unit);
             cw.WriteLine("{0} = {1};", ValuePropName, ValuePropName.FirstLower());
             cw.WriteLine("{0} = {1};", UnitPropName, code);
 

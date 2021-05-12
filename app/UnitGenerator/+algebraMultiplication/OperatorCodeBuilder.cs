@@ -42,7 +42,7 @@ namespace UnitGenerator
                     value += " * " + _input.ResultMultiplication;
                 cw.WriteAssign("value", value, true);
 
-                var code = new Args("value", ResultUnit).Create(OperatorParameters.Result.Value.ValueTypeName);
+                var code = new CsArguments("value", ResultUnit).Create(OperatorParameters.Result.Value.ValueTypeName);
                 cw.WriteReturn(code);
             } else
                 cw.WriteReturn(_input.UseReturnExpression);

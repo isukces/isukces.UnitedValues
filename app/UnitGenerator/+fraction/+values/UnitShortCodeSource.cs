@@ -23,12 +23,12 @@ namespace UnitGenerator
             };
         }
 
-        public Args GetCreationArgs(RelatedUnitsFamily related)
+        public CsArguments GetCreationArgs(RelatedUnitsFamily related)
         {
             var constructorArgument = TryGetConstructorArgumentFromPowerOneUnit(related);
             if (constructorArgument is null)
                 constructorArgument = EffectiveValue.CsEncode();
-            return new Args(constructorArgument);
+            return new CsArguments(constructorArgument);
         }
 
         public override string ToString()

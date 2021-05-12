@@ -24,7 +24,7 @@ namespace UnitGenerator
             foreach (var i in GetImplementedInterfaces())
                 Target.ImplementedInterfaces.Add(i);
 
-            var name = new Args(Cfg.UnitTypes.Unit.TypeName).MakeGenericType("IEquatable");
+            var name = new CsArguments(Cfg.UnitTypes.Unit.TypeName).MakeGenericType("IEquatable");
             Target.ImplementedInterfaces.Add(name);
 
             var pi = new[]
@@ -61,7 +61,7 @@ namespace UnitGenerator
             var items = _info2?.Items;
             if (items is null || items.Length == 0)
                 return;
-            var type = new Args(Target.GetTypeName<DecomposableUnitItem>())
+            var type = new CsArguments(Target.GetTypeName<DecomposableUnitItem>())
                 .MakeGenericType(Target.GetTypeName<IReadOnlyList<int>>(), true);
 
             var cs = Ext.Create(GetType());
@@ -73,7 +73,7 @@ namespace UnitGenerator
                     var initCodes = codeItems.Select(a => a.Init).Where(a => !string.IsNullOrWhiteSpace(a));
                     foreach (var i in initCodes) 
                         cs.WriteLine(i);
-                    cs.WriteLine(new Args(codeItems.Select(a=>a.Expression).ToArray()).ReturnArray().Code);
+                    cs.WriteLine(new CsArguments(codeItems.Select(a=>a.Expression).ToArray()).ReturnArray().Code);
                     cs.WriteLine("/*");
                 }
 
@@ -116,7 +116,7 @@ namespace UnitGenerator
         private void Add_WithFirst()
         {
             var cw = Ext.Create(GetType());
-            var e  = new Args(_info.FirstPropertyName, "newUnit").Create(Target.Name);
+            var e  = new CsArguments(_info.FirstPropertyName, "newUnit").Create(Target.Name);
             cw.WriteLine($"return {e};");
             Target.AddMethod("With" + _info.SecondPropertyName, Cfg.UnitTypes.Unit.TypeName)
                 .WithBody(cw)
@@ -126,7 +126,7 @@ namespace UnitGenerator
         private void Add_WithSecond()
         {
             var cw = Ext.Create(GetType());
-            var e  = new Args("newUnit", _info.SecondPropertyName).Create(Target.Name);
+            var e  = new CsArguments("newUnit", _info.SecondPropertyName).Create(Target.Name);
             cw.WriteLine($"return {e};");
             Target.AddMethod($"With{_info.FirstPropertyName}", Cfg.UnitTypes.Unit.TypeName)
                 .WithBody(cw)

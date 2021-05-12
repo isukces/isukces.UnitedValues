@@ -19,7 +19,7 @@ namespace UnitGenerator
         {
             var cw = Ext.Create<MultiplyAlgebraGenerator>();
             cw.WriteLine("// scenario E");
-            var args = new Args(
+            var args = new CsArguments(
                 $"{p.LeftMethodArgumentName}.Value {p.Oper} {p.RightMethodArgumentName}.Value",
                 $"{p.LeftMethodArgumentName}.Unit",
                 $"{p.RightMethodArgumentName}.Unit"

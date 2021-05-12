@@ -24,14 +24,14 @@ namespace UnitGenerator
         public void AddVariable<T>(string name, params string[] a)
         {
             a = a.Select(Replace).ToArray();
-            var code = new Args(a).Create<T>();
+            var code = new CsArguments(a).Create<T>();
             AddVariable(name, code);
         }
 
 
         public void ConvertRight<T>(params string[] a)
         {
-            var type = new Args(a).Create<T>();
+            var type = new CsArguments(a).Create<T>();
             ConvertRight(type);
         }
 
@@ -77,7 +77,7 @@ namespace UnitGenerator
         public void WithResultUnit<T>(params string[] a)
         {
             a          = a.Select(Replace).ToArray();
-            ResultUnit = new Args(a).Create<T>();
+            ResultUnit = new CsArguments(a).Create<T>();
         }
 
         public string ResultUnit { get; set; }

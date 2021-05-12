@@ -22,7 +22,7 @@ namespace UnitGenerator
                 if (inputType == OtherValuePropertyType)
                     arg = $"({ValuePropertyType}){arg}";
 
-                var args = new Args(arg, types.Container + "." + u.FieldName)
+                var args = new CsArguments(arg, types.Container + "." + u.FieldName)
                     .Create(target.Name);
                 var valueIn           = $" value in {u.UnitShortCode.EffectiveValue}";
                 var methodName        = "From" + u.FromMethodNameSufix.CoalesceNullOrWhiteSpace(u.FieldName);
@@ -92,11 +92,11 @@ namespace UnitGenerator
 
         private void Add_Algebra_MulDiv()
         {
-            Target.AddOperator("*", new Args("value.Value * number", "value.Unit"))
+            Target.AddOperator("*", new CsArguments("value.Value * number", "value.Unit"))
                 .WithLeftRightArguments(Target.Name, ValuePropertyType, "value", "number");
-            Target.AddOperator("*", new Args("value.Value * number", "value.Unit"))
+            Target.AddOperator("*", new CsArguments("value.Value * number", "value.Unit"))
                 .WithLeftRightArguments(ValuePropertyType, Target.Name, "number", "value");
-            Target.AddOperator("/", new Args("value.Value / number", "value.Unit"))
+            Target.AddOperator("/", new CsArguments("value.Value / number", "value.Unit"))
                 .WithLeftRightArguments(Target.Name, ValuePropertyType, "value", "number");
 
             {
@@ -141,7 +141,7 @@ namespace UnitGenerator
                             throw new NotSupportedException();
                     }
 
-                    result = new Args(result + ".Value", unitSource + ".Unit").Create(resultType.ValueTypeName);
+                    result = new CsArguments(result + ".Value", unitSource + ".Unit").Create(resultType.ValueTypeName);
                     return result;
                 }
 
@@ -158,7 +158,7 @@ namespace UnitGenerator
                 cw.SingleLineIf(condition, ReturnValue(result1));
 
                 cw.WriteLine($"{right} = {right}.ConvertTo({left}.Unit);");
-                var returnExpression = new Args($"{left}.Value {op} {right}.Value", $"{left}.Unit")
+                var returnExpression = new CsArguments($"{left}.Value {op} {right}.Value", $"{left}.Unit")
                     .Create(resultType.ValueTypeName);
                 cw.WriteLine(ReturnValue(returnExpression));
                 Target.AddMethod(op, resultType.ValueTypeName)
@@ -241,7 +241,7 @@ namespace UnitGenerator
             var invTypes             = q.Target;
             var resultUnit = invTypes.Container.GetTypename() + ".Get" + invTypes.Unit.GetTypename()
                              + "(value.Unit)";
-            Target.AddOperator("/", new Args("number / value.Value", resultUnit), invTypes.Value.GetTypename())
+            Target.AddOperator("/", new CsArguments("number / value.Value", resultUnit), invTypes.Value.GetTypename())
                 .WithLeftRightArguments(ValuePropertyType, Target.Name, "number", "value");
         }
 

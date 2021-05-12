@@ -63,7 +63,7 @@ namespace UnitGenerator
             {
                 if (Kind != Kind2.Method)
                     return null;
-                var args = Args.Make(Arguments, a => a.Code);
+                var args = CsArguments.Make(Arguments, a => a.Code);
                 // return args.CallMethod(Path.Code);
 
                 if (Path.Parts.Length == 1)
@@ -97,7 +97,7 @@ namespace UnitGenerator
                     return _override;
                 if (Kind == Kind2.Method)
                 {
-                    var args = Args.Make(Arguments, a => a.Code);
+                    var args = CsArguments.Make(Arguments, a => a.Code);
                     return args.CallMethod(Path.Code);
                 }
 

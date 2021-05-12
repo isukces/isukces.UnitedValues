@@ -7,19 +7,19 @@ using UnitGenerator.Local;
 
 namespace UnitGenerator
 {
-    public class Args
+    public class CsArguments
     {
-        public Args(params string[] arguments)
+        public CsArguments(params string[] arguments)
         {
             Arguments = arguments;
         }
         
-        public static Args Make<T>(IEnumerable<T> arguments, Func<T,string> map)
+        public static CsArguments Make<T>(IEnumerable<T> arguments, Func<T,string> map)
         {
-            return new Args(arguments.Select(map).ToArray());
+            return new CsArguments(arguments.Select(map).ToArray());
         }
 
-        public Args(IEnumerable<string> args)
+        public CsArguments(IEnumerable<string> args)
         {
             Arguments = args.ToArray();
         }
@@ -74,7 +74,7 @@ namespace UnitGenerator
         public string MakeGenericTypeMethodCall(string methodName, params string [] args)
         {
             var call1 = MakeGenericType(methodName);
-            var a     = new Args(args);
+            var a     = new CsArguments(args);
             return a.CallMethod(call1);
         }
 

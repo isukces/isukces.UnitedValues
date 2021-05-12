@@ -25,7 +25,7 @@ namespace UnitGenerator
             {
                 var tt         = Cfg.UnitTypes;
                 var valueTypeName = tt.Value.ValueTypeName;
-                Target.BaseClass = new Args(valueTypeName, tt.Unit.TypeName).MakeGenericType("AbstractUnitJsonConverter");
+                Target.BaseClass = new CsArguments(valueTypeName, tt.Unit.TypeName).MakeGenericType("AbstractUnitJsonConverter");
                 {
                     var cw = new CsCodeWriter();
                     cw.WriteLine("unit = unit?.Trim();");

@@ -88,7 +88,7 @@ namespace UnitGenerator.Local
             var cs     = new CsCodeWriter();
             if (def.WrappedType == WrappedTypes.String)
             {
-                var args      = new Args($"nameof({argName})");
+                var args      = new CsArguments($"nameof({argName})");
                 var exception = args.Create(csStruct.GetTypeName<NullReferenceException>());
                 cs.SingleLineIf($"{argName} is null", $"throw {exception};");
 

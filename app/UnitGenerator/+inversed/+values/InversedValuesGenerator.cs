@@ -17,7 +17,7 @@ namespace UnitGenerator
             Target.Kind = CsNamespaceMemberKind.Struct;
             AddCommonValues_PropertiesAndConstructor(UnitTypeName);
             Add_GetBaseUnitValue();
-            Target.ImplementedInterfaces.Add(new Args(UnitTypeName).MakeGenericType("IUnitedValue"));
+            Target.ImplementedInterfaces.Add(new CsArguments(UnitTypeName).MakeGenericType("IUnitedValue"));
             Add_Properties();
             Add_Algebra_MinusUnary();
             Add_NumberDiv();
@@ -45,7 +45,7 @@ namespace UnitGenerator
             var invTypes             = Cfg.InversionBaseUnit.UnitTypes;
             var unitConversionMethod = "Get" + invTypes.Unit.TypeName;
             var resultUnit           = $"value.Unit.{unitConversionMethod}()";
-            Target.AddOperator("/", new Args("number / value.Value", resultUnit), invTypes.Value.GetTypename())
+            Target.AddOperator("/", new CsArguments("number / value.Value", resultUnit), invTypes.Value.GetTypename())
                 .WithLeftRightArguments(ValuePropertyType, Target.Name, "number", "value");
         }
 

@@ -75,7 +75,7 @@ namespace UnitGenerator
                 if (Cfg == targetUnit.Unit)
                     continue;
                 var cw = Ext.Create<BasicUnitGenerator>();
-                var code = new Args(Target.Name, targetUnit.Unit.GetTypename())
+                var code = new CsArguments(Target.Name, targetUnit.Unit.GetTypename())
                     .MakeGenericTypeMethodCall("GlobalUnitRegistry.Relations.GetOrThrow", "this");
                 cw.WriteReturn(code);
                 var m = Target.AddMethod("Get" + targetUnit.Unit.TypeName, targetUnit.Unit.GetTypename()).WithBody(cw);
@@ -92,7 +92,7 @@ namespace UnitGenerator
             var basicUnit = BaseUnit;
 
             {
-                var type = new Args(Target.GetTypeName<DecomposableUnitItem>())
+                var type = new CsArguments(Target.GetTypeName<DecomposableUnitItem>())
                     .MakeGenericType(Target.GetTypeName<IReadOnlyList<int>>(), true);
 
                 var cs = Ext.Create(GetType());
@@ -118,7 +118,7 @@ namespace UnitGenerator
                 var resultType = Target.GetTypeName<DecomposableUnitItem>();
                 var cs         = Ext.Create(GetType());
                 cs.WriteAssign("tmp", "Get" + basicUnit.Name + "Unit()", true);
-                var args = new Args("tmp", Related.MyInfo.Power.CsEncode()).Create(resultType);
+                var args = new CsArguments("tmp", Related.MyInfo.Power.CsEncode()).Create(resultType);
                 cs.WriteReturn(args);
 
                 var m = Target.AddMethod(nameof(IDerivedDecomposableUnit.GetBasicUnit), resultType);

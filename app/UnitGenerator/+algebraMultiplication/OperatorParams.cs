@@ -27,7 +27,7 @@ namespace UnitGenerator
         {
             var l          = Left.Value + " " + LeftMethodArgumentName;
             var r          = Right.Value + " " + RightMethodArgumentName;
-            var args       = new Args(l, r);
+            var args       = new CsArguments(l, r);
             var methodName = $"{Result.Value} operator {Oper}";
             return args.CallMethod(methodName);
         }
@@ -37,8 +37,8 @@ namespace UnitGenerator
             get
             {
                 // .Is<LinearDensity, Length, PlanarDensity>("/")
-                var a = new Args(Left.Value.ValueTypeName, Right.Value.ValueTypeName, Result.Value.ValueTypeName).MakeGenericType(".Is");
-                var b = new Args(Oper.CsEncode()).CallMethod(a);
+                var a = new CsArguments(Left.Value.ValueTypeName, Right.Value.ValueTypeName, Result.Value.ValueTypeName).MakeGenericType(".Is");
+                var b = new CsArguments(Oper.CsEncode()).CallMethod(a);
                 return b;
             }
         }

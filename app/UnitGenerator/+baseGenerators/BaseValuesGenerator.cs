@@ -15,7 +15,7 @@ namespace UnitGenerator
 
         protected void Add_Algebra_MinusUnary()
         {
-            Target.AddOperator("-", new Args("-value.Value", "value.Unit"))
+            Target.AddOperator("-", new CsArguments("-value.Value", "value.Unit"))
                 .AddParam("value", Target.Name);
         }
 

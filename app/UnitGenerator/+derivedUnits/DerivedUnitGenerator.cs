@@ -37,7 +37,7 @@ namespace UnitGenerator
             cw.Close();
 
             var resultTypeName = Cfg.Name.ToUnitTypeName().GetTypename();
-            cw.WriteReturn(new Args("unitName").Create(resultTypeName));
+            cw.WriteReturn(new CsArguments("unitName").Create(resultTypeName));
             var m = Target.AddMethod("TryRecoverUnitFromName", resultTypeName)
                 .WithStatic()
                 .WithBody(cw);
@@ -63,7 +63,7 @@ namespace UnitGenerator
         private void Add_AllProperty()
         {
             var cw    = new CsCodeWriter();
-            var array = new Args(Cfg.Units.Select(q => q.FieldName).ToArray());
+            var array = new CsArguments(Cfg.Units.Select(q => q.FieldName).ToArray());
             array.CreateArray(cw, "return ");
             Target.AddProperty("All", "IReadOnlyList<UnitDefinition<" + Cfg.Name + "Unit>>")
                 .WithIsPropertyReadOnly()
@@ -100,12 +100,12 @@ namespace UnitGenerator
                     if (i.Aliases != null)
                         args = i.Aliases.Plus(args);
 
-                    var unitDefinitionType = new Args(unitTypeName)
+                    var unitDefinitionType = new CsArguments(unitTypeName)
                         .MakeGenericType("UnitDefinition");
 
                     // public static readonly UnitDefinition<LengthUnit> Km
                     // = new UnitDefinition<LengthUnit>("km", 1000m);
-                    var value = new Args(args).Create(unitDefinitionType);
+                    var value = new CsArguments(args).Create(unitDefinitionType);
                     Target.AddField(i.FieldName, unitDefinitionType)
                         .WithIsReadOnly()
                         .WithStatic()

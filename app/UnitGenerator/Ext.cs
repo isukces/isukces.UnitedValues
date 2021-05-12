@@ -12,10 +12,10 @@ namespace UnitGenerator
 {
     public static class Ext
     {
-        public static CsMethod AddOperator(this CsClass cl, string operatorName, Args arg, string resultType = null)
+        public static CsMethod AddOperator(this CsClass cl, string operatorName, CsArguments csArgument, string resultType = null)
         {
             resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name);
-            var code = arg.Create(resultType);
+            var code = csArgument.Create(resultType);
             return cl.AddMethod(operatorName, resultType, "implements " + operatorName + " operator")
                 .WithBodyFromExpression(code);
         }
@@ -48,7 +48,7 @@ namespace UnitGenerator
             var argNameToRead = argName + "?";
             if ((flags & ArgChecking.NotNull) != 0)
             {
-                var throwCode = new Args($"nameof({argName})")
+                var throwCode = new CsArguments($"nameof({argName})")
                     .Throw<NullReferenceException>(resolver);
                 code.SingleLineIf($"{argName} is null", throwCode);
                 canBeNull     = false;
@@ -71,7 +71,7 @@ namespace UnitGenerator
             {
                 flags &= ~ArgChecking.NotNull;
                 //p.Attributes.Add(CsAttribute.Make<NotNullAttribute>(target));
-                var throwCode = new Args($"nameof({argName})")
+                var throwCode = new CsArguments($"nameof({argName})")
                     .Throw<NullReferenceException>(resolver);
                 code.SingleLineIf($"{argName} is null", throwCode);
             }
@@ -80,7 +80,7 @@ namespace UnitGenerator
             {
                 flags &= ~(ArgChecking.NotEmpty | ArgChecking.NotWhitespace);
                 // var m = nameof(string.IsNullOrWhiteSpace);
-                var throwCode = new Args($"nameof({argName})")
+                var throwCode = new CsArguments($"nameof({argName})")
                     .Throw<ArgumentException>(resolver);
                 code.SingleLineIf($"string.IsNullOrWhiteSpace({argName})", throwCode);
 
@@ -90,7 +90,7 @@ namespace UnitGenerator
             if ((flags & ArgChecking.NotEmpty) != 0)
             {
                 flags &= ~ArgChecking.NotEmpty;
-                var throwCode = new Args($"nameof({argName})")
+                var throwCode = new CsArguments($"nameof({argName})")
                     .Throw<ArgumentException>(resolver);
                 var condition =
                     canBeNull
@@ -197,7 +197,7 @@ namespace UnitGenerator
 
         public static void Throw<T>(this CsCodeWriter cs, params string[] arguments)
         {
-            var exception = new Args(arguments).Create<T>();
+            var exception = new CsArguments(arguments).Create<T>();
             var code      = $"throw {exception};";
             cs.WriteLine(code);
         }
