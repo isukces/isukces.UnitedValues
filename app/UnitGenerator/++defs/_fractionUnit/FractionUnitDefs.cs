@@ -68,5 +68,9 @@ namespace UnitGenerator
     */
         public static readonly FractionUnit SpecificHeatCapacity
             = FractionUnit.Make<SpecificHeatCapacity, EnergyMassDensity, KelvinTemperature>();
+        
+        public static readonly FractionUnit PressureDrop
+            = FractionUnit.Make<PressureDrop, Pressure, Length>();
     }
+
 }
