@@ -1,4 +1,8 @@
+using System;
+using iSukces.Code;
+using iSukces.Code.AutoCode;
 using iSukces.Code.CodeWrite;
+using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
 using Self = UnitGenerator.FractionValuesGenerator;
 
@@ -8,6 +12,21 @@ namespace UnitGenerator
     {
         public FractionValuesGenerator(string output, string nameSpace) : base(output, nameSpace)
         {
+        }
+
+        protected override void Add_GetBaseUnitValue()
+        {
+            var cs = Ext.Create<BasicUnitValuesGenerator>();
+            cs.WriteLine("var factor1 = GlobalUnitRegistry.Factors.Get(Unit.CounterUnit);");
+            cs.WriteLine("var factor2 = GlobalUnitRegistry.Factors.Get(Unit.DenominatorUnit);");
+            cs.SingleLineIf("(factor1.HasValue && factor2.HasValue)", ReturnValue("Value * factor1.Value / factor2.Value"));
+            var exceptionMessage = new CsExpression("Unable to find multiplication for unit ".CsEncode())
+                                   + new CsExpression("Unit");
+
+            cs.Throw<Exception>(exceptionMessage.ToString());
+            Target.AddMethod("GetBaseUnitValue", ValuePropertyType)
+                .WithBody(cs);
+
         }
 
 

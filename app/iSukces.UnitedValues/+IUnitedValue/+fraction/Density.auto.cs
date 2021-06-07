@@ -60,8 +60,12 @@ namespace iSukces.UnitedValues
 
         public decimal GetBaseUnitValue()
         {
-            // generator : FractionValuesGenerator.Add_GetBaseUnitValue
-            throw new System.NotImplementedException();
+            // generator : BasicUnitValuesGenerator.Add_GetBaseUnitValue
+            var factor1 = GlobalUnitRegistry.Factors.Get(Unit.CounterUnit);
+            var factor2 = GlobalUnitRegistry.Factors.Get(Unit.DenominatorUnit);
+            if ((factor1.HasValue && factor2.HasValue))
+                return Value * factor1.Value / factor2.Value;
+            throw new Exception("Unable to find multiplication for unit " + Unit);
         }
 
         public override int GetHashCode()

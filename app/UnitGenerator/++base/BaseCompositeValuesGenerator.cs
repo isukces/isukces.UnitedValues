@@ -1,3 +1,4 @@
+using System;
 using iSukces.Code;
 using iSukces.Code.AutoCode;
 using iSukces.Code.Interfaces;
@@ -145,9 +146,16 @@ namespace UnitGenerator
 
         protected override void Add_GetBaseUnitValue()
         {
-            var cw = Ext.Create(GetType());
-            cw.WriteLine("throw new System.NotImplementedException();");
-            Target.AddMethod("GetBaseUnitValue", ValuePropertyType).WithBody(cw);
+            var cs = Ext.Create<BasicUnitValuesGenerator>();
+            cs.WriteLine("var factor1 = GlobalUnitRegistry.Factors.Get(Unit.LeftUnit);");
+            cs.WriteLine("var factor2 = GlobalUnitRegistry.Factors.Get(Unit.RightUnit);");
+            cs.SingleLineIf("(factor1.HasValue && factor2.HasValue)", ReturnValue("Value * factor1.Value * factor2.Value"));
+            var exceptionMessage = new CsExpression("Unable to find multiplication for unit ".CsEncode())
+                                   + new CsExpression("Unit");
+
+            cs.Throw<Exception>(exceptionMessage.ToString());
+            Target.AddMethod("GetBaseUnitValue", ValuePropertyType)
+                .WithBody(cs);
         }
 
         private void Add_ImplementedInterfaces()
