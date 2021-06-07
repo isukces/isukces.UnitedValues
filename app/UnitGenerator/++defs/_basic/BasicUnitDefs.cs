@@ -52,6 +52,8 @@ namespace UnitGenerator
         
         
         private static readonly BasicUnit Power = new BasicUnit(nameof(Power), "Watt", true);
+        
+        private static readonly BasicUnit Pressure = new BasicUnit(nameof(Pressure), "Pascal", true);
 
 
         private static BasicUnitsCollection _all;

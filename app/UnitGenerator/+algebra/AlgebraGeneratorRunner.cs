@@ -20,10 +20,10 @@ namespace UnitGenerator
 
             AddMul(distance, distance, area); // m*m => m²
             AddDiv(force, distance, linForce); // N / m => N/m
-            AddDiv(linForce, distance, pressure); // N/m  / m  => N/m²
-            AddDiv(force, area, pressure); // N / m² => N/m²
+            //AddDiv(linForce, distance, pressure); // N/m  / m  => N/m²
+            // AddDiv(force, area, pressure); // N / m² => N/m²
             AddMul(mass, acceleration, force); // kg * m/s² => N
-            AddMul(areaDensity, acceleration, pressure); // kg/m² * m/s² => N/m²
+            // AddMul(areaDensity, acceleration, pressure); // kg/m² * m/s² => N/m²
 
             AddMul(density, distance, areaDensity); // kg/m³ * m => kh/m²
             // AddMul(areaDensity, area,         pressure);
@@ -41,7 +41,7 @@ namespace UnitGenerator
                 density,
                 areaDensity,
 
-                pressure,
+                // pressure,
                 linForce,
                 force,
                 mass,
@@ -71,8 +71,10 @@ namespace UnitGenerator
         private static readonly UnitDefinition areaDensity =
             new UnitDefinition("AreaDensity", "kg/m²", "gęstość powierzchniową");
 
+        /*
         private static readonly UnitDefinition pressure
             = new UnitDefinition("Pressure", "N/m²", "ciśnienie");
+            */
 
         private static readonly UnitDefinition linForce =
             new UnitDefinition("LinearForce", "N/m", "siłę na jedn. długości");

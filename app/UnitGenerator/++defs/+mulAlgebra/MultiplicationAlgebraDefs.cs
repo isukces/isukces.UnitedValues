@@ -23,7 +23,7 @@ namespace UnitGenerator
 
                 Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity(c);
 
-                c.WithDiv<Force, Area, Pressure>();
+                // c.WithDiv<Force, Area, Pressure>();
                 c.WithDiv<Force, Length, LinearForce>();
 
                 Def_Energy_Time_Power.Setup(c);

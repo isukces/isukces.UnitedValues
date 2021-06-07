@@ -28,6 +28,12 @@ namespace iSukces.UnitedValues.Test
                 MassUnits.Kg,
                 KelvinTemperatureUnits.Degree);
             var waterSpecificHeatCapacity = new SpecificHeatCapacity(4211, specificHeatCapacityUnit);
+
+
+            var velocity1 = Velocity.FromMeterPerSecond(12);
+            var velocity2 = new Velocity(2, LengthUnits.Feet, TimeUnits.Minute);
+
+            var pressure = new Pressure(123, PressureUnits.KiloPascal);
         }
     }
 }

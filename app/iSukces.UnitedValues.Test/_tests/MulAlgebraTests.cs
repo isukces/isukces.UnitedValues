@@ -48,9 +48,11 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal(expected, result);
         }
 
-        [Fact]
+        [Fact(Skip = "Pressure redefinition")]
         public void T05_Should_multiply_kilopascal_by_square_centimeter()
         {
+            #if NEW_PRESSURE
+
             var pressure = new Pressure(2, ForceUnits.KiloNewton, AreaUnits.SquareMeter);
             var area     = Area.FromSquareCentimeters(4);
             var result   = pressure * area;
@@ -60,6 +62,8 @@ namespace iSukces.UnitedValues.Test
             result   = result.ConvertTo(ForceUnits.Newton);
             expected = new Force(0.8m, ForceUnits.Newton);
             Assert.Equal(expected, result);
+
+            #endif
         }
         
         [Fact]

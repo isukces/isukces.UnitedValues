@@ -65,7 +65,12 @@ namespace UnitGenerator
                     .WithPrefixedUnit("MWh", "MegaWattHour", 3600_000_000)
                     .WithPrefixedUnit("GWh", "GigaWattHour", 3600_000_000_000)
                     .WithPrefixedUnit("cal", "Calorie", 4.1855m)
-                    .WithPrefixedUnit("kcal", "KiloCalorie", 4185.5m)
+                    .WithPrefixedUnit("kcal", "KiloCalorie", 4185.5m),
+                
+                new RelatedUnit("Pressure")
+                    .WithPrefixedUnit("Pa", "Pascal", 1)
+                    .WithPrefixedUnit("hPa", "hectoPascal", 100)
+                    .WithPrefixedUnits("Pa", "Pascal", CommonPrefixes.Kilo | CommonPrefixes.Mega)
             };
             return arr;
         }
