@@ -14,5 +14,29 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal(PressureUnits.Pascal, pd1.Unit.CounterUnit);
             Assert.Equal(LengthUnits.Meter, pd1.Unit.DenominatorUnit);
         }
+
+
+        [Fact]
+        public void T02_Should_multiply_length_and_pressure()
+        {
+            Length   dzp      = Length.FromMeter(10);
+            Pressure pressure = Pressure.FromKiloPascal(12);
+            var      mul      = pressure * dzp;
+            Assert.Equal(120000, mul.Value);
+            Assert.Equal("N", mul.Unit.CounterUnit.UnitName);
+            Assert.Equal("m", mul.Unit.DenominatorUnit.UnitName);
+        }
+
+
+        [Fact]
+        public void T03_Should_multiply_length_and_pressure()
+        {
+            Length   dzp      = Length.FromMeter(10).ConvertTo(LengthUnits.Dm);
+            Pressure pressure = Pressure.FromKiloPascal(12);
+            var      mul      = pressure * dzp;
+            Assert.Equal(120000, mul.Value);
+            Assert.Equal("N", mul.Unit.CounterUnit.UnitName);
+            Assert.Equal("m", mul.Unit.DenominatorUnit.UnitName);
+        }
     }
 }
