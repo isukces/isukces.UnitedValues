@@ -75,11 +75,9 @@ namespace iSukces.UnitedValues.Test
             Pressure Et_N_m2 = Pressure.FromMegaPascal(134);
             Area A_m2 = Area.FromSquareMilimeters(1234);
 
-            Length x1 = at_1_C * (T_C - To_C) * L_m;
+            Et_N_m2 = Et_N_m2.ConvertTo(PressureUnits.Pascal);
 
-            var tmp = F_N_m / Et_N_m2;
-
-            Length x2 = F_N_m / Et_N_m2 * (L_m * L_m / (2 * A_m2));
+            var result = at_1_C * (T_C - To_C) * L_m - F_N_m / Et_N_m2 * (L_m * L_m) / (2 * A_m2);
         }
     }
 }
