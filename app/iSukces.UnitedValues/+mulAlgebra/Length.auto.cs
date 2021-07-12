@@ -411,115 +411,6 @@ namespace iSukces.UnitedValues
         /// Multiplication operation
         /// </summary>
         /// <param name="length">left factor (multiplicand)</param>
-        /// <param name="linearForce">rigth factor (multiplier)</param>
-        public static Force operator *(Length length, LinearForce linearForce)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
-            // scenario B
-            var unit = new LinearForceUnit(linearForce.Unit.CounterUnit, length.Unit);
-            var linearForceConverted    = linearForce.WithDenominatorUnit(length.Unit);
-            var value = length.Value * linearForceConverted.Value;
-            return new Force(value, linearForce.Unit.CounterUnit);
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="linearForce">left factor (multiplicand)</param>
-        /// <param name="length">rigth factor (multiplier)</param>
-        public static Force operator *(LinearForce linearForce, Length length)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
-            // Force operator *(LinearForce linearForce, Length length)
-            // scenario D3
-            var linearForceUnit = linearForce.Unit;
-            var lengthConverted = length.ConvertTo(linearForceUnit.DenominatorUnit);
-            var value = linearForce.Value * lengthConverted.Value;
-            return new Force(value, linearForceUnit.CounterUnit);
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="length">left factor (multiplicand)</param>
-        /// <param name="linearForce">rigth factor (multiplier)</param>
-        public static Force? operator *(Length? length, LinearForce linearForce)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (length is null)
-                return null;
-            return length.Value * linearForce;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="linearForce">left factor (multiplicand)</param>
-        /// <param name="length">rigth factor (multiplier)</param>
-        public static Force? operator *(LinearForce? linearForce, Length length)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (linearForce is null)
-                return null;
-            return linearForce.Value * length;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="length">left factor (multiplicand)</param>
-        /// <param name="linearForce">rigth factor (multiplier)</param>
-        public static Force? operator *(Length length, LinearForce? linearForce)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (linearForce is null)
-                return null;
-            return length * linearForce.Value;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="linearForce">left factor (multiplicand)</param>
-        /// <param name="length">rigth factor (multiplier)</param>
-        public static Force? operator *(LinearForce linearForce, Length? length)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (length is null)
-                return null;
-            return linearForce * length.Value;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="length">left factor (multiplicand)</param>
-        /// <param name="linearForce">rigth factor (multiplier)</param>
-        public static Force? operator *(Length? length, LinearForce? linearForce)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (length is null || linearForce is null)
-                return null;
-            return length.Value * linearForce.Value;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="linearForce">left factor (multiplicand)</param>
-        /// <param name="length">rigth factor (multiplier)</param>
-        public static Force? operator *(LinearForce? linearForce, Length? length)
-        {
-            // generator : MultiplyAlgebraGenerator.CreateCode
-            if (linearForce is null || length is null)
-                return null;
-            return linearForce.Value * length.Value;
-        }
-
-        /// <summary>
-        /// Multiplication operation
-        /// </summary>
-        /// <param name="length">left factor (multiplicand)</param>
         /// <param name="pressure">rigth factor (multiplier)</param>
         public static LinearForce operator *(Length length, Pressure pressure)
         {
@@ -626,6 +517,116 @@ namespace iSukces.UnitedValues
             if (pressure is null || length is null)
                 return null;
             return pressure.Value * length.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="linearForce">rigth factor (multiplier)</param>
+        public static Force operator *(Length length, LinearForce linearForce)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+            // scenario B
+            var unit = new LinearForceUnit(linearForce.Unit.CounterUnit, length.Unit);
+            var linearForceConverted    = linearForce.WithDenominatorUnit(length.Unit);
+            var value = length.Value * linearForceConverted.Value;
+            return new Force(value, linearForce.Unit.CounterUnit);
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="linearForce">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static Force operator *(LinearForce linearForce, Length length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
+            // Force operator *(LinearForce linearForce, Length length)
+            // scenario with hint
+            // hint location HandleCreateOperatorCode, line 27 Def_Force_Length_LinearForce
+            var lengthConverted = length.ConvertTo(linearForce.Unit.DenominatorUnit);
+            var value = linearForce.Value * lengthConverted.Value;
+            return new Force(value, linearForce.Unit.CounterUnit);
+            // scenario D1
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="linearForce">rigth factor (multiplier)</param>
+        public static Force? operator *(Length? length, LinearForce linearForce)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null)
+                return null;
+            return length.Value * linearForce;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="linearForce">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static Force? operator *(LinearForce? linearForce, Length length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (linearForce is null)
+                return null;
+            return linearForce.Value * length;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="linearForce">rigth factor (multiplier)</param>
+        public static Force? operator *(Length length, LinearForce? linearForce)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (linearForce is null)
+                return null;
+            return length * linearForce.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="linearForce">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static Force? operator *(LinearForce linearForce, Length? length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null)
+                return null;
+            return linearForce * length.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="linearForce">rigth factor (multiplier)</param>
+        public static Force? operator *(Length? length, LinearForce? linearForce)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null || linearForce is null)
+                return null;
+            return length.Value * linearForce.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="linearForce">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static Force? operator *(LinearForce? linearForce, Length? length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (linearForce is null || length is null)
+                return null;
+            return linearForce.Value * length.Value;
         }
 
         /// <summary>

@@ -13,9 +13,12 @@ namespace iSukces.UnitedValues
         /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
         public static LinearForce operator /(Force force, Length length)
         {
-            // generator : MultiplyAlgebraGenerator.CreateCodeForFractionalResult
-            // scenario E
-            return new LinearForce(force.Value / length.Value, force.Unit, length.Unit);
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // hint location HandleCreateOperatorCode, line 19 Def_Force_Length_LinearForce
+            var value = force.Value / length.Value;
+            return new LinearForce(value, new LinearForceUnit(force.Unit, length.Unit));
+            // scenario F3
         }
 
         /// <summary>

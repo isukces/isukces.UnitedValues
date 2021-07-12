@@ -24,11 +24,12 @@ namespace UnitGenerator
                 Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity(c);
 
                 // c.WithDiv<Force, Area, Pressure>();
-                c.WithDiv<Force, Length, LinearForce>();
+               
 
                 Def_Energy_Time_Power.Setup(c);
                 Def_Power_EnergyMassDensity_MassStream.Setup(c);
                 Def_LinearForce_Length_Pressure.Setup(c);
+                Def_Force_Length_LinearForce.Setup(c);
 
                 c.WithDiv<MassStream, Density, VolumeStream>(hints);
                 c.WithDiv<Length, Time, Velocity>(hints);
