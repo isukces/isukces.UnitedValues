@@ -517,6 +517,118 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="pressure">rigth factor (multiplier)</param>
+        public static LinearForce operator *(Length length, Pressure pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // hint location HandleCreateOperatorCode, line 18 Def_LinearForce_Length_Pressure
+            var leftConverted = length.ConvertTo(LengthUnits.Meter);
+            var rightConverted = pressure.ConvertTo(PressureUnits.Pascal);
+            var value = leftConverted.Value * rightConverted.Value;
+            return new LinearForce(value, new LinearForceUnit(ForceUnits.Newton, LengthUnits.Meter));
+            // scenario F3
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="pressure">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static LinearForce operator *(Pressure pressure, Length length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // hint location HandleCreateOperatorCode, line 34 Def_LinearForce_Length_Pressure
+            var leftConverted = pressure.ConvertTo(PressureUnits.Pascal);
+            var rightConverted = length.ConvertTo(LengthUnits.Meter);
+            var value = leftConverted.Value * rightConverted.Value;
+            return new LinearForce(value, new LinearForceUnit(ForceUnits.Newton, LengthUnits.Meter));
+            // scenario F3
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="pressure">rigth factor (multiplier)</param>
+        public static LinearForce? operator *(Length? length, Pressure pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null)
+                return null;
+            return length.Value * pressure;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="pressure">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static LinearForce? operator *(Pressure? pressure, Length length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (pressure is null)
+                return null;
+            return pressure.Value * length;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="pressure">rigth factor (multiplier)</param>
+        public static LinearForce? operator *(Length length, Pressure? pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (pressure is null)
+                return null;
+            return length * pressure.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="pressure">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static LinearForce? operator *(Pressure pressure, Length? length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null)
+                return null;
+            return pressure * length.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="length">left factor (multiplicand)</param>
+        /// <param name="pressure">rigth factor (multiplier)</param>
+        public static LinearForce? operator *(Length? length, Pressure? pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (length is null || pressure is null)
+                return null;
+            return length.Value * pressure.Value;
+        }
+
+        /// <summary>
+        /// Multiplication operation
+        /// </summary>
+        /// <param name="pressure">left factor (multiplicand)</param>
+        /// <param name="length">rigth factor (multiplier)</param>
+        public static LinearForce? operator *(Pressure? pressure, Length? length)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (pressure is null || length is null)
+                return null;
+            return pressure.Value * length.Value;
+        }
+
+        /// <summary>
         /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
         /// </summary>
         /// <param name="length">a dividend (counter) - a value that is being divided</param>

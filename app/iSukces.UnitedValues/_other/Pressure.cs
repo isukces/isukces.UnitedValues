@@ -34,21 +34,9 @@ namespace iSukces.UnitedValues
             return new Force(area.Value * pressure.Value, ForceUnits.Newton);
         }
         
-        
-        /// <summary>
-        ///     Multiplication operation
-        /// </summary>
-        /// <param name="pressure">left factor (multiplicand)</param>
-        /// <param name="length">rigth factor (multiplier)</param>
-        public static LinearForce operator *(Pressure pressure, Length length)
-        {
-            length     = length.ConvertTo(LengthUnits.Meter);
-            pressure = pressure.ConvertTo(PressureUnits.Pascal);
-            LinearForceUnit unit = new LinearForceUnit(ForceUnits.Newton, LengthUnits.Meter);
-            return new LinearForce(length.Value * pressure.Value, unit);
-        }
-        
-        /// <summary>
+
+        // Manual !!!!!!!!
+        /*/// <summary>
         ///     Multiplication operation
         /// </summary>
         /// <param name="pressure">left factor (multiplicand)</param>
@@ -59,6 +47,6 @@ namespace iSukces.UnitedValues
             pressure = pressure.ConvertTo(PressureUnits.Pascal);
             LinearForceUnit unit = new LinearForceUnit(ForceUnits.Newton, LengthUnits.Meter);
             return new LinearForce(length.Value * pressure.Value, unit);
-        }
+        }*/
     }
 }
