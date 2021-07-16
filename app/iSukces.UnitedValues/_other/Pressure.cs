@@ -4,11 +4,13 @@ namespace iSukces.UnitedValues
     {
         public Pressure(decimal value, ForceUnit force, AreaUnit area)
         {
-            var areaSqM = new Area(1, area).ConvertTo(AreaUnits.SquareMeter);
-            Unit  = PressureUnits.Pascal;
-            Value = value / areaSqM.Value;
+            var areaValue = new Area(1, area)
+                .ConvertTo(AreaUnits.SquareMeter);
+            var forceValue = new Force(value, force)
+                .ConvertTo(ForceUnits.Newton);
+            Value = forceValue.Value / areaValue.Value;
+
+            Unit = PressureUnits.Pascal;
         }
-
-
     }
 }
