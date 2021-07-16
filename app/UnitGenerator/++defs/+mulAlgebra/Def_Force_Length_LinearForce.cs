@@ -32,14 +32,7 @@ namespace UnitGenerator
                 return;   
             }
             
-            /*if (input.Is<Length, LinearForce,  Force>("*"))
-            {
-                result.SetComment();
-                result.Comment += " " + nameof(Def_Force_Length_LinearForce);
-                result.ConvertRight("linearForce.Unit.DenominatorUnit");
-                result.ResultUnit = "linearForce.Unit.CounterUnit";
-                return;   
-            }*/
+           
 
 
             
@@ -54,11 +47,6 @@ namespace UnitGenerator
             // c.WithDiv<LinearForce, Length, Pressure>(hints);
             c.WithDiv<Force, Length, LinearForce>( hints);
         }
-
-        private const string U_Force = "ForceUnits.Newton";
-
-        const string U_Length = "LengthUnits.Meter";
-
-        const string U_LinearForce = "new LinearForceUnit(ForceUnits.Newton, LengthUnits.Meter)";
+        
     }
 }

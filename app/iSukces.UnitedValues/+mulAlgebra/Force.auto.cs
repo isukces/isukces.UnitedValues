@@ -115,5 +115,119 @@ namespace iSukces.UnitedValues
             return force.Value / linearForce.Value;
         }
 
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="force">a dividend (counter) - a value that is being divided</param>
+        /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Pressure operator /(Force force, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // .Is<Force, Area, Pressure>("/")
+            // hint location HandleCreateOperatorCode, line 24
+            var leftConverted = force.ConvertTo(ForceUnits.Newton);
+            var rightConverted = area.ConvertTo(AreaUnits.SquareMeter);
+            var value = leftConverted.Value / rightConverted.Value;
+            return new Pressure(value, PressureUnits.Pascal);
+            // scenario F3
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="force">a dividend (counter) - a value that is being divided</param>
+        /// <param name="pressure">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Area operator /(Force force, Pressure pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateOperator
+            // scenario with hint
+            // .Is<Force, Pressure, Area>("/")
+            // hint location HandleCreateOperatorCode, line 31
+            var leftConverted = force.ConvertTo(ForceUnits.Newton);
+            var rightConverted = pressure.ConvertTo(PressureUnits.Pascal);
+            var value = leftConverted.Value / rightConverted.Value;
+            return new Area(value, AreaUnits.SquareMeter);
+            // scenario F3
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="force">a dividend (counter) - a value that is being divided</param>
+        /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Pressure? operator /(Force? force, Area area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (force is null)
+                return null;
+            return force.Value / area;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="force">a dividend (counter) - a value that is being divided</param>
+        /// <param name="pressure">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Area? operator /(Force? force, Pressure pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (force is null)
+                return null;
+            return force.Value / pressure;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="force">a dividend (counter) - a value that is being divided</param>
+        /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Pressure? operator /(Force force, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (area is null)
+                return null;
+            return force / area.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="force">a dividend (counter) - a value that is being divided</param>
+        /// <param name="pressure">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Area? operator /(Force force, Pressure? pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (pressure is null)
+                return null;
+            return force / pressure.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="force">a dividend (counter) - a value that is being divided</param>
+        /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Pressure? operator /(Force? force, Area? area)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (force is null || area is null)
+                return null;
+            return force.Value / area.Value;
+        }
+
+        /// <summary>
+        /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+        /// </summary>
+        /// <param name="force">a dividend (counter) - a value that is being divided</param>
+        /// <param name="pressure">a divisor (denominator) - a value which dividend is divided by</param>
+        public static Area? operator /(Force? force, Pressure? pressure)
+        {
+            // generator : MultiplyAlgebraGenerator.CreateCode
+            if (force is null || pressure is null)
+                return null;
+            return force.Value / pressure.Value;
+        }
+
     }
 }
