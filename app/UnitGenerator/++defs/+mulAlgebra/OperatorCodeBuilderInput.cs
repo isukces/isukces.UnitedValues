@@ -69,6 +69,8 @@ namespace UnitGenerator
             Comment = "hint location " + method + ", line " + line;
 #endif
         }
+        
+        
 
         public void SetThrow([CallerMemberName] string member = null)
         {

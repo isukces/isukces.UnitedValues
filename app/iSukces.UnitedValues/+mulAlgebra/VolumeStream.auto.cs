@@ -17,6 +17,7 @@ namespace iSukces.UnitedValues
             // Velocity operator /(VolumeStream volumeStream, Area area)
             // scenario with hint
             // .Is<VolumeStream, Area, Velocity>("/")
+            // hint location GetBasicOperatorHints, line 31
             var volumeStreamUnit = volumeStream.Unit;
             var tmp1 = volumeStreamUnit.CounterUnit;
             var resultUnit = new VelocityUnit(tmp1.GetLengthUnit(), volumeStreamUnit.DenominatorUnit);
@@ -35,6 +36,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<VolumeStream, Velocity, Area>("/")
+            // hint location GetBasicOperatorHints, line 31
             var volumeStreamUnit = volumeStream.Unit;
             var tmp1 = volumeStreamUnit.CounterUnit;
             var targetRightUnit = new VelocityUnit(tmp1.GetLengthUnit(), volumeStreamUnit.DenominatorUnit);

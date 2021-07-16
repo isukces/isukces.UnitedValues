@@ -16,6 +16,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
             // .Is<Power, EnergyMassDensity, MassStream>("/")
+            // hint location HandleCreateOperatorCode, line 16
             var ru = energyMassDensity.Unit;
             var energy = new Energy(energyMassDensity.Value, ru.CounterUnit);
             var time = energy / power;
@@ -31,10 +32,8 @@ namespace iSukces.UnitedValues
         public static EnergyMassDensity operator /(Power power, MassStream massStream)
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
-            // scenario with hint
-            // Fill method HandleCreateOperatorCode
-            // .Is<Power, MassStream, EnergyMassDensity>("/")
-            throw new NotImplementedException();
+            // scenario G
+            throw new NotImplementedException("Not implemented yet");
         }
 
         /// <summary>

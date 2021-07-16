@@ -32,6 +32,7 @@ namespace iSukces.UnitedValues
             // Mass operator *(Density density, Volume volume)
             // scenario with hint
             // .Is<Density, Volume, Mass>("*")
+            // hint location GetBasicOperatorHints, line 31
             var densityUnit = density.Unit;
             var volumeConverted = volume.ConvertTo(densityUnit.DenominatorUnit);
             var value = density.Value * volumeConverted.Value;

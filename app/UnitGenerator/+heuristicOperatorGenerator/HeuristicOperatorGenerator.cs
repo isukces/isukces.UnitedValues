@@ -24,7 +24,9 @@ namespace UnitGenerator
             }
             catch
             {
-                args.Handled = true;
+                args.Result.SetComment();
+                args.Result.Comment += " Exception !!!";
+                args.SetHandled();
             }
         }
 

@@ -87,6 +87,7 @@ namespace iSukces.UnitedValues
             // Mass operator *(LinearDensity linearDensity, Length length)
             // scenario with hint
             // .Is<LinearDensity, Length, Mass>("*")
+            // hint location GetBasicOperatorHints, line 31
             var linearDensityUnit = linearDensity.Unit;
             var lengthConverted = length.ConvertTo(linearDensityUnit.DenominatorUnit);
             var value = linearDensity.Value * lengthConverted.Value;
@@ -182,6 +183,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
             // .Is<Length, PlanarDensity, LinearDensity>("*")
+            // hint location GetBasicOperatorHints, line 31
             var planarDensityUnit = planarDensity.Unit;
             var tmp1 = planarDensityUnit.CounterUnit;
             var lengthUnit = length.Unit;
@@ -203,6 +205,7 @@ namespace iSukces.UnitedValues
             // LinearDensity operator *(PlanarDensity planarDensity, Length length)
             // scenario with hint
             // .Is<PlanarDensity, Length, LinearDensity>("*")
+            // hint location GetBasicOperatorHints, line 31
             var planarDensityUnit = planarDensity.Unit;
             var tmp1 = planarDensityUnit.DenominatorUnit;
             var tmp2 = tmp1.GetLengthUnit();
@@ -300,6 +303,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
             // .Is<Length, Density, PlanarDensity>("*")
+            // hint location GetBasicOperatorHints, line 31
             var densityUnit = density.Unit;
             var tmp1 = densityUnit.CounterUnit;
             var lengthUnit = length.Unit;
@@ -321,6 +325,7 @@ namespace iSukces.UnitedValues
             // PlanarDensity operator *(Density density, Length length)
             // scenario with hint
             // .Is<Density, Length, PlanarDensity>("*")
+            // hint location GetBasicOperatorHints, line 31
             var densityUnit = density.Unit;
             var tmp1 = densityUnit.DenominatorUnit;
             var resultUnit = new PlanarDensityUnit(densityUnit.CounterUnit, tmp1.GetAreaUnit());
@@ -416,7 +421,8 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
-            // hint location HandleCreateOperatorCode, line 18 Def_LinearForce_Length_Pressure
+            // .Is<Length, Pressure, LinearForce>("*")
+            // hint location HandleCreateOperatorCode, line 19 Def_LinearForce_Length_Pressure
             var leftConverted = length.ConvertTo(LengthUnits.Meter);
             var rightConverted = pressure.ConvertTo(PressureUnits.Pascal);
             var value = leftConverted.Value * rightConverted.Value;
@@ -433,7 +439,8 @@ namespace iSukces.UnitedValues
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
-            // hint location HandleCreateOperatorCode, line 34 Def_LinearForce_Length_Pressure
+            // .Is<Pressure, Length, LinearForce>("*")
+            // hint location HandleCreateOperatorCode, line 35 Def_LinearForce_Length_Pressure
             var leftConverted = pressure.ConvertTo(PressureUnits.Pascal);
             var rightConverted = length.ConvertTo(LengthUnits.Meter);
             var value = leftConverted.Value * rightConverted.Value;
@@ -544,7 +551,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // Force operator *(LinearForce linearForce, Length length)
             // scenario with hint
-            // hint location HandleCreateOperatorCode, line 27 Def_Force_Length_LinearForce
+            // hint location HandleCreateOperatorCode, line 28 Def_Force_Length_LinearForce
             var lengthConverted = length.ConvertTo(linearForce.Unit.DenominatorUnit);
             var value = linearForce.Value * lengthConverted.Value;
             return new Force(value, linearForce.Unit.CounterUnit);
@@ -639,6 +646,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<Length, Time, Velocity>("/")
+            // hint location GetBasicOperatorHints, line 31
             var resultUnit = new VelocityUnit(length.Unit, time.Unit);
             var value = length.Value / time.Value;
             return new Velocity(value, resultUnit);

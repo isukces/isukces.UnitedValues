@@ -166,7 +166,7 @@ namespace UnitGenerator
                 }
             }
 
-            Console.WriteLine("args.Input" + par.DebugIs);
+            // Console.WriteLine("args.Input" + par.DebugIs);
 
             return false;
         }

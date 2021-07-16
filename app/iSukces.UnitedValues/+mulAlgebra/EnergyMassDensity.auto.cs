@@ -17,6 +17,7 @@ namespace iSukces.UnitedValues
             // SpecificHeatCapacity operator /(EnergyMassDensity energyMassDensity, DeltaKelvinTemperature deltaKelvinTemperature)
             // scenario with hint
             // .Is<EnergyMassDensity, DeltaKelvinTemperature, SpecificHeatCapacity>("/")
+            // hint location Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity, line 16
             var energyMassDensityUnit = energyMassDensity.Unit;
             var resultUnit = new SpecificHeatCapacityUnit(energyMassDensityUnit.CounterUnit, energyMassDensityUnit.DenominatorUnit, deltaKelvinTemperature.Unit);
             var value = energyMassDensity.Value / deltaKelvinTemperature.Value;
@@ -33,6 +34,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<EnergyMassDensity, SpecificHeatCapacity, DeltaKelvinTemperature>("/")
+            // hint location Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity, line 16
             var energyMassDensityUnit = energyMassDensity.Unit;
             var specificHeatCapacityUnit = specificHeatCapacity.Unit;
             var tmp1 = specificHeatCapacityUnit.DenominatorUnit;

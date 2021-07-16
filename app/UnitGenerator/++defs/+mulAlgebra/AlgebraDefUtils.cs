@@ -28,7 +28,7 @@ namespace UnitGenerator
                 args.Result.Comment = args.Input.DebugIs;
                 Debug.WriteLine("Processing " + args.Input.DebugIs);
                 CreateHeuristicCode(args);
-                args.Handled = true;
+                args.SetHandled();
             };
             return hints;
         }

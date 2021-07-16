@@ -32,6 +32,7 @@ namespace iSukces.UnitedValues
             // EnergyMassDensity operator *(SpecificHeatCapacity specificHeatCapacity, DeltaKelvinTemperature deltaKelvinTemperature)
             // scenario with hint
             // .Is<SpecificHeatCapacity, DeltaKelvinTemperature, EnergyMassDensity>("*")
+            // hint location Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity, line 16
             var specificHeatCapacityUnit = specificHeatCapacity.Unit;
             var tmp1 = specificHeatCapacityUnit.CounterUnit;
             var resultUnit = new EnergyMassDensityUnit(tmp1.CounterUnit, tmp1.DenominatorUnit);

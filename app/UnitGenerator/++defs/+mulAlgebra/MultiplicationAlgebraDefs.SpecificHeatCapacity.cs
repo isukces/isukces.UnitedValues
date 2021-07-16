@@ -13,8 +13,9 @@ namespace UnitGenerator
             {
                 args.Result.Comment = args.Input.DebugIs;
                 AlgebraDefUtils.CreateHeuristicCode(args);
-                args.Handled = true;
+                args.SetHandled();
             };
+            hints.ImplementingClass = nameof(MultiplicationAlgebraDefs); 
           
             c.WithDiv<EnergyMassDensity, DeltaKelvinTemperature, SpecificHeatCapacity>(hints);
         }

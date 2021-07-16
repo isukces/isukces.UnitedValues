@@ -9,10 +9,12 @@ namespace UnitGenerator
             get
             {
                 var hints = AlgebraDefUtils.GetBasicOperatorHints();
+                hints.ImplementingClass = nameof(MultiplicationAlgebraDefs);
+                
 
                 var c = new MultiplicationAlgebra()
-                    .WithMul<Length, Length, Area>(true)
-                    .WithMul<Length, Area, Volume>(true)
+                    .WithMul<Length, Length, Area>(null, true)
+                    .WithMul<Length, Area, Volume>(null, true)
                     .WithDiv<Mass, Length, LinearDensity>(hints)
                     .WithDiv<Mass, Area, PlanarDensity>(hints)
                     .WithDiv<Mass, Volume, Density>(hints);
@@ -24,7 +26,6 @@ namespace UnitGenerator
                 Add_EnergyMassDensity_DeltaKelvinTemperature_SpecificHeatCapacity(c);
 
                 // c.WithDiv<Force, Area, Pressure>();
-               
 
                 Def_Energy_Time_Power.Setup(c);
                 Def_Power_EnergyMassDensity_MassStream.Setup(c);
@@ -38,13 +39,6 @@ namespace UnitGenerator
                 return c;
             }
         }
+        
     }
 }
-
-/*
- *
-                 if (args.Input.Is<Length, PlanarDensity, LinearDensity>("*"))
-                    Debug.Write("");
-                if (args.Input.Is<LinearDensity, PlanarDensity, Length>("/"))
-                    Debug.Write("");* 
- */

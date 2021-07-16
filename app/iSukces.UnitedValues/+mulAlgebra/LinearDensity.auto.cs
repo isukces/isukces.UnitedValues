@@ -17,6 +17,7 @@ namespace iSukces.UnitedValues
             // PlanarDensity operator /(LinearDensity linearDensity, Length length)
             // scenario with hint
             // .Is<LinearDensity, Length, PlanarDensity>("/")
+            // hint location GetBasicOperatorHints, line 31
             var linearDensityUnit = linearDensity.Unit;
             var tmp1 = linearDensityUnit.DenominatorUnit;
             var resultUnit = new PlanarDensityUnit(linearDensityUnit.CounterUnit, linearDensityUnit.DenominatorUnit.GetAreaUnit());
@@ -35,6 +36,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<LinearDensity, PlanarDensity, Length>("/")
+            // hint location GetBasicOperatorHints, line 31
             var linearDensityUnit = linearDensity.Unit;
             var tmp1 = linearDensityUnit.DenominatorUnit;
             var targetRightUnit = new PlanarDensityUnit(linearDensityUnit.CounterUnit, tmp1.GetAreaUnit());
@@ -133,6 +135,7 @@ namespace iSukces.UnitedValues
             // Density operator /(LinearDensity linearDensity, Area area)
             // scenario with hint
             // .Is<LinearDensity, Area, Density>("/")
+            // hint location GetBasicOperatorHints, line 31
             var linearDensityUnit = linearDensity.Unit;
             var tmp1 = linearDensityUnit.DenominatorUnit;
             var resultUnit = new DensityUnit(linearDensityUnit.CounterUnit, tmp1.GetVolumeUnit());
@@ -151,6 +154,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<LinearDensity, Density, Area>("/")
+            // hint location GetBasicOperatorHints, line 31
             var linearDensityUnit = linearDensity.Unit;
             var tmp1 = linearDensityUnit.DenominatorUnit;
             var targetRightUnit = new DensityUnit(linearDensityUnit.CounterUnit, tmp1.GetVolumeUnit());

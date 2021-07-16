@@ -12,10 +12,10 @@ namespace UnitGenerator
             OperatorHints   = operatorHints;
         }
 
-        public TypesGroup    Counter         { get; }
-        public TypesGroup    Denominator     { get; }
-        public TypesGroup    Result          { get; }
-        public bool          AreRelatedUnits { get; }
-        public OperatorHints OperatorHints   { get; }
+        public TypesGroup    Counter           { get; }
+        public TypesGroup    Denominator       { get; }
+        public TypesGroup    Result            { get; }
+        public bool          AreRelatedUnits   { get; }
+        public OperatorHints OperatorHints     { get; }
     }
 }

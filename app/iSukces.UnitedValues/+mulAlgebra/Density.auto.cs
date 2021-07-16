@@ -16,6 +16,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<Density, VolumeStream, MassStream>("*")
+            // hint location GetBasicOperatorHints, line 31
             var densityUnit = density.Unit;
             var volumeStreamUnit = volumeStream.Unit;
             var tmp1 = volumeStreamUnit.DenominatorUnit;
@@ -37,6 +38,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<VolumeStream, Density, MassStream>("*")
+            // hint location GetBasicOperatorHints, line 31
             var densityUnit = density.Unit;
             var tmp1 = densityUnit.CounterUnit;
             var volumeStreamUnit = volumeStream.Unit;

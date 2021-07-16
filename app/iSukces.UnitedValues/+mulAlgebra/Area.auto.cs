@@ -142,6 +142,7 @@ namespace iSukces.UnitedValues
             // Mass operator *(PlanarDensity planarDensity, Area area)
             // scenario with hint
             // .Is<PlanarDensity, Area, Mass>("*")
+            // hint location GetBasicOperatorHints, line 31
             var planarDensityUnit = planarDensity.Unit;
             var areaConverted = area.ConvertTo(planarDensityUnit.DenominatorUnit);
             var value = planarDensity.Value * areaConverted.Value;
@@ -237,6 +238,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
             // .Is<Area, Density, LinearDensity>("*")
+            // hint location GetBasicOperatorHints, line 31
             var densityUnit = density.Unit;
             var tmp1 = densityUnit.CounterUnit;
             var areaUnit = area.Unit;
@@ -258,6 +260,7 @@ namespace iSukces.UnitedValues
             // LinearDensity operator *(Density density, Area area)
             // scenario with hint
             // .Is<Density, Area, LinearDensity>("*")
+            // hint location GetBasicOperatorHints, line 31
             var densityUnit = density.Unit;
             var tmp1 = densityUnit.DenominatorUnit;
             var resultUnit = new LinearDensityUnit(densityUnit.CounterUnit, tmp1.GetLengthUnit());
@@ -354,6 +357,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
             // scenario with hint
             // .Is<Area, Velocity, VolumeStream>("*")
+            // hint location GetBasicOperatorHints, line 31
             var areaUnit = area.Unit;
             var velocityUnit = velocity.Unit;
             var tmp1 = velocityUnit.DenominatorUnit;
@@ -375,6 +379,7 @@ namespace iSukces.UnitedValues
             // VolumeStream operator *(Velocity velocity, Area area)
             // scenario with hint
             // .Is<Velocity, Area, VolumeStream>("*")
+            // hint location GetBasicOperatorHints, line 31
             var velocityUnit = velocity.Unit;
             var tmp1 = velocityUnit.CounterUnit;
             var resultUnit = new VolumeStreamUnit(tmp1.GetVolumeUnit(), velocityUnit.DenominatorUnit);

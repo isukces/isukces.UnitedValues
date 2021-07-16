@@ -16,6 +16,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<Mass, Length, LinearDensity>("/")
+            // hint location GetBasicOperatorHints, line 31
             var resultUnit = new LinearDensityUnit(mass.Unit, length.Unit);
             var value = mass.Value / length.Value;
             return new LinearDensity(value, resultUnit);
@@ -126,6 +127,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<Mass, Area, PlanarDensity>("/")
+            // hint location GetBasicOperatorHints, line 31
             var resultUnit = new PlanarDensityUnit(mass.Unit, area.Unit);
             var value = mass.Value / area.Value;
             return new PlanarDensity(value, resultUnit);
@@ -236,6 +238,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<Mass, Volume, Density>("/")
+            // hint location GetBasicOperatorHints, line 31
             var resultUnit = new DensityUnit(mass.Unit, volume.Unit);
             var value = mass.Value / volume.Value;
             return new Density(value, resultUnit);

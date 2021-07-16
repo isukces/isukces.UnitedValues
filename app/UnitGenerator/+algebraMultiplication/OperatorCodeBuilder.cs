@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
 
@@ -14,7 +15,12 @@ namespace UnitGenerator
         public void WriteCode(CsCodeWriter cw)
         {
             if (!string.IsNullOrEmpty(_input.Comment))
-                cw.WriteLine("// " + _input.Comment);
+            {
+                var lines = _input.Comment.Split('\r', '\n').Where(a => !string.IsNullOrWhiteSpace(a));
+                foreach (var i in lines)
+                    cw.WriteLine("// " + i);
+            }
+
             if (_input.Throw)
             {
                 cw.WriteLine("// " + _input.OperatorParameters.DebugIs);

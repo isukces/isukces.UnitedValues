@@ -16,7 +16,8 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // Pressure operator /(LinearForce linearForce, Length length)
             // scenario with hint
-            // hint location HandleCreateOperatorCode, line 49 Def_LinearForce_Length_Pressure
+            // .Is<LinearForce, Length, Pressure>("/")
+            // hint location HandleCreateOperatorCode, line 50 Def_LinearForce_Length_Pressure
             var leftConverted = linearForce.ConvertTo(new LinearForceUnit(ForceUnits.Newton, LengthUnits.Meter));
             var rightConverted = length.ConvertTo(LengthUnits.Meter);
             var value = leftConverted.Value / rightConverted.Value;
@@ -33,7 +34,8 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
             // Length operator /(LinearForce linearForce, Pressure pressure)
             // scenario with hint
-            // hint location HandleCreateOperatorCode, line 42 Def_LinearForce_Length_Pressure
+            // .Is<LinearForce, Pressure, Length>("/")
+            // hint location HandleCreateOperatorCode, line 43 Def_LinearForce_Length_Pressure
             var leftConverted = linearForce.ConvertTo(new LinearForceUnit(ForceUnits.Newton, LengthUnits.Meter));
             var rightConverted = pressure.ConvertTo(PressureUnits.Pascal);
             var value = leftConverted.Value / rightConverted.Value;

@@ -18,7 +18,7 @@ namespace UnitGenerator
             return this;
         }
 
-        public MultiplicationAlgebra WithMul<T1, T2, TMul>(bool areRelatedUnits = false)
+        public MultiplicationAlgebra WithMul<T1, T2, TMul>(string implementingClass, bool areRelatedUnits = false)
         {
             // T1/T2 = TMul
             // TMul * T2 = T1

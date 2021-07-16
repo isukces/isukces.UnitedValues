@@ -14,11 +14,8 @@ namespace iSukces.UnitedValues
         public static Power operator *(EnergyMassDensity energyMassDensity, MassStream massStream)
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
-            // scenario with hint
-            // Fill method HandleCreateOperatorCode
-            // .Is<EnergyMassDensity, MassStream, Power>("*")
-            throw new NotImplementedException();
-            // scenario F1
+            // scenario F2
+            throw new NotImplementedException("Not implemented yet");
         }
 
         /// <summary>
@@ -29,11 +26,8 @@ namespace iSukces.UnitedValues
         public static Power operator *(MassStream massStream, EnergyMassDensity energyMassDensity)
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
-            // scenario with hint
-            // Fill method HandleCreateOperatorCode
-            // .Is<MassStream, EnergyMassDensity, Power>("*")
-            throw new NotImplementedException();
-            // scenario F1
+            // scenario F2
+            throw new NotImplementedException("Not implemented yet");
         }
 
         /// <summary>
@@ -124,6 +118,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<MassStream, Density, VolumeStream>("/")
+            // hint location GetBasicOperatorHints, line 31
             var massStreamUnit = massStream.Unit;
             var densityUnit = density.Unit;
             var tmp1 = densityUnit.DenominatorUnit;
@@ -145,6 +140,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<MassStream, VolumeStream, Density>("/")
+            // hint location GetBasicOperatorHints, line 31
             var volumeStreamUnit = volumeStream.Unit;
             var tmp1 = volumeStreamUnit.CounterUnit;
             var massStreamUnit = massStream.Unit;

@@ -16,6 +16,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<Time, Power, Energy>("*")
+            // hint location HandleCreateOperatorCode, line 42
             var timeValue = time.GetBaseUnitValue();
             var powerValue = power.GetBaseUnitValue();
             var basicEnergy = timeValue * powerValue;
@@ -34,6 +35,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<Power, Time, Energy>("*")
+            // hint location HandleCreateOperatorCode, line 51
             var x = 4;
             var powerValue = power.GetBaseUnitValue();
             var timeValue = time.GetBaseUnitValue();
@@ -147,6 +149,7 @@ namespace iSukces.UnitedValues
             // Length operator *(Velocity velocity, Time time)
             // scenario with hint
             // .Is<Velocity, Time, Length>("*")
+            // hint location GetBasicOperatorHints, line 31
             var velocityUnit = velocity.Unit;
             var timeConverted = time.ConvertTo(velocityUnit.DenominatorUnit);
             var value = velocity.Value * timeConverted.Value;
