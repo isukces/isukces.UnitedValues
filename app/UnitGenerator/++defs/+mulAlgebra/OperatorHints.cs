@@ -35,6 +35,8 @@ namespace UnitGenerator
         {
             public bool ShouldITryToCreate(string name)
             {
+                if (Handled)
+                    return false;
                 if (!(Input is OperatorParams op))
                     return true;
                 var implementingClass = op.OperatorHints?.ImplementingClass;

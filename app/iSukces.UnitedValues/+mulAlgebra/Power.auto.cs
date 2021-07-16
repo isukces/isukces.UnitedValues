@@ -32,8 +32,14 @@ namespace iSukces.UnitedValues
         public static EnergyMassDensity operator /(Power power, MassStream massStream)
         {
             // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
-            // scenario G
-            throw new NotImplementedException("Not implemented yet");
+            // scenario with hint
+            // .Is<Power, MassStream, EnergyMassDensity>("/")
+            // hint location HandleCreateOperatorCode, line 27
+            var massUnit = massStream.Unit.CounterUnit;
+            var leftConverted = power.ConvertTo(PowerUnits.Watt);
+            var rightConverted = massStream.ConvertTo(new MassStreamUnit(massUnit, TimeUnits.Second));
+            var value = leftConverted.Value / rightConverted.Value;
+            return new EnergyMassDensity(value, new EnergyMassDensityUnit(EnergyUnits.Joule, massUnit));
         }
 
         /// <summary>

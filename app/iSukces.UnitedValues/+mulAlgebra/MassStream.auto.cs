@@ -14,8 +14,15 @@ namespace iSukces.UnitedValues
         public static Power operator *(EnergyMassDensity energyMassDensity, MassStream massStream)
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
-            // scenario F2
-            throw new NotImplementedException("Not implemented yet");
+            // scenario with hint
+            // .Is<EnergyMassDensity, MassStream, Power>("*")
+            // hint location HandleCreateOperatorCode, line 38
+            var massUnit = massStream.Unit.CounterUnit;
+            var leftConverted = energyMassDensity.ConvertTo(new EnergyMassDensityUnit(EnergyUnits.Joule, massUnit));
+            var rightConverted = massStream.ConvertTo(new MassStreamUnit(massUnit, TimeUnits.Second));
+            var value = leftConverted.Value * rightConverted.Value;
+            return new Power(value, PowerUnits.Watt);
+            // scenario F1
         }
 
         /// <summary>
@@ -26,8 +33,15 @@ namespace iSukces.UnitedValues
         public static Power operator *(MassStream massStream, EnergyMassDensity energyMassDensity)
         {
             // generator : MultiplyAlgebraGenerator.CreateOperator
-            // scenario F2
-            throw new NotImplementedException("Not implemented yet");
+            // scenario with hint
+            // .Is<MassStream, EnergyMassDensity, Power>("*")
+            // hint location HandleCreateOperatorCode, line 49
+            var massUnit = massStream.Unit.CounterUnit;
+            var leftConverted = energyMassDensity.ConvertTo(new EnergyMassDensityUnit(EnergyUnits.Joule, massUnit));
+            var rightConverted = massStream.ConvertTo(new MassStreamUnit(massUnit, TimeUnits.Second));
+            var value = leftConverted.Value * rightConverted.Value;
+            return new Power(value, PowerUnits.Watt);
+            // scenario F1
         }
 
         /// <summary>

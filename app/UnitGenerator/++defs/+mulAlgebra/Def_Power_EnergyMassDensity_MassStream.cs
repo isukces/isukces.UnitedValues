@@ -24,14 +24,35 @@ namespace UnitGenerator
 
             if (input.Is<Power, MassStream, EnergyMassDensity>("/"))
             {
+                e.SetHandled();
+                result.AddVariable("massUnit", "$(right).Unit.CounterUnit");
+                result.AddVariable("leftConverted", "$(left).ConvertTo(PowerUnits.Watt)");
+                result.AddVariable("rightConverted", "$(right).ConvertTo(new MassStreamUnit(massUnit, TimeUnits.Second))");
+                result.WithResultUnit<EnergyMassDensityUnit>("EnergyUnits.Joule", "massUnit");
+                result.UseValueExpression = "leftConverted.Value / rightConverted.Value";
+                return;
             }
 
             if (input.Is<EnergyMassDensity, MassStream, Power>("*"))
             {
+                e.SetHandled();
+                result.AddVariable("massUnit", "$(right).Unit.CounterUnit");
+                result.AddVariable("leftConverted", "$(left).ConvertTo(new EnergyMassDensityUnit(EnergyUnits.Joule, massUnit))");
+                result.AddVariable("rightConverted", "$(right).ConvertTo(new MassStreamUnit(massUnit, TimeUnits.Second))");
+                result.ResultUnit         = "PowerUnits.Watt";
+                result.UseValueExpression = "leftConverted.Value * rightConverted.Value";
+                return;
             }
 
             if (input.Is<MassStream, EnergyMassDensity, Power>("*"))
             {
+                e.SetHandled();
+                result.AddVariable("massUnit", "$(left).Unit.CounterUnit");
+                result.AddVariable("leftConverted", "$(right).ConvertTo(new EnergyMassDensityUnit(EnergyUnits.Joule, massUnit))");
+                result.AddVariable("rightConverted", "$(left).ConvertTo(new MassStreamUnit(massUnit, TimeUnits.Second))");
+                result.ResultUnit         = "PowerUnits.Watt";
+                result.UseValueExpression = "leftConverted.Value * rightConverted.Value";
+                return;
             }
 
             result.SetThrow();
