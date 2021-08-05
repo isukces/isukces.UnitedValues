@@ -15,9 +15,9 @@
     <IncludeSymbols>true</IncludeSymbols>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.21197.22</AssemblyVersion>
-    <Version>1.0.21197.22</Version>
-    <FileVersion>1.0.21197.22</FileVersion>
+    <AssemblyVersion>1.0.21217.23</AssemblyVersion>
+    <Version>1.0.21217.23</Version>
+    <FileVersion>1.0.21217.23</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
