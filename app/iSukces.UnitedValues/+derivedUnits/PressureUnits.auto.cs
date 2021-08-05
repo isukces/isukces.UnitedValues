@@ -43,7 +43,8 @@ namespace iSukces.UnitedValues
                     Pascal,
                     HectoPascal,
                     KiloPascal,
-                    MegaPascal
+                    MegaPascal,
+                    GigaPascal
                 };
             }
         }
@@ -63,6 +64,10 @@ namespace iSukces.UnitedValues
         internal static readonly PressureUnit MegaPascalPressureUnit = new PressureUnit("MPa");
 
         public static readonly UnitDefinition<PressureUnit> MegaPascal = new UnitDefinition<PressureUnit>(MegaPascalPressureUnit, 1000000m);
+
+        internal static readonly PressureUnit GigaPascalPressureUnit = new PressureUnit("GPa");
+
+        public static readonly UnitDefinition<PressureUnit> GigaPascal = new UnitDefinition<PressureUnit>(GigaPascalPressureUnit, 1000000000m);
 
     }
 }

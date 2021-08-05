@@ -198,6 +198,46 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
+        /// creates pressure from value in GPa
+        /// </summary>
+        /// <param name="value">Pressure value in GPa</param>
+        public static Pressure FromGigaPascal(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Pressure(value, PressureUnits.GigaPascal);
+        }
+
+        /// <summary>
+        /// creates pressure from value in GPa
+        /// </summary>
+        /// <param name="value">Pressure value in GPa</param>
+        public static Pressure FromGigaPascal(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Pressure((decimal)value, PressureUnits.GigaPascal);
+        }
+
+        /// <summary>
+        /// creates pressure from value in GPa
+        /// </summary>
+        /// <param name="value">Pressure value in GPa</param>
+        public static Pressure FromGigaPascal(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Pressure(value, PressureUnits.GigaPascal);
+        }
+
+        /// <summary>
+        /// creates pressure from value in GPa
+        /// </summary>
+        /// <param name="value">Pressure value in GPa</param>
+        public static Pressure FromGigaPascal(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Pressure(value, PressureUnits.GigaPascal);
+        }
+
+        /// <summary>
         /// creates pressure from value in hPa
         /// </summary>
         /// <param name="value">Pressure value in hPa</param>

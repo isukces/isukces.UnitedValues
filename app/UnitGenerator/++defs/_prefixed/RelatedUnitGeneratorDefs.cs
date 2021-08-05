@@ -70,7 +70,8 @@ namespace UnitGenerator
                 new RelatedUnit("Pressure")
                     .WithPrefixedUnit("Pa", "Pascal", 1)
                     .WithPrefixedUnit("hPa", "hectoPascal", 100)
-                    .WithPrefixedUnits("Pa", "Pascal", CommonPrefixes.Kilo | CommonPrefixes.Mega)
+                    .WithPrefixedUnits("Pa", "Pascal", 
+                        CommonPrefixes.Kilo | CommonPrefixes.Mega | CommonPrefixes.Giga)
             };
             return arr;
         }
