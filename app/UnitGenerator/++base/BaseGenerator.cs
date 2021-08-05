@@ -42,16 +42,23 @@ namespace UnitGenerator
                 Cfg = unit;
                 if (!CanGenerate())
                     continue;
-                var file = new CsFile();
-                PrepareFile(file);
-                var ns   = file.GetOrCreateNamespace(_nameSpace);
                 var name = GetTypename(unit);
+                var info = CsFilesManager.Instance.GetFileInfo(name, _nameSpace);
+
+                var file = info.File;
+                if (!info.IsEmbedded)
+                    PrepareFile(file);
+                var ns   = file.GetOrCreateNamespace(_nameSpace);
+                
                 Target           = ns.GetOrCreateClass(name);
                 Target.IsPartial = true;
                 GenerateOne();
-                file.BeginContent += "// generator: " + GetType().Name;
-                var filename = Path.Combine(_output, name + ".auto.cs");
-                file.SaveIfDifferent(filename);
+                CsFilesManager.AddGeneratorName(file, GetType().Name);
+                if (!info.IsEmbedded)
+                {
+                    var filename = Path.Combine(_output, name + ".auto.cs");
+                    file.SaveIfDifferent(filename);
+                }
             }
         }
 

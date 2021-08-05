@@ -10,7 +10,8 @@ namespace UnitGenerator
 {
     public class MultiplyAlgebraGenerator : MultipleFilesGenerator
     {
-        public MultiplyAlgebraGenerator(string nameSpace) : base(nameSpace)
+        public MultiplyAlgebraGenerator(string nameSpace) 
+            : base(nameSpace)
         {
         }
 

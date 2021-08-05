@@ -28,17 +28,33 @@ namespace UnitGenerator
 
         private protected CsClass GetClass(string name)
         {
+            var info2 = CsFilesManager.Instance.GetFileInfo(name, _nameSpace);
+            var file = info2.File;
+            if (info2.IsEmbedded)
+            {
+                CsFilesManager.AddGeneratorName(file, GetType().Name);
+                //file.BeginContent += "// generator: " + GetType().Name;
+                // ProcessFile(file);
+                var ns = file.GetOrCreateNamespace(_nameSpace);
+                var cl = ns.GetOrCreateClass(name);
+                cl.IsPartial  = true;
+                /*info          = new FileHolder(file, ns, cl);
+                _clases[name] = info;
+                return info.Cl;*/
+                return cl;
+            }
             if (_clases.TryGetValue(name, out var info))
                 return info.Cl;
-            var file = new CsFile();
-            file.BeginContent += "// generator: " + GetType().Name;
-            ProcessFile(file);
-            var ns = file.GetOrCreateNamespace(_nameSpace);
-            var cl = ns.GetOrCreateClass(name);
-            cl.IsPartial  = true;
-            info          = new FileHolder(file, ns, cl);
-            _clases[name] = info;
-            return info.Cl;
+            {
+                //file.BeginContent += "// generator: " + GetType().Name;
+                ProcessFile(file);
+                var ns = file.GetOrCreateNamespace(_nameSpace);
+                var cl = ns.GetOrCreateClass(name);
+                cl.IsPartial  = true;
+                info          = new FileHolder(file, ns, cl);
+                _clases[name] = info;
+                return info.Cl;
+            }
         }
 
         private readonly Dictionary<string, FileHolder> _clases = new Dictionary<string, FileHolder>();

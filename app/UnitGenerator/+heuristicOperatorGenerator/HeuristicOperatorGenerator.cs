@@ -185,6 +185,11 @@ namespace UnitGenerator
                     addExtraValueMultiplication = () => { return result.Code + "." + nameof(IUnitDefinition.Multiplication); };
                 }
             }
+
+            if (result is null)
+            {
+                
+            }
             reductor.AddAny(result);
             //result.AddToDeleteMe(reductor);
             reductor.ReduceExpressions();
@@ -195,7 +200,7 @@ namespace UnitGenerator
 
 
             // =============================
-            if (result.Code == "specificHeatCapacity.Unit.DenominatorUnit")
+            if (result?.Code == "specificHeatCapacity.Unit.DenominatorUnit")
                 Debug.WriteLine("");
             switch (convertType)
             {

@@ -4,9 +4,10 @@
         <Authors>Internet Sukces Piotr Stęclik</Authors>
         <Company>Internet Sukces Piotr Stęclik</Company>
         <Copyright>Copyright by Internet Sukces Piotr Stęclik 2017-2021</Copyright>
-        <TargetFramework>net47</TargetFramework>
+        <TargetFramework>net48</TargetFramework>
         <OutputType>Exe</OutputType>
         <IsPackable>false</IsPackable>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="iSukces.Code" Version="1.0.21211.183" />

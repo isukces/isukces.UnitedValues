@@ -46,6 +46,9 @@ namespace UnitGenerator
             
             InversedUnitGeneratorRunner.Run(basePath, nameSpace);
             InversedValuesGeneratorRunner.Run(basePath, nameSpace);
+
+
+            CsFilesManager.Instance.Flush();
             Console.WriteLine("Done");
         }
     }

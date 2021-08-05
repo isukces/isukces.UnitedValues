@@ -17,9 +17,10 @@ namespace UnitGenerator
 
         protected override void GenerateOne()
         {
-            _info       = GetInfo();
-            _info2      = GetInfo2();
-            Target.Kind = CsNamespaceMemberKind.Class;
+            _info           = GetInfo();
+            _info2          = GetInfo2();
+            Target.Kind     = CsNamespaceMemberKind.Class;
+            Target.IsSealed = true;
 
             foreach (var i in GetImplementedInterfaces())
                 Target.ImplementedInterfaces.Add(i);

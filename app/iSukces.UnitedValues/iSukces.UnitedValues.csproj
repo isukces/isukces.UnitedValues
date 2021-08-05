@@ -28,4 +28,7 @@
       <DependentUpon>InversedDeltaKelvinTemperature.cs</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="+derivedUnits" />
+  </ItemGroup>
 </Project>
