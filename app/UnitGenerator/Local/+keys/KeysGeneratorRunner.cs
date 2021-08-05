@@ -24,12 +24,11 @@ namespace UnitGenerator.Local
 
             var file = new CsFile();
             file.AddImportNamespace("System");
-            var classes = new Dictionary<TypeProvider, CsClass>();
             IAutoCodeGeneratorContext ctx =
                 new AutoCodeGenerator.SimpleAutoCodeGeneratorContext(file,
                     type =>
                     {
-                        var c = file.GetOrCreateClass(type, classes);
+                        var c = file.GetOrCreateClass(type);
                         c.IsPartial = true;
                         return c;
                     });

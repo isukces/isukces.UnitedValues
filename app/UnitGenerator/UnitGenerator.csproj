@@ -9,7 +9,7 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="iSukces.Code" Version="1.0.21073.174" />
+      <PackageReference Include="iSukces.Code" Version="1.0.21211.183" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
