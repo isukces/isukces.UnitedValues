@@ -32,10 +32,13 @@ namespace UnitGenerator
                 Def_LinearForce_Length_Pressure.Setup(c);
                 Def_Force_Length_LinearForce.Setup(c);
                 Def_Force_Area_Pressure.Setup(c);
+                Def_Pressure_PlanarDensity_Acceleration.Setup(c);
 
                 c.WithDiv<MassStream, Density, VolumeStream>(hints);
                 c.WithDiv<Length, Time, Velocity>(hints);
                 c.WithDiv<VolumeStream, Area, Velocity>(hints);
+
+                
                 return c;
             }
         }

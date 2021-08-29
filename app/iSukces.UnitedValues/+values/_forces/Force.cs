@@ -282,7 +282,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<Force, Area, Pressure>("/")
-            // hint location HandleCreateOperatorCode, line 24
+            // hint location HandleCreateOperatorCode, line 26
             var leftConverted = force.ConvertTo(ForceUnits.Newton);
             var rightConverted = area.ConvertTo(AreaUnits.SquareMeter);
             var value = leftConverted.Value / rightConverted.Value;
@@ -300,7 +300,7 @@ namespace iSukces.UnitedValues
             // generator : MultiplyAlgebraGenerator.CreateOperator
             // scenario with hint
             // .Is<Force, Pressure, Area>("/")
-            // hint location HandleCreateOperatorCode, line 31
+            // hint location HandleCreateOperatorCode, line 33
             var leftConverted = force.ConvertTo(ForceUnits.Newton);
             var rightConverted = pressure.ConvertTo(PressureUnits.Pascal);
             var value = leftConverted.Value / rightConverted.Value;

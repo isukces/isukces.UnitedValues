@@ -1,14 +1,15 @@
-using TMul = iSukces.UnitedValues.Force;
-using T1 = iSukces.UnitedValues.Area;
-using T2 = iSukces.UnitedValues.Pressure;
+
+using TMul = iSukces.UnitedValues.Pressure;
+using T1 = iSukces.UnitedValues.PlanarDensity;
+using T2 = iSukces.UnitedValues.Acceleration;
 
 namespace UnitGenerator
 {
-    public class Def_Force_Area_Pressure
+    public class Def_Pressure_PlanarDensity_Acceleration
     {
         private static void HandleCreateOperatorCode(object sender, OperatorHints.CreateOperatorCodeEventArgs e)
         {
-            if (!e.ShouldITryToCreate(nameof(Def_Force_Area_Pressure)))
+            if (!e.ShouldITryToCreate(nameof(Def_Pressure_PlanarDensity_Acceleration)))
                 return;
             var input  = e.Input;
             var result = e.Result;
@@ -56,14 +57,14 @@ namespace UnitGenerator
         {
             var hints = new OperatorHints
             {
-                ImplementingClass = nameof(Def_Force_Area_Pressure)
+                ImplementingClass = nameof(Def_Pressure_PlanarDensity_Acceleration)
             };
             hints.CreateOperatorCode += HandleCreateOperatorCode;
             c.WithDiv<TMul, T1, T2>(hints);
         }
 
-        private const string TMulUnit = "ForceUnits.Newton";
-        private const string T1Unit = "AreaUnits.SquareMeter";
-        private const string T2Unit = "PressureUnits.Pascal";
+        private const string TMulUnit = "PressureUnits.Pascal";
+        private const string T1Unit = "PlanarDensityUnits.KgPerSquareMeter";
+        private const string T2Unit = "AccelerationUnits.MetersPerSquareSeconds";
     }
 }

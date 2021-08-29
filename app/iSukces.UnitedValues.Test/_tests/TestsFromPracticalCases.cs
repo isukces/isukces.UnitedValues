@@ -79,5 +79,18 @@ namespace iSukces.UnitedValues.Test
 
             var result = at_1_C * (T_C - To_C) * L_m - F_N_m / Et_N_m2 * (L_m * L_m) / (2 * A_m2);
         }
+
+        [Fact]
+        public void T03_Should_multiply_PlanarDensity_Acceleration()
+        {
+            Length       l  = Length.FromMeter(1.2);
+            Density      d  = new Density(13, MassUnits.Kg, VolumeUnits.CubicMeter);
+            Acceleration acc  = new Acceleration(9.81m, LengthUnits.Meter, SquareTimeUnits.SquareSecond);
+            Pressure     v1 = l * d * acc;
+            
+            // next to do
+            // Pressure     v2 = l * (d * acc); // need N/m3
+            // Pressure     v3 = acc * l * d; // need sq. velocity (m2/s2)
+        }
     }
 }
