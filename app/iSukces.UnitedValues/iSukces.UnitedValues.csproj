@@ -15,9 +15,9 @@
     <IncludeSymbols>true</IncludeSymbols>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.21247.25</AssemblyVersion>
-    <Version>1.0.21247.25</Version>
-    <FileVersion>1.0.21247.25</FileVersion>
+    <AssemblyVersion>1.0.21289.26</AssemblyVersion>
+    <Version>1.0.21289.26</Version>
+    <FileVersion>1.0.21289.26</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
@@ -27,8 +27,5 @@
     <Compile Update="+IUnitedValue\+inversed\InversedDeltaKelvinTemperature.auto.cs">
       <DependentUpon>InversedDeltaKelvinTemperature.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="+derivedUnits" />
   </ItemGroup>
 </Project>

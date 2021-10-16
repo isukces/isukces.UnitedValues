@@ -46,6 +46,8 @@ namespace UnitGenerator
             
             InversedUnitGeneratorRunner.Run(basePath, nameSpace);
             InversedValuesGeneratorRunner.Run(basePath, nameSpace);
+            
+            ThermalValuesGeneratorRunner.Run(basePath, nameSpace);
 
 
             CsFilesManager.Instance.Flush();
