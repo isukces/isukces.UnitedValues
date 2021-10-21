@@ -61,6 +61,11 @@ namespace UnitGenerator
 
         private static FractionUnitsCollection _allFractionUnitses;
 
+        
+        
+        public static readonly FractionUnit Irradiance = FractionUnit.Make<Power, Area>(nameof(Irradiance));
+        public static readonly FractionUnit LinearPowerLoss = FractionUnit.Make<Power, Length>(nameof(LinearPowerLoss));
+        
 
         /*
         public static readonly FractionUnit SpecificHeatCapacity
