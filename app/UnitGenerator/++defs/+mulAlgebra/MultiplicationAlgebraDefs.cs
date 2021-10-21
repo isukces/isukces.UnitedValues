@@ -33,6 +33,9 @@ namespace UnitGenerator
                 Def_Force_Length_LinearForce.Setup(c);
                 Def_Force_Area_Pressure.Setup(c);
                 Def_Pressure_PlanarDensity_Acceleration.Setup(c);
+                Def_Power_Length_LinearPowerLoss.Setup(c);
+                Def_LinearPowerLoss_Length_Irradiance.Setup(c);
+                Def_Power_Area_Irradiance.Setup(c);
 
                 c.WithDiv<MassStream, Density, VolumeStream>(hints);
                 c.WithDiv<Length, Time, Velocity>(hints);

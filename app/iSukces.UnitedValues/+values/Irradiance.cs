@@ -24,20 +24,20 @@ namespace iSukces.UnitedValues
     public partial struct Irradiance : IUnitedValue<IrradianceUnit>, IEquatable<Irradiance>, IFormattable
     {
         /// <summary>
-        ///     creates instance of Irradiance
+        /// creates instance of Irradiance
         /// </summary>
         /// <param name="value">value</param>
         /// <param name="unit">unit</param>
         public Irradiance(decimal value, IrradianceUnit unit)
         {
             Value = value;
-            Unit  = unit;
+            Unit = unit;
         }
 
         public Irradiance(decimal value, PowerUnit counterUnit, AreaUnit denominatorUnit)
         {
             Value = value;
-            Unit  = new IrradianceUnit(counterUnit, denominatorUnit);
+            Unit = new IrradianceUnit(counterUnit, denominatorUnit);
         }
 
         public Irradiance ConvertTo(IrradianceUnit newUnit)
@@ -87,15 +87,21 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public Irradiance Round(int decimalPlaces) { return new Irradiance(Math.Round(Value, decimalPlaces), Unit); }
+        public Irradiance Round(int decimalPlaces)
+        {
+            return new Irradiance(Math.Round(Value, decimalPlaces), Unit);
+        }
 
         /// <summary>
-        ///     Returns unit name
+        /// Returns unit name
         /// </summary>
-        public override string ToString() { return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName; }
+        public override string ToString()
+        {
+            return Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName;
+        }
 
         /// <summary>
-        ///     Returns unit name
+        /// Returns unit name
         /// </summary>
         /// <param name="format"></param>
         /// <param name="provider"></param>
@@ -110,8 +116,8 @@ namespace iSukces.UnitedValues
             var oldUnit = Unit.CounterUnit;
             if (oldUnit == newUnit)
                 return this;
-            var oldFactor  = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
-            var newFactor  = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
             var resultUnit = Unit.WithCounterUnit(newUnit);
             return new Irradiance(oldFactor / newFactor * Value, resultUnit);
         }
@@ -122,71 +128,79 @@ namespace iSukces.UnitedValues
             var oldUnit = Unit.DenominatorUnit;
             if (oldUnit == newUnit)
                 return this;
-            var oldFactor  = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
-            var newFactor  = GlobalUnitRegistry.Factors.GetThrow(newUnit);
+            var oldFactor = GlobalUnitRegistry.Factors.GetThrow(oldUnit);
+            var newFactor = GlobalUnitRegistry.Factors.GetThrow(newUnit);
             var resultUnit = Unit.WithDenominatorUnit(newUnit);
             return new Irradiance(newFactor / oldFactor * Value, resultUnit);
         }
 
         /// <summary>
-        ///     Inequality operator
+        /// Inequality operator
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator !=(Irradiance left, Irradiance right) { return !left.Equals(right); }
+        public static bool operator !=(Irradiance left, Irradiance right)
+        {
+            return !left.Equals(right);
+        }
 
         /// <summary>
-        ///     Equality operator
+        /// Equality operator
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator ==(Irradiance left, Irradiance right) { return left.Equals(right); }
+        public static bool operator ==(Irradiance left, Irradiance right)
+        {
+            return left.Equals(right);
+        }
 
         public static Irradiance Parse(string value)
         {
             // generator : FractionValuesGenerator.Add_Parse
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException(nameof(value));
-            var r     = CommonParse.Parse(value, typeof(Irradiance));
+            var r = CommonParse.Parse(value, typeof(Irradiance));
             var units = Common.SplitUnitNameBySlash(r.UnitName);
             if (units.Length != 2)
                 throw new Exception($"{r.UnitName} is not valid Irradiance unit");
-            var counterUnit     = new PowerUnit(units[0]);
+            var counterUnit = new PowerUnit(units[0]);
             var denominatorUnit = new AreaUnit(units[1]);
             return new Irradiance(r.Value, counterUnit, denominatorUnit);
         }
 
         /// <summary>
-        ///     value
+        /// value
         /// </summary>
         public decimal Value { get; }
 
         /// <summary>
-        ///     unit
+        /// unit
         /// </summary>
         public IrradianceUnit Unit { get; }
+
     }
 
     public partial class IrradianceJsonConverter : JsonConverter
     {
-        public override bool CanConvert(Type objectType) { return objectType == typeof(IrradianceUnit); }
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(IrradianceUnit);
+        }
 
         /// <summary>
-        ///     Reads the JSON representation of the object.
+        /// Reads the JSON representation of the object.
         /// </summary>
         /// <param name="reader">The JsonReader to read from.</param>
         /// <param name="objectType">Type of the object.</param>
         /// <param name="existingValue">The existing value of object being read.</param>
         /// <param name="serializer">The calling serializer.</param>
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             if (reader.ValueType == typeof(string))
             {
                 if (objectType == typeof(Irradiance))
                     return Irradiance.Parse((string)reader.Value);
             }
-
             throw new NotImplementedException();
         }
 
@@ -197,5 +211,6 @@ namespace iSukces.UnitedValues
             else
                 writer.WriteValue(value.ToString());
         }
+
     }
 }

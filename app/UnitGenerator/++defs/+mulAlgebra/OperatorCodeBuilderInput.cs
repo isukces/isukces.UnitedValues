@@ -39,7 +39,10 @@ namespace UnitGenerator
         {
             RightValue = $"{OperatorParameters.RightMethodArgumentName}.ConvertTo({targetType})";
         }
-        
+        public void ConvertRight_WithDenominatorUnit(string targetType)
+        {
+            RightValue = $"{OperatorParameters.RightMethodArgumentName}.WithDenominatorUnit({targetType})";
+        }
  
 
         public void ConvertRight_FromLeftUnit(string propertyOfUnit)
