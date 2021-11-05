@@ -45,9 +45,7 @@ namespace UnitGenerator
                     .WithPrefixedUnit("N", "Newton", 1)
                     .WithPrefixedUnits("N", "Newton", CommonPrefixes.Kilo | CommonPrefixes.Mega | CommonPrefixes.Mili),
                 
-                new RelatedUnit(nameof(Power))
-                    .WithPrefixedUnit("W", "Watt", 1)
-                    .WithPrefixedUnits("W", "Watt", CommonPrefixes.Kilo | CommonPrefixes.Mega  | CommonPrefixes.Giga | CommonPrefixes.Mili),
+                GetPowerUnits(),
 
                 new RelatedUnit(nameof(Time)).WithTime(1),
                 new RelatedUnit(nameof(SquareTime)).WithTime(2),
@@ -74,6 +72,15 @@ namespace UnitGenerator
                         CommonPrefixes.Kilo | CommonPrefixes.Mega | CommonPrefixes.Giga)
             };
             return arr;
+        }
+
+        private static RelatedUnit GetPowerUnits()
+        {
+            const decimal secondsPerYear = 1_000_000_000m / Time.SecondsPerYear;
+            return new RelatedUnit(nameof(Power))
+                .WithPrefixedUnit("W", "Watt", 1)
+                .WithPrefixedUnit("GJ/year", "GigaJoulePerYear", secondsPerYear)
+                .WithPrefixedUnits("W", "Watt", CommonPrefixes.Kilo | CommonPrefixes.Mega  | CommonPrefixes.Giga | CommonPrefixes.Mili);
         }
 
         public static RelatedUnitCollection All

@@ -164,6 +164,8 @@ namespace iSukces.UnitedValues
             dict.AddRelated<TimeUnit, SquareTimeUnit>(TimeUnits.Minute, SquareMinute);
             dict.AddRelated<SquareTimeUnit, TimeUnit>(SquareHour, TimeUnits.Hour);
             dict.AddRelated<TimeUnit, SquareTimeUnit>(TimeUnits.Hour, SquareHour);
+            dict.AddRelated<SquareTimeUnit, TimeUnit>(SquareYear, TimeUnits.Year);
+            dict.AddRelated<TimeUnit, SquareTimeUnit>(TimeUnits.Year, SquareYear);
         }
 
         /// <summary>
@@ -178,7 +180,8 @@ namespace iSukces.UnitedValues
                     SquareMiliSecond,
                     SquareSecond,
                     SquareMinute,
-                    SquareHour
+                    SquareHour,
+                    SquareYear
                 };
             }
         }
@@ -198,6 +201,10 @@ namespace iSukces.UnitedValues
         internal static readonly SquareTimeUnit SquareHourSquareTimeUnit = new SquareTimeUnit(TimeUnits.Hour);
 
         public static readonly UnitDefinition<SquareTimeUnit> SquareHour = new UnitDefinition<SquareTimeUnit>(SquareHourSquareTimeUnit, 3600m * 3600m);
+
+        internal static readonly SquareTimeUnit SquareYearSquareTimeUnit = new SquareTimeUnit(TimeUnits.Year);
+
+        public static readonly UnitDefinition<SquareTimeUnit> SquareYear = new UnitDefinition<SquareTimeUnit>(SquareYearSquareTimeUnit, 31556925.993600m * 31556925.993600m);
 
     }
 }

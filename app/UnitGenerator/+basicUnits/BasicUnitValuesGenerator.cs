@@ -16,6 +16,10 @@ namespace UnitGenerator
         public static  void Add_FromMethods(Type t, XValueTypeName valueTypeName,
             TypesGroup types, CsClass target, IRelatedUnitDefinition u)
         {
+#if DEBUG
+            if (target.Name == "Power")
+                System.Diagnostics.Debug.Write("");
+#endif
             foreach (var inputType in "decimal,double,int,long".Split(','))
             {
                 var arg = "value";
@@ -33,7 +37,6 @@ namespace UnitGenerator
                 var m = target.AddMethod(methodName, target.Name, methodDescription)
                     .WithStatic()
                     .WithBody(cw);
-                    //.WithBodyFromExpression(args);
                 m.AddParam("value", inputType).Description = string.Format("{0}{1}", valueTypeName, valueIn);
             }
         }

@@ -133,7 +133,8 @@ namespace iSukces.UnitedValues
                     MiliSecond,
                     Second,
                     Minute,
-                    Hour
+                    Hour,
+                    Year
                 };
             }
         }
@@ -153,6 +154,10 @@ namespace iSukces.UnitedValues
         internal static readonly TimeUnit HourTimeUnit = new TimeUnit("h");
 
         public static readonly UnitDefinition<TimeUnit> Hour = new UnitDefinition<TimeUnit>(HourTimeUnit, 3600m);
+
+        internal static readonly TimeUnit YearTimeUnit = new TimeUnit("y");
+
+        public static readonly UnitDefinition<TimeUnit> Year = new UnitDefinition<TimeUnit>(YearTimeUnit, 31556925.993600m);
 
     }
 }

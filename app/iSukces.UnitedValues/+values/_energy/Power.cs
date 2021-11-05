@@ -532,6 +532,46 @@ namespace iSukces.UnitedValues
         }
 
         /// <summary>
+        /// creates power from value in GJ/year
+        /// </summary>
+        /// <param name="value">Power value in GJ/year</param>
+        public static Power FromGigaJoulePerYear(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Power(value, PowerUnits.GigaJoulePerYear);
+        }
+
+        /// <summary>
+        /// creates power from value in GJ/year
+        /// </summary>
+        /// <param name="value">Power value in GJ/year</param>
+        public static Power FromGigaJoulePerYear(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Power((decimal)value, PowerUnits.GigaJoulePerYear);
+        }
+
+        /// <summary>
+        /// creates power from value in GJ/year
+        /// </summary>
+        /// <param name="value">Power value in GJ/year</param>
+        public static Power FromGigaJoulePerYear(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Power(value, PowerUnits.GigaJoulePerYear);
+        }
+
+        /// <summary>
+        /// creates power from value in GJ/year
+        /// </summary>
+        /// <param name="value">Power value in GJ/year</param>
+        public static Power FromGigaJoulePerYear(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new Power(value, PowerUnits.GigaJoulePerYear);
+        }
+
+        /// <summary>
         /// creates power from value in GW
         /// </summary>
         /// <param name="value">Power value in GW</param>

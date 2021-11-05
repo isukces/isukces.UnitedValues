@@ -359,6 +359,46 @@ namespace iSukces.UnitedValues
             return new SquareTime(value, SquareTimeUnits.SquareSecond);
         }
 
+        /// <summary>
+        /// creates squareTime from value in y²
+        /// </summary>
+        /// <param name="value">SquareTime value in y²</param>
+        public static SquareTime FromSquareYears(decimal value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new SquareTime(value, SquareTimeUnits.SquareYear);
+        }
+
+        /// <summary>
+        /// creates squareTime from value in y²
+        /// </summary>
+        /// <param name="value">SquareTime value in y²</param>
+        public static SquareTime FromSquareYears(double value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new SquareTime((decimal)value, SquareTimeUnits.SquareYear);
+        }
+
+        /// <summary>
+        /// creates squareTime from value in y²
+        /// </summary>
+        /// <param name="value">SquareTime value in y²</param>
+        public static SquareTime FromSquareYears(int value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new SquareTime(value, SquareTimeUnits.SquareYear);
+        }
+
+        /// <summary>
+        /// creates squareTime from value in y²
+        /// </summary>
+        /// <param name="value">SquareTime value in y²</param>
+        public static SquareTime FromSquareYears(long value)
+        {
+            // generator : BasicUnitValuesGenerator.Add_FromMethods
+            return new SquareTime(value, SquareTimeUnits.SquareYear);
+        }
+
         public static SquareTime Parse(string value)
         {
             // generator : BasicUnitValuesGenerator.Add_Parse

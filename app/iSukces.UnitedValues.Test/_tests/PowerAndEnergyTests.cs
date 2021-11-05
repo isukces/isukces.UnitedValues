@@ -48,5 +48,16 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal(20, power.Value, 8);
         }
 
+        [Fact]
+        public void T05_Should_calulate_power_from_GJ_per_year()
+        {
+            var power = Power.FromGigaJoulePerYear(60);
+            Assert.Equal("GJ/year", power.Unit.UnitName);
+            Assert.Equal(60, power.Value, 8);
+            power = power.ConvertTo(PowerUnits.Watt);
+            Assert.Equal("W", power.Unit.UnitName);
+            Assert.Equal(1901.32587731m, power.Value, 8);
+        }
+
     }
 }

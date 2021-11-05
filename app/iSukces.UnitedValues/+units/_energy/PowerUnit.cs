@@ -152,6 +152,7 @@ namespace iSukces.UnitedValues
                 return new []
                 {
                     Watt,
+                    GigaJoulePerYear,
                     KiloWatt,
                     MegaWatt,
                     GigaWatt,
@@ -163,6 +164,10 @@ namespace iSukces.UnitedValues
         internal static readonly PowerUnit WattPowerUnit = new PowerUnit("W");
 
         public static readonly UnitDefinition<PowerUnit> Watt = new UnitDefinition<PowerUnit>(WattPowerUnit, 1m);
+
+        internal static readonly PowerUnit GigaJoulePerYearPowerUnit = new PowerUnit("GJ/year");
+
+        public static readonly UnitDefinition<PowerUnit> GigaJoulePerYear = new UnitDefinition<PowerUnit>(GigaJoulePerYearPowerUnit, 31.688764621839531948700358345m);
 
         internal static readonly PowerUnit KiloWattPowerUnit = new PowerUnit("kW");
 

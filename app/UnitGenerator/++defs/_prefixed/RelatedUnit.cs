@@ -114,6 +114,7 @@ namespace UnitGenerator
                 new PrefixedUnitInfo("Second", "s", 1m),
                 new PrefixedUnitInfo("Minute", "min", 60, "Minutes"),
                 new PrefixedUnitInfo("Hour", "h", 3600, "Hours"),
+                new PrefixedUnitInfo("Year", "y", Time.SecondsPerYear, "Years")
             };
 
             var values = XValueTypeName.FromSplit(',', "Time,SquareTime");
