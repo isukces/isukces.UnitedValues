@@ -30,21 +30,19 @@ namespace UnitGenerator
                     {
                         // https://en.wikipedia.org/wiki/Pound_(mass)
                         // info.Description = "International troy ounce";
-                        info.System      = UnitSystem.Imperial;
+                        info.System = UnitSystem.Imperial;
                         // ℥
-                    })
-                
-                ,
+                    }),
                 new RelatedUnit(nameof(Length)).WithLengths(1),
-                
+
                 new RelatedUnit(nameof(Area)).WithLengths(2),
-                
+
                 new RelatedUnit(nameof(Volume)).WithLengths(3),
 
                 new RelatedUnit(nameof(Force))
                     .WithPrefixedUnit("N", "Newton", 1)
                     .WithPrefixedUnits("N", "Newton", CommonPrefixes.Kilo | CommonPrefixes.Mega | CommonPrefixes.Mili),
-                
+
                 GetPowerUnits(),
 
                 new RelatedUnit(nameof(Time)).WithTime(1),
@@ -64,15 +62,52 @@ namespace UnitGenerator
                     .WithPrefixedUnit("GWh", "GigaWattHour", 3600_000_000_000)
                     .WithPrefixedUnit("cal", "Calorie", 4.1855m)
                     .WithPrefixedUnit("kcal", "KiloCalorie", 4185.5m),
-                
+
                 new RelatedUnit("Pressure")
                     .WithPrefixedUnit("Pa", "Pascal", 1)
                     .WithPrefixedUnit("hPa", "hectoPascal", 100)
-                    .WithPrefixedUnits("Pa", "Pascal", 
-                        CommonPrefixes.Kilo | CommonPrefixes.Mega | CommonPrefixes.Giga)
+                    .WithPrefixedUnits("Pa", "Pascal",
+                        CommonPrefixes.Kilo | CommonPrefixes.Mega | CommonPrefixes.Giga),
+
+                GetEnergyMassDensity(),
+                GetLinearDensity()
             };
             return arr;
         }
+
+        private static RelatedUnit GetEnergyMassDensity()
+        {
+            var unit = new RelatedUnit(nameof(EnergyMassDensity));
+
+            void Add(string energyFieldName, string massFieldName)
+            {
+                unit = unit.AddFraction<EnergyMassDensityUnit>(
+                    typeof( EnergyUnits), energyFieldName, 
+                    typeof(MassUnits), massFieldName, true);
+            }
+            Add(nameof(EnergyUnits.KiloJoule), nameof(MassUnits.Kg));
+            Add(nameof(EnergyUnits.MegaJoule), nameof(MassUnits.Kg));
+            Add(nameof(EnergyUnits.MegaJoule), nameof(MassUnits.Tone));
+            Add(nameof(EnergyUnits.GigaJoule), nameof(MassUnits.Tone));
+            Add(nameof(EnergyUnits.KiloWattHour), nameof(MassUnits.Tone));
+            return unit;
+        }
+
+        private static RelatedUnit GetLinearDensity()
+        {
+            var unit = new RelatedUnit(nameof(LinearDensity));
+
+            void Add(string energyFieldName, string massFieldName)
+            {
+                unit = unit.AddFraction<LinearDensityUnit>(
+                    typeof(MassUnits), energyFieldName,
+                    typeof(LengthUnits), massFieldName, true);
+            }
+
+            Add(nameof(MassUnits.Kg), nameof(LengthUnits.Meter));
+            return unit;
+        }
+
 
         private static RelatedUnit GetPowerUnits()
         {
@@ -80,8 +115,11 @@ namespace UnitGenerator
             return new RelatedUnit(nameof(Power))
                 .WithPrefixedUnit("W", "Watt", 1)
                 .WithPrefixedUnit("GJ/year", "GigaJoulePerYear", secondsPerYear)
-                .WithPrefixedUnits("W", "Watt", CommonPrefixes.Kilo | CommonPrefixes.Mega  | CommonPrefixes.Giga | CommonPrefixes.Mili);
+                .WithPrefixedUnits("W", "Watt",
+                    CommonPrefixes.Kilo | CommonPrefixes.Mega | CommonPrefixes.Giga | CommonPrefixes.Mili);
         }
+
+        private static RelatedUnitCollection _all;
 
         public static RelatedUnitCollection All
         {
@@ -95,7 +133,5 @@ namespace UnitGenerator
                 return _all;
             }
         }
-
-        private static RelatedUnitCollection _all;
     }
 }

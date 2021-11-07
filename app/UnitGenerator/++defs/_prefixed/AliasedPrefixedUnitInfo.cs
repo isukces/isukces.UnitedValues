@@ -23,7 +23,9 @@ namespace UnitGenerator
 
         public TypeCodeAliases Aliases     { get; }
         
-        public string     Description { get; set; }
-        public UnitSystem System      { get; set; }
+        public string     Description     { get; set; }
+        public UnitSystem System          { get; set; }
+        public string     UnitConstructor { get; set; }
+        public bool       AddFromMethod   { get; set; }
     }
 }

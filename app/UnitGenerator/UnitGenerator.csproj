@@ -10,7 +10,7 @@
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="iSukces.Code" Version="1.0.21211.183" />
+      <PackageReference Include="iSukces.Code" Version="1.0.21240.184" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />

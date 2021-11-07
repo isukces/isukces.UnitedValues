@@ -68,17 +68,6 @@ namespace UnitGenerator
 
         private static void Add_Properties()
         {
-            /*
-            Target.AddField("BaseUnit", UnitTypeName)
-                .WithStatic()
-                .WithIsReadOnly()
-                .WithConstValue(Cfg.BaseUnitValueSource.ToString());
-                */
-
-            /*Target.AddField("Zero", Target.Name)
-                .WithStatic()
-                .WithIsReadOnly()
-                .WithConstValue($"new {Target.Name}(0, BaseUnit)");*/
         }
 
         private string UnitTypeName => Cfg.TargetUnitTypename;

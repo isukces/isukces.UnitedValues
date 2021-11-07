@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using iSukces.Code;
 using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
@@ -43,7 +44,7 @@ namespace UnitGenerator
                 if (!CanGenerate())
                     continue;
                 var name = GetTypename(unit);
-                var info = CsFilesManager.Instance.GetFileInfo(name, _nameSpace);
+                /*var info = CsFilesManager.Instance.GetFileInfo(name, _nameSpace);
 
                 var file = info.File;
                 if (!info.IsEmbedded)
@@ -51,15 +52,34 @@ namespace UnitGenerator
                 var ns   = file.GetOrCreateNamespace(_nameSpace);
                 
                 Target           = ns.GetOrCreateClass(name);
-                Target.IsPartial = true;
+                Target.IsPartial = true;*/
+                Target = Get(name, out var file);
                 GenerateOne();
                 CsFilesManager.AddGeneratorName(file, GetType().Name);
-                if (!info.IsEmbedded)
-                {
-                    var filename = Path.Combine(_output, name + ".auto.cs");
-                    file.SaveIfDifferent(filename);
-                }
+                
             }
+        }
+
+        protected CsClass Get(string name, out CsFile file)
+        {
+            var info = CsFilesManager.Instance.GetFileInfo(name, _nameSpace);
+
+            file = info.File;
+            if (!info.IsEmbedded)
+                PrepareFile(file);
+            var ns = file.GetOrCreateNamespace(_nameSpace);
+                
+            var t= ns.GetOrCreateClass(name);
+            t.IsPartial = true;
+            
+            
+            if (!info.IsEmbedded)
+            {
+                var filename = Path.Combine(_output, name + ".auto.cs");
+                file.SaveIfDifferent(filename);
+            }
+            
+            return t;
         }
 
         protected void Add_Constructor(Col1 col)
@@ -224,6 +244,8 @@ namespace UnitGenerator
 
         protected virtual void PrepareFile(CsFile file)
         {
+            if (file.Namespaces.Any())
+                return;
             file.AddImportNamespace("System");
             file.AddImportNamespace("System.Globalization");
             file.AddImportNamespace("System.Collections.Generic");

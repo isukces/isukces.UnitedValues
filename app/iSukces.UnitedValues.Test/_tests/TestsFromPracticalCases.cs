@@ -28,7 +28,7 @@ namespace iSukces.UnitedValues.Test
             Assert.Equal("147385J/kg", energyDensity.ToString());
 
             var newUnit = EnergyMassDensityUnits.KiloWattHourPerTone;
-            energyDensity = energyDensity.ConvertTo(newUnit);
+            energyDensity = energyDensity.ConvertTo(newUnit.Unit);
             Assert.Equal("40.9403kWh/t", energyDensity.Round(4).ToString());
 
             {

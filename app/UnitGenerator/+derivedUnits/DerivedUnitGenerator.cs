@@ -1,6 +1,6 @@
+using System;
 using System.Linq;
 using iSukces.Code;
-using iSukces.Code.CodeWrite;
 using iSukces.Code.Interfaces;
 using iSukces.UnitedValues;
 using JetBrains.Annotations;
@@ -14,52 +14,19 @@ namespace UnitGenerator
         {
         }
 
-        protected override void GenerateOne()
+        static (Type, Type) GetFractionalUnit(Type t)
         {
-            Related         = RelatedUnitGeneratorDefs.All.GetPowers(Cfg.Name.ToUnitTypeName());
-            Target.IsStatic = true;
-            Add_AllProperty();
-            Add_Properties();
-            Add_Register();
-            Add_RegisterUnitExchangeFactors();
-            Add_TryRecoverUnitFromName();
-        }
-        
+            foreach (var i in t.GetInterfaces())
+            {
+                if (!i.IsGenericType) continue;
+                if (i.GetGenericTypeDefinition() != typeof(IFractionalUnit<,>)) continue;
+                var args = i.GetGenericArguments();
+                return (args[0], args[1]);
+            }
 
-        private void Add_TryRecoverUnitFromName()
-        {
-            var cw = Ext.Create(GetType());
-
-            const ArgChecking flags = ArgChecking.NormalizedString;
-            cw.CheckArgument("unitName", flags, Target);
-            cw.Open("foreach (var i in All)");
-            cw.SingleLineIf("unitName == i.UnitName", "return i.Unit;");
-            cw.Close();
-
-            var resultTypeName = Cfg.Name.ToUnitTypeName().GetTypename();
-            cw.WriteReturn(new CsArguments("unitName").Create(resultTypeName));
-            var m = Target.AddMethod("TryRecoverUnitFromName", resultTypeName)
-                .WithStatic()
-                .WithBody(cw);
-            var p = m.AddParam("unitName", "string");
-            p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
+            return (null, null);
         }
 
-        private void Add_RegisterUnitExchangeFactors()
-        {
-            Target.WithAttributeFromName(nameof(UnitsContainerAttribute));
-            var m = Target.AddMethod("RegisterUnitExchangeFactors", "void")
-                .WithStatic()
-                .WithBody("factors.RegisterMany(All);");
-            m.AddParam<UnitExchangeFactors>("factors", Target);
-        }
-
-
-        protected override string GetTypename(RelatedUnit cfg)
-        {
-            return cfg.Name.ToUnitTypeName().ToUnitContainerTypeName().TypeName;
-        }
-        
         private void Add_AllProperty()
         {
             var cw    = new CsCodeWriter();
@@ -81,8 +48,12 @@ namespace UnitGenerator
 
                 var n2 = i.FieldName + unitTypeName;
                 {
-                    var args       = i.UnitShortCode.GetCreationArgs(Related);
-                    var constValue = args.Create(unitTypeName);
+                    var constValue = i.UnitConstructor;
+                    if (string.IsNullOrEmpty(constValue))
+                    {
+                        var args       = i.UnitShortCode.GetCreationArgs(Related);
+                        constValue = args.Create(unitTypeName);
+                    }
 
                     Target.AddField(n2, unitTypeName)
                         .WithIsReadOnly()
@@ -111,6 +82,15 @@ namespace UnitGenerator
                         .WithStatic()
                         .WithConstValue(value);
                 }
+                if (i.AddFromMethod)
+                {
+                    var c = Get(Cfg.Name.ValueTypeName, out var file);
+                    CsFilesManager.AddGeneratorName(file, GetType().Name);
+                    var value = new CsArguments("value", Target.Name+"."+ i.FieldName + ".Unit").Create(c.Name);
+                    c.AddMethod("From" + i.FieldName, c.Name).WithBody($"return {value};")
+                        .WithParameter(new CsMethodParameter("value", "decimal"));
+
+                }
             }
         }
 
@@ -136,6 +116,78 @@ namespace UnitGenerator
                 .WithStatic()
                 .WithVisibility(Visibilities.Internal)
                 .AddParam<UnitRelationsDictionary>("dict", Target);
+        }
+
+        private void Add_RegisterUnitExchangeFactors()
+        {
+            Target.WithAttributeFromName(nameof(UnitsContainerAttribute));
+            var m = Target.AddMethod("RegisterUnitExchangeFactors", "void")
+                .WithStatic()
+                .WithBody("factors.RegisterMany(All);");
+            m.AddParam<UnitExchangeFactors>("factors", Target);
+        }
+
+
+        private void Add_TryRecoverUnitFromName()
+        {
+            var resultTypeName = Cfg.Name.ToUnitTypeName().GetTypename();
+
+            string c()
+            {
+                var cw = Ext.Create(GetType());
+
+                const ArgChecking flags = ArgChecking.NormalizedString;
+                cw.CheckArgument("unitName", flags, Target);
+                cw.Open("foreach (var i in All)");
+                cw.SingleLineIf("unitName == i.UnitName", "return i.Unit;");
+                cw.Close();
+
+                RelatedUnit cfg = Cfg;
+                {
+                    var type = typeof(Power).Assembly.GetTypes().FirstOrDefault(a => a.Name == resultTypeName);
+                    if (type != null)
+                    {
+                        var t = GetFractionalUnit(type);
+                        if (t.Item1 != null)
+                        {
+                            cw.WriteLine("// try to split");
+                            cw.WriteLine("var parts = unitName.Split('/');");
+                            cw.OpenIf("parts.Length == 2");
+                            cw.WriteLine("var counterUnit = "+t.Item1.Name+"s.TryRecoverUnitFromName(parts[0]);");
+                            cw.WriteLine("var denominatorUnit = "+t.Item2.Name+"s.TryRecoverUnitFromName(parts[1]);");
+                            cw.WriteLine("return new "+resultTypeName+"(counterUnit, denominatorUnit);");
+                            cw.Close();
+                            cw.WriteLine("throw new ArgumentException(nameof(unitName));");
+                            return cw.Code;
+                        }
+                    }
+                }
+                cw.WriteReturn(new CsArguments("unitName").Create(resultTypeName));
+                return cw.Code;
+            }
+
+            var body = c();
+            // koniec body
+            var m = Target.AddMethod("TryRecoverUnitFromName", resultTypeName).WithStatic().WithBody(body);
+            var p = m.AddParam("unitName", "string");
+            p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
+        }
+
+        protected override void GenerateOne()
+        {
+            Related         = RelatedUnitGeneratorDefs.All.GetPowers(Cfg.Name.ToUnitTypeName());
+            Target.IsStatic = true;
+            Add_AllProperty();
+            Add_Properties();
+            Add_Register();
+            Add_RegisterUnitExchangeFactors();
+            Add_TryRecoverUnitFromName();
+        }
+
+
+        protected override string GetTypename(RelatedUnit cfg)
+        {
+            return cfg.Name.ToUnitTypeName().ToUnitContainerTypeName().TypeName;
         }
 
         public RelatedUnitsFamily Related { get; set; }

@@ -48,22 +48,24 @@ namespace UnitGenerator
 
                 var v = Cfg.Source.Container.GetTypename() + "." + i.FieldName + Cfg.Source.Unit.GetTypename();
                 v = new CsArguments(v).Create(f1Type);
-                Target.AddField(f1Name, f1Type)
+                var field =Target.AddField(f1Name, f1Type)
                     .WithStatic()
                     .WithIsReadOnly()
                     .WithVisibility(Visibilities.Internal)
                     .WithConstValue(v)
                     .Description = $"unit 1/{i.UnitShortCode.EffectiveValue}";
+                
 
                 var unitDefinitionType = new CsArguments(unitTypeName)
                     .MakeGenericType("UnitDefinition");
 
                 var value = new CsArguments(f1Name, Inverse(i.ScaleFactor)).Create(unitDefinitionType);
-                Target.AddField(i.FieldName, unitDefinitionType)
+                field = Target.AddField(i.FieldName, unitDefinitionType)
                     .WithIsReadOnly()
                     .WithStatic()
                     .WithConstValue(value)
                     .Description = $"unit 1/{i.UnitShortCode.EffectiveValue} with factor";
+                
             }
         }
 

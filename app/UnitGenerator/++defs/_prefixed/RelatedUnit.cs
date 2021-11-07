@@ -10,15 +10,9 @@ namespace UnitGenerator
     /// </summary>
     public sealed class RelatedUnit
     {
-        public RelatedUnit(XValueTypeName name)
-        {
-            Name = name;
-        }
+        public RelatedUnit(XValueTypeName name) { Name = name; }
 
-        public RelatedUnit(string name)
-        {
-            Name = new XValueTypeName(name);
-        }
+        public RelatedUnit(string name) { Name = new XValueTypeName(name); }
 
         private static string Mul(int power, string x)
         {
@@ -44,10 +38,26 @@ namespace UnitGenerator
             }
         }
 
-        public override string ToString()
+        public RelatedUnit AddFraction<TConstructor>(Type tCounter, string counterFieldName,
+            Type tDenominator, string denominatorFieldName, bool addFromMethod)
         {
-            return $"{Name} = {PowerOne.Value}^{Power}";
+            var energy = (IUnitDefinition)tCounter.GetField(counterFieldName).GetValue(null);
+            var mass   = (IUnitDefinition)tDenominator.GetField(denominatorFieldName).GetValue(null);
+
+            var unitName       = energy.UnitName + "/" + mass.UnitName;
+            var fieldName      = counterFieldName + "Per" + denominatorFieldName;
+            var multiplication = energy.Multiplication / mass.Multiplication;
+
+            var name = typeof(TConstructor).Name;
+            return WithPrefixedUnit(unitName, fieldName, multiplication,
+                extraSettings: info =>
+                {
+                    info.UnitConstructor = $"new {name}({tCounter.Name}.{counterFieldName}, {tDenominator.Name}.{denominatorFieldName})";
+                    info.AddFromMethod   = addFromMethod;
+                });
         }
+
+        public override string ToString() { return $"{Name} = {PowerOne.Value}^{Power}"; }
 
         public RelatedUnit WithLengths(int power)
         {
@@ -70,6 +80,38 @@ namespace UnitGenerator
             return WithPowerDerivedUnits(power, g, XValueTypeName.FromSplit(',', "Length,Area,Volume"));
         }
 
+        private RelatedUnit WithPowerDerivedUnits(int power, PrefixedUnitInfo[] items, XValueTypeName[] values)
+        {
+            Power = power;
+            if (power != 1)
+                PowerOne = new TypesGroup(values[0]);
+
+            var propertyPrefix = Prefix(power);
+
+            foreach (var i in items)
+            {
+                var fromMethodNameSufix = i.FromMethodNameSufix.AddPrefix(propertyPrefix);
+                var unitShortCodeSource = UnitShortCodeSource.MakePower(i.UnitShortCode, power);
+                var q = new AliasedPrefixedUnitInfo(propertyPrefix + i.FieldName,
+                    unitShortCodeSource,
+                    Mul(power, i.ScaleFactor), fromMethodNameSufix, null);
+                Units.Add(q);
+            }
+
+            if (power <= 1) return this;
+            for (var i = 1; i < power; i++)
+            {
+                var otherUnitContainer = values[i - 1] + "Unit";
+                var myUnitContainer    = values[power - 1] + "Unit";
+                var relation = new UnitNamePrefixRelation(
+                    Prefix(i), Prefix(power),
+                    myUnitContainer, otherUnitContainer);
+                PrefixRelations.Add(relation);
+            }
+
+            return this;
+        }
+
         public RelatedUnit WithPrefixedUnit(string unitShortName, string fieldName,
             decimal multiplicator, string fromMethodNameSufix = null, TypeCodeAliases aliases = null,
             Action<AliasedPrefixedUnitInfo> extraSettings = null)
@@ -84,8 +126,11 @@ namespace UnitGenerator
                         fromMethodNameSufix = aliases.NamePlural.FirstUpper();
             }
 
-            var info = new AliasedPrefixedUnitInfo(fieldName, UnitShortCodeSource.MakeDirect(unitShortName),   multiplicator.CsEncode(),
+            AliasedPrefixedUnitInfo info = new AliasedPrefixedUnitInfo(fieldName,
+                UnitShortCodeSource.MakeDirect(unitShortName), multiplicator.CsEncode(),
                 fromMethodNameSufix, aliases);
+            if (extraSettings != null)
+                extraSettings(info);
             Units.Add(info);
             return this;
         }
@@ -121,38 +166,6 @@ namespace UnitGenerator
             return WithPowerDerivedUnits(power, g, values);
         }
 
-        private RelatedUnit WithPowerDerivedUnits(int power, PrefixedUnitInfo[] items, XValueTypeName[] values)
-        {
-            Power = power;
-            if (power != 1)
-                PowerOne = new TypesGroup(values[0]);
-            
-            var propertyPrefix = Prefix(power);
-
-            foreach (var i in items)
-            {
-                var fromMethodNameSufix = i.FromMethodNameSufix.AddPrefix(propertyPrefix);
-                var unitShortCodeSource  = UnitShortCodeSource.MakePower(i.UnitShortCode, power);
-                var q = new AliasedPrefixedUnitInfo(propertyPrefix + i.FieldName,
-                    unitShortCodeSource,
-                    Mul(power, i.ScaleFactor), fromMethodNameSufix, null);
-                Units.Add(q);
-            }
-
-            if (power <= 1) return this;
-            for (var i = 1; i < power; i++)
-            {
-                var otherUnitContainer = values[i - 1] + "Unit";
-                var myUnitContainer    = values[power - 1] + "Unit";
-                var relation = new UnitNamePrefixRelation(
-                    Prefix(i), Prefix(power),
-                    myUnitContainer, otherUnitContainer);
-                PrefixRelations.Add(relation);
-            }
-
-            return this;
-        }
-
 
         public TypesGroup PowerOne { get; set; }
 
@@ -161,6 +174,6 @@ namespace UnitGenerator
         public XValueTypeName Name { get; }
 
         public List<AliasedPrefixedUnitInfo> Units           { get; } = new List<AliasedPrefixedUnitInfo>();
-        public List<UnitNamePrefixRelation>          PrefixRelations { get; } = new List<UnitNamePrefixRelation>();
+        public List<UnitNamePrefixRelation>  PrefixRelations { get; } = new List<UnitNamePrefixRelation>();
     }
 }
