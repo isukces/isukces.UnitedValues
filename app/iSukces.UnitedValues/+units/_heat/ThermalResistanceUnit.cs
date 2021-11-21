@@ -61,6 +61,8 @@ namespace iSukces.UnitedValues
             return new ThermalConductivityUnit(LengthUnit, PowerUnit);
         }
 
+        public override string ToString() { return UnitName; }
+
         public string UnitName
         {
             get

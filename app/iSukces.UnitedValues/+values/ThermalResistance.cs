@@ -14,6 +14,37 @@ namespace iSukces.UnitedValues
 
         public static bool operator ==(ThermalResistance left, ThermalResistance right) { return left.Equals(right); }
         public static bool operator !=(ThermalResistance left, ThermalResistance right) { return !left.Equals(right); }
+
+        public static ThermalResistance operator +(ThermalResistance left, ThermalResistance right)
+        {
+            var rightConverted = right.ConvertTo(left.Unit);
+            return new ThermalResistance(left.Value + rightConverted.Value, left.Unit);
+        }
+
+        public static ThermalResistance operator -(ThermalResistance left, ThermalResistance right)
+        {
+            var rightConverted = right.ConvertTo(left.Unit);
+            return new ThermalResistance(left.Value - rightConverted.Value, left.Unit);
+        }
+
+        public ThermalResistance ConvertTo(ThermalResistanceUnit newUnit)
+        {
+            if (newUnit.Equals(Unit))
+                return this;
+            var value = Value;
+            if (!Unit.LengthUnit.Equals(newUnit.LengthUnit))
+            {
+                var l = new Length(1, Unit.LengthUnit).ConvertTo(newUnit.LengthUnit).Value;
+                value *= l;
+            }
+            if (!Unit.PowerUnit.Equals(newUnit.PowerUnit))
+            {
+                var l = new Power(1, Unit.PowerUnit).ConvertTo(newUnit.PowerUnit).Value;
+                value /= l;
+            }
+            
+            return new ThermalResistance(value, newUnit);
+        }
     }
 }
 

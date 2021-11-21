@@ -15,9 +15,9 @@
     <IncludeSymbols>true</IncludeSymbols>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.21311.29</AssemblyVersion>
-    <Version>1.0.21311.29</Version>
-    <FileVersion>1.0.21311.29</FileVersion>
+    <AssemblyVersion>1.0.21325.30</AssemblyVersion>
+    <Version>1.0.21325.30</Version>
+    <FileVersion>1.0.21325.30</FileVersion>
     <RepositoryUrl>https://github.com/isukces/isukces.UnitedValues</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
