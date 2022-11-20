@@ -1,35 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <Authors>Internet Sukces Piotr Stęclik</Authors>
-        <Company>Internet Sukces Piotr Stęclik</Company>
-        <Copyright>Copyright by Internet Sukces Piotr Stęclik 2017-2021</Copyright>
-        <TargetFramework>net48</TargetFramework>
-        <OutputType>Exe</OutputType>
-        <IsPackable>false</IsPackable>
-        <LangVersion>latest</LangVersion>
-    </PropertyGroup>
-    <ItemGroup>
-      <PackageReference Include="iSukces.Code" Version="1.0.21240.184" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Scenarios.cs">
-        <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
-      </Compile>
-      <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.SpecificHeatCapacity.cs">
-        <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
-      </Compile>
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="+attributes" />
-      <Folder Include="+inversed" />
-    </ItemGroup>
-    <ItemGroup>
-      <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c">
-        <HintPath>..\..\..\..\..\..\Users\piotr\AppData\Local\JetBrains\Toolbox\apps\Rider\ch-0\203.7717.10\lib\ReSharperHost\TestRunner\net461\NLog.dll</HintPath>
-      </Reference>
-    </ItemGroup>
+  <PropertyGroup>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <Company>Internet Sukces Piotr Stęclik</Company>
+    <Copyright>Copyright by Internet Sukces Piotr Stęclik 2017-2022</Copyright>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <LangVersion>latest</LangVersion>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Scenarios.cs">
+      <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
+    </Compile>
+    <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.SpecificHeatCapacity.cs">
+      <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="+inversed" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="iSukces.Code" Version="1.0.22322.190" />
+  </ItemGroup>
 </Project>
