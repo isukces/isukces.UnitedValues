@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright by Internet Sukces Piotr Stęclik 2017-2022</Copyright>
-    <TargetFrameworks>net47;net48;net6.0;net6.0-windows;netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2017-2023</Copyright>
     <Product>iSukces.UnitedValues</Product>
-    <PackageId>iSukces.UnitedValues</PackageId>
+    <TargetFrameworks>net48;net6.0;netcoreapp3.1;netstandard2.0;net7.0</TargetFrameworks>
+    <AssemblyVersion>1.0.22324.31</AssemblyVersion>
+    <FileVersion>1.0.22324.31</FileVersion>
+    <Version>1.0.22324.31</Version>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Description>Values with units serialization and simple algebra</Description>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
+    <PackageId>iSukces.UnitedValues</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <AssemblyVersion>1.0.22324.31</AssemblyVersion>
-    <Version>1.0.22324.31</Version>
-    <FileVersion>1.0.22324.31</FileVersion>
     <RepositoryUrl>https://github.com/isukces/isukces.UnitedValues</RepositoryUrl>
-    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="+IUnitedValue\+inversed\InversedDeltaKelvinTemperature.auto.cs">

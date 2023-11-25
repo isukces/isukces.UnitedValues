@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright by Internet Sukces Piotr Stęclik 2017-2022</Copyright>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2017-2023</Copyright>
     <TargetFramework>net48</TargetFramework>
+    <LangVersion>11</LangVersion>
     <OutputType>Exe</OutputType>
-    <IsPackable>false</IsPackable>
-    <LangVersion>latest</LangVersion>
     <NoWarn>1701;1702;1591</NoWarn>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="iSukces.Code" Version="1.23.819.201" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Scenarios.cs">
@@ -20,11 +23,6 @@
     <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.SpecificHeatCapacity.cs">
       <DependentUpon>MultiplicationAlgebraDefs.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="+inversed" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="iSukces.Code" Version="1.0.22322.190" />
   </ItemGroup>
 </Project>
