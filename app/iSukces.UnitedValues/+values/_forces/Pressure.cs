@@ -15,7 +15,7 @@ namespace iSukces.UnitedValues
                 .ConvertTo(ForceUnits.Newton);
             Value = forceValue.Value / areaValue.Value;
 
-            Unit = PressureUnits.Pascal;
+            _unit = PressureUnits.Pascal;
         }
     }
 }
@@ -40,7 +40,7 @@ namespace iSukces.UnitedValues
             Value = value;
             if (unit is null)
                 throw new NullReferenceException(nameof(unit));
-            Unit = unit;
+            _unit = unit;
         }
 
         public int CompareTo(Pressure other)
@@ -90,7 +90,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 
@@ -531,6 +531,8 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(Pressure));
+            if (string.IsNullOrEmpty(parseResult.UnitName))
+                return new Pressure(parseResult.Value, Pressure.BaseUnit);
             return new Pressure(parseResult.Value, new PressureUnit(parseResult.UnitName));
         }
 
@@ -542,7 +544,13 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// unit
         /// </summary>
-        public PressureUnit Unit { get; }
+        [JetBrains.Annotations.NotNull]
+        public PressureUnit Unit
+        {
+            get { return _unit ?? BaseUnit; }
+        }
+
+        private PressureUnit _unit;
 
         public static readonly PressureUnit BaseUnit = PressureUnits.Pascal;
 

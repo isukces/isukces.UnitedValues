@@ -72,7 +72,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 

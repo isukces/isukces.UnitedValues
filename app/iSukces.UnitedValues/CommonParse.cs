@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues
 {
@@ -21,20 +22,24 @@ namespace iSukces.UnitedValues
             return new ParseResult(number, unit);
         }
 
+        public const string RegexFilter = @"^\s*([-+]?)\s*((\d+)(\.(\d+))?)\s*(.*)\s*$";
+
         public static readonly Regex ParseRegex = new Regex(RegexFilter, RegexOptions.Compiled);
 
         public struct ParseResult
         {
             public ParseResult(decimal value, string unitName)
             {
-                Value    = value;
-                UnitName = unitName;
+                Value     = value;
+                _unitName = unitName?.Trim();
             }
 
-            public decimal Value    { get; }
-            public string  UnitName { get; }
-        }
+            public decimal Value { get; }
 
-        public const string RegexFilter = @"^\s*([-+]?)\s*((\d+)(\.(\d+))?)\s*(.*)\s*$";
+            [NotNull]
+            public string UnitName => _unitName ?? "";
+
+            private readonly string _unitName;
+        }
     }
 }

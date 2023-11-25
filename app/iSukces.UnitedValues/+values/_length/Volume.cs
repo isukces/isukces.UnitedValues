@@ -24,7 +24,7 @@ namespace iSukces.UnitedValues
             Value = value;
             if (unit is null)
                 throw new NullReferenceException(nameof(unit));
-            Unit = unit;
+            _unit = unit;
         }
 
         public Volume ConvertTo(VolumeUnit newUnit)
@@ -69,7 +69,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 
@@ -870,6 +870,8 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(Volume));
+            if (string.IsNullOrEmpty(parseResult.UnitName))
+                return new Volume(parseResult.Value, Volume.BaseUnit);
             return new Volume(parseResult.Value, new VolumeUnit(parseResult.UnitName));
         }
 
@@ -881,7 +883,13 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// unit
         /// </summary>
-        public VolumeUnit Unit { get; }
+        [JetBrains.Annotations.NotNull]
+        public VolumeUnit Unit
+        {
+            get { return _unit ?? BaseUnit; }
+        }
+
+        private VolumeUnit _unit;
 
         public static readonly VolumeUnit BaseUnit = VolumeUnits.CubicMeter;
 

@@ -76,7 +76,13 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypes.Unit.GetTypename(), null, "unit", Flags1.NotNull)
+                    Cfg.UnitTypes.Unit.GetTypename(), 
+                    null, 
+                    "unit", 
+                    Flags1.NotNull | Flags1.EmitField | Flags1.PropertyIsNeverNull)
+                {
+                    PropertyDefaultValue = "BaseUnit"
+                }
             });
         }
 
@@ -252,12 +258,20 @@ namespace UnitGenerator
         {
             var cs = Ext.Create<BasicUnitValuesGenerator>();
             cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({Cfg.UnitTypes.Value}));");
-            cs.WriteLine(
-                $"return new {Cfg.UnitTypes.Value}(parseResult.Value, new {Cfg.UnitTypes.Unit}(parseResult.UnitName));");
+            cs.SingleLineIf(
+                "string.IsNullOrEmpty(parseResult.UnitName)",
+                Return(Cfg.UnitTypes.Value + ".BaseUnit"));
+            cs.WriteLine(Return($"new {Cfg.UnitTypes.Unit}(parseResult.UnitName)"));
+            
             Target.AddMethod("Parse", Cfg.UnitTypes.Value.ValueTypeName)
                 .WithBody(cs)
                 .WithStatic()
                 .AddParam<string>("value", Target);
+
+            string Return(string unitCode)
+            {
+                return $"return new {Cfg.UnitTypes.Value}(parseResult.Value, {unitCode});";
+            }
         }
 
         private void Add_Properties()

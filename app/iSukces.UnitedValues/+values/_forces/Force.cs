@@ -24,7 +24,7 @@ namespace iSukces.UnitedValues
             Value = value;
             if (unit is null)
                 throw new NullReferenceException(nameof(unit));
-            Unit = unit;
+            _unit = unit;
         }
 
         public int CompareTo(Force other)
@@ -74,7 +74,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 
@@ -586,6 +586,8 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(Force));
+            if (string.IsNullOrEmpty(parseResult.UnitName))
+                return new Force(parseResult.Value, Force.BaseUnit);
             return new Force(parseResult.Value, new ForceUnit(parseResult.UnitName));
         }
 
@@ -597,7 +599,13 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// unit
         /// </summary>
-        public ForceUnit Unit { get; }
+        [JetBrains.Annotations.NotNull]
+        public ForceUnit Unit
+        {
+            get { return _unit ?? BaseUnit; }
+        }
+
+        private ForceUnit _unit;
 
         public static readonly ForceUnit BaseUnit = ForceUnits.Newton;
 

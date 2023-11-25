@@ -60,7 +60,7 @@ namespace iSukces.UnitedValues
             Value = value;
             if (unit is null)
                 throw new NullReferenceException(nameof(unit));
-            Unit = unit;
+            _unit = unit;
         }
 
         public int CompareTo(CelsiusTemperature other)
@@ -110,7 +110,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 
@@ -290,6 +290,8 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(CelsiusTemperature));
+            if (string.IsNullOrEmpty(parseResult.UnitName))
+                return new CelsiusTemperature(parseResult.Value, CelsiusTemperature.BaseUnit);
             return new CelsiusTemperature(parseResult.Value, new CelsiusTemperatureUnit(parseResult.UnitName));
         }
 
@@ -301,7 +303,13 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// unit
         /// </summary>
-        public CelsiusTemperatureUnit Unit { get; }
+        [JetBrains.Annotations.NotNull]
+        public CelsiusTemperatureUnit Unit
+        {
+            get { return _unit ?? BaseUnit; }
+        }
+
+        private CelsiusTemperatureUnit _unit;
 
         public static readonly CelsiusTemperatureUnit BaseUnit = CelsiusTemperatureUnits.Degree;
 

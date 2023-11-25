@@ -80,7 +80,7 @@ namespace UnitGenerator
 
         private void AddCommonValues_GetHashCode()
         {
-            var expression = $"({ValuePropName}.GetHashCode() * 397) ^ {UnitPropName}?.GetHashCode() ?? 0";
+            const string expression = $"({ValuePropName}.GetHashCode() * 397) ^ {UnitPropName}.GetHashCode()";
             Add_GetHashCode(expression);
         }
 

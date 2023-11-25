@@ -57,7 +57,7 @@ namespace iSukces.UnitedValues
             Value = value;
             if (unit is null)
                 throw new NullReferenceException(nameof(unit));
-            Unit = unit;
+            _unit = unit;
         }
 
         public Area ConvertTo(AreaUnit newUnit)
@@ -102,7 +102,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 
@@ -1419,6 +1419,8 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(Area));
+            if (string.IsNullOrEmpty(parseResult.UnitName))
+                return new Area(parseResult.Value, Area.BaseUnit);
             return new Area(parseResult.Value, new AreaUnit(parseResult.UnitName));
         }
 
@@ -1430,7 +1432,13 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// unit
         /// </summary>
-        public AreaUnit Unit { get; }
+        [JetBrains.Annotations.NotNull]
+        public AreaUnit Unit
+        {
+            get { return _unit ?? BaseUnit; }
+        }
+
+        private AreaUnit _unit;
 
         public static readonly AreaUnit BaseUnit = AreaUnits.SquareMeter;
 

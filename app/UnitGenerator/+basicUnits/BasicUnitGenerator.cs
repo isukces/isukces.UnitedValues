@@ -213,21 +213,24 @@ namespace UnitGenerator
             {
                 if (Related is null || !Related.IsPower2OrHigher)
                     return null;
-                var a= new[]
+                var a = new[]
                 {
                     new ConstructorParameterInfo("BaseUnit", Related.MyInfo.PowerOne.Unit.TypeName, null, "based on",
-                        Flags1.NotNull,
-                        property =>
+                        Flags1.NotNull)
+                    {
+                        PropertyCreated = property =>
                         {
                             property.AddRelatedUnitSourceAttribute(Target, RelatedUnitSourceUsage.DoNotUse, 0);
-                        }),
+                        }
+                    },
                     new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit",
-                        Flags1.Optional|Flags1.DoNotAssignProperty|Flags1.DoNotCreateProperty)
+                        Flags1.Optional | Flags1.DoNotAssignProperty | Flags1.DoNotCreateProperty)
                 };
                 var h         = new Col1(a);
                 var powerChar = Ext.GetPowerSuffix(Related.MyInfo.Power);
                 h.Writer2.WriteLine("unitName = unitName?.Trim();");
-                h.Writer2.WriteLine(PropertyName + " = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "+powerChar.CsEncode()+" : unitName;");
+                h.Writer2.WriteLine(PropertyName + " = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + " + powerChar.CsEncode() +
+                                    " : unitName;");
                 return h;
             }
 

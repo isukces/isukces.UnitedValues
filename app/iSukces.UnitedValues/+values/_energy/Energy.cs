@@ -38,7 +38,7 @@ namespace iSukces.UnitedValues
             Value = value;
             if (unit is null)
                 throw new NullReferenceException(nameof(unit));
-            Unit = unit;
+            _unit = unit;
         }
 
         public int CompareTo(Energy other)
@@ -88,7 +88,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 
@@ -736,6 +736,8 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(Energy));
+            if (string.IsNullOrEmpty(parseResult.UnitName))
+                return new Energy(parseResult.Value, Energy.BaseUnit);
             return new Energy(parseResult.Value, new EnergyUnit(parseResult.UnitName));
         }
 
@@ -747,7 +749,13 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// unit
         /// </summary>
-        public EnergyUnit Unit { get; }
+        [JetBrains.Annotations.NotNull]
+        public EnergyUnit Unit
+        {
+            get { return _unit ?? BaseUnit; }
+        }
+
+        private EnergyUnit _unit;
 
         public static readonly EnergyUnit BaseUnit = EnergyUnits.Joule;
 

@@ -35,7 +35,7 @@ namespace iSukces.UnitedValues
             Value = value;
             if (unit is null)
                 throw new NullReferenceException(nameof(unit));
-            Unit = unit;
+            _unit = unit;
         }
 
         public int CompareTo(Length other)
@@ -85,7 +85,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 
@@ -1658,6 +1658,8 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(Length));
+            if (string.IsNullOrEmpty(parseResult.UnitName))
+                return new Length(parseResult.Value, Length.BaseUnit);
             return new Length(parseResult.Value, new LengthUnit(parseResult.UnitName));
         }
 
@@ -1669,7 +1671,13 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// unit
         /// </summary>
-        public LengthUnit Unit { get; }
+        [JetBrains.Annotations.NotNull]
+        public LengthUnit Unit
+        {
+            get { return _unit ?? BaseUnit; }
+        }
+
+        private LengthUnit _unit;
 
         public static readonly LengthUnit BaseUnit = LengthUnits.Meter;
 

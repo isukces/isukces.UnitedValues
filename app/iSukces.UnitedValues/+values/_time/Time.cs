@@ -34,7 +34,7 @@ namespace iSukces.UnitedValues
             Value = value;
             if (unit is null)
                 throw new NullReferenceException(nameof(unit));
-            Unit = unit;
+            _unit = unit;
         }
 
         public int CompareTo(Time other)
@@ -84,7 +84,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 
@@ -642,6 +642,8 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(Time));
+            if (string.IsNullOrEmpty(parseResult.UnitName))
+                return new Time(parseResult.Value, Time.BaseUnit);
             return new Time(parseResult.Value, new TimeUnit(parseResult.UnitName));
         }
 
@@ -653,7 +655,13 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// unit
         /// </summary>
-        public TimeUnit Unit { get; }
+        [JetBrains.Annotations.NotNull]
+        public TimeUnit Unit
+        {
+            get { return _unit ?? BaseUnit; }
+        }
+
+        private TimeUnit _unit;
 
         public static readonly TimeUnit BaseUnit = TimeUnits.Second;
 

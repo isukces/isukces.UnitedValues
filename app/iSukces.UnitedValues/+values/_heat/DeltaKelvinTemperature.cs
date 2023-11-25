@@ -24,7 +24,7 @@ namespace iSukces.UnitedValues
             Value = value;
             if (unit is null)
                 throw new NullReferenceException(nameof(unit));
-            Unit = unit;
+            _unit = unit;
         }
 
         public int CompareTo(DeltaKelvinTemperature other)
@@ -74,7 +74,7 @@ namespace iSukces.UnitedValues
         {
             unchecked
             {
-                return (Value.GetHashCode() * 397) ^ Unit?.GetHashCode() ?? 0;
+                return (Value.GetHashCode() * 397) ^ Unit.GetHashCode();
             }
         }
 
@@ -253,6 +253,8 @@ namespace iSukces.UnitedValues
         {
             // generator : BasicUnitValuesGenerator.Add_Parse
             var parseResult = CommonParse.Parse(value, typeof(DeltaKelvinTemperature));
+            if (string.IsNullOrEmpty(parseResult.UnitName))
+                return new DeltaKelvinTemperature(parseResult.Value, DeltaKelvinTemperature.BaseUnit);
             return new DeltaKelvinTemperature(parseResult.Value, new KelvinTemperatureUnit(parseResult.UnitName));
         }
 
@@ -264,7 +266,13 @@ namespace iSukces.UnitedValues
         /// <summary>
         /// unit
         /// </summary>
-        public KelvinTemperatureUnit Unit { get; }
+        [JetBrains.Annotations.NotNull]
+        public KelvinTemperatureUnit Unit
+        {
+            get { return _unit ?? BaseUnit; }
+        }
+
+        private KelvinTemperatureUnit _unit;
 
         public static readonly KelvinTemperatureUnit BaseUnit = KelvinTemperatureUnits.Degree;
 

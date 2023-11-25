@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Copyright>Copyright © Internet Sukces Piotr Stęclik 2017-2023</Copyright>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <LangVersion>11</LangVersion>
     <OutputType>Exe</OutputType>
     <NoWarn>1701;1702;1591</NoWarn>
