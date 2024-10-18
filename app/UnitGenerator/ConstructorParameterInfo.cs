@@ -8,7 +8,7 @@ namespace UnitGenerator;
 //[ImmutableObject(true)]
 public class ConstructorParameterInfo
 {
-    public ConstructorParameterInfo(string propertyName, string propertyType, string expression, string description,
+    public ConstructorParameterInfo(string propertyName, CsType propertyType, string expression, string description,
         Flags1 checkingFlags = Flags1.None)
     {
         PropertyName    = propertyName;
@@ -18,10 +18,10 @@ public class ConstructorParameterInfo
         CheckingFlags   = checkingFlags;
     }
 
-    private static string GetExpr(string propertyName, string propertyType)
+    private static string GetExpr(string propertyName, CsType propertyType)
     {
         var arg = propertyName.FirstLower();
-        if (propertyType == "string")
+        if (propertyType.Declaration == "string")
             arg += ".TrimToNull()";
         return arg;
     }
@@ -38,7 +38,7 @@ public class ConstructorParameterInfo
 
     public string FieldName => "_" + ArgName;
 
-    public string PropertyType { get; }
+    public CsType PropertyType { get; }
 
     public string Expression { get; }
 

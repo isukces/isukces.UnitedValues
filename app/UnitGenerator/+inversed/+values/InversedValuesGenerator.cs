@@ -56,7 +56,7 @@ namespace UnitGenerator
                 new ConstructorParameterInfo(ValuePropName,
                     ValuePropertyType, null, "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    UnitTypeName, null, "unit")
+                    (CsType)UnitTypeName, null, "unit")
             });
         }
 
@@ -67,7 +67,7 @@ namespace UnitGenerator
 
         private void Add_Properties()
         {
-            Target.AddField("BaseUnit", UnitTypeName)
+            Target.AddField("BaseUnit", (CsType)UnitTypeName)
                 .WithStatic()
                 .WithIsReadOnly()
                 .WithConstValue(Cfg.BaseUnitValueSource.ToString());
@@ -78,6 +78,6 @@ namespace UnitGenerator
                 .WithConstValue($"new {Target.Name}(0, BaseUnit)");*/
         }
 
-        private string UnitTypeName => Cfg.TargetUnitTypename;
+        private string UnitTypeName => Cfg.TargetUnitTypename.Declaration;
     }
 }

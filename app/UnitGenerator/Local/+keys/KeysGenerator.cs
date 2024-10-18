@@ -12,7 +12,7 @@ namespace UnitGenerator.Local
     {
         private static void AddGetHashCodeMethod(CsClass cl, KeysGeneratorDef def)
         {
-            var m = cl.AddMethod(nameof(GetHashCode), "int");
+            var m = cl.AddMethod(nameof(GetHashCode), (CsType)"int");
             m.Overriding = OverridingType.Override;
 
             switch (def.WrappedType)
@@ -32,7 +32,7 @@ namespace UnitGenerator.Local
 
         private static void AddToStringMethod(CsClass cl, KeysGeneratorDef def)
         {
-            var m = cl.AddMethod(nameof(ToString), "string");
+            var m = cl.AddMethod(nameof(ToString), (CsType)"string");
             m.Overriding = OverridingType.Override;
             var e = def.GetToStringExpression();
             m.Body = $"return {e};";
@@ -108,7 +108,7 @@ namespace UnitGenerator.Local
             for (var i = 0; i < 2; i++)
             {
                 var eq = i == 0;
-                var m = csStruct.AddMethod(eq ? "==" : "!=", "bool", eq ? "Equality operator" : "Inequality operator")
+                var m = csStruct.AddMethod(eq ? "==" : "!=", (CsType)"bool", eq ? "Equality operator" : "Inequality operator")
                     .WithBody($"return {(eq ? "" : "!")}left.Equals(right);");
 
                 m.AddParam("left", csStruct.Name, "first value to compare");
@@ -118,21 +118,21 @@ namespace UnitGenerator.Local
 
         private void AddEqualsMethods(CsClass cl, KeysGeneratorDef def)
         {
-            var typeName             = def.TypeName;
+            var typeName = (CsType)def.TypeName;
             var propName = def.ValuePropertyName;
             {
-                var m = cl.AddMethod(nameof(Equals), "bool");
+                var m = cl.AddMethod(nameof(Equals), (CsType)"bool");
                 m.Parameters.Add(new CsMethodParameter("other", typeName));
                 m.Body = ValueEquals($"other.{propName}", def);
             }
             {
-                var m = cl.AddMethod(nameof(Equals), "bool");
+                var m = cl.AddMethod(nameof(Equals), (CsType)"bool");
                 m.Overriding = OverridingType.Override;
-                m.Parameters.Add(new CsMethodParameter("obj", "object"));
+                m.Parameters.Add(new CsMethodParameter("obj", (CsType)"object"));
                 if (def.WrappedType == WrappedTypes.String)
-                    m.Body = $"return obj is {typeName} s && StringComparer.Ordinal.Equals({propName}, s.{propName});";
+                    m.Body = $"return obj is {typeName.Declaration} s && StringComparer.Ordinal.Equals({propName}, s.{propName});";
                 else
-                    m.Body = $"return obj is {typeName} s && {propName}.Equals(s.{propName});";
+                    m.Body = $"return obj is {typeName.Declaration} s && {propName}.Equals(s.{propName});";
             }
         }
 

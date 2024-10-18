@@ -40,7 +40,7 @@ namespace UnitGenerator
             cs.WriteLine($"var parseResult = CommonParse.Parse(value, typeof({names.Value}));");
             cs.WriteLine(
                 $"return new {names.Value}(parseResult.Value, new {names.Unit}(parseResult.UnitName));");
-            Target.AddMethod("Round", names.Value.ValueTypeName)
+            Target.AddMethod("Round", (CsType)names.Value.ValueTypeName)
                 .WithBodyFromExpression("new " + names.Value + "(Math.Round(Value, decimalPlaces), Unit)")
                 .AddParam<int>("decimalPlaces", Target);
         }
@@ -86,18 +86,18 @@ namespace UnitGenerator
 
         private void AddCommonValues_ToString()
         {
-            Target.AddMethod("ToString", "string", "Returns unit name")
+            Target.AddMethod("ToString", (CsType)"string", "Returns unit name")
                 .WithOverride()
                 .WithBodyFromExpression("Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName");
 
-            var m = Target.AddMethod("ToString", "string", "Returns unit name")
+            var m = Target.AddMethod("ToString", (CsType)"string", "Returns unit name")
                 .WithBodyFromExpression("this.ToStringFormat(format, provider)");
             m.AddParam<string>("format", Target);
             m.AddParam<IFormatProvider>("provider", Target).WithConstValue("null");
         }
 
-        public const string ValuePropertyType = "decimal";
-        public const string OtherValuePropertyType = "double";
+        public static CsType ValuePropertyType      = (CsType)"decimal";
+        public static CsType OtherValuePropertyType = (CsType)"double";
 
         protected const string ValuePropName = "Value";
         protected const string UnitPropName = "Unit";

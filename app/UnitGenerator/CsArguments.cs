@@ -33,6 +33,11 @@ namespace UnitGenerator
         {
             return $"new {constructedTypeName}({ToString()})";
         }
+        
+        public string Create(CsType constructedTypeName)
+        {
+            return $"new {constructedTypeName.Declaration}({ToString()})";
+        }
 
         public string Create(ITypeNameProvider constructedTypeName)
         {
@@ -65,17 +70,23 @@ namespace UnitGenerator
             c.WriteLine("};");
         }
 
-        public string MakeGenericType(string type, bool trunc = false)
+        public CsType MakeGenericType(CsType type, bool trunc = false)
+        {
+            return MakeGenericType(type.Declaration, trunc);
+        }
+        
+        public CsType MakeGenericType(string type, bool trunc = false)
         {
             if (trunc)
                 type = type.Split('<')[0];
-            return $"{type}<{ToString()}>";
+            
+            return (CsType)$"{type}<{ToString()}>";
         }
         public string MakeGenericTypeMethodCall(string methodName, params string [] args)
         {
             var call1 = MakeGenericType(methodName);
             var a     = new CsArguments(args);
-            return a.CallMethod(call1);
+            return a.CallMethod(call1.Declaration);
         }
 
         public CsCodeWriter ReturnArray()

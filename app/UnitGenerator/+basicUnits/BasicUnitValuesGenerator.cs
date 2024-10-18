@@ -16,14 +16,14 @@ namespace UnitGenerator
             TypesGroup types, CsClass target, IRelatedUnitDefinition u)
         {
 #if DEBUG
-            if (target.Name == "Power")
+            if (target.Name.Declaration == "Power")
                 System.Diagnostics.Debug.Write("");
 #endif
             foreach (var inputType in "decimal,double,int,long".Split(','))
             {
                 var arg = "value";
-                if (inputType == OtherValuePropertyType)
-                    arg = $"({ValuePropertyType}){arg}";
+                if (inputType == OtherValuePropertyType.Declaration)
+                    arg = $"({ValuePropertyType.Declaration}){arg}";
 
                 var args = new CsArguments(arg, types.Container + "." + u.FieldName)
                     .Create(target.Name);
@@ -36,7 +36,7 @@ namespace UnitGenerator
                 var m = target.AddMethod(methodName, target.Name, methodDescription)
                     .WithStatic()
                     .WithBody(cw);
-                m.AddParam("value", inputType).Description = string.Format("{0}{1}", valueTypeName, valueIn);
+                m.AddParam("value", (CsType)inputType).Description = $"{valueTypeName}{valueIn}";
             }
         }
 
@@ -76,7 +76,7 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypes.Unit.GetTypename(), 
+                    (CsType)Cfg.UnitTypes.Unit.GetTypename(), 
                     null, 
                     "unit", 
                     Flags1.NotNull | Flags1.EmitField | Flags1.PropertyIsNeverNull)
@@ -157,24 +157,24 @@ namespace UnitGenerator
 
                 var result1 = CreateResultFromVariable(right, rt, op == "-");
                 var condition =
-                    $"{left}.Value.Equals({ValuePropertyType}.Zero) && string.IsNullOrEmpty({left}.Unit?.UnitName)";
+                    $"{left}.Value.Equals({ValuePropertyType.Declaration}.Zero) && string.IsNullOrEmpty({left}.Unit?.UnitName)";
                 cw.SingleLineIf(condition, ReturnValue(result1));
 
                 result1 = CreateResultFromVariable(left, lt);
                 condition =
-                    $"{right}.Value.Equals({ValuePropertyType}.Zero) && string.IsNullOrEmpty({right}.Unit?.UnitName)";
+                    $"{right}.Value.Equals({ValuePropertyType.Declaration}.Zero) && string.IsNullOrEmpty({right}.Unit?.UnitName)";
                 cw.SingleLineIf(condition, ReturnValue(result1));
 
                 cw.WriteLine($"{right} = {right}.ConvertTo({left}.Unit);");
                 var returnExpression = new CsArguments($"{left}.Value {op} {right}.Value", $"{left}.Unit")
                     .Create(resultType.ValueTypeName);
                 cw.WriteLine(ReturnValue(returnExpression));
-                Target.AddMethod(op, resultType.ValueTypeName)
-                    .WithLeftRightArguments(lt.ValueTypeName, rt.ValueTypeName)
+                Target.AddMethod(op, (CsType)resultType.ValueTypeName)
+                    .WithLeftRightArguments((CsType)lt.ValueTypeName, (CsType)rt.ValueTypeName)
                     .WithBody(cw);
             }
 
-            var targetName = new XValueTypeName(Target.Name);
+            var targetName = new XValueTypeName(Target.Name.Declaration);
             AddPlusOrMinus("-", targetName, targetName);
             if (delta != null)
             {
@@ -190,14 +190,14 @@ namespace UnitGenerator
         private void Add_Comparable()
         {
             if (!Cfg.IsComparable) return;
-            Target.AddMethod("CompareTo", "int")
+            Target.AddMethod("CompareTo", (CsType)"int")
                 .WithBodyFromExpression(
                     "UnitedValuesUtils.Compare<" + Cfg.UnitTypes.Value + ", " + Cfg.UnitTypes.Unit + ">(this, other)")
                 .AddParam("other", Target.Name);
 
             var operators = "!=,==,>,<,>=,<=";
             foreach (var oper in operators.Split(','))
-                Target.AddMethod(oper, "bool")
+                Target.AddMethod(oper, (CsType)"bool")
                     .WithBodyFromExpression("left.CompareTo(right) " + oper + " 0")
                     .WithLeftRightArguments(Target.Name, Target.Name);
         }
@@ -209,11 +209,12 @@ namespace UnitGenerator
             cw.SingleLineIf("Unit.Equals(newUnit)", ReturnValue("this"));
             cw.WriteLine("var basic = GetBaseUnitValue();");
             cw.WriteLine("var factor = GlobalUnitRegistry.Factors.GetThrow(newUnit);");
-            cw.WriteLine(ReturnValue("new " + Target.Name + "(basic / factor, newUnit)"));
+            cw.WriteLine(ReturnValue(Target.Name.New("basic / factor, newUnit")));
+            //cw.WriteLine(ReturnValue("new " + Target.Name.Declaration + "(basic / factor, newUnit)"));
 
             Target.AddMethod("ConvertTo", Target.Name)
                 .WithBody(cw)
-                .AddParam("newUnit", Cfg.UnitTypes.Unit.GetTypename());
+                .AddParam("newUnit", (CsType)Cfg.UnitTypes.Unit.GetTypename());
         }
 
         private void Add_FromMethods()
@@ -263,7 +264,7 @@ namespace UnitGenerator
                 Return(Cfg.UnitTypes.Value + ".BaseUnit"));
             cs.WriteLine(Return($"new {Cfg.UnitTypes.Unit}(parseResult.UnitName)"));
             
-            Target.AddMethod("Parse", Cfg.UnitTypes.Value.ValueTypeName)
+            Target.AddMethod("Parse", (CsType)Cfg.UnitTypes.Value.ValueTypeName)
                 .WithBody(cs)
                 .WithStatic()
                 .AddParam<string>("value", Target);
@@ -276,14 +277,14 @@ namespace UnitGenerator
 
         private void Add_Properties()
         {
-            Target.AddField("BaseUnit", Cfg.UnitTypes.Unit.GetTypename())
+            Target.AddField("BaseUnit", (CsType)Cfg.UnitTypes.Unit.GetTypename())
                 .WithStatic()
                 .WithIsReadOnly()
                 .WithConstValue(Cfg.BaseUnit.ToString());
-            Target.AddField("Zero", Cfg.UnitTypes.Value.ValueTypeName)
+            Target.AddField("Zero", (CsType)Cfg.UnitTypes.Value.ValueTypeName)
                 .WithStatic()
                 .WithIsReadOnly()
-                .WithConstValue($"new {Target.Name}(0, BaseUnit)");
+                .WithConstValue(Target.Name.New("0", "BaseUnit"));
         }
     }
 }

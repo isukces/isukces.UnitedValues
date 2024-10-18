@@ -37,13 +37,14 @@ namespace UnitGenerator
             get
             {
                 // .Is<LinearDensity, Length, PlanarDensity>("/")
-                var a = new CsArguments(Left.Value.ValueTypeName, Right.Value.ValueTypeName, Result.Value.ValueTypeName).MakeGenericType(".Is");
+                var a = new CsArguments(Left.Value.ValueTypeName, Right.Value.ValueTypeName, Result.Value.ValueTypeName)
+                    .MakeGenericType(".Is")
+                    .Declaration;
                 var b = new CsArguments(Oper.CsEncode()).CallMethod(a);
                 return b;
             }
         }
-
-
+        
         public TypesGroup Left                    { get; }
         public TypesGroup Right                   { get; }
         public TypesGroup Result                  { get; }

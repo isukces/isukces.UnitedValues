@@ -57,7 +57,7 @@ namespace UnitGenerator
                 new ConstructorParameterInfo(ValuePropName,
                     ValuePropertyType, null, "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    UnitTypeName, null, "unit")
+                    (CsType)UnitTypeName, null, "unit")
             });
         }
 
@@ -70,6 +70,6 @@ namespace UnitGenerator
         {
         }
 
-        private string UnitTypeName => Cfg.TargetUnitTypename;
+        private string UnitTypeName => Cfg.TargetUnitTypename.Declaration;
     }
 }

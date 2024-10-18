@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using iSukces.Code;
 
 namespace UnitGenerator
 {
@@ -7,7 +8,7 @@ namespace UnitGenerator
     {
         public ThermalUnit(Type type, Type inversed)
         {
-            Source = new TypesGroup(new XValueTypeName(type.Name));
+            Source   = new TypesGroup(new XValueTypeName(type.Name));
             Inversed = new TypesGroup(new XValueTypeName(inversed.Name));
         }
 
@@ -16,9 +17,9 @@ namespace UnitGenerator
 
         public TypesGroup Source { get; }
 
-        public string TargetUnitTypename => Inversed.Unit.GetTypename();
+        public CsType TargetUnitTypename => (CsType)Inversed.Unit.GetTypename();
 
-        public string TargetContainerTypename => Inversed.Container.GetTypename();
+        // public CsType TargetContainerTypename => (CsType)Inversed.Container.GetTypename();
 
         /*public BasicUnit InversionBaseUnit
         {

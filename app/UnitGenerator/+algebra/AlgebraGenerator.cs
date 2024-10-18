@@ -36,17 +36,17 @@ namespace UnitGenerator
             Target.Kind        = CsNamespaceMemberKind.Struct;
             Target.Description = $"Reprezentuje {Cfg.Description} w [{Cfg.Unit}]";
             {
-                var p = Target.AddProperty("Value", "double");
+                var p = Target.AddProperty("Value", (CsType)"double");
                 p.IsPropertyReadOnly          = true;
                 p.EmitField                   = false;
                 p.MakeAutoImplementIfPossible = true;
             }
             {
                 var c = Target.AddConstructor("").WithBody("Value = value;");
-                c.AddParam("value", "double");
+                c.AddParam("value", (CsType)"double");
             }
             {
-                Add_ImplicitOperator("double", Cfg.ClassName, "src.Value");
+                Add_ImplicitOperator((CsType)"double", Cfg.ClassName, "src.Value");
                 /*
                 var m = cl.AddMethod(CsMethod.Implicit, "double", "implicit converts double into " + Cfg.ClassName)
                     .WithBody("return src.Value;");
@@ -57,21 +57,21 @@ namespace UnitGenerator
                 // operatory mnożenia przez liczbę
                 var m = Target.AddMethod("*", Cfg.ClassName)
                     .WithBody($"return new {Cfg.ClassName}(number * x.Value);");
-                m.AddParam("number", "double");
+                m.AddParam("number", (CsType)"double");
                 m.AddParam("x", Cfg.ClassName);
                 // odwrócona wersja
                 m = Target.AddMethod("*", Cfg.ClassName)
                     .WithBody($"return new {Cfg.ClassName}(x.Value * number);");
                 m.AddParam("x", Cfg.ClassName);
-                m.AddParam("number", "double");
+                m.AddParam("number", (CsType)"double");
                 // operator dzielenia
                 m = Target.AddMethod("/", Cfg.ClassName)
                     .WithBody($"return new {Cfg.ClassName}(x.Value / number);");
                 m.AddParam("x", Cfg.ClassName);
-                m.AddParam("number", "double");
+                m.AddParam("number", (CsType)"double");
 
                 // operator dzielenia
-                m = Target.AddMethod("/", "double")
+                m = Target.AddMethod("/", (CsType)"double")
                     .WithBody("return x.Value / y.Value;");
                 m.AddParam("x", Cfg.ClassName);
                 m.AddParam("y", Cfg.ClassName);
@@ -110,7 +110,7 @@ namespace UnitGenerator
 
         protected override string GetTypename(UnitDefinition cfg)
         {
-            return cfg.ClassName;
+            return cfg.ClassName.ToString();
         }
 
 

@@ -14,7 +14,7 @@ namespace UnitGenerator
         {
             var name = new CsArguments(Cfg.CounterUnit.Unit.GetTypename(), Cfg.DenominatorUnit.Unit.GetTypename())
                 .MakeGenericType(nameof(IFractionalUnit));
-            return new[] {name};
+            return new[] {name.Declaration};
         }
 
         protected override CompositeUnitGeneratorInfo GetInfo()

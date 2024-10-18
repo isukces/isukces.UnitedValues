@@ -43,7 +43,7 @@ namespace UnitGenerator
             foreach (var i in _relatedUnit.Units)
             {
                 var unitTypeName = Cfg.TargetUnitTypename;
-                var f1Name       = i.FieldName + unitTypeName;
+                var f1Name       = i.FieldName + unitTypeName.Declaration;
                 var f1Type       = unitTypeName;
 
                 var v = Cfg.Source.Container.GetTypename() + "." + i.FieldName + Cfg.Source.Unit.GetTypename();
@@ -56,7 +56,7 @@ namespace UnitGenerator
                     .Description = $"unit 1/{i.UnitShortCode.EffectiveValue}";
                 
 
-                var unitDefinitionType = new CsArguments(unitTypeName)
+                var unitDefinitionType = new CsArguments(unitTypeName.Declaration)
                     .MakeGenericType("UnitDefinition");
 
                 var value = new CsArguments(f1Name, Inverse(i.ScaleFactor)).Create(unitDefinitionType);
@@ -76,15 +76,15 @@ namespace UnitGenerator
             array.CreateArray(cw, "All = ");
             var c = Target.AddConstructor().WithStatic().WithBody(cw);
 
-            Target.AddField("All", AllPropertyTypeName).WithStatic().WithIsReadOnly()
-                .Description = $"All known {Cfg.TargetUnitTypename.FirstLower()} units";
+            Target.AddField("All", (CsType)AllPropertyTypeName).WithStatic().WithIsReadOnly()
+                .Description = $"All known {Cfg.TargetUnitTypename.Declaration.FirstLower()} units";
         }
 
-        private string AllPropertyTypeName => $"IReadOnlyList<UnitDefinition<{Cfg.TargetUnitTypename}>>";
+        private string AllPropertyTypeName => $"IReadOnlyList<UnitDefinition<{Cfg.TargetUnitTypename.Declaration}>>";
 
         protected override string GetTypename(InversedUnit cfg)
         {
-            return cfg.TargetContainerTypename;
+            return cfg.TargetContainerTypename.Declaration;
         }
 
         /*private void Add_AllProperty()
@@ -110,10 +110,10 @@ namespace UnitGenerator
             cs.Close();
             cs.WithThrowNotImplementedException();
 
-            var m = Target.AddMethod("Get" + Cfg.TargetUnitTypename, Cfg.TargetUnitTypename)
+            var m = Target.AddMethod("Get" + Cfg.TargetUnitTypename.Declaration, Cfg.TargetUnitTypename)
                 .WithStatic()
                 .WithBody(cs);
-            m.AddParam("unit", Cfg.Source.Unit.GetTypename());
+            m.AddParam("unit", (CsType)Cfg.Source.Unit.GetTypename());
         }
 
         private RelatedUnit _relatedUnit;

@@ -1,6 +1,7 @@
 // ReSharper disable All
 using System;
 
+// suggestion: File scope namespace is possible, use [AssumeDefinedNamespace]
 namespace UnitGenerator
 {
     public partial class XUnitContainerTypeName

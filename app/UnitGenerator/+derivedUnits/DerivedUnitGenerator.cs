@@ -32,7 +32,7 @@ namespace UnitGenerator
             var cw    = new CsCodeWriter();
             var array = new CsArguments(Cfg.Units.Select(q => q.FieldName).ToArray());
             array.CreateArray(cw, "return ");
-            Target.AddProperty("All", "IReadOnlyList<UnitDefinition<" + Cfg.Name + "Unit>>")
+            Target.AddProperty("All", (CsType)$"IReadOnlyList<UnitDefinition<{Cfg.Name}Unit>>")
                 .WithIsPropertyReadOnly()
                 .WithNoEmitField()
                 .WithStatic()
@@ -44,9 +44,9 @@ namespace UnitGenerator
         {
             foreach (var i in Cfg.Units)
             {
-                var unitTypeName = Cfg.Name.ToUnitTypeName().GetTypename();
+                var unitTypeName = (CsType)Cfg.Name.ToUnitTypeName().GetTypename();
 
-                var n2 = i.FieldName + unitTypeName;
+                var n2 = i.FieldName + unitTypeName.Declaration;
                 {
                     var constValue = i.UnitConstructor;
                     if (string.IsNullOrEmpty(constValue))
@@ -71,7 +71,7 @@ namespace UnitGenerator
                     if (i.Aliases != null)
                         args = i.Aliases.Plus(args);
 
-                    var unitDefinitionType = new CsArguments(unitTypeName)
+                    var unitDefinitionType = new CsArguments(unitTypeName.Declaration)
                         .MakeGenericType("UnitDefinition");
 
                     // public static readonly UnitDefinition<LengthUnit> Km
@@ -86,9 +86,9 @@ namespace UnitGenerator
                 {
                     var c = Get(Cfg.Name.ValueTypeName, out var file);
                     CsFilesManager.AddGeneratorName(file, GetType().Name);
-                    var value = new CsArguments("value", Target.Name+"."+ i.FieldName + ".Unit").Create(c.Name);
+                    var value = new CsArguments("value", Target.Name.Declaration+"."+ i.FieldName + ".Unit").Create(c.Name);
                     c.AddMethod("From" + i.FieldName, c.Name).WithBody($"return {value};")
-                        .WithParameter(new CsMethodParameter("value", "decimal"));
+                        .WithParameter(new CsMethodParameter("value", (CsType)"decimal"));
 
                 }
             }
@@ -111,7 +111,7 @@ namespace UnitGenerator
                 cw.WriteLine(q);
             }
 
-            Target.AddMethod("Register", "void")
+            Target.AddMethod("Register", (CsType)"void")
                 .WithBody(cw)
                 .WithStatic()
                 .WithVisibility(Visibilities.Internal)
@@ -121,7 +121,7 @@ namespace UnitGenerator
         private void Add_RegisterUnitExchangeFactors()
         {
             Target.WithAttributeFromName(nameof(UnitsContainerAttribute));
-            var m = Target.AddMethod("RegisterUnitExchangeFactors", "void")
+            var m = Target.AddMethod("RegisterUnitExchangeFactors", (CsType)"void")
                 .WithStatic()
                 .WithBody("factors.RegisterMany(All);");
             m.AddParam<UnitExchangeFactors>("factors", Target);
@@ -130,7 +130,7 @@ namespace UnitGenerator
 
         private void Add_TryRecoverUnitFromName()
         {
-            var resultTypeName = Cfg.Name.ToUnitTypeName().GetTypename();
+            var resultTypeName = (CsType)Cfg.Name.ToUnitTypeName().GetTypename();
 
             string c()
             {
@@ -144,7 +144,7 @@ namespace UnitGenerator
 
                 RelatedUnit cfg = Cfg;
                 {
-                    var type = typeof(Power).Assembly.GetTypes().FirstOrDefault(a => a.Name == resultTypeName);
+                    var type = typeof(Power).Assembly.GetTypes().FirstOrDefault(a => a.Name == resultTypeName.Declaration);
                     if (type != null)
                     {
                         var t = GetFractionalUnit(type);
@@ -155,7 +155,8 @@ namespace UnitGenerator
                             cw.OpenIf("parts.Length == 2");
                             cw.WriteLine("var counterUnit = "+t.Item1.Name+"s.TryRecoverUnitFromName(parts[0]);");
                             cw.WriteLine("var denominatorUnit = "+t.Item2.Name+"s.TryRecoverUnitFromName(parts[1]);");
-                            cw.WriteLine("return new "+resultTypeName+"(counterUnit, denominatorUnit);");
+                            //cw.WriteLine("return new "+resultTypeName+"(counterUnit, denominatorUnit);");
+                            cw.WriteLine("return " + resultTypeName.New("counterUnit", "denominatorUnit") + ";");
                             cw.Close();
                             cw.WriteLine("throw new ArgumentException(nameof(unitName));");
                             return cw.Code;
@@ -169,7 +170,7 @@ namespace UnitGenerator
             var body = c();
             // koniec body
             var m = Target.AddMethod("TryRecoverUnitFromName", resultTypeName).WithStatic().WithBody(body);
-            var p = m.AddParam("unitName", "string");
+            var p = m.AddParam("unitName", (CsType)"string");
             p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
         }
 

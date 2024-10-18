@@ -14,9 +14,9 @@ namespace UnitGenerator
     {
         public static CsMethod AddOperator(this CsClass cl, string operatorName, CsArguments csArgument, string resultType = null)
         {
-            resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name);
+            resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name.Declaration);
             var code = csArgument.Create(resultType);
-            return cl.AddMethod(operatorName, resultType, "implements " + operatorName + " operator")
+            return cl.AddMethod(operatorName, (CsType)resultType, "implements " + operatorName + " operator")
                 .WithBodyFromExpression(code);
         }
 
@@ -214,7 +214,7 @@ namespace UnitGenerator
             return method;
         }
 
-        public static CsMethod WithLeftRightArguments(this CsMethod method, string leftType, string rightType,
+        public static CsMethod WithLeftRightArguments(this CsMethod method, CsType leftType, CsType rightType,
             string leftName = "left",
             string rightName = "right")
         {

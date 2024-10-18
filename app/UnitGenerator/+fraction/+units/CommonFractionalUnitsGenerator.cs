@@ -29,7 +29,7 @@ namespace UnitGenerator
                 var p2 = fuDefinition.DenominatorUnit.Container + "." + item.DenominatorUnit;
 
                 var x = new CsArguments(p1, p2).Create(item.Type.Unit);
-                var f = cl.AddField(item.TargetPropertyName, item.Type.Unit.GetTypename())
+                var f = cl.AddField(item.TargetPropertyName, (CsType)item.Type.Unit.GetTypename())
                     .WithStatic()
                     .WithIsReadOnly()
                     .WithConstValue(x);

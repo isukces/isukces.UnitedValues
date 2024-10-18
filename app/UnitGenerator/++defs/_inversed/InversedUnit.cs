@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using iSukces.Code;
 
 namespace UnitGenerator
 {
@@ -19,9 +20,9 @@ namespace UnitGenerator
 
         public TypesGroup Source { get; }
 
-        public string TargetUnitTypename => Target.Unit.GetTypename();
+        public CsType TargetUnitTypename => (CsType)Target.Unit.GetTypename();
 
-        public string TargetContainerTypename => Target.Container.GetTypename();
+        public CsType TargetContainerTypename => (CsType)Target.Container.GetTypename();
 
         public BasicUnit InversionBaseUnit
         {
@@ -41,7 +42,7 @@ namespace UnitGenerator
 
                 var baseUnit = new TypeAndFieldName(
                     TargetContainerTypename,
-                    related.BaseUnitField + TargetUnitTypename);
+                    related.BaseUnitField + TargetUnitTypename.Declaration);
                 return baseUnit;
             }
         }

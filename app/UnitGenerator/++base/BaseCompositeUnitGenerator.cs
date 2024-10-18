@@ -30,9 +30,9 @@ namespace UnitGenerator
 
             var pi = new[]
             {
-                new ConstructorParameterInfo(_info.FirstPropertyName, _info.First.Unit.TypeName, null,
+                new ConstructorParameterInfo(_info.FirstPropertyName, (CsType)_info.First.Unit.TypeName, null,
                     _info.FirstPropertyName.Decamelize().ToLower()),
-                new ConstructorParameterInfo(_info.SecondPropertyName, _info.Second.Unit.TypeName, null,
+                new ConstructorParameterInfo(_info.SecondPropertyName, (CsType)_info.Second.Unit.TypeName, null,
                     _info.SecondPropertyName.Decamelize().ToLower())
             };
             var col1 = new Col1(pi);
@@ -62,13 +62,13 @@ namespace UnitGenerator
             var items = _info2?.Items;
             if (items is null || items.Length == 0)
                 return;
-            var type = new CsArguments(Target.GetTypeName<DecomposableUnitItem>())
+            var type = new CsArguments(Target.GetTypeName<DecomposableUnitItem>().Declaration)
                 .MakeGenericType(Target.GetTypeName<IReadOnlyList<int>>(), true);
 
             var cs = Ext.Create(GetType());
             {
                 // creates code
-                var codeItems = new DecomposeExpressionFinder(typeof(Length).Assembly).GetCodeItems(items, Target.Name);
+                var codeItems = new DecomposeExpressionFinder(typeof(Length).Assembly).GetCodeItems(items, Target.Name.Declaration);
                 if (codeItems != null)
                 {
                     var initCodes = codeItems.Select(a => a.Init).Where(a => !string.IsNullOrWhiteSpace(a));
@@ -99,7 +99,7 @@ namespace UnitGenerator
                 $"{_info.FirstPropertyName}.Equals(other.{_info.FirstPropertyName}) && {_info.SecondPropertyName}.Equals(other.{_info.SecondPropertyName})";
             Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
             Add_EqualsUniversal("object", false, OverridingType.Override,
-                "other is " + Target.Name + " unitedValue ? Equals(unitedValue) : false");
+                "other is " + Target.Name.Declaration + " unitedValue ? Equals(unitedValue) : false");
         }
 
         private void Add_UnitNameProperty()
@@ -107,7 +107,7 @@ namespace UnitGenerator
             var sep = string.IsNullOrEmpty(_info2.StringSeparator)
                 ? ""
                 : " + " + _info2.StringSeparator.CsEncode();
-            Target.AddProperty(PropertyName, "string")
+            Target.AddProperty(PropertyName, (CsType)"string")
                 .WithIsPropertyReadOnly()
                 .WithNoEmitField()
                 .WithOwnGetter($@"{_info.FirstPropertyName}.UnitName{sep} + {_info.SecondPropertyName}.UnitName")
@@ -119,9 +119,9 @@ namespace UnitGenerator
             var cw = Ext.Create(GetType());
             var e  = new CsArguments(_info.FirstPropertyName, "newUnit").Create(Target.Name);
             cw.WriteLine($"return {e};");
-            Target.AddMethod("With" + _info.SecondPropertyName, Cfg.UnitTypes.Unit.TypeName)
+            Target.AddMethod("With" + _info.SecondPropertyName, (CsType)Cfg.UnitTypes.Unit.TypeName)
                 .WithBody(cw)
-                .AddParam("newUnit", _info.Second.Unit.TypeName);
+                .AddParam("newUnit", (CsType)_info.Second.Unit.TypeName);
         }
 
         private void Add_WithSecond()
@@ -129,9 +129,9 @@ namespace UnitGenerator
             var cw = Ext.Create(GetType());
             var e  = new CsArguments("newUnit", _info.SecondPropertyName).Create(Target.Name);
             cw.WriteLine($"return {e};");
-            Target.AddMethod($"With{_info.FirstPropertyName}", Cfg.UnitTypes.Unit.TypeName)
+            Target.AddMethod($"With{_info.FirstPropertyName}", (CsType)Cfg.UnitTypes.Unit.TypeName)
                 .WithBody(cw)
-                .AddParam("newUnit", _info.First.Unit.TypeName);
+                .AddParam("newUnit", (CsType)_info.First.Unit.TypeName);
         }
 
         private CompositeUnitGeneratorInfo _info;

@@ -38,7 +38,7 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypes.Unit.GetTypename(), null, "unit")
+                    (CsType)Cfg.UnitTypes.Unit.GetTypename(), null, "unit")
             });
         }
 

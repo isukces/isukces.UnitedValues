@@ -30,16 +30,16 @@ namespace UnitGenerator.Local
         public string   TypeName       { get; }
         public Assembly TargetAssembly { get; }
 
-        public string CsWrappedType
+        public CsType CsWrappedType
         {
             get
             {
                 switch (WrappedType)
                 {
                     case WrappedTypes.String:
-                        return "string";
+                        return (CsType)"string";
                     case WrappedTypes.Int:
-                        return "int";
+                        return (CsType)"int";
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

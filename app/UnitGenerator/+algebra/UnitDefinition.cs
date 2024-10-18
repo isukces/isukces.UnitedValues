@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using iSukces.Code;
 
 namespace UnitGenerator
 {
     public class UnitDefinition : IEquatable<UnitDefinition>
     {
         public UnitDefinition(string className, string unit, string description)
+            :this((CsType)className, unit, description)
+        {
+            
+        }
+        public UnitDefinition(CsType className, string unit, string description)
         {
             Description = description;
             ClassName   = className;
@@ -68,11 +74,11 @@ namespace UnitGenerator
             return Unit;
         }
 
-        public static UnitDefinition Scalar => new UnitDefinition("double", "scalar value", "Scalar value");
+        public static UnitDefinition Scalar => new UnitDefinition((CsType)"double", "scalar value", "Scalar value");
 
         public string Description { get; set; }
 
-        public string                 ClassName   { get; }
+        public CsType               ClassName   { get; }
         public string                 Unit        { get; }
         public List<MulDivDefinition> MulsAndDivs { get; } = new List<MulDivDefinition>();
     }

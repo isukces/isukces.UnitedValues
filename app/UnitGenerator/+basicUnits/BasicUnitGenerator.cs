@@ -74,10 +74,10 @@ namespace UnitGenerator
                 if (Cfg == targetUnit.Unit)
                     continue;
                 var cw = Ext.Create<BasicUnitGenerator>();
-                var code = new CsArguments(Target.Name, targetUnit.Unit.GetTypename())
+                var code = new CsArguments(Target.Name.Declaration, targetUnit.Unit.GetTypename())
                     .MakeGenericTypeMethodCall("GlobalUnitRegistry.Relations.GetOrThrow", "this");
                 cw.WriteReturn(code);
-                var m = Target.AddMethod("Get" + targetUnit.Unit.TypeName, targetUnit.Unit.GetTypename()).WithBody(cw);
+                var m = Target.AddMethod("Get" + targetUnit.Unit.TypeName, (CsType)targetUnit.Unit.GetTypename()).WithBody(cw);
                 m.WithAggressiveInlining(Target);
 
                 m.AddRelatedUnitSourceAttribute(Target, RelatedUnitSourceUsage.ProvidesRelatedUnit, 10);
@@ -91,7 +91,7 @@ namespace UnitGenerator
             var basicUnit = BaseUnit;
 
             {
-                var type = new CsArguments(Target.GetTypeName<DecomposableUnitItem>())
+                var type = new CsArguments(Target.GetTypeName<DecomposableUnitItem>().Declaration)
                     .MakeGenericType(Target.GetTypeName<IReadOnlyList<int>>(), true);
 
                 var cs = Ext.Create(GetType());
@@ -143,9 +143,9 @@ namespace UnitGenerator
 
         private void Add_Equals()
         {
-            var m = Target.AddMethod("Equals", "bool")
+            var m = Target.AddMethod("Equals", (CsType)"bool")
                 .WithBodyFromExpression($"String.Equals({PropertyName}, other?.{PropertyName})");
-            m.AddParam("other", Cfg.GetTypename());
+            m.AddParam("other", (CsType)Cfg.GetTypename());
         }
 
         private void Add_EqualsOverride()
@@ -153,24 +153,24 @@ namespace UnitGenerator
             // equals override
             var cw = new CsCodeWriter();
             cw.WriteLine("if (ReferenceEquals(null, obj)) return false;");
-            cw.WriteLine(ReturnValue("obj is " + Target.Name + " tmp && Equals(tmp)"));
-            var m = Target.AddMethod("Equals", "bool")
+            cw.WriteLine(ReturnValue("obj is " + Target.Name.Declaration + " tmp && Equals(tmp)"));
+            var m = Target.AddMethod("Equals", (CsType)"bool")
                 .WithOverride()
                 .WithBody(cw);
-            m.AddParam("obj", "object");
+            m.AddParam("obj", (CsType)"object");
         }
 
         private void Add_GetHashCode()
         {
             // GetHashCode override
-            Target.AddMethod("GetHashCode", "int")
+            Target.AddMethod("GetHashCode", (CsType)"int")
                 .WithOverride()
                 .WithBodyFromExpression("" + PropertyName + "?.GetHashCode() ?? 0");
         }
 
         private void Add_IEquatableEquals()
         {
-            Target.AddMethod($"IEquatable<{Target.Name}>.Equals", "bool")
+            Target.AddMethod($"IEquatable<{Target.Name.Declaration}>.Equals", (CsType)"bool")
                 .WithBodyFromExpression("Equals(other)")
                 .WithVisibility(Visibilities.InterfaceDefault)
                 .AddParam("other", Target.Name);
@@ -178,7 +178,7 @@ namespace UnitGenerator
 
         private void Add_ImplicitOperator()
         {
-            var pa   = MakeGenericType<UnitDefinition<IUnit>>(Target, Cfg);
+            var pa   = (CsType)MakeGenericType<UnitDefinition<IUnit>>(Target, Cfg);
             // var expr = $"new {Cfg}(src.{PropertyName})";
             var expr = "src.Unit";
             Add_ImplicitOperator(pa, Target.Name, expr);
@@ -215,7 +215,7 @@ namespace UnitGenerator
                     return null;
                 var a = new[]
                 {
-                    new ConstructorParameterInfo("BaseUnit", Related.MyInfo.PowerOne.Unit.TypeName, null, "based on",
+                    new ConstructorParameterInfo("BaseUnit", (CsType)Related.MyInfo.PowerOne.Unit.TypeName, null, "based on",
                         Flags1.NotNull)
                     {
                         PropertyCreated = property =>
@@ -223,7 +223,7 @@ namespace UnitGenerator
                             property.AddRelatedUnitSourceAttribute(Target, RelatedUnitSourceUsage.DoNotUse, 0);
                         }
                     },
-                    new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit",
+                    new ConstructorParameterInfo(PropertyName, (CsType)"string", expr, "name of unit",
                         Flags1.Optional | Flags1.DoNotAssignProperty | Flags1.DoNotCreateProperty)
                 };
                 var h         = new Col1(a);
@@ -237,7 +237,7 @@ namespace UnitGenerator
             {
                 var b = new[]
                 {
-                    new ConstructorParameterInfo(PropertyName, "string", expr, "name of unit",
+                    new ConstructorParameterInfo(PropertyName, (CsType)"string", expr, "name of unit",
                         Flags1.NormalizedString)
                 };
                 return new Col1(b);

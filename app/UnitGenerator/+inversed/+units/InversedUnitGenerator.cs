@@ -25,7 +25,7 @@ namespace UnitGenerator
             Add_ToString(PropName);
 
             Target.ImplementedInterfaces.Add(Target.Owner.GetTypeName<IUnit>());
-            var t = MakeGenericType<IEquatable<int>>(Target.Owner, Target.Name);
+            var t = MakeGenericType<IEquatable<int>>(Target.Owner, Target.Name.Declaration);
             Target.ImplementedInterfaces.Add(t);
             Target.WithAttribute(typeof(SerializableAttribute));
 
@@ -40,7 +40,7 @@ namespace UnitGenerator
 
         protected override string GetTypename(InversedUnit cfg)
         {
-            return cfg.TargetUnitTypename;
+            return cfg.TargetUnitTypename.Declaration;
         }
 
         private void Add_Decompose()
@@ -64,7 +64,7 @@ namespace UnitGenerator
                 $"{PropName}.Equals(other.{PropName})";
             Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
             Add_EqualsUniversal("object", false, OverridingType.Override,
-                "other is " + Target.Name + " unitedValue ? Equals(unitedValue) : false");
+                "other is " + Target.Name.Declaration + " unitedValue ? Equals(unitedValue) : false");
         }
 
         private void AddGetBaseUnit()
@@ -77,7 +77,7 @@ namespace UnitGenerator
             cw.SingleLineIf("UnitName.StartsWith(\"1/\")", "return new " + resultType + "(UnitName.Substring(2));");
 
             cw.WithThrowNotImplementedException();
-            var m = Target.AddMethod("Get" + resultType, resultType)
+            var m = Target.AddMethod("Get" + resultType, (CsType)resultType)
                 .WithBody(cw);
             m.AddRelatedUnitSourceAttribute(Target, RelatedUnitSourceUsage.ProvidesRelatedUnit, 5);
         }
@@ -87,7 +87,7 @@ namespace UnitGenerator
             IReadOnlyList<ConstructorParameterInfo> items = new[]
             {
                 new ConstructorParameterInfo(PropName,
-                    "string",
+                    (CsType)"string",
                     null,
                     "name of unit",
                     Flags1.NormalizedString | Flags1.AddNotNullAttributeToPropertyIfPossible)
@@ -97,12 +97,12 @@ namespace UnitGenerator
             items = new[]
             {
                 new ConstructorParameterInfo("BaseUnit",
-                    Cfg.Source.Unit.GetTypename(),
+                    (CsType)Cfg.Source.Unit.GetTypename(),
                     null,
                     "base unit",
                     Flags1.NotNull | Flags1.PropertyCanBeNull),
                 new ConstructorParameterInfo(PropName,
-                    "string",
+                    (CsType)"string",
                     null,
                     "name of unit",
                     Flags1.TrimValue | Flags1.Optional | Flags1.DoNotAssignProperty | Flags1.DoNotCreateProperty)

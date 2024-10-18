@@ -36,7 +36,7 @@ namespace UnitGenerator
                     null,
                     "value"),
                 new ConstructorParameterInfo(UnitPropName,
-                    Cfg.UnitTypes.Unit.TypeName, null, "unit")
+                    (CsType)Cfg.UnitTypes.Unit.TypeName, null, "unit")
             });
         }
 
@@ -64,7 +64,7 @@ namespace UnitGenerator
             cw.WriteLine("var r = Unit.RightUnit.UnitName ?? string.Empty;");
             cw.SingleLineIf("l.Length==1 && r.Length==1", "return ToString();");
             cw.WriteLine("return Value.ToString(CultureInfo.InvariantCulture) + l + Common.TimesSign + r;");
-            Target.AddMethod("SerializeToJson", "string")
+            Target.AddMethod("SerializeToJson", (CsType)"string")
                 .WithBody(cw);
         }
     }

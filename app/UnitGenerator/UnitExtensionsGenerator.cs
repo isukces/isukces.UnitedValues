@@ -22,10 +22,10 @@ namespace UnitGenerator
                 cw.SingleLineIf("items is null", ReturnValue(Cfg.UnitTypes.Value + ".Zero"));
 
                 actions(cw);
-                var m = Target.AddMethod("Sum", Cfg.UnitTypes.Value.ValueTypeName)
+                var m = Target.AddMethod("Sum", (CsType)Cfg.UnitTypes.Value.ValueTypeName)
                     .WithStatic()
                     .WithBody(cw);
-                m.AddParam("items", MakeGenericType<IEnumerable<int>>(Target, itemType)).UseThis = true;
+                m.AddParam("items", (CsType)MakeGenericType<IEnumerable<int>>(Target, itemType)).UseThis = true;
                 return m;
             }
 
@@ -52,7 +52,7 @@ namespace UnitGenerator
             });
 
             mm.GenericArguments = new CsGenericArguments("T");
-            mm.AddParam("map", "Func<T, " + Cfg.UnitTypes.Value + ">");
+            mm.AddParam("map", (CsType)$"Func<T, {Cfg.UnitTypes.Value}>");
         }
 
         protected override string GetTypename(BasicUnit cfg)

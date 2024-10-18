@@ -279,18 +279,17 @@ namespace UnitGenerator
 
             var cw1 = PrepareCode();
 
-            var method = cl.AddMethod(op, tResult + (nullableArguments == NullableArguments.None ? "" : "?"),
-                    info.Description)
+            var type = tResult + (nullableArguments == NullableArguments.None ? "" : "?");
+            var method = cl.AddMethod(op, (CsType)type, info.Description)
                 .WithBody(cw1);
 
-            var p = method.AddParam(leftName, leftValue);
+            var p = method.AddParam(leftName, (CsType)leftValue);
             p.Description = info.Left.Desctiption;
-            p             = method.AddParam(rightName, rightValue);
+            p             = method.AddParam(rightName, (CsType)rightValue);
             p.Description = info.Right.Desctiption;
         }
 
 
-        private readonly Dictionary<OperatorGenerationKey, string> _done =
-            new Dictionary<OperatorGenerationKey, string>();
+        private readonly Dictionary<OperatorGenerationKey, string> _done = new();
     }
 }

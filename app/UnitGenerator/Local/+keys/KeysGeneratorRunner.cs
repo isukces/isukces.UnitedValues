@@ -12,11 +12,6 @@ namespace UnitGenerator.Local
             var gen = new KeysGenerator();
             var a   = typeof(KeysGeneratorRunner).Assembly;
 
-            void AddString(string n, string p = "Value")
-            {
-                gen.Add(new KeysGeneratorDef(n, a, WrappedTypes.String, p));
-            }
-
             AddString(nameof(XValueTypeName), nameof(XValueTypeName.ValueTypeName));
             AddString(nameof(XUnitTypeName), nameof(XUnitTypeName.TypeName));
             AddString(nameof(XUnitContainerTypeName), nameof(XUnitContainerTypeName.TypeName));
@@ -37,6 +32,12 @@ namespace UnitGenerator.Local
 
             var filename = Path.Combine(basePath, "Keys.auto.cs");
             file.SaveIfDifferent(filename);
+            return;
+
+            void AddString(string n, string p = "Value")
+            {
+                gen.Add(new KeysGeneratorDef(n, a, WrappedTypes.String, p));
+            }
         }
     }
 }

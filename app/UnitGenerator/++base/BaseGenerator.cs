@@ -26,13 +26,13 @@ public abstract class BaseGenerator<TDef>
     protected static string MakeGenericType<TGenericType>(ITypeNameResolver reslve, string arg)
     {
         var tn    = reslve.GetTypeName<TGenericType>();
-        var parts = tn.Split('<');
+        var parts = tn.Declaration.Split('<');
         return parts[0] + "<" + arg + ">";
     }
 
     protected static void MakeToString(CsClass cl, string returnValue)
     {
-        var m = cl.AddMethod("ToString", "string").WithBody($"return {returnValue};");
+        var m = cl.AddMethod("ToString", (CsType)"string").WithBody($"return {returnValue};");
         m.Overriding = OverridingType.Override;
     }
 
@@ -86,7 +86,7 @@ public abstract class BaseGenerator<TDef>
     {
         var target = Target;
         var code   = new CsCodeWriter();
-        var m      = target.AddConstructor("creates instance of " + target.Name);
+        var m      = target.AddConstructor("creates instance of " + target.Name.Declaration);
         var c      = col.Writer1.Code;
         if (!string.IsNullOrEmpty(c))
             code.WriteLine(c);
@@ -114,17 +114,23 @@ public abstract class BaseGenerator<TDef>
         m.WithBody(code);
     }
 
-    protected void Add_EqualsUniversal(string compareType, bool nullable, OverridingType overridingType,
+
+    protected void Add_EqualsUniversal(CsType compareType, bool nullable, OverridingType overridingType,
         string compareCode)
+    {
+        Add_EqualsUniversal(compareType.Declaration, nullable, overridingType, compareCode);
+    }
+    
+    protected void Add_EqualsUniversal(string compareType, bool nullable, OverridingType overridingType, string compareCode)
     {
         var cw = new CsCodeWriter();
         if (nullable)
             cw.SingleLineIf("other is null", ReturnValue("false"));
         cw.WriteLine(ReturnValue(compareCode));
-        var m = Target.AddMethod("Equals", "bool")
+        var m = Target.AddMethod("Equals", (CsType)"bool")
             .WithBody(cw);
         m.Overriding = overridingType;
-        m.AddParam("other", compareType);
+        m.AddParam("other", (CsType)compareType);
     }
 
     protected void Add_GetHashCode(string expression)
@@ -133,14 +139,14 @@ public abstract class BaseGenerator<TDef>
         cw.Open("unchecked");
         cw.WriteLine(ReturnValue(expression));
         cw.Close();
-        Target.AddMethod("GetHashCode", "int")
+        Target.AddMethod("GetHashCode", (CsType)"int")
             .WithOverride()
             .WithBody(cw);
     }
 
-    protected void Add_ImplicitOperator(string source, string target, string expr)
+    protected void Add_ImplicitOperator(CsType source, CsType target, string expr)
     {
-        var description = $"Converts {source} into {target} implicitly.";
+        var description = $"Converts {source.Declaration} into {target.Declaration} implicitly.";
         var m = Target.AddMethod(CsMethod.Implicit, target, description)
             .WithBodyFromExpression(expr);
         m.AddParam("src", source);
@@ -205,7 +211,7 @@ public abstract class BaseGenerator<TDef>
     }
         
 
-    protected CsProperty Add_Property(string name, string type, string description)
+    protected CsProperty Add_Property(string name, CsType type, string description)
     {
         return Target.AddProperty(name, type)
             .WithDescription(description)
@@ -216,7 +222,7 @@ public abstract class BaseGenerator<TDef>
 
     protected void Add_ToString(string expression)
     {
-        Target.AddMethod("ToString", "string", "Returns unit name")
+        Target.AddMethod("ToString", (CsType)"string", "Returns unit name")
             .WithOverride()
             .WithBody("return " + expression + ";");
     }
@@ -227,7 +233,7 @@ public abstract class BaseGenerator<TDef>
         for (var i = 0; i < 2; i++)
         {
             var eq = i == 0;
-            var m = Target.AddMethod(eq ? "==" : "!=", "bool", eq ? "Equality operator" : "Inequality operator")
+            var m = Target.AddMethod(eq ? "==" : "!=", (CsType)"bool", eq ? "Equality operator" : "Inequality operator")
                 .WithBody($"return {(eq ? "" : "!")}left.Equals(right);");
 
             m.AddParam("left", Target.Name, "first value to compare");

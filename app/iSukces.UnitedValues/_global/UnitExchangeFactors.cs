@@ -10,14 +10,14 @@ namespace iSukces.UnitedValues
             where TUnit : IUnit
         {
             var key = new Key(typeof(TUnit), unitName);
-            return _dict.TryGetValue(key, out var value) ? (decimal?)value : null;
+            return _dict.TryGetValue(key, out var value) ? value : (decimal?)null;
         }
 
         public decimal? Get<TUnit>(TUnit unit)
             where TUnit : IUnit
         {
             var key = new Key(typeof(TUnit), unit.UnitName);
-            return _dict.TryGetValue(key, out var value) ? (decimal?)value : null;
+            return _dict.TryGetValue(key, out var value) ? value : (decimal?)null;
         }
         
         public decimal GetThrow<TUnit>(TUnit unit)
