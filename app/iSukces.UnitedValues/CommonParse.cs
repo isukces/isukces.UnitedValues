@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 
@@ -18,7 +19,9 @@ public static class CommonParse
             var number = decimal.Parse(m.Groups[2].Value, CultureInfo.InvariantCulture);
             if (minus)
                 number = -number;
-            var unit = m.Groups[6].Value.Trim();
+            var unit  = m.Groups[6].Value.Trim();
+            var units = unit.Split('/').Select(a => a.Trim());
+            unit = string.Join("/", units);
             return new ParseResult(number, unit);
         }
 

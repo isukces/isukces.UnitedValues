@@ -16,7 +16,6 @@ public partial struct Pressure
         var forceValue = new Force(value, force)
             .ConvertTo(ForceUnits.Newton);
         Value = forceValue.Value / areaValue.Value;
-
         _unit = PressureUnits.Pascal;
     }
 }

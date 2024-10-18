@@ -363,12 +363,12 @@ public class SerializationTests
         Assert.Equal(obj.Unit, deserialized.Unit);
     }
 
-    [InlineData("45.87N/m²", "45.87N/m²", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
-    [InlineData("45.87N/m²", " 45.87   N/m²     ", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
-    [InlineData("45.87N/m²", " 45.8700   N/m²     ", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
-    [InlineData("45.87N/m²", "45.87N/ m²", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
-    [InlineData("45.87N/m²", " 45.87   N/ m²     ", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
-    [InlineData("45.87N/m²", " 45.8700   N/ m²     ", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
+    [InlineData("45.87Pa", "45.87N/m²", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
+    [InlineData("45.87Pa", " 45.87   N/m²     ", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
+    [InlineData("45.87Pa", " 45.8700   N/m²     ", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
+    [InlineData("45.87Pa", "45.87N/ m²", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
+    [InlineData("45.87Pa", " 45.87   N/ m²     ", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
+    [InlineData("45.87Pa", " 45.8700   N/ m²     ", "ForceUnits.Newton", "AreaUnits.SquareMeter")]
     [InlineData("45.87N/inch²", "45.87N/inch²", "ForceUnits.Newton", "AreaUnits.SquareInch")]
     [InlineData("45.87N/inch²", " 45.87   N/inch²     ", "ForceUnits.Newton", "AreaUnits.SquareInch")]
     [InlineData("45.87N/inch²", " 45.8700   N/inch²     ", "ForceUnits.Newton", "AreaUnits.SquareInch")]
@@ -391,7 +391,9 @@ public class SerializationTests
         _testOutputHelper.WriteLine("Try deserialize " +jsonToDeserialize);
         var deserialized = JsonConvert.DeserializeObject<Pressure>(jsonToDeserialize);
         Assert.Equal(obj.Value, deserialized.Value);
-        Assert.Equal(obj.Unit, deserialized.Unit);
+
+        var expectedUnit = obj.Unit.UnitName == "Pa" ? "N/m²" : obj.Unit.UnitName;
+        Assert.Equal(expectedUnit, deserialized.Unit.UnitName);
     }
 
     [InlineData("45.87m³/s", "45.87m³/s", "VolumeUnits.CubicMeter", "TimeUnits.Second")]
