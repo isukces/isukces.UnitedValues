@@ -45,16 +45,12 @@ public partial class AreaUnit : IUnit, IEquatable<AreaUnit>, IDecomposableUnit, 
         return new[] { GetBasicUnit() };
     }
 
-    public bool Equals(AreaUnit other)
+    public bool Equals(AreaUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is AreaUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is AreaUnit tmp && Equals(tmp);
 
     public DecomposableUnitItem GetBasicUnit()
     {

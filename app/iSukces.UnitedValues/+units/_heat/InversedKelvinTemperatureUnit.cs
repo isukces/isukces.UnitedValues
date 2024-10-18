@@ -40,12 +40,14 @@ public partial class InversedKelvinTemperatureUnit : IUnit, IEquatable<InversedK
 
     public bool Equals(InversedKelvinTemperatureUnit other)
     {
+        // generator : InversedUnitGenerator
         return UnitName.Equals(other.UnitName);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is InversedKelvinTemperatureUnit unitedValue ? Equals(unitedValue) : false;
+        // generator : InversedUnitGenerator
+        return other is InversedKelvinTemperatureUnit value && Equals(value);
     }
 
     public DecomposableUnitItem GetBasicUnit()
@@ -67,7 +69,7 @@ public partial class InversedKelvinTemperatureUnit : IUnit, IEquatable<InversedK
     public KelvinTemperatureUnit GetKelvinTemperatureUnit()
     {
         // generator : InversedUnitGenerator.AddGetBaseUnit
-        if (!(BaseUnit is null))
+        if (BaseUnit is not null)
             return BaseUnit;
         // poor quality code :(, but should work for simple cases like 1/K
         if (UnitName.StartsWith("1/"))

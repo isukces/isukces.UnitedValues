@@ -45,14 +45,16 @@ public sealed partial class PlanarDensityUnit : IFractionalUnit<MassUnit, AreaUn
         */
     }
 
-    public bool Equals(PlanarDensityUnit other)
+    public bool Equals(PlanarDensityUnit? other)
     {
-        return CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit);
+        // generator : FractionUnitGenerator
+        return CounterUnit.Equals(other?.CounterUnit) && DenominatorUnit.Equals(other?.DenominatorUnit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is PlanarDensityUnit unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionUnitGenerator
+        return other is PlanarDensityUnit value && Equals(value);
     }
 
     public override int GetHashCode()
@@ -113,9 +115,6 @@ public sealed partial class PlanarDensityUnit : IFractionalUnit<MassUnit, AreaUn
     /// </summary>
     public AreaUnit DenominatorUnit { get; }
 
-    public string UnitName
-    {
-        get { return CounterUnit.UnitName + "/" + DenominatorUnit.UnitName; }
-    }
+    public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
 
 }

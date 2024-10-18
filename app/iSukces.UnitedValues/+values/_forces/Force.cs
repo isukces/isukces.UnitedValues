@@ -44,19 +44,22 @@ public partial struct Force : IUnitedValue<ForceUnit>, IEquatable<Force>, ICompa
 
     public bool Equals(Force other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : BasicUnitValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<ForceUnit> other)
+    public bool Equals(IUnitedValue<ForceUnit>? other)
     {
+        // generator : BasicUnitValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<ForceUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : BasicUnitValuesGenerator
+        return other is IUnitedValue<ForceUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -65,7 +68,7 @@ public partial struct Force : IUnitedValue<ForceUnit>, IEquatable<Force>, ICompa
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }
@@ -600,10 +603,7 @@ public partial struct Force : IUnitedValue<ForceUnit>, IEquatable<Force>, ICompa
     /// unit
     /// </summary>
     [JetBrains.Annotations.NotNull]
-    public ForceUnit Unit
-    {
-        get { return _unit ?? BaseUnit; }
-    }
+    public ForceUnit Unit => _unit ?? BaseUnit;
 
     private ForceUnit _unit;
 
@@ -647,7 +647,7 @@ public static partial class ForceExtensions
 
 public partial class ForceJsonConverter : AbstractUnitJsonConverter<Force, ForceUnit>
 {
-    protected override Force Make(decimal value, string unit)
+    protected override Force Make(decimal value, string? unit)
     {
         unit = unit?.Trim();
         return new Force(value, string.IsNullOrEmpty(unit) ? Force.BaseUnit : new ForceUnit(unit));

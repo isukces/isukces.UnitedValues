@@ -52,19 +52,22 @@ public partial struct Length : IUnitedValue<LengthUnit>, IEquatable<Length>, ICo
 
     public bool Equals(Length other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : BasicUnitValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<LengthUnit> other)
+    public bool Equals(IUnitedValue<LengthUnit>? other)
     {
+        // generator : BasicUnitValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<LengthUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : BasicUnitValuesGenerator
+        return other is IUnitedValue<LengthUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -73,7 +76,7 @@ public partial struct Length : IUnitedValue<LengthUnit>, IEquatable<Length>, ICo
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }
@@ -1669,10 +1672,7 @@ public partial struct Length : IUnitedValue<LengthUnit>, IEquatable<Length>, ICo
     /// unit
     /// </summary>
     [JetBrains.Annotations.NotNull]
-    public LengthUnit Unit
-    {
-        get { return _unit ?? BaseUnit; }
-    }
+    public LengthUnit Unit => _unit ?? BaseUnit;
 
     private LengthUnit _unit;
 
@@ -1716,7 +1716,7 @@ public static partial class LengthExtensions
 
 public partial class LengthJsonConverter : AbstractUnitJsonConverter<Length, LengthUnit>
 {
-    protected override Length Make(decimal value, string unit)
+    protected override Length Make(decimal value, string? unit)
     {
         unit = unit?.Trim();
         return new Length(value, string.IsNullOrEmpty(unit) ? Length.BaseUnit : new LengthUnit(unit));

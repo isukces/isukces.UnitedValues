@@ -109,13 +109,16 @@ public sealed class CsFilesManager
     public Result GetFileInfo(string name, string nameSpace)
     {
         var units  = name.EndsWith("Units") || name.EndsWith("Unit");
-        var csFile = new CsFile();
+        var csFile = new CsFile
+        {
+            Nullable = FileNullableOption.GlobalEnabled
+        };
         csFile.AddImportNamespace("System");
         csFile.AddImportNamespace("System.Collections.Generic");
         if (units)
         {
             if (name.EndsWith("Units"))
-                name = name.Substring(0, name.Length - 1);
+                name = name[..^1];
         }
         else
         {

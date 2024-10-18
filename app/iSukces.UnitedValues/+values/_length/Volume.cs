@@ -39,19 +39,22 @@ public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume>, IFo
 
     public bool Equals(Volume other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : BasicUnitValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<VolumeUnit> other)
+    public bool Equals(IUnitedValue<VolumeUnit>? other)
     {
+        // generator : BasicUnitValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<VolumeUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : BasicUnitValuesGenerator
+        return other is IUnitedValue<VolumeUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -60,7 +63,7 @@ public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume>, IFo
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }
@@ -884,10 +887,7 @@ public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume>, IFo
     /// unit
     /// </summary>
     [JetBrains.Annotations.NotNull]
-    public VolumeUnit Unit
-    {
-        get { return _unit ?? BaseUnit; }
-    }
+    public VolumeUnit Unit => _unit ?? BaseUnit;
 
     private VolumeUnit _unit;
 
@@ -931,7 +931,7 @@ public static partial class VolumeExtensions
 
 public partial class VolumeJsonConverter : AbstractUnitJsonConverter<Volume, VolumeUnit>
 {
-    protected override Volume Make(decimal value, string unit)
+    protected override Volume Make(decimal value, string? unit)
     {
         unit = unit?.Trim();
         return new Volume(value, string.IsNullOrEmpty(unit) ? Volume.BaseUnit : new VolumeUnit(unit));

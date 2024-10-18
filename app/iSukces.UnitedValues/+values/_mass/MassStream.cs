@@ -42,19 +42,22 @@ public partial struct MassStream : IUnitedValue<MassStreamUnit>, IEquatable<Mass
 
     public bool Equals(MassStream other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : FractionValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<MassStreamUnit> other)
+    public bool Equals(IUnitedValue<MassStreamUnit>? other)
     {
+        // generator : FractionValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<MassStreamUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionValuesGenerator
+        return other is IUnitedValue<MassStreamUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()

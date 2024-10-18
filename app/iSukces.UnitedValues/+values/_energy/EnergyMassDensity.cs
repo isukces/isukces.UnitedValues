@@ -42,19 +42,22 @@ public partial struct EnergyMassDensity : IUnitedValue<EnergyMassDensityUnit>, I
 
     public bool Equals(EnergyMassDensity other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : FractionValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<EnergyMassDensityUnit> other)
+    public bool Equals(IUnitedValue<EnergyMassDensityUnit>? other)
     {
+        // generator : FractionValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<EnergyMassDensityUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionValuesGenerator
+        return other is IUnitedValue<EnergyMassDensityUnit> value && Equals(value);
     }
 
     public EnergyMassDensity FromGigaJoulePerTone(decimal value)

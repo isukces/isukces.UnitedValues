@@ -16,15 +16,17 @@ public class KeysGeneratorRunner
         AddString(nameof(XUnitTypeName), nameof(XUnitTypeName.TypeName));
         AddString(nameof(XUnitContainerTypeName), nameof(XUnitContainerTypeName.TypeName));
 
-        var file = new CsFile();
+        var file = new CsFile
+        {
+            Nullable = FileNullableOption.GlobalEnabled,
+        };
         file.AddImportNamespace("System");
         IAutoCodeGeneratorContext ctx =
             new AutoCodeGenerator.SimpleAutoCodeGeneratorContext(file,
                 type =>
                 {
                     var c = file.GetOrCreateClass(type);
-                    c.IsPartial = true;
-                    return c;
+                    return GeneratorCommon.Setup(c);
                 });
 
         gen.AssemblyStart(a, ctx);

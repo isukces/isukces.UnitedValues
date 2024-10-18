@@ -42,19 +42,22 @@ public partial struct MassDetlaKelvin : IUnitedValue<MassDetlaKelvinUnit>, IEqua
 
     public bool Equals(MassDetlaKelvin other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : ProductValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<MassDetlaKelvinUnit> other)
+    public bool Equals(IUnitedValue<MassDetlaKelvinUnit>? other)
     {
+        // generator : ProductValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<MassDetlaKelvinUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : ProductValuesGenerator
+        return other is IUnitedValue<MassDetlaKelvinUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()

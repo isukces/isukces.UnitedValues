@@ -74,7 +74,7 @@ public class UnitDefinition : IEquatable<UnitDefinition>
         return Unit;
     }
 
-    public static UnitDefinition Scalar => new UnitDefinition((CsType)"double", "scalar value", "Scalar value");
+    public static UnitDefinition Scalar => new UnitDefinition(CsType.Double, "scalar value", "Scalar value");
 
     public string Description { get; set; }
 

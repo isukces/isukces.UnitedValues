@@ -64,7 +64,7 @@ internal class ProductValuesGenerator : BaseCompositeValuesGenerator<ProductUnit
         cw.WriteLine("var r = Unit.RightUnit.UnitName ?? string.Empty;");
         cw.SingleLineIf("l.Length==1 && r.Length==1", "return ToString();");
         cw.WriteLine("return Value.ToString(CultureInfo.InvariantCulture) + l + Common.TimesSign + r;");
-        Target.AddMethod("SerializeToJson", (CsType)"string")
+        Target.AddMethod("SerializeToJson", CsType.String)
             .WithBody(cw);
     }
 }

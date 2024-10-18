@@ -42,19 +42,22 @@ public partial struct VolumeStream : IUnitedValue<VolumeStreamUnit>, IEquatable<
 
     public bool Equals(VolumeStream other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : FractionValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<VolumeStreamUnit> other)
+    public bool Equals(IUnitedValue<VolumeStreamUnit>? other)
     {
+        // generator : FractionValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<VolumeStreamUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionValuesGenerator
+        return other is IUnitedValue<VolumeStreamUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()

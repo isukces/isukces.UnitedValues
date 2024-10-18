@@ -73,19 +73,22 @@ public partial struct ThermalResistance : IUnitedValue<ThermalResistanceUnit>
 
     public bool Equals(ThermalResistance other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : ThermalValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<ThermalResistanceUnit> other)
+    public bool Equals(IUnitedValue<ThermalResistanceUnit>? other)
     {
+        // generator : ThermalValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<ThermalResistanceUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : ThermalValuesGenerator
+        return other is IUnitedValue<ThermalResistanceUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -94,7 +97,7 @@ public partial struct ThermalResistance : IUnitedValue<ThermalResistanceUnit>
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }

@@ -24,16 +24,12 @@ public partial class ForceUnit : IUnit, IEquatable<ForceUnit>
         UnitName = unitName;
     }
 
-    public bool Equals(ForceUnit other)
+    public bool Equals(ForceUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is ForceUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is ForceUnit tmp && Equals(tmp);
 
     public override int GetHashCode()
     {

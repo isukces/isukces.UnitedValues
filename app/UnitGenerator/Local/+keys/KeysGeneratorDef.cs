@@ -37,9 +37,9 @@ public class KeysGeneratorDef
             switch (WrappedType)
             {
                 case WrappedTypes.String:
-                    return (CsType)"string";
+                    return CsType.String;
                 case WrappedTypes.Int:
-                    return (CsType)"int";
+                    return CsType.Int32;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -35,14 +35,16 @@ public sealed partial class LinearForceUnit : IFractionalUnit<ForceUnit, LengthU
         */
     }
 
-    public bool Equals(LinearForceUnit other)
+    public bool Equals(LinearForceUnit? other)
     {
-        return CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit);
+        // generator : FractionUnitGenerator
+        return CounterUnit.Equals(other?.CounterUnit) && DenominatorUnit.Equals(other?.DenominatorUnit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is LinearForceUnit unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionUnitGenerator
+        return other is LinearForceUnit value && Equals(value);
     }
 
     public override int GetHashCode()
@@ -103,9 +105,6 @@ public sealed partial class LinearForceUnit : IFractionalUnit<ForceUnit, LengthU
     /// </summary>
     public LengthUnit DenominatorUnit { get; }
 
-    public string UnitName
-    {
-        get { return CounterUnit.UnitName + "/" + DenominatorUnit.UnitName; }
-    }
+    public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
 
 }

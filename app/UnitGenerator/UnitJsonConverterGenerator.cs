@@ -36,14 +36,14 @@ public class UnitJsonConverterGenerator : BaseGenerator<IUnitInfo>
                     .WithVisibility(Visibilities.Protected)
                     .WithBody(cw);
                 m.AddParam("value", BasicUnitValuesGenerator.ValuePropertyType);
-                m.AddParam("unit", (CsType)"string");
+                m.AddParam("unit", CsType.String.WithReferenceNullable());
             }
             {
                 var m = Target.AddMethod("Parse", (CsType)valueTypeName)
                     .WithOverride()
                     .WithVisibility(Visibilities.Protected)
                     .WithBodyFromExpression(tt.Value + ".Parse(txt)");
-                m.AddParam("txt", (CsType)"string");
+                m.AddParam("txt", CsType.String);
             }
         }
     }
@@ -62,7 +62,7 @@ public class UnitJsonConverterGenerator : BaseGenerator<IUnitInfo>
     private void Add_CanConvert()
     {
         var tt = Cfg.UnitTypes;
-        Target.AddMethod("CanConvert", (CsType)"bool")
+        Target.AddMethod("CanConvert", CsType.Bool)
             .WithOverride()
             .WithBodyFromExpression($"objectType == typeof({tt.Unit})")
             .AddParam("objectType", (CsType)"Type");
@@ -78,7 +78,7 @@ public class UnitJsonConverterGenerator : BaseGenerator<IUnitInfo>
         cw.Close();
         cw.WriteLine("throw new NotImplementedException();");
 
-        var m = Target.AddMethod("ReadJson", (CsType)"object", "Reads the JSON representation of the object.")
+        var m = Target.AddMethod("ReadJson", CsType.Object, "Reads the JSON representation of the object.")
             .WithOverride()
             .WithBody(cw);
         m.AddParam<JsonReader>("reader", Target, "The JsonReader to read from.");
@@ -97,7 +97,7 @@ public class UnitJsonConverterGenerator : BaseGenerator<IUnitInfo>
             "writer.WriteNull();",
             "writer.WriteValue(" + s + ");");
 
-        var m = Target.AddMethod("WriteJson", (CsType)"void")
+        var m = Target.AddMethod("WriteJson", CsType.Void)
             .WithOverride()
             .WithBody(cw);
         m.AddParam<JsonWriter>("writer", Target);

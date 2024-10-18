@@ -51,19 +51,22 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
 
     public bool Equals(Time other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : BasicUnitValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<TimeUnit> other)
+    public bool Equals(IUnitedValue<TimeUnit>? other)
     {
+        // generator : BasicUnitValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<TimeUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : BasicUnitValuesGenerator
+        return other is IUnitedValue<TimeUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -72,7 +75,7 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }
@@ -653,10 +656,7 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
     /// unit
     /// </summary>
     [JetBrains.Annotations.NotNull]
-    public TimeUnit Unit
-    {
-        get { return _unit ?? BaseUnit; }
-    }
+    public TimeUnit Unit => _unit ?? BaseUnit;
 
     private TimeUnit _unit;
 
@@ -700,7 +700,7 @@ public static partial class TimeExtensions
 
 public partial class TimeJsonConverter : AbstractUnitJsonConverter<Time, TimeUnit>
 {
-    protected override Time Make(decimal value, string unit)
+    protected override Time Make(decimal value, string? unit)
     {
         unit = unit?.Trim();
         return new Time(value, string.IsNullOrEmpty(unit) ? Time.BaseUnit : new TimeUnit(unit));

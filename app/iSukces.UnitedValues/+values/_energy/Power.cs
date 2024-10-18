@@ -44,19 +44,22 @@ public partial struct Power : IUnitedValue<PowerUnit>, IEquatable<Power>, ICompa
 
     public bool Equals(Power other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : BasicUnitValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<PowerUnit> other)
+    public bool Equals(IUnitedValue<PowerUnit>? other)
     {
+        // generator : BasicUnitValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<PowerUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : BasicUnitValuesGenerator
+        return other is IUnitedValue<PowerUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -65,7 +68,7 @@ public partial struct Power : IUnitedValue<PowerUnit>, IEquatable<Power>, ICompa
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }
@@ -789,10 +792,7 @@ public partial struct Power : IUnitedValue<PowerUnit>, IEquatable<Power>, ICompa
     /// unit
     /// </summary>
     [JetBrains.Annotations.NotNull]
-    public PowerUnit Unit
-    {
-        get { return _unit ?? BaseUnit; }
-    }
+    public PowerUnit Unit => _unit ?? BaseUnit;
 
     private PowerUnit _unit;
 
@@ -836,7 +836,7 @@ public static partial class PowerExtensions
 
 public partial class PowerJsonConverter : AbstractUnitJsonConverter<Power, PowerUnit>
 {
-    protected override Power Make(decimal value, string unit)
+    protected override Power Make(decimal value, string? unit)
     {
         unit = unit?.Trim();
         return new Power(value, string.IsNullOrEmpty(unit) ? Power.BaseUnit : new PowerUnit(unit));

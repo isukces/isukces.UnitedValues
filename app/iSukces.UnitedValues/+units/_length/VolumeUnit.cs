@@ -45,16 +45,12 @@ public partial class VolumeUnit : IUnit, IEquatable<VolumeUnit>, IDecomposableUn
         return new[] { GetBasicUnit() };
     }
 
-    public bool Equals(VolumeUnit other)
+    public bool Equals(VolumeUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is VolumeUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is VolumeUnit tmp && Equals(tmp);
 
     [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
     [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit, 10)]

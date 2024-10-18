@@ -36,37 +36,37 @@ internal class Generator : BaseGenerator<UnitDefinition>
         Target.Kind        = CsNamespaceMemberKind.Struct;
         Target.Description = $"Reprezentuje {Cfg.Description} w [{Cfg.Unit}]";
         {
-            var p = Target.AddProperty("Value", (CsType)"double");
+            var p = Target.AddProperty("Value", CsType.Double);
             p.IsPropertyReadOnly          = true;
             p.EmitField                   = false;
             p.MakeAutoImplementIfPossible = true;
         }
         {
             var c = Target.AddConstructor("").WithBody("Value = value;");
-            c.AddParam("value", (CsType)"double");
+            c.AddParam("value", CsType.Double);
         }
         {
-            Add_ImplicitOperator((CsType)"double", Cfg.ClassName, "src.Value");
+            Add_ImplicitOperator(CsType.Double, Cfg.ClassName, "src.Value");
         }
         {
             // operatory mnożenia przez liczbę
             var m = Target.AddMethod("*", Cfg.ClassName)
                 .WithBody($"return new {Cfg.ClassName}(number * x.Value);");
-            m.AddParam("number", (CsType)"double");
+            m.AddParam("number", CsType.Double);
             m.AddParam("x", Cfg.ClassName);
             // odwrócona wersja
             m = Target.AddMethod("*", Cfg.ClassName)
                 .WithBody($"return new {Cfg.ClassName}(x.Value * number);");
             m.AddParam("x", Cfg.ClassName);
-            m.AddParam("number", (CsType)"double");
+            m.AddParam("number", CsType.Double);
             // operator dzielenia
             m = Target.AddMethod("/", Cfg.ClassName)
                 .WithBody($"return new {Cfg.ClassName}(x.Value / number);");
             m.AddParam("x", Cfg.ClassName);
-            m.AddParam("number", (CsType)"double");
+            m.AddParam("number", CsType.Double);
 
             // operator dzielenia
-            m = Target.AddMethod("/", (CsType)"double")
+            m = Target.AddMethod("/", CsType.Double)
                 .WithBody("return x.Value / y.Value;");
             m.AddParam("x", Cfg.ClassName);
             m.AddParam("y", Cfg.ClassName);

@@ -96,10 +96,10 @@ public abstract class BaseCompositeUnitGenerator<T> : BaseGenerator<T>
     private void Add_Equals()
     {
         var compareCode =
-            $"{_info.FirstPropertyName}.Equals(other.{_info.FirstPropertyName}) && {_info.SecondPropertyName}.Equals(other.{_info.SecondPropertyName})";
-        Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
-        Add_EqualsUniversal("object", false, OverridingType.Override,
-            "other is " + Target.Name.Declaration + " unitedValue ? Equals(unitedValue) : false");
+            $"{_info.FirstPropertyName}.Equals(other?.{_info.FirstPropertyName}) && {_info.SecondPropertyName}.Equals(other?.{_info.SecondPropertyName})";
+        Add_EqualsUniversal(Target.Name.WithReferenceNullable(), false, OverridingType.None, compareCode);
+        Add_EqualsUniversal(CsType.ObjectNullable, false, OverridingType.Override,
+            GeneratorCommon.EqualExpression(Target.Name));
     }
 
     private void Add_UnitNameProperty()
@@ -107,10 +107,10 @@ public abstract class BaseCompositeUnitGenerator<T> : BaseGenerator<T>
         var sep = string.IsNullOrEmpty(_info2.StringSeparator)
             ? ""
             : " + " + _info2.StringSeparator.CsEncode();
-        Target.AddProperty(PropertyName, (CsType)"string")
+        Target.AddProperty(PropertyName, CsType.String)
             .WithIsPropertyReadOnly()
             .WithNoEmitField()
-            .WithOwnGetter($@"{_info.FirstPropertyName}.UnitName{sep} + {_info.SecondPropertyName}.UnitName")
+            .WithOwnGetter($"{_info.FirstPropertyName}.UnitName{sep} + {_info.SecondPropertyName}.UnitName")
             .OwnGetterIsExpression = true;
     }
 

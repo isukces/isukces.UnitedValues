@@ -76,7 +76,7 @@ public abstract class BaseCompositeValuesGenerator<T> : BaseValuesGenerator<T>
         var m = Target.AddMethod("Parse", (CsType)GenInfo.Result.Value.ValueTypeName)
             .WithStatic()
             .WithBody(cw);
-        m.AddParam("value", (CsType)"string");
+        m.AddParam("value", CsType.String);
     }
 
 

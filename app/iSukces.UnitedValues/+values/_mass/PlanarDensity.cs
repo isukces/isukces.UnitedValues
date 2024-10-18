@@ -42,19 +42,22 @@ public partial struct PlanarDensity : IUnitedValue<PlanarDensityUnit>, IEquatabl
 
     public bool Equals(PlanarDensity other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : FractionValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<PlanarDensityUnit> other)
+    public bool Equals(IUnitedValue<PlanarDensityUnit>? other)
     {
+        // generator : FractionValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<PlanarDensityUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionValuesGenerator
+        return other is IUnitedValue<PlanarDensityUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()

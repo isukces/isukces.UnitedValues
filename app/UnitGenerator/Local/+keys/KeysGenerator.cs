@@ -12,17 +12,16 @@ public class KeysGenerator : IAssemblyAutoCodeGenerator
 {
     private static void AddGetHashCodeMethod(CsClass cl, KeysGeneratorDef def)
     {
-        var m = cl.AddMethod(nameof(GetHashCode), (CsType)"int");
+        var m = cl.AddMethod(nameof(GetHashCode), CsType.Int32);
         m.Overriding = OverridingType.Override;
 
         switch (def.WrappedType)
         {
             case WrappedTypes.String:
-                // m.Body = "return Value is null ? 0 : StringComparer.Ordinal.GetHashCode(Value);";
-                m.Body = $"return {def.ValuePropertyName}.GetHashCode();";
+                m.WithBodyAsExpression($"{def.ValuePropertyName}.GetHashCode()");
                 break;
             case WrappedTypes.Int:
-                m.Body = $"return {def.ValuePropertyName};";
+                m.WithBodyAsExpression(def.ValuePropertyName);
                 break;
             default:
                 throw new NotImplementedException();
@@ -32,18 +31,15 @@ public class KeysGenerator : IAssemblyAutoCodeGenerator
 
     private static void AddToStringMethod(CsClass cl, KeysGeneratorDef def)
     {
-        var m = cl.AddMethod(nameof(ToString), (CsType)"string");
+        var m = cl.AddMethod(nameof(ToString), CsType.String);
         m.Overriding = OverridingType.Override;
         var e = def.GetToStringExpression();
-        m.Body = $"return {e};";
+        m.WithBodyAsExpression(e);
     }
 
     private static string ValueEquals(string other, KeysGeneratorDef def)
     {
-        return $"return {def.ValuePropertyName}.Equals({other});";
-        /*if (compareByEqual)
-            return $"return Value.Equals({other});";
-        return $"return Value == {other};";*/
+        return $"{def.ValuePropertyName}.Equals({other})";
     }
 
     public void Add(KeysGeneratorDef def)
@@ -61,9 +57,8 @@ public class KeysGenerator : IAssemblyAutoCodeGenerator
         {
             var ns       = context.GetOrCreateNamespace(assembly.GetName().Name);
             var csStruct = ns.GetOrCreateClass(def.TypeName);
+            GeneratorCommon.Setup(csStruct);
             csStruct.Description = def.TypeDescription;
-            csStruct.IsPartial   = true;
-            // csStruct.Kind        = CsNamespaceMemberKind.Struct;
 
             csStruct.AddProperty(def.ValuePropertyName, def.CsWrappedType)
                 .WithMakeAutoImplementIfPossible()
@@ -71,7 +66,6 @@ public class KeysGenerator : IAssemblyAutoCodeGenerator
                 .WithNoEmitField();
 
             AddConstructor(csStruct, def);
-
             AddEqualsMethods(csStruct, def);
             AddGetHashCodeMethod(csStruct, def);
             AddToStringMethod(csStruct, def);
@@ -107,9 +101,10 @@ public class KeysGenerator : IAssemblyAutoCodeGenerator
             
         for (var i = 0; i < 2; i++)
         {
-            var eq = i == 0;
-            var m = csStruct.AddMethod(eq ? "==" : "!=", (CsType)"bool", eq ? "Equality operator" : "Inequality operator")
-                .WithBody($"return {(eq ? "" : "!")}left.Equals(right);");
+            var eq   = i == 0;
+            var expresion = $"{(eq ? "" : "!")}left.Equals(right)";
+            var m = csStruct.AddMethod(eq ? "==" : "!=", CsType.Bool, eq ? "Equality operator" : "Inequality operator")
+                .WithBodyAsExpression(expresion);
 
             m.AddParam("left", csStruct.Name, "first value to compare");
             m.AddParam("right", csStruct.Name, "second value to compare");
@@ -121,20 +116,20 @@ public class KeysGenerator : IAssemblyAutoCodeGenerator
         var typeName = (CsType)def.TypeName;
         var propName = def.ValuePropertyName;
         {
-            var m = cl.AddMethod(nameof(Equals), (CsType)"bool");
+            var m = cl.AddMethod(nameof(Equals), CsType.Bool);
             m.Parameters.Add(new CsMethodParameter("other", typeName));
-            m.Body = ValueEquals($"other.{propName}", def);
+            m.WithBodyAsExpression(ValueEquals($"other.{propName}", def));
         }
         {
-            var m = cl.AddMethod(nameof(Equals), (CsType)"bool");
+            var expression = def.WrappedType == WrappedTypes.String 
+                ? $"obj is {typeName.Declaration} s && StringComparer.Ordinal.Equals({propName}, s.{propName})" : $"obj is {typeName.Declaration} s && {propName}.Equals(s.{propName})";
+            var m = cl.AddMethod(nameof(Equals), CsType.Bool)
+                .WithBodyAsExpression(expression);
             m.Overriding = OverridingType.Override;
-            m.Parameters.Add(new CsMethodParameter("obj", (CsType)"object"));
-            if (def.WrappedType == WrappedTypes.String)
-                m.Body = $"return obj is {typeName.Declaration} s && StringComparer.Ordinal.Equals({propName}, s.{propName});";
-            else
-                m.Body = $"return obj is {typeName.Declaration} s && {propName}.Equals(s.{propName});";
+            m.Parameters.Add(new CsMethodParameter("obj", CsType.Object));
+            
         }
     }
 
-    public List<KeysGeneratorDef> Defs { get; } = new List<KeysGeneratorDef>();
+    public List<KeysGeneratorDef> Defs { get; } = new();
 }

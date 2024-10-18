@@ -43,19 +43,22 @@ public partial struct LinearForce : IUnitedValue<LinearForceUnit>, IEquatable<Li
 
     public bool Equals(LinearForce other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : FractionValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<LinearForceUnit> other)
+    public bool Equals(IUnitedValue<LinearForceUnit>? other)
     {
+        // generator : FractionValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<LinearForceUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionValuesGenerator
+        return other is IUnitedValue<LinearForceUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()

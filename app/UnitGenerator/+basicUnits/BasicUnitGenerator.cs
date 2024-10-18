@@ -140,37 +140,38 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
         }
     }
 
-
     private void Add_Equals()
     {
-        var m = Target.AddMethod("Equals", (CsType)"bool")
+        var m = Target.AddMethod(nameof(Equals), CsType.Bool)
             .WithBodyFromExpression($"String.Equals({PropertyName}, other?.{PropertyName})");
-        m.AddParam("other", (CsType)Cfg.GetTypename());
+        var csType = (CsType)Cfg.GetTypename();
+        csType.Nullable = NullableKind.ReferenceNullable;
+        m.AddParam("other", csType);
     }
 
     private void Add_EqualsOverride()
     {
         // equals override
-        var cw = new CsCodeWriter();
-        cw.WriteLine("if (ReferenceEquals(null, obj)) return false;");
-        cw.WriteLine(ReturnValue("obj is " + Target.Name.Declaration + " tmp && Equals(tmp)"));
-        var m = Target.AddMethod("Equals", (CsType)"bool")
+        //var cw         = new CsCodeWriter();
+        var expression = $"obj is {Target.Name.Declaration} tmp && Equals(tmp)";
+        //cw.WriteLine(expression);
+        var m = Target.AddMethod(nameof(Equals), CsType.Bool)
             .WithOverride()
-            .WithBody(cw);
-        m.AddParam("obj", (CsType)"object");
+            .WithBodyAsExpression(expression);
+        m.AddParam("obj", CsType.ObjectNullable);
     }
 
     private void Add_GetHashCode()
     {
         // GetHashCode override
-        Target.AddMethod("GetHashCode", (CsType)"int")
+        Target.AddMethod("GetHashCode", CsType.Int32)
             .WithOverride()
-            .WithBodyFromExpression("" + PropertyName + "?.GetHashCode() ?? 0");
+            .WithBodyFromExpression($"{PropertyName}?.GetHashCode() ?? 0");
     }
 
     private void Add_IEquatableEquals()
     {
-        Target.AddMethod($"IEquatable<{Target.Name.Declaration}>.Equals", (CsType)"bool")
+        Target.AddMethod($"IEquatable<{Target.Name.Declaration}>.Equals", CsType.Bool)
             .WithBodyFromExpression("Equals(other)")
             .WithVisibility(Visibilities.InterfaceDefault)
             .AddParam("other", Target.Name);
@@ -223,7 +224,7 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
                         property.AddRelatedUnitSourceAttribute(Target, RelatedUnitSourceUsage.DoNotUse, 0);
                     }
                 },
-                new ConstructorParameterInfo(PropertyName, (CsType)"string", expr, "name of unit",
+                new ConstructorParameterInfo(PropertyName, CsType.String, expr, "name of unit",
                     Flags1.Optional | Flags1.DoNotAssignProperty | Flags1.DoNotCreateProperty)
             };
             var h         = new Col1(a);
@@ -237,7 +238,7 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
         {
             var b = new[]
             {
-                new ConstructorParameterInfo(PropertyName, (CsType)"string", expr, "name of unit",
+                new ConstructorParameterInfo(PropertyName, CsType.String, expr, "name of unit",
                     Flags1.NormalizedString)
             };
             return new Col1(b);

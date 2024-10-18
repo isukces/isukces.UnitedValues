@@ -60,11 +60,10 @@ internal class InversedUnitGenerator : BaseGenerator<InversedUnit>
 
     private void Add_Equals()
     {
-        var compareCode =
-            $"{PropName}.Equals(other.{PropName})";
+        const string compareCode = $"{PropName}.Equals(other.{PropName})";
         Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
-        Add_EqualsUniversal("object", false, OverridingType.Override,
-            "other is " + Target.Name.Declaration + " unitedValue ? Equals(unitedValue) : false");
+        Add_EqualsUniversal(CsType.ObjectNullable, false, OverridingType.Override,
+            GeneratorCommon.EqualExpression(Target.Name));
     }
 
     private void AddGetBaseUnit()
@@ -72,7 +71,7 @@ internal class InversedUnitGenerator : BaseGenerator<InversedUnit>
         var resultType = Cfg.Source.Unit.GetTypename();
 
         var cw = Ext.Create(GetType());
-        cw.SingleLineIf("!(BaseUnit is null)", "return BaseUnit;");
+        cw.SingleLineIf("BaseUnit is not null", "return BaseUnit;");
         cw.WriteLine("// poor quality code :(, but should work for simple cases like 1/K");
         cw.SingleLineIf("UnitName.StartsWith(\"1/\")", "return new " + resultType + "(UnitName.Substring(2));");
 
@@ -87,7 +86,7 @@ internal class InversedUnitGenerator : BaseGenerator<InversedUnit>
         IReadOnlyList<ConstructorParameterInfo> items = new[]
         {
             new ConstructorParameterInfo(PropName,
-                (CsType)"string",
+                CsType.String,
                 null,
                 "name of unit",
                 Flags1.NormalizedString | Flags1.AddNotNullAttributeToPropertyIfPossible)
@@ -102,7 +101,7 @@ internal class InversedUnitGenerator : BaseGenerator<InversedUnit>
                 "base unit",
                 Flags1.NotNull | Flags1.PropertyCanBeNull),
             new ConstructorParameterInfo(PropName,
-                (CsType)"string",
+                CsType.String,
                 null,
                 "name of unit",
                 Flags1.TrimValue | Flags1.Optional | Flags1.DoNotAssignProperty | Flags1.DoNotCreateProperty)

@@ -25,16 +25,12 @@ public partial class TimeUnit : IUnit, IEquatable<TimeUnit>
         UnitName = unitName;
     }
 
-    public bool Equals(TimeUnit other)
+    public bool Equals(TimeUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is TimeUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is TimeUnit tmp && Equals(tmp);
 
     public override int GetHashCode()
     {

@@ -50,16 +50,12 @@ public partial class PowerUnit : IUnit, IEquatable<PowerUnit>
         UnitName = unitName;
     }
 
-    public bool Equals(PowerUnit other)
+    public bool Equals(PowerUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is PowerUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is PowerUnit tmp && Equals(tmp);
 
     public override int GetHashCode()
     {

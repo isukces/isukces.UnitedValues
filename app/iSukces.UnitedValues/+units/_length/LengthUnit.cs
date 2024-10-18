@@ -25,16 +25,12 @@ public partial class LengthUnit : IUnit, IEquatable<LengthUnit>
         UnitName = unitName;
     }
 
-    public bool Equals(LengthUnit other)
+    public bool Equals(LengthUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is LengthUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is LengthUnit tmp && Equals(tmp);
 
     [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
     [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit, 10)]

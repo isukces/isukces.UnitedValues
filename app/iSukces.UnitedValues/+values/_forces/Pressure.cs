@@ -57,19 +57,22 @@ public partial struct Pressure : IUnitedValue<PressureUnit>, IEquatable<Pressure
 
     public bool Equals(Pressure other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : BasicUnitValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<PressureUnit> other)
+    public bool Equals(IUnitedValue<PressureUnit>? other)
     {
+        // generator : BasicUnitValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<PressureUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : BasicUnitValuesGenerator
+        return other is IUnitedValue<PressureUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -78,7 +81,7 @@ public partial struct Pressure : IUnitedValue<PressureUnit>, IEquatable<Pressure
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }
@@ -542,10 +545,7 @@ public partial struct Pressure : IUnitedValue<PressureUnit>, IEquatable<Pressure
     /// unit
     /// </summary>
     [JetBrains.Annotations.NotNull]
-    public PressureUnit Unit
-    {
-        get { return _unit ?? BaseUnit; }
-    }
+    public PressureUnit Unit => _unit ?? BaseUnit;
 
     private PressureUnit _unit;
 
@@ -589,7 +589,7 @@ public static partial class PressureExtensions
 
 public partial class PressureJsonConverter : AbstractUnitJsonConverter<Pressure, PressureUnit>
 {
-    protected override Pressure Make(decimal value, string unit)
+    protected override Pressure Make(decimal value, string? unit)
     {
         unit = unit?.Trim();
         return new Pressure(value, string.IsNullOrEmpty(unit) ? Pressure.BaseUnit : new PressureUnit(unit));

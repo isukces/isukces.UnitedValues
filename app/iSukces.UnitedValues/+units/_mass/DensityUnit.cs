@@ -36,14 +36,16 @@ public sealed partial class DensityUnit : IFractionalUnit<MassUnit, VolumeUnit>,
         */
     }
 
-    public bool Equals(DensityUnit other)
+    public bool Equals(DensityUnit? other)
     {
-        return CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit);
+        // generator : FractionUnitGenerator
+        return CounterUnit.Equals(other?.CounterUnit) && DenominatorUnit.Equals(other?.DenominatorUnit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is DensityUnit unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionUnitGenerator
+        return other is DensityUnit value && Equals(value);
     }
 
     public override int GetHashCode()
@@ -104,9 +106,6 @@ public sealed partial class DensityUnit : IFractionalUnit<MassUnit, VolumeUnit>,
     /// </summary>
     public VolumeUnit DenominatorUnit { get; }
 
-    public string UnitName
-    {
-        get { return CounterUnit.UnitName + "/" + DenominatorUnit.UnitName; }
-    }
+    public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
 
 }

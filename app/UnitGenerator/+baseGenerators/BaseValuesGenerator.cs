@@ -25,7 +25,7 @@ public abstract class BaseValuesGenerator<TDef> : BaseGenerator<TDef>
         var cs = Ext.Create<BasicUnitValuesGenerator>();
         cs.SingleLineIf("Unit.Equals(BaseUnit)", ReturnValue("Value"));
         cs.WriteLine("var factor = GlobalUnitRegistry.Factors.Get(Unit);");
-        cs.SingleLineIf("!(factor is null)", ReturnValue("Value * factor.Value"));
+        cs.SingleLineIf("factor is not null", ReturnValue("Value * factor.Value"));
         var exceptionMessage = new CsExpression("Unable to find multiplication for unit ".CsEncode())
                                + new CsExpression("Unit");
 
@@ -66,15 +66,16 @@ public abstract class BaseValuesGenerator<TDef> : BaseGenerator<TDef>
     private void AddCommonValues_EqualsMethods(string unitTypeName)
     {
         var compareCode = string.Format(
-            "{0} == other.{0} && !({1} is null) && {1}.Equals(other.{1})",
+            "{0} == other.{0} && {1} is not null && {1}.Equals(other.{1})",
             ValuePropName, UnitPropName);
         Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
 
-        var compareType = MakeGenericType<IUnitedValue<LengthUnit>>(Target, unitTypeName);
+        var compareType = (CsType)MakeGenericType<IUnitedValue<LengthUnit>>(Target, unitTypeName);
+        compareType.Nullable = NullableKind.ReferenceNullable;
         Add_EqualsUniversal(compareType, true, OverridingType.None, compareCode);
 
-        Add_EqualsUniversal("object", false, OverridingType.Override,
-            $"other is {compareType} unitedValue ? Equals(unitedValue) : false");
+        Add_EqualsUniversal(CsType.ObjectNullable, false, OverridingType.Override,
+            GeneratorCommon.EqualExpression(compareType));
     }
 
 
@@ -86,18 +87,18 @@ public abstract class BaseValuesGenerator<TDef> : BaseGenerator<TDef>
 
     private void AddCommonValues_ToString()
     {
-        Target.AddMethod("ToString", (CsType)"string", "Returns unit name")
+        Target.AddMethod("ToString", CsType.String, "Returns unit name")
             .WithOverride()
             .WithBodyFromExpression("Value.ToString(CultureInfo.InvariantCulture) + Unit.UnitName");
 
-        var m = Target.AddMethod("ToString", (CsType)"string", "Returns unit name")
+        var m = Target.AddMethod("ToString", CsType.String, "Returns unit name")
             .WithBodyFromExpression("this.ToStringFormat(format, provider)");
         m.AddParam<string>("format", Target);
         m.AddParam<IFormatProvider>("provider", Target).WithConstValue("null");
     }
 
-    public static CsType ValuePropertyType      = (CsType)"decimal";
-    public static CsType OtherValuePropertyType = (CsType)"double";
+    public static CsType ValuePropertyType      = CsType.Decimal;
+    public static CsType OtherValuePropertyType = CsType.Double;
 
     protected const string ValuePropName = "Value";
     protected const string UnitPropName  = "Unit";

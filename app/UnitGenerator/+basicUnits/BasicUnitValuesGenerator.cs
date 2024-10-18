@@ -190,14 +190,14 @@ public class BasicUnitValuesGenerator : BaseValuesGenerator<BasicUnit>
     private void Add_Comparable()
     {
         if (!Cfg.IsComparable) return;
-        Target.AddMethod("CompareTo", (CsType)"int")
+        Target.AddMethod("CompareTo", CsType.Int32)
             .WithBodyFromExpression(
                 "UnitedValuesUtils.Compare<" + Cfg.UnitTypes.Value + ", " + Cfg.UnitTypes.Unit + ">(this, other)")
             .AddParam("other", Target.Name);
 
         var operators = "!=,==,>,<,>=,<=";
         foreach (var oper in operators.Split(','))
-            Target.AddMethod(oper, (CsType)"bool")
+            Target.AddMethod(oper, CsType.Bool)
                 .WithBodyFromExpression("left.CompareTo(right) " + oper + " 0")
                 .WithLeftRightArguments(Target.Name, Target.Name);
     }

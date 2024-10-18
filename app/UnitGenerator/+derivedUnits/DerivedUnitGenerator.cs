@@ -88,7 +88,7 @@ public class DerivedUnitGenerator : BaseGenerator<RelatedUnit>
                 CsFilesManager.AddGeneratorName(file, GetType().Name);
                 var value = new CsArguments("value", Target.Name.Declaration+"."+ i.FieldName + ".Unit").Create(c.Name);
                 c.AddMethod("From" + i.FieldName, c.Name).WithBody($"return {value};")
-                    .WithParameter(new CsMethodParameter("value", (CsType)"decimal"));
+                    .WithParameter(new CsMethodParameter("value", CsType.Decimal));
 
             }
         }
@@ -111,7 +111,7 @@ public class DerivedUnitGenerator : BaseGenerator<RelatedUnit>
             cw.WriteLine(q);
         }
 
-        Target.AddMethod("Register", (CsType)"void")
+        Target.AddMethod("Register", CsType.Void)
             .WithBody(cw)
             .WithStatic()
             .WithVisibility(Visibilities.Internal)
@@ -121,7 +121,7 @@ public class DerivedUnitGenerator : BaseGenerator<RelatedUnit>
     private void Add_RegisterUnitExchangeFactors()
     {
         Target.WithAttributeFromName(nameof(UnitsContainerAttribute));
-        var m = Target.AddMethod("RegisterUnitExchangeFactors", (CsType)"void")
+        var m = Target.AddMethod("RegisterUnitExchangeFactors", CsType.Void)
             .WithStatic()
             .WithBody("factors.RegisterMany(All);");
         m.AddParam<UnitExchangeFactors>("factors", Target);
@@ -135,7 +135,7 @@ public class DerivedUnitGenerator : BaseGenerator<RelatedUnit>
         var body = c();
         // koniec body
         var m = Target.AddMethod("TryRecoverUnitFromName", resultTypeName).WithStatic().WithBody(body);
-        var p = m.AddParam("unitName", (CsType)"string");
+        var p = m.AddParam("unitName", CsType.String);
         p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
         return;
 

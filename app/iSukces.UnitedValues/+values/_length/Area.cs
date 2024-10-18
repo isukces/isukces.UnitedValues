@@ -73,19 +73,22 @@ public partial struct Area : IUnitedValue<AreaUnit>, IEquatable<Area>, IFormatta
 
     public bool Equals(Area other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : BasicUnitValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<AreaUnit> other)
+    public bool Equals(IUnitedValue<AreaUnit>? other)
     {
+        // generator : BasicUnitValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<AreaUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : BasicUnitValuesGenerator
+        return other is IUnitedValue<AreaUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -94,7 +97,7 @@ public partial struct Area : IUnitedValue<AreaUnit>, IEquatable<Area>, IFormatta
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }
@@ -1434,10 +1437,7 @@ public partial struct Area : IUnitedValue<AreaUnit>, IEquatable<Area>, IFormatta
     /// unit
     /// </summary>
     [JetBrains.Annotations.NotNull]
-    public AreaUnit Unit
-    {
-        get { return _unit ?? BaseUnit; }
-    }
+    public AreaUnit Unit => _unit ?? BaseUnit;
 
     private AreaUnit _unit;
 
@@ -1481,7 +1481,7 @@ public static partial class AreaExtensions
 
 public partial class AreaJsonConverter : AbstractUnitJsonConverter<Area, AreaUnit>
 {
-    protected override Area Make(decimal value, string unit)
+    protected override Area Make(decimal value, string? unit)
     {
         unit = unit?.Trim();
         return new Area(value, string.IsNullOrEmpty(unit) ? Area.BaseUnit : new AreaUnit(unit));

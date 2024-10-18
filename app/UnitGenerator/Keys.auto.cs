@@ -15,45 +15,29 @@ namespace UnitGenerator
             TypeName = typeName.Trim();
         }
 
-        public bool Equals(XUnitContainerTypeName other)
-        {
-            return TypeName.Equals(other.TypeName);
-        }
+        public bool Equals(XUnitContainerTypeName other) => TypeName.Equals(other.TypeName);
 
-        public override bool Equals(object obj)
-        {
-            return obj is XUnitContainerTypeName s && StringComparer.Ordinal.Equals(TypeName, s.TypeName);
-        }
+        public override bool Equals(object obj) => 
+            obj is XUnitContainerTypeName s && StringComparer.Ordinal.Equals(TypeName, s.TypeName);
 
-        public override int GetHashCode()
-        {
-            return TypeName.GetHashCode();
-        }
+        public override int GetHashCode() => TypeName.GetHashCode();
 
-        public override string ToString()
-        {
-            return TypeName;
-        }
+        public override string ToString() => TypeName;
 
         /// <summary>
         /// Inequality operator
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator !=(XUnitContainerTypeName left, XUnitContainerTypeName right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(XUnitContainerTypeName left, XUnitContainerTypeName right) => 
+            !left.Equals(right);
 
         /// <summary>
         /// Equality operator
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator ==(XUnitContainerTypeName left, XUnitContainerTypeName right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(XUnitContainerTypeName left, XUnitContainerTypeName right) => left.Equals(right);
 
         public string TypeName { get; }
 
@@ -70,45 +54,28 @@ namespace UnitGenerator
             TypeName = typeName.Trim();
         }
 
-        public bool Equals(XUnitTypeName other)
-        {
-            return TypeName.Equals(other.TypeName);
-        }
+        public bool Equals(XUnitTypeName other) => TypeName.Equals(other.TypeName);
 
-        public override bool Equals(object obj)
-        {
-            return obj is XUnitTypeName s && StringComparer.Ordinal.Equals(TypeName, s.TypeName);
-        }
+        public override bool Equals(object obj) => 
+            obj is XUnitTypeName s && StringComparer.Ordinal.Equals(TypeName, s.TypeName);
 
-        public override int GetHashCode()
-        {
-            return TypeName.GetHashCode();
-        }
+        public override int GetHashCode() => TypeName.GetHashCode();
 
-        public override string ToString()
-        {
-            return TypeName;
-        }
+        public override string ToString() => TypeName;
 
         /// <summary>
         /// Inequality operator
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator !=(XUnitTypeName left, XUnitTypeName right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(XUnitTypeName left, XUnitTypeName right) => !left.Equals(right);
 
         /// <summary>
         /// Equality operator
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator ==(XUnitTypeName left, XUnitTypeName right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(XUnitTypeName left, XUnitTypeName right) => left.Equals(right);
 
         public string TypeName { get; }
 
@@ -125,45 +92,28 @@ namespace UnitGenerator
             ValueTypeName = valueTypeName.Trim();
         }
 
-        public bool Equals(XValueTypeName other)
-        {
-            return ValueTypeName.Equals(other.ValueTypeName);
-        }
+        public bool Equals(XValueTypeName other) => ValueTypeName.Equals(other.ValueTypeName);
 
-        public override bool Equals(object obj)
-        {
-            return obj is XValueTypeName s && StringComparer.Ordinal.Equals(ValueTypeName, s.ValueTypeName);
-        }
+        public override bool Equals(object obj) => 
+            obj is XValueTypeName s && StringComparer.Ordinal.Equals(ValueTypeName, s.ValueTypeName);
 
-        public override int GetHashCode()
-        {
-            return ValueTypeName.GetHashCode();
-        }
+        public override int GetHashCode() => ValueTypeName.GetHashCode();
 
-        public override string ToString()
-        {
-            return ValueTypeName;
-        }
+        public override string ToString() => ValueTypeName;
 
         /// <summary>
         /// Inequality operator
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator !=(XValueTypeName left, XValueTypeName right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(XValueTypeName left, XValueTypeName right) => !left.Equals(right);
 
         /// <summary>
         /// Equality operator
         /// </summary>
         /// <param name="left">first value to compare</param>
         /// <param name="right">second value to compare</param>
-        public static bool operator ==(XValueTypeName left, XValueTypeName right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(XValueTypeName left, XValueTypeName right) => left.Equals(right);
 
         public string ValueTypeName { get; }
 

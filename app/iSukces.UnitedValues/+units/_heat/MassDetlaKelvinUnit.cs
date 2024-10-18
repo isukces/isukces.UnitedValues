@@ -35,14 +35,16 @@ public sealed partial class MassDetlaKelvinUnit : IProductUnit<MassUnit, KelvinT
         */
     }
 
-    public bool Equals(MassDetlaKelvinUnit other)
+    public bool Equals(MassDetlaKelvinUnit? other)
     {
-        return LeftUnit.Equals(other.LeftUnit) && RightUnit.Equals(other.RightUnit);
+        // generator : ProductUnitGenerator
+        return LeftUnit.Equals(other?.LeftUnit) && RightUnit.Equals(other?.RightUnit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is MassDetlaKelvinUnit unitedValue ? Equals(unitedValue) : false;
+        // generator : ProductUnitGenerator
+        return other is MassDetlaKelvinUnit value && Equals(value);
     }
 
     public override int GetHashCode()
@@ -103,9 +105,6 @@ public sealed partial class MassDetlaKelvinUnit : IProductUnit<MassUnit, KelvinT
     /// </summary>
     public KelvinTemperatureUnit RightUnit { get; }
 
-    public string UnitName
-    {
-        get { return LeftUnit.UnitName + RightUnit.UnitName; }
-    }
+    public string UnitName => LeftUnit.UnitName + RightUnit.UnitName;
 
 }

@@ -42,19 +42,22 @@ public partial struct Torque : IUnitedValue<TorqueUnit>, IEquatable<Torque>, IFo
 
     public bool Equals(Torque other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : ProductValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<TorqueUnit> other)
+    public bool Equals(IUnitedValue<TorqueUnit>? other)
     {
+        // generator : ProductValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<TorqueUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : ProductValuesGenerator
+        return other is IUnitedValue<TorqueUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()

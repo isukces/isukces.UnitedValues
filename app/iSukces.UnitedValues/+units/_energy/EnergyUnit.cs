@@ -24,16 +24,12 @@ public partial class EnergyUnit : IUnit, IEquatable<EnergyUnit>
         UnitName = unitName;
     }
 
-    public bool Equals(EnergyUnit other)
+    public bool Equals(EnergyUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is EnergyUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is EnergyUnit tmp && Equals(tmp);
 
     public override int GetHashCode()
     {

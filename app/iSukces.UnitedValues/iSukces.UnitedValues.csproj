@@ -21,6 +21,7 @@
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
     <PackageId>iSukces.UnitedValues</PackageId>
+    <Nullable>enable</Nullable>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/isukces/isukces.UnitedValues</PackageProjectUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>

@@ -36,14 +36,16 @@ public sealed partial class AccelerationUnit : IFractionalUnit<LengthUnit, Squar
         */
     }
 
-    public bool Equals(AccelerationUnit other)
+    public bool Equals(AccelerationUnit? other)
     {
-        return CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit);
+        // generator : FractionUnitGenerator
+        return CounterUnit.Equals(other?.CounterUnit) && DenominatorUnit.Equals(other?.DenominatorUnit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is AccelerationUnit unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionUnitGenerator
+        return other is AccelerationUnit value && Equals(value);
     }
 
     public override int GetHashCode()
@@ -104,10 +106,7 @@ public sealed partial class AccelerationUnit : IFractionalUnit<LengthUnit, Squar
     /// </summary>
     public SquareTimeUnit DenominatorUnit { get; }
 
-    public string UnitName
-    {
-        get { return CounterUnit.UnitName + "/" + DenominatorUnit.UnitName; }
-    }
+    public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
 
 }
 

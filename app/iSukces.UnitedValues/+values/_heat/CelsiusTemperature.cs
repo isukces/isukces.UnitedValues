@@ -75,19 +75,22 @@ public partial struct CelsiusTemperature : IUnitedValue<CelsiusTemperatureUnit>,
 
     public bool Equals(CelsiusTemperature other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : BasicUnitValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<CelsiusTemperatureUnit> other)
+    public bool Equals(IUnitedValue<CelsiusTemperatureUnit>? other)
     {
+        // generator : BasicUnitValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<CelsiusTemperatureUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : BasicUnitValuesGenerator
+        return other is IUnitedValue<CelsiusTemperatureUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -96,7 +99,7 @@ public partial struct CelsiusTemperature : IUnitedValue<CelsiusTemperatureUnit>,
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }
@@ -299,10 +302,7 @@ public partial struct CelsiusTemperature : IUnitedValue<CelsiusTemperatureUnit>,
     /// unit
     /// </summary>
     [JetBrains.Annotations.NotNull]
-    public CelsiusTemperatureUnit Unit
-    {
-        get { return _unit ?? BaseUnit; }
-    }
+    public CelsiusTemperatureUnit Unit => _unit ?? BaseUnit;
 
     private CelsiusTemperatureUnit _unit;
 
@@ -346,7 +346,7 @@ public static partial class CelsiusTemperatureExtensions
 
 public partial class CelsiusTemperatureJsonConverter : AbstractUnitJsonConverter<CelsiusTemperature, CelsiusTemperatureUnit>
 {
-    protected override CelsiusTemperature Make(decimal value, string unit)
+    protected override CelsiusTemperature Make(decimal value, string? unit)
     {
         unit = unit?.Trim();
         return new CelsiusTemperature(value, string.IsNullOrEmpty(unit) ? CelsiusTemperature.BaseUnit : new CelsiusTemperatureUnit(unit));

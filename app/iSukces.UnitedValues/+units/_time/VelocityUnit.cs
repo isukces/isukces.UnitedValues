@@ -35,14 +35,16 @@ public sealed partial class VelocityUnit : IFractionalUnit<LengthUnit, TimeUnit>
         */
     }
 
-    public bool Equals(VelocityUnit other)
+    public bool Equals(VelocityUnit? other)
     {
-        return CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit);
+        // generator : FractionUnitGenerator
+        return CounterUnit.Equals(other?.CounterUnit) && DenominatorUnit.Equals(other?.DenominatorUnit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is VelocityUnit unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionUnitGenerator
+        return other is VelocityUnit value && Equals(value);
     }
 
     public override int GetHashCode()
@@ -103,9 +105,6 @@ public sealed partial class VelocityUnit : IFractionalUnit<LengthUnit, TimeUnit>
     /// </summary>
     public TimeUnit DenominatorUnit { get; }
 
-    public string UnitName
-    {
-        get { return CounterUnit.UnitName + "/" + DenominatorUnit.UnitName; }
-    }
+    public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
 
 }

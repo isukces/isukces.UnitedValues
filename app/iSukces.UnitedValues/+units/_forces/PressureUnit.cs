@@ -24,16 +24,12 @@ public partial class PressureUnit : IUnit, IEquatable<PressureUnit>
         UnitName = unitName;
     }
 
-    public bool Equals(PressureUnit other)
+    public bool Equals(PressureUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is PressureUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is PressureUnit tmp && Equals(tmp);
 
     public override int GetHashCode()
     {

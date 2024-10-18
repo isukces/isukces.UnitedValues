@@ -24,16 +24,12 @@ public partial class CelsiusTemperatureUnit : IUnit, IEquatable<CelsiusTemperatu
         UnitName = unitName;
     }
 
-    public bool Equals(CelsiusTemperatureUnit other)
+    public bool Equals(CelsiusTemperatureUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is CelsiusTemperatureUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is CelsiusTemperatureUnit tmp && Equals(tmp);
 
     public override int GetHashCode()
     {

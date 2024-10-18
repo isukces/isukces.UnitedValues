@@ -36,14 +36,16 @@ public sealed partial class SpecificHeatCapacityUnit : IFractionalUnit<EnergyMas
         return decomposer.Items;
     }
 
-    public bool Equals(SpecificHeatCapacityUnit other)
+    public bool Equals(SpecificHeatCapacityUnit? other)
     {
-        return CounterUnit.Equals(other.CounterUnit) && DenominatorUnit.Equals(other.DenominatorUnit);
+        // generator : FractionUnitGenerator
+        return CounterUnit.Equals(other?.CounterUnit) && DenominatorUnit.Equals(other?.DenominatorUnit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is SpecificHeatCapacityUnit unitedValue ? Equals(unitedValue) : false;
+        // generator : FractionUnitGenerator
+        return other is SpecificHeatCapacityUnit value && Equals(value);
     }
 
     public override int GetHashCode()
@@ -104,9 +106,6 @@ public sealed partial class SpecificHeatCapacityUnit : IFractionalUnit<EnergyMas
     /// </summary>
     public KelvinTemperatureUnit DenominatorUnit { get; }
 
-    public string UnitName
-    {
-        get { return CounterUnit.UnitName + "/" + DenominatorUnit.UnitName; }
-    }
+    public string UnitName => CounterUnit.UnitName + "/" + DenominatorUnit.UnitName;
 
 }

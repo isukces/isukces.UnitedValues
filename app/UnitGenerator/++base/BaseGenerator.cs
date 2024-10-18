@@ -32,7 +32,7 @@ public abstract class BaseGenerator<TDef>
 
     protected static void MakeToString(CsClass cl, string returnValue)
     {
-        var m = cl.AddMethod("ToString", (CsType)"string").WithBody($"return {returnValue};");
+        var m = cl.AddMethod("ToString", CsType.String).WithBody($"return {returnValue};");
         m.Overriding = OverridingType.Override;
     }
 
@@ -70,15 +70,13 @@ public abstract class BaseGenerator<TDef>
         var ns = file.GetOrCreateNamespace(_nameSpace);
                 
         var t = ns.GetOrCreateClass(name);
-        t.IsPartial = true;
-            
-            
-        if (!info.IsEmbedded)
-        {
-            var filename = Path.Combine(_output, name + ".auto.cs");
-            file.SaveIfDifferent(filename);
-        }
-            
+        t = GeneratorCommon.Setup(t);
+
+        if (info.IsEmbedded) 
+            return t;
+        var filename = Path.Combine(_output, name + ".auto.cs");
+        file.SaveIfDifferent(filename);
+
         return t;
     }
 
@@ -113,24 +111,17 @@ public abstract class BaseGenerator<TDef>
 
         m.WithBody(code);
     }
-
-
-    protected void Add_EqualsUniversal(CsType compareType, bool nullable, OverridingType overridingType,
-        string compareCode)
-    {
-        Add_EqualsUniversal(compareType.Declaration, nullable, overridingType, compareCode);
-    }
     
-    protected void Add_EqualsUniversal(string compareType, bool nullable, OverridingType overridingType, string compareCode)
+    protected void Add_EqualsUniversal(CsType compareType, bool addNullableChecking, OverridingType overridingType, string compareCode)
     {
-        var cw = new CsCodeWriter();
-        if (nullable)
+        var cw = CsCodeWriter.Create(new SourceCodeLocation().WithGeneratorClass(GetType()));
+        if (addNullableChecking)
             cw.SingleLineIf("other is null", ReturnValue("false"));
         cw.WriteLine(ReturnValue(compareCode));
-        var m = Target.AddMethod("Equals", (CsType)"bool")
+        var m = Target.AddMethod(nameof(Equals), CsType.Bool)
             .WithBody(cw);
         m.Overriding = overridingType;
-        m.AddParam("other", (CsType)compareType);
+        m.AddParam("other", compareType);
     }
 
     protected void Add_GetHashCode(string expression)
@@ -139,7 +130,7 @@ public abstract class BaseGenerator<TDef>
         cw.Open("unchecked");
         cw.WriteLine(ReturnValue(expression));
         cw.Close();
-        Target.AddMethod("GetHashCode", (CsType)"int")
+        Target.AddMethod("GetHashCode", CsType.Int32)
             .WithOverride()
             .WithBody(cw);
     }
@@ -222,7 +213,7 @@ public abstract class BaseGenerator<TDef>
 
     protected void Add_ToString(string expression)
     {
-        Target.AddMethod("ToString", (CsType)"string", "Returns unit name")
+        Target.AddMethod("ToString", CsType.String, "Returns unit name")
             .WithOverride()
             .WithBody("return " + expression + ";");
     }
@@ -233,7 +224,7 @@ public abstract class BaseGenerator<TDef>
         for (var i = 0; i < 2; i++)
         {
             var eq = i == 0;
-            var m = Target.AddMethod(eq ? "==" : "!=", (CsType)"bool", eq ? "Equality operator" : "Inequality operator")
+            var m = Target.AddMethod(eq ? "==" : "!=", CsType.Bool, eq ? "Equality operator" : "Inequality operator")
                 .WithBody($"return {(eq ? "" : "!")}left.Equals(right);");
 
             m.AddParam("left", Target.Name, "first value to compare");

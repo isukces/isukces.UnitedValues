@@ -58,19 +58,22 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
 
     public bool Equals(Mass other)
     {
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        // generator : BasicUnitValuesGenerator
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public bool Equals(IUnitedValue<MassUnit> other)
+    public bool Equals(IUnitedValue<MassUnit>? other)
     {
+        // generator : BasicUnitValuesGenerator
         if (other is null)
             return false;
-        return Value == other.Value && !(Unit is null) && Unit.Equals(other.Unit);
+        return Value == other.Value && Unit is not null && Unit.Equals(other.Unit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is IUnitedValue<MassUnit> unitedValue ? Equals(unitedValue) : false;
+        // generator : BasicUnitValuesGenerator
+        return other is IUnitedValue<MassUnit> value && Equals(value);
     }
 
     public decimal GetBaseUnitValue()
@@ -79,7 +82,7 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
         if (Unit.Equals(BaseUnit))
             return Value;
         var factor = GlobalUnitRegistry.Factors.Get(Unit);
-        if (!(factor is null))
+        if (factor is not null)
             return Value * factor.Value;
         throw new Exception("Unable to find multiplication for unit " + Unit);
     }
@@ -804,10 +807,7 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
     /// unit
     /// </summary>
     [JetBrains.Annotations.NotNull]
-    public MassUnit Unit
-    {
-        get { return _unit ?? BaseUnit; }
-    }
+    public MassUnit Unit => _unit ?? BaseUnit;
 
     private MassUnit _unit;
 
@@ -851,7 +851,7 @@ public static partial class MassExtensions
 
 public partial class MassJsonConverter : AbstractUnitJsonConverter<Mass, MassUnit>
 {
-    protected override Mass Make(decimal value, string unit)
+    protected override Mass Make(decimal value, string? unit)
     {
         unit = unit?.Trim();
         return new Mass(value, string.IsNullOrEmpty(unit) ? Mass.BaseUnit : new MassUnit(unit));

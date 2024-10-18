@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using iSukces.Code;
+using UnitGenerator.Local;
 
 namespace UnitGenerator;
 
@@ -32,15 +33,9 @@ public abstract class MultipleFilesGenerator
         if (info2.IsEmbedded)
         {
             CsFilesManager.AddGeneratorName(file, GetType().Name);
-            //file.BeginContent += "// generator: " + GetType().Name;
-            // ProcessFile(file);
             var ns = file.GetOrCreateNamespace(_nameSpace);
             var cl = ns.GetOrCreateClass(name);
-            cl.IsPartial  = true;
-            /*info          = new FileHolder(file, ns, cl);
-            _clases[name] = info;
-            return info.Cl;*/
-            return cl;
+            return GeneratorCommon.Setup(cl);
         }
 
         if (_clases.TryGetValue(name, out var info))
@@ -50,7 +45,7 @@ public abstract class MultipleFilesGenerator
             ProcessFile(file);
             var ns = file.GetOrCreateNamespace(_nameSpace);
             var cl = ns.GetOrCreateClass(name);
-            cl.IsPartial  = true;
+            cl = GeneratorCommon.Setup(cl);
             info          = new FileHolder(file, ns, cl);
             _clases[name] = info;
             return info.Cl;

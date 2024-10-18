@@ -24,16 +24,12 @@ public partial class MassUnit : IUnit, IEquatable<MassUnit>
         UnitName = unitName;
     }
 
-    public bool Equals(MassUnit other)
+    public bool Equals(MassUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is MassUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is MassUnit tmp && Equals(tmp);
 
     public override int GetHashCode()
     {

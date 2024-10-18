@@ -24,16 +24,12 @@ public partial class KelvinTemperatureUnit : IUnit, IEquatable<KelvinTemperature
         UnitName = unitName;
     }
 
-    public bool Equals(KelvinTemperatureUnit other)
+    public bool Equals(KelvinTemperatureUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is KelvinTemperatureUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is KelvinTemperatureUnit tmp && Equals(tmp);
 
     public override int GetHashCode()
     {

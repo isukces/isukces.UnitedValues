@@ -45,16 +45,12 @@ public partial class SquareTimeUnit : IUnit, IEquatable<SquareTimeUnit>, IDecomp
         return new[] { GetBasicUnit() };
     }
 
-    public bool Equals(SquareTimeUnit other)
+    public bool Equals(SquareTimeUnit? other)
     {
         return String.Equals(UnitName, other?.UnitName);
     }
 
-    public override bool Equals(object obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        return obj is SquareTimeUnit tmp && Equals(tmp);
-    }
+    public override bool Equals(object? obj) => obj is SquareTimeUnit tmp && Equals(tmp);
 
     public DecomposableUnitItem GetBasicUnit()
     {

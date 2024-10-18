@@ -35,14 +35,16 @@ public sealed partial class TorqueUnit : IProductUnit<ForceUnit, LengthUnit>, IE
         */
     }
 
-    public bool Equals(TorqueUnit other)
+    public bool Equals(TorqueUnit? other)
     {
-        return LeftUnit.Equals(other.LeftUnit) && RightUnit.Equals(other.RightUnit);
+        // generator : ProductUnitGenerator
+        return LeftUnit.Equals(other?.LeftUnit) && RightUnit.Equals(other?.RightUnit);
     }
 
-    public override bool Equals(object other)
+    public override bool Equals(object? other)
     {
-        return other is TorqueUnit unitedValue ? Equals(unitedValue) : false;
+        // generator : ProductUnitGenerator
+        return other is TorqueUnit value && Equals(value);
     }
 
     public override int GetHashCode()
@@ -103,9 +105,6 @@ public sealed partial class TorqueUnit : IProductUnit<ForceUnit, LengthUnit>, IE
     /// </summary>
     public LengthUnit RightUnit { get; }
 
-    public string UnitName
-    {
-        get { return LeftUnit.UnitName + RightUnit.UnitName; }
-    }
+    public string UnitName => LeftUnit.UnitName + RightUnit.UnitName;
 
 }
