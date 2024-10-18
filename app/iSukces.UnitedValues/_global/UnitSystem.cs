@@ -1,9 +1,8 @@
-namespace iSukces.UnitedValues
+namespace iSukces.UnitedValues;
+
+public enum UnitSystem
 {
-    public enum UnitSystem
-    {
-        Unknown,
-        Si,
-        Imperial
-    }
+    Unknown,
+    Si,
+    Imperial
 }

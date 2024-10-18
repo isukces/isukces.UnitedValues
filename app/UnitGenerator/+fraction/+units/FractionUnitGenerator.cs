@@ -2,28 +2,28 @@ using System.Collections.Generic;
 using iSukces.UnitedValues;
 using Self = UnitGenerator.FractionUnitGenerator;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+internal class FractionUnitGenerator : BaseCompositeUnitGenerator<FractionUnit>
 {
-    internal class FractionUnitGenerator : BaseCompositeUnitGenerator<FractionUnit>
+    public FractionUnitGenerator(string output, string nameSpace) : base(output, nameSpace)
     {
-        public FractionUnitGenerator(string output, string nameSpace) : base(output, nameSpace)
-        {
         }
 
-        protected override IEnumerable<string> GetImplementedInterfaces()
-        {
+    protected override IEnumerable<string> GetImplementedInterfaces()
+    {
             var name = new CsArguments(Cfg.CounterUnit.Unit.GetTypename(), Cfg.DenominatorUnit.Unit.GetTypename())
                 .MakeGenericType(nameof(IFractionalUnit));
             return new[] {name.Declaration};
         }
 
-        protected override CompositeUnitGeneratorInfo GetInfo()
-        {
+    protected override CompositeUnitGeneratorInfo GetInfo()
+    {
             return CompositeUnitGeneratorInfo.Make(Cfg);
         }
 
-        protected override Info2 GetInfo2()
-        {
+    protected override Info2 GetInfo2()
+    {
             return new Info2("/", new[]
             {
                 new NameAndPower(nameof(FakeFractionalUnit.CounterUnit), 1),
@@ -32,9 +32,8 @@ namespace UnitGenerator
         }
 
 
-        protected override string GetTypename(FractionUnit cfg)
-        {
+    protected override string GetTypename(FractionUnit cfg)
+    {
             return Cfg.UnitTypes.Unit.GetTypename();
         }
-    }
 }

@@ -1,38 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace iSukces.UnitedValues
-{
-    public struct UnitDefinition<TUnit>: IUnitDefinition
-        where TUnit : IUnit
-    {
-        public UnitDefinition(TUnit unit, decimal multiplication, params string[] aliases)
-        {
-            UnitName       = unit.UnitName;
-            Unit      = unit;
-            Multiplication = multiplication;
-            Aliases        = aliases ?? new string[0];
-        }
+namespace iSukces.UnitedValues;
 
-        public string   UnitName       { get; }
-        public TUnit    Unit           { get; }
-        public decimal  Multiplication { get; }
-        public string[] Aliases        { get; }
+public struct UnitDefinition<TUnit>: IUnitDefinition
+    where TUnit : IUnit
+{
+    public UnitDefinition(TUnit unit, decimal multiplication, params string[] aliases)
+    {
+        UnitName       = unit.UnitName;
+        Unit           = unit;
+        Multiplication = multiplication;
+        Aliases        = aliases ?? [];
     }
 
-    public class UnitEqualityComparer<TUnit> : IEqualityComparer<TUnit>
-        where TUnit : IUnit
-    {
-        public bool Equals(TUnit x, TUnit y)
-        {
-            return string.Equals(x?.UnitName, y?.UnitName, StringComparison.Ordinal);
-        }
+    public string   UnitName       { get; }
+    public TUnit    Unit           { get; }
+    public decimal  Multiplication { get; }
+    public string[] Aliases        { get; }
+}
 
-        public int GetHashCode(TUnit obj)
-        {
-            return string.IsNullOrEmpty(obj?.UnitName)
-                ? 0
-                : obj.UnitName.GetHashCode();
-        }
+public class UnitEqualityComparer<TUnit> : IEqualityComparer<TUnit>
+    where TUnit : IUnit
+{
+    public bool Equals(TUnit x, TUnit y)
+    {
+        return string.Equals(x?.UnitName, y?.UnitName, StringComparison.Ordinal);
+    }
+
+    public int GetHashCode(TUnit obj)
+    {
+        return string.IsNullOrEmpty(obj?.UnitName)
+            ? 0
+            : obj.UnitName.GetHashCode();
     }
 }

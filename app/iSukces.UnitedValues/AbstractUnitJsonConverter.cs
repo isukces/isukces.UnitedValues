@@ -2,20 +2,20 @@ using System;
 using System.Globalization;
 using Newtonsoft.Json;
 
-namespace iSukces.UnitedValues
+namespace iSukces.UnitedValues;
+
+public abstract class AbstractUnitJsonConverter<T, TUnit> : JsonConverter
+    where T : struct, IUnitedValue<TUnit>
+    where TUnit : IEquatable<TUnit>, IUnit
 {
-    public abstract class AbstractUnitJsonConverter<T, TUnit> : JsonConverter
-        where T : struct, IUnitedValue<TUnit>
-        where TUnit : IEquatable<TUnit>, IUnit
+    public override bool CanConvert(Type objectType)
     {
-        public override bool CanConvert(Type objectType)
-        {
             return objectType == typeof(T);
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
-        {
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+        JsonSerializer serializer)
+    {
             switch (reader.Value)
             {
                 case string value:
@@ -33,15 +33,14 @@ namespace iSukces.UnitedValues
             }
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
+    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    {
             var tValue      = (T)value;
             var value2 = tValue.Value.ToString(CultureInfo.InvariantCulture) + tValue.Unit?.UnitName;
             writer.WriteValue(value2);
         }
 
-        protected abstract T Make(decimal value, string unit);
+    protected abstract T Make(decimal value, string unit);
 
-        protected abstract T Parse(string txt);
-    }
+    protected abstract T Parse(string txt);
 }

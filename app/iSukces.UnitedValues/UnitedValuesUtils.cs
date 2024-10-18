@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Globalization;
 
-namespace iSukces.UnitedValues
+namespace iSukces.UnitedValues;
+
+public static class UnitedValuesUtils
 {
-    public static class UnitedValuesUtils
+    public static int Compare<T, TUnit>(T a, T b)
+        where T : struct, IUnitedValue<TUnit>
+        where TUnit : IEquatable<TUnit>, IUnit
     {
-        public static int Compare<T, TUnit>(T a, T b)
-            where T : struct, IUnitedValue<TUnit>
-            where TUnit : IEquatable<TUnit>, IUnit
-        {
             if (a.Equals(b)) return 0;
             if (a.Unit.Equals(b.Unit))
                 return a.Value.CompareTo(b.Value);
@@ -18,19 +18,19 @@ namespace iSukces.UnitedValues
             return val1.CompareTo(val2);
         }
 
-        public static TResult Divide<
-            TLeft, TLeftUnit,
-            TRight, TRightUnit,
-            TResult, TResultUnit>(TLeft a, TRight b,
-            Func<TRight, TRightUnit, TRight> leftConvert,
-            Func<decimal, TResultUnit, TResult> result)
-            where TLeft : IUnitedValue<TLeftUnit>
-            where TRight : IUnitedValue<TRightUnit>
-            where TResult : IUnitedValue<TResultUnit>
-            where TLeftUnit : IUnit, IEquatable<TLeftUnit>
-            where TRightUnit : IUnit, IEquatable<TRightUnit>
-            where TResultUnit : IUnit, IEquatable<TResultUnit>
-        {
+    public static TResult Divide<
+        TLeft, TLeftUnit,
+        TRight, TRightUnit,
+        TResult, TResultUnit>(TLeft a, TRight b,
+        Func<TRight, TRightUnit, TRight> leftConvert,
+        Func<decimal, TResultUnit, TResult> result)
+        where TLeft : IUnitedValue<TLeftUnit>
+        where TRight : IUnitedValue<TRightUnit>
+        where TResult : IUnitedValue<TResultUnit>
+        where TLeftUnit : IUnit, IEquatable<TLeftUnit>
+        where TRightUnit : IUnit, IEquatable<TRightUnit>
+        where TResultUnit : IUnit, IEquatable<TResultUnit>
+    {
             var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<TLeftUnit, TRightUnit>(a.Unit);
             if (rightUnit == null)
                 throw new Exception($"Unable to convert {a.Unit} into {typeof(TRightUnit)}");
@@ -45,21 +45,21 @@ namespace iSukces.UnitedValues
             return result(value, resultUnit);
         }
 
-        public static TResult Multiply<
-            TLeft, TLeftUnit,
-            TRight, TRightUnit,
-            TResult, TResultUnit>(
-            TLeft a,
-            TRight b,
-            Func<TRight, TRightUnit, TRight> leftConvert,
-            Func<decimal, TResultUnit, TResult> result)
-            where TLeft : IUnitedValue<TLeftUnit>
-            where TRight : IUnitedValue<TRightUnit>
-            where TResult : IUnitedValue<TResultUnit>
-            where TLeftUnit : IUnit, IEquatable<TLeftUnit>
-            where TRightUnit : IUnit, IEquatable<TRightUnit>
-            where TResultUnit : IUnit, IEquatable<TResultUnit>
-        {
+    public static TResult Multiply<
+        TLeft, TLeftUnit,
+        TRight, TRightUnit,
+        TResult, TResultUnit>(
+        TLeft a,
+        TRight b,
+        Func<TRight, TRightUnit, TRight> leftConvert,
+        Func<decimal, TResultUnit, TResult> result)
+        where TLeft : IUnitedValue<TLeftUnit>
+        where TRight : IUnitedValue<TRightUnit>
+        where TResult : IUnitedValue<TResultUnit>
+        where TLeftUnit : IUnit, IEquatable<TLeftUnit>
+        where TRightUnit : IUnit, IEquatable<TRightUnit>
+        where TResultUnit : IUnit, IEquatable<TResultUnit>
+    {
             var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<TLeftUnit, TRightUnit>(a.Unit);
             if (rightUnit == null)
                 throw new Exception($"Unable to convert {a.Unit} into {typeof(TRightUnit)}");
@@ -74,9 +74,9 @@ namespace iSukces.UnitedValues
             return result(value, resultUnit);
         }
 
-        public static string ToStringFormat<T>(this IUnitedValue<T> value, string format, IFormatProvider provider)
-            where T : IUnit, IEquatable<T>
-        {
+    public static string ToStringFormat<T>(this IUnitedValue<T> value, string format, IFormatProvider provider)
+        where T : IUnit, IEquatable<T>
+    {
             if (string.IsNullOrEmpty(format)) format = "G";
             if (provider == null) provider           = CultureInfo.CurrentCulture;
 
@@ -91,5 +91,4 @@ namespace iSukces.UnitedValues
 
             return value.Value.ToString("F2", provider) + " " + value.Unit;
         }
-    }
 }

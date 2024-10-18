@@ -1,65 +1,64 @@
 ﻿using System;
 
-namespace iSukces.UnitedValues
+namespace iSukces.UnitedValues;
+
+public interface IUnitedValue<TUnit>
+    : IEquatable<IUnitedValue<TUnit>>
+    where TUnit : IUnit, IEquatable<TUnit>
 {
-    public interface IUnitedValue<TUnit>
-        : IEquatable<IUnitedValue<TUnit>>
-        where TUnit : IUnit, IEquatable<TUnit>
-    {
-        decimal GetBaseUnitValue();
-        decimal Value { get; }
-        TUnit   Unit  { get; }
-    }
+    decimal GetBaseUnitValue();
+    decimal Value { get; }
+    TUnit   Unit  { get; }
+}
 
-    public interface IUnitNameContainer
-    {
-        string UnitName { get; }
-    }
+public interface IUnitNameContainer
+{
+    string UnitName { get; }
+}
 
-    public interface IUnit : IUnitNameContainer
-    {
-    }
+public interface IUnit : IUnitNameContainer
+{
+}
 
-    public interface IUnitDefinition : IUnitNameContainer
-    {
-        decimal Multiplication { get; }
-    }
+public interface IUnitDefinition : IUnitNameContainer
+{
+    decimal Multiplication { get; }
+}
 
-    public interface ICompositeUnit: IUnit
-    {
+public interface ICompositeUnit: IUnit
+{
         
-    }
-    public interface IFractionalUnit : ICompositeUnit
-    {
-    }
+}
+public interface IFractionalUnit : ICompositeUnit
+{
+}
 
-    public interface IFractionalUnit<out TCounter, out TDenominator> : IFractionalUnit
-    {
-        /// <summary>
-        ///     counter unit
-        /// </summary>
-        TCounter CounterUnit { get; }
+public interface IFractionalUnit<out TCounter, out TDenominator> : IFractionalUnit
+{
+    /// <summary>
+    ///     counter unit
+    /// </summary>
+    TCounter CounterUnit { get; }
 
-        /// <summary>
-        ///     denominator unit
-        /// </summary>
-        TDenominator DenominatorUnit { get; }
-    }
+    /// <summary>
+    ///     denominator unit
+    /// </summary>
+    TDenominator DenominatorUnit { get; }
+}
 
-    public interface IProductUnit : ICompositeUnit
-    {
-    }
+public interface IProductUnit : ICompositeUnit
+{
+}
 
-    public interface IProductUnit<out TCounter, out TDenominator> : IProductUnit
-    {
-        /// <summary>
-        ///     left unit
-        /// </summary>
-        TCounter LeftUnit { get; }
+public interface IProductUnit<out TCounter, out TDenominator> : IProductUnit
+{
+    /// <summary>
+    ///     left unit
+    /// </summary>
+    TCounter LeftUnit { get; }
 
-        /// <summary>
-        ///     right unit
-        /// </summary>
-        TDenominator RightUnit { get; }
-    }
+    /// <summary>
+    ///     right unit
+    /// </summary>
+    TDenominator RightUnit { get; }
 }

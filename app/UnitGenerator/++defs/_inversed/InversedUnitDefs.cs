@@ -1,24 +1,23 @@
 using System.Collections.Generic;
 using iSukces.UnitedValues;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public class InversedUnitDefs
 {
-    public class InversedUnitDefs
+    public static InversedUnitsCollection All
     {
-        public static InversedUnitsCollection All
+        get
         {
-            get
-            {
-                if (_all is null)
+            if (_all is null)
 
-                    _all = new InversedUnitsCollection(new[]
-                    {
-                        new InversedUnit(typeof(DeltaKelvinTemperature))
-                    });
-                return _all;
-            }
+                _all = new InversedUnitsCollection(new[]
+                {
+                    new InversedUnit(typeof(DeltaKelvinTemperature))
+                });
+            return _all;
         }
-
-        private static InversedUnitsCollection _all;
     }
+
+    private static InversedUnitsCollection _all;
 }

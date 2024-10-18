@@ -1,7 +1,6 @@
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public interface IUnitInfo
 {
-    public interface IUnitInfo
-    {
-        TypesGroup UnitTypes { get; }
-    }
+    TypesGroup UnitTypes { get; }
 }

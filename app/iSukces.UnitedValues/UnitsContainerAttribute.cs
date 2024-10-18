@@ -1,8 +1,7 @@
 using System;
 
-namespace iSukces.UnitedValues
+namespace iSukces.UnitedValues;
+
+public class UnitsContainerAttribute : Attribute
 {
-    public class UnitsContainerAttribute : Attribute
-    {
-    }
 }

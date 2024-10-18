@@ -1,7 +1,6 @@
-namespace iSukces.UnitedValues.Test
+namespace iSukces.UnitedValues.Test;
+
+public class AccelerationTests
 {
-    public class AccelerationTests
-    {
         
-    }
 }

@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public interface ICodeSource1
 {
-    public interface ICodeSource1
-    {
-        string Code { get; }
+    string Code { get; }
         
 
-    }
-    interface ICodeSource:ICodeSource1
-    {
+}
+interface ICodeSource:ICodeSource1
+{
    
         
-        bool DependsOnLeftArgument { get; }
-    }
+    bool DependsOnLeftArgument { get; }
 }

@@ -1,13 +1,12 @@
 using System;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+[Flags]
+public enum NullableArguments
 {
-    [Flags]
-    public enum NullableArguments
-    {
-        None = 0,
-        Left = 1,
-        Right = 2,
-        Both = Left | Right
-    }
+    None  = 0,
+    Left  = 1,
+    Right = 2,
+    Both  = Left | Right
 }

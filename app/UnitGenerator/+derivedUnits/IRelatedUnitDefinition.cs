@@ -1,9 +1,8 @@
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public interface IRelatedUnitDefinition
 {
-    public interface IRelatedUnitDefinition
-    {
-        string             FieldName           { get; }
-        UnitShortCodeSource UnitShortCode       { get; }
-        string             FromMethodNameSufix { get; }
-    }
+    string              FieldName           { get; }
+    UnitShortCodeSource UnitShortCode       { get; }
+    string              FromMethodNameSufix { get; }
 }

@@ -3,65 +3,64 @@ using System.Linq;
 using iSukces.Code;
 using UnitGenerator.Local;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public partial class XValueTypeName:ITypeNameProvider
 {
-    public partial class XValueTypeName:ITypeNameProvider
+    public static XValueTypeName[] FromSplit(char separator, string text)
     {
-        public static XValueTypeName[] FromSplit(char separator, string text)
-        {
-            var items = text.Split(separator);
-            return items.Select(a => new XValueTypeName(a)).ToArray();
-        }
+        var items = text.Split(separator);
+        return items.Select(a => new XValueTypeName(a)).ToArray();
+    }
 
-        public string FirstLower()
-        {
-            return ValueTypeName.FirstLower();
-        }
+    public string FirstLower()
+    {
+        return ValueTypeName.FirstLower();
+    }
 
-        public string GetExtensions()
-        {
-            return ValueTypeName + "Extensions";
-        }
+    public string GetExtensions()
+    {
+        return ValueTypeName + "Extensions";
+    }
 
-        public string ToLower()
-        {
-            return ValueTypeName.ToLower();
-        }
+    public string ToLower()
+    {
+        return ValueTypeName.ToLower();
+    }
 
-        public UnitNameKind Kind
+    public UnitNameKind Kind
+    {
+        get
         {
-            get
-            {
-                if (ValueTypeName.StartsWith("Delta", StringComparison.Ordinal))
-                    return UnitNameKind.Delta;
-                return UnitNameKind.Normal;
-            }
+            if (ValueTypeName.StartsWith("Delta", StringComparison.Ordinal))
+                return UnitNameKind.Delta;
+            return UnitNameKind.Normal;
         }
+    }
 
-        public string CoreName
+    public string CoreName
+    {
+        get
         {
-            get
-            {
-                if (Kind == UnitNameKind.Delta)
-                    return ValueTypeName.Substring(5);
-                return ValueTypeName;
-            }
-        }
-
-        public XUnitTypeName ToUnitTypeName()
-        {
-            return new XUnitTypeName(CoreName + "Unit");
-        }
-
-        public string GetTypename()
-        {
+            if (Kind == UnitNameKind.Delta)
+                return ValueTypeName.Substring(5);
             return ValueTypeName;
         }
     }
 
-    public enum UnitNameKind
+    public XUnitTypeName ToUnitTypeName()
     {
-        Normal,
-        Delta
+        return new XUnitTypeName(CoreName + "Unit");
     }
+
+    public string GetTypename()
+    {
+        return ValueTypeName;
+    }
+}
+
+public enum UnitNameKind
+{
+    Normal,
+    Delta
 }

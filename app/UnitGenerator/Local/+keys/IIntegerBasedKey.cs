@@ -1,7 +1,6 @@
-namespace UnitGenerator.Local
+namespace UnitGenerator.Local;
+
+public interface IIntegerBasedKey
 {
-    public interface IIntegerBasedKey
-    {
-        int Value { get; }
-    }
+    int Value { get; }
 }

@@ -1,7 +1,6 @@
-namespace iSukces.UnitedValues
+namespace iSukces.UnitedValues;
+
+public interface IDerivedDecomposableUnit : IUnit
 {
-    public interface IDerivedDecomposableUnit : IUnit
-    {
-        DecomposableUnitItem GetBasicUnit();
-    }
+    DecomposableUnitItem GetBasicUnit();
 }

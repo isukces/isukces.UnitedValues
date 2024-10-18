@@ -1,11 +1,10 @@
 using iSukces.UnitedValues;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+internal class FakeProductUnit : IProductUnit<int, int>
 {
-    internal class FakeProductUnit : IProductUnit<int, int>
-    {
-        public string UnitName  { get; }
-        public int    LeftUnit  { get; }
-        public int    RightUnit { get; }
-    }
+    public string UnitName  { get; }
+    public int    LeftUnit  { get; }
+    public int    RightUnit { get; }
 }

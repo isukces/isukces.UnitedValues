@@ -1,9 +1,8 @@
 using iSukces.Code;
 
-namespace UnitGenerator.Local
+namespace UnitGenerator.Local;
+
+public interface ITypeNameProvider
 {
-    public interface ITypeNameProvider
-    {
-        string GetTypename();
-    }
+    string GetTypename();
 }

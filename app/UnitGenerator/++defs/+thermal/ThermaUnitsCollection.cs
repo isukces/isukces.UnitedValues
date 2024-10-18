@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public class ThermaUnitsCollection
 {
-    public class ThermaUnitsCollection
+    public ThermaUnitsCollection(IReadOnlyList<ThermalUnit> items)
     {
-        public ThermaUnitsCollection(IReadOnlyList<ThermalUnit> items)
-        {
-            Items = items;
+        Items = items;
             
-        }
-        public IReadOnlyList<ThermalUnit> Items { get; }
     }
+    public IReadOnlyList<ThermalUnit> Items { get; }
 }

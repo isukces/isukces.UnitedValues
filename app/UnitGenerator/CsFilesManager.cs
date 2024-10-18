@@ -9,13 +9,13 @@ using iSukces.Code.AutoCode;
 using iSukces.Code.IO;
 using JetBrains.Annotations;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public sealed class CsFilesManager
 {
-    public sealed class CsFilesManager
+    private CsFilesManager()
     {
-        private CsFilesManager()
-        {
-            _provider = SlnAssemblyBaseDirectoryProvider.Make<CsFilesManager>("isukces.UnitedValues.sln");
+        _provider = SlnAssemblyBaseDirectoryProvider.Make<CsFilesManager>("isukces.UnitedValues.sln");
 
 #if CLEAR
             var fileName = GetDir(true);
@@ -25,149 +25,149 @@ namespace UnitGenerator
             new DirectoryInfo(fileName).Delete(true);
 #endif
 
-            _subFolders = new Dictionary<string, string>
-            {
-                ["Area"]   = "_length",
-                ["Length"] = "_length",
-                ["Volume"] = "_length",
-
-                ["CelsiusTemperature"]             = "_heat",
-                ["DeltaCelsiusTemperature"]        = "_heat",
-                ["DeltaKelvinTemperature"]         = "_heat",
-                ["InversedDeltaKelvinTemperature"] = "_heat",
-                ["InversedKelvinTemperature"]      = "_heat",
-                ["KelvinTemperature"]              = "_heat",
-                ["SpecificHeatCapacity"]           = "_heat",
-                ["MassDetlaKelvin"]                = "_heat",
-
-                ["Torque"]       = "_forces",
-                ["Pressure"]     = "_forces",
-                ["Force"]        = "_forces",
-                ["LinearForce"]  = "_forces",
-                ["PressureDrop"] = "_forces",
-
-                ["Energy"]            = "_energy",
-                ["EnergyMassDensity"] = "_energy",
-                ["Power"]             = "_energy",
-
-                ["Mass"]          = "_mass",
-                ["Density"]       = "_mass",
-                ["LinearDensity"] = "_mass",
-                ["MassStream"]    = "_mass",
-                ["PlanarDensity"] = "_mass",
-
-                ["Acceleration"] = "_time",
-                ["SquareTime"]   = "_time",
-                ["Time"]         = "_time",
-                ["Velocity"]     = "_time",
-                ["VolumeStream"] = "_time",
-            };
-
-            var tmp = _subFolders.ToArray();
-            foreach (var i in tmp)
-                _subFolders[i.Key + "Unit"] = i.Value;
-        }
-
-        public static void AddGeneratorName(CsFile file, string name)
+        _subFolders = new Dictionary<string, string>
         {
-            if (string.IsNullOrEmpty(file.BeginContent))
-                file.BeginContent = "// generator: " + name;
-            else
-                file.BeginContent += ", " + name;
-        }
+            ["Area"]   = "_length",
+            ["Length"] = "_length",
+            ["Volume"] = "_length",
 
-        private static string CutEnd(string name, string jsonconverter)
+            ["CelsiusTemperature"]             = "_heat",
+            ["DeltaCelsiusTemperature"]        = "_heat",
+            ["DeltaKelvinTemperature"]         = "_heat",
+            ["InversedDeltaKelvinTemperature"] = "_heat",
+            ["InversedKelvinTemperature"]      = "_heat",
+            ["KelvinTemperature"]              = "_heat",
+            ["SpecificHeatCapacity"]           = "_heat",
+            ["MassDetlaKelvin"]                = "_heat",
+
+            ["Torque"]       = "_forces",
+            ["Pressure"]     = "_forces",
+            ["Force"]        = "_forces",
+            ["LinearForce"]  = "_forces",
+            ["PressureDrop"] = "_forces",
+
+            ["Energy"]            = "_energy",
+            ["EnergyMassDensity"] = "_energy",
+            ["Power"]             = "_energy",
+
+            ["Mass"]          = "_mass",
+            ["Density"]       = "_mass",
+            ["LinearDensity"] = "_mass",
+            ["MassStream"]    = "_mass",
+            ["PlanarDensity"] = "_mass",
+
+            ["Acceleration"] = "_time",
+            ["SquareTime"]   = "_time",
+            ["Time"]         = "_time",
+            ["Velocity"]     = "_time",
+            ["VolumeStream"] = "_time",
+        };
+
+        var tmp = _subFolders.ToArray();
+        foreach (var i in tmp)
+            _subFolders[i.Key + "Unit"] = i.Value;
+    }
+
+    public static void AddGeneratorName(CsFile file, string name)
+    {
+        if (string.IsNullOrEmpty(file.BeginContent))
+            file.BeginContent = "// generator: " + name;
+        else
+            file.BeginContent += ", " + name;
+    }
+
+    private static string CutEnd(string name, string jsonconverter)
+    {
+        if (name.EndsWith(jsonconverter, StringComparison.Ordinal))
+            return name.Substring(0, name.Length - jsonconverter.Length);
+        return name;
+    }
+
+    public void Flush()
+    {
+        foreach (var i in _cache.Values)
         {
-            if (name.EndsWith(jsonconverter, StringComparison.Ordinal))
-                return name.Substring(0, name.Length - jsonconverter.Length);
-            return name;
+            var sourceInfoFileName = i.FileName;
+            var c = File.Exists(sourceInfoFileName)
+                ? File.ReadAllText(sourceInfoFileName)
+                : "";
+            var allContent = EndCodeEmbedder.Append(c, i.File.GetCode(true),
+                "autogenerated code");
+            CodeFileUtils.SaveIfDifferent(allContent, sourceInfoFileName, false);
         }
+    }
 
-        public void Flush()
+    string GetDir(bool units)
+    {
+        var fileName = Path.Combine(_provider.SolutionDir.FullName,
+            "iSukces.UnitedValues",
+            units ? "+units" : "+values");
+        return fileName;
+    }
+
+    [NotNull]
+    public Result GetFileInfo(string name, string nameSpace)
+    {
+        var units  = name.EndsWith("Units") || name.EndsWith("Unit");
+        var csFile = new CsFile();
+        csFile.AddImportNamespace("System");
+        csFile.AddImportNamespace("System.Collections.Generic");
+        if (units)
         {
-            foreach (var i in _cache.Values)
-            {
-                var sourceInfoFileName = i.FileName;
-                var c = File.Exists(sourceInfoFileName)
-                    ? File.ReadAllText(sourceInfoFileName)
-                    : "";
-                var allContent = EndCodeEmbedder.Append(c, i.File.GetCode(true),
-                    "autogenerated code");
-                CodeFileUtils.SaveIfDifferent(allContent, sourceInfoFileName, false);
-            }
+            if (name.EndsWith("Units"))
+                name = name.Substring(0, name.Length - 1);
         }
-
-        string GetDir(bool units)
+        else
         {
-            var fileName = Path.Combine(_provider.SolutionDir.FullName,
-                "iSukces.UnitedValues",
-                units ? "+units" : "+values");
-            return fileName;
+            name = CutEnd(name, "JsonConverter");
+            name = CutEnd(name, "Extensions");
+            csFile.AddImportNamespace("System.Globalization");
+            csFile.AddImportNamespace("Newtonsoft.Json");
         }
 
-        [NotNull]
-        public Result GetFileInfo(string name, string nameSpace)
+        var key = nameSpace + "--" + name;
+        if (_cache.TryGetValue(key, out var r))
+            return r;
+
+        var fileName = Path.Combine(GetDir(units));
+        if (_subFolders.TryGetValue(name, out var sf))
+            fileName = Path.Combine(fileName, sf);
+
+        fileName = Path.Combine(fileName, name + ".cs");
+        csFile.FileScopeNamespace = FileScopeNamespaceConfiguration.AssumeDefined(nameSpace);
+        return _cache[key] = new Result(true, csFile, fileName);
+    }
+
+    public static CsFilesManager Instance => CsFilesManagerHolder.SingleIstance;
+
+
+    private readonly Dictionary<string, Result>       _cache = new();
+    private readonly SlnAssemblyBaseDirectoryProvider _provider;
+
+    private readonly Dictionary<string, string> _subFolders;
+
+    private static class CsFilesManagerHolder
+    {
+        public static readonly CsFilesManager SingleIstance = new CsFilesManager();
+    }
+
+
+    [ImmutableObject(true)]
+    public class Result
+    {
+        public Result(bool isEmbedded, CsFile file, string fileName)
         {
-            var units  = name.EndsWith("Units") || name.EndsWith("Unit");
-            var csFile = new CsFile();
-            csFile.AddImportNamespace("System");
-            csFile.AddImportNamespace("System.Collections.Generic");
-            if (units)
-            {
-                if (name.EndsWith("Units"))
-                    name = name.Substring(0, name.Length - 1);
-            }
-            else
-            {
-                name = CutEnd(name, "JsonConverter");
-                name = CutEnd(name, "Extensions");
-                csFile.AddImportNamespace("System.Globalization");
-                csFile.AddImportNamespace("Newtonsoft.Json");
-            }
-
-            var key = nameSpace + "--" + name;
-            if (_cache.TryGetValue(key, out var r))
-                return r;
-
-            var fileName = Path.Combine(GetDir(units));
-            if (_subFolders.TryGetValue(name, out var sf))
-                fileName = Path.Combine(fileName, sf);
-
-            fileName = Path.Combine(fileName, name + ".cs");
-            return _cache[key] = new Result(true, csFile, fileName);
+            IsEmbedded = isEmbedded;
+            File       = file;
+            FileName   = fileName;
         }
 
-        public static CsFilesManager Instance => CsFilesManagerHolder.SingleIstance;
+        public override string ToString() { return $"IsEmbedded={IsEmbedded}, File={File}, FileName={FileName}"; }
 
+        public bool IsEmbedded { get; }
 
-        private readonly Dictionary<string, Result> _cache = new();
-        private readonly SlnAssemblyBaseDirectoryProvider _provider;
+        public CsFile File { get; }
 
-        private readonly Dictionary<string, string> _subFolders;
-
-        private static class CsFilesManagerHolder
-        {
-            public static readonly CsFilesManager SingleIstance = new CsFilesManager();
-        }
-
-
-        [ImmutableObject(true)]
-        public class Result
-        {
-            public Result(bool isEmbedded, CsFile file, string fileName)
-            {
-                IsEmbedded = isEmbedded;
-                File       = file;
-                FileName   = fileName;
-            }
-
-            public override string ToString() { return $"IsEmbedded={IsEmbedded}, File={File}, FileName={FileName}"; }
-
-            public bool IsEmbedded { get; }
-
-            public CsFile File { get; }
-
-            public string FileName { get; }
-        }
+        public string FileName { get; }
     }
 }

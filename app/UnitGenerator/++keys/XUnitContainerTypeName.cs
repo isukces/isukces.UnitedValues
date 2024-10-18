@@ -1,13 +1,12 @@
 using iSukces.Code;
 using UnitGenerator.Local;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public partial class XUnitContainerTypeName: ITypeNameProvider
 {
-    public partial class XUnitContainerTypeName: ITypeNameProvider
+    public string GetTypename()
     {
-        public string GetTypename()
-        {
-            return TypeName;
-        }
+        return TypeName;
     }
 }

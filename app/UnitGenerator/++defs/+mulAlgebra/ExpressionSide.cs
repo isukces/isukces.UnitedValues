@@ -1,7 +1,6 @@
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public enum ExpressionSide
 {
-    public enum ExpressionSide
-    {
-        Left, Right
-    }
+    Left, Right
 }

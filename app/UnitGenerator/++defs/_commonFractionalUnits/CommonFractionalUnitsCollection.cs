@@ -1,19 +1,18 @@
 using System.Linq;
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public class CommonFractionalUnitsCollection
 {
-    public class CommonFractionalUnitsCollection
+    public CommonFractionalUnitsCollection(CommonFractionalUnit[] items)
     {
-        public CommonFractionalUnitsCollection(CommonFractionalUnit[] items)
-        {
-            Items = items;
-        }
-
-        public CommonFractionalUnit[] GetBy(XUnitTypeName namesUnit)
-        {
-            return Items.Where(a => a.Type.Unit == namesUnit).ToArray();
-        }
-
-        public CommonFractionalUnit[] Items { get; }
+        Items = items;
     }
+
+    public CommonFractionalUnit[] GetBy(XUnitTypeName namesUnit)
+    {
+        return Items.Where(a => a.Type.Unit == namesUnit).ToArray();
+    }
+
+    public CommonFractionalUnit[] Items { get; }
 }

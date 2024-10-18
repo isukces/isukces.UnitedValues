@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 
-namespace iSukces.UnitedValues
+namespace iSukces.UnitedValues;
+
+public interface IDecomposableUnit : IUnit
 {
-    public interface IDecomposableUnit : IUnit
-    {
-        IReadOnlyList<DecomposableUnitItem> Decompose();
-    }
+    IReadOnlyList<DecomposableUnitItem> Decompose();
 }

@@ -2,25 +2,24 @@ using System.Collections.Generic;
 using iSukces.UnitedValues;
 
 
-namespace UnitGenerator
+namespace UnitGenerator;
+
+public class ThermaUnitDefs
 {
-    public class ThermaUnitDefs
+    public static ThermaUnitsCollection All
     {
-        public static ThermaUnitsCollection All
+        get
         {
-            get
-            {
-                if (_all is null)
+            if (_all is null)
 
-                    _all = new ThermaUnitsCollection(new[]
-                    {
-                        new ThermalUnit(typeof(ThermalResistance),typeof(ThermalConductivity)),
-                        new ThermalUnit(typeof(ThermalConductivity),typeof(ThermalResistance)),
-                    });
-                return _all;
-            }
+                _all = new ThermaUnitsCollection(new[]
+                {
+                    new ThermalUnit(typeof(ThermalResistance),typeof(ThermalConductivity)),
+                    new ThermalUnit(typeof(ThermalConductivity),typeof(ThermalResistance)),
+                });
+            return _all;
         }
-
-        private static ThermaUnitsCollection _all;
     }
+
+    private static ThermaUnitsCollection _all;
 }

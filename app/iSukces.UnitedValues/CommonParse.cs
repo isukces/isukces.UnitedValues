@@ -3,12 +3,12 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 
-namespace iSukces.UnitedValues
+namespace iSukces.UnitedValues;
+
+public static class CommonParse
 {
-    public static class CommonParse
+    public static ParseResult Parse(string value, Type resultType)
     {
-        public static ParseResult Parse(string value, Type resultType)
-        {
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentNullException();
             var m = ParseRegex.Match(value);
@@ -22,24 +22,23 @@ namespace iSukces.UnitedValues
             return new ParseResult(number, unit);
         }
 
-        public const string RegexFilter = @"^\s*([-+]?)\s*((\d+)(\.(\d+))?)\s*(.*)\s*$";
+    public const string RegexFilter = @"^\s*([-+]?)\s*((\d+)(\.(\d+))?)\s*(.*)\s*$";
 
-        public static readonly Regex ParseRegex = new Regex(RegexFilter, RegexOptions.Compiled);
+    public static readonly Regex ParseRegex = new Regex(RegexFilter, RegexOptions.Compiled);
 
-        public struct ParseResult
+    public struct ParseResult
+    {
+        public ParseResult(decimal value, string unitName)
         {
-            public ParseResult(decimal value, string unitName)
-            {
                 Value     = value;
                 _unitName = unitName?.Trim();
             }
 
-            public decimal Value { get; }
+        public decimal Value { get; }
 
-            [NotNull]
-            public string UnitName => _unitName ?? "";
+        [NotNull]
+        public string UnitName => _unitName ?? "";
 
-            private readonly string _unitName;
-        }
+        private readonly string _unitName;
     }
 }
