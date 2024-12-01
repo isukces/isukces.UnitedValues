@@ -4,32 +4,33 @@
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Copyright>Copyright © Internet Sukces Piotr Stęclik 2017-2024</Copyright>
     <Product>iSukces.UnitedValues</Product>
-    <TargetFrameworks>net48;net6.0;netcoreapp3.1;netstandard2.0;net7.0;net8.0</TargetFrameworks>
-    <AssemblyVersion>1.24.1018.34</AssemblyVersion>
-    <FileVersion>1.24.1018.34</FileVersion>
-    <Version>1.24.1018.34</Version>
+    <ProjectGuid>{CD06B707-1169-4E47-8097-CC8CD0947C9C}</ProjectGuid>
+    <TargetFrameworks>net48;net6.0;net8.0;net9.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
+    <AssemblyVersion>1.24.1201.35</AssemblyVersion>
+    <FileVersion>1.24.1201.35</FileVersion>
+    <Version>1.24.1201.35</Version>
+    <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
-    <LangVersion>12</LangVersion>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
     <NoWarn>1701;1702;1591</NoWarn>
     <Authors>Internet Sukces Piotr Stęclik</Authors>
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <Description>Values with units serialization and simple algebra</Description>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageId>iSukces.UnitedValues</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSource>false</IncludeSource>
     <IncludeSymbols>true</IncludeSymbols>
-    <PackageId>iSukces.UnitedValues</PackageId>
-    <Nullable>enable</Nullable>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/isukces/isukces.UnitedValues</PackageProjectUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/isukces/isukces.UnitedValues</RepositoryUrl>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>

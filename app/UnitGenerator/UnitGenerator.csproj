@@ -3,8 +3,9 @@
   <PropertyGroup>
     <Company>Internet Sukces Piotr Stęclik</Company>
     <Copyright>Copyright © Internet Sukces Piotr Stęclik 2017-2024</Copyright>
-    <TargetFramework>net8.0</TargetFramework>
-    <LangVersion>11</LangVersion>
+    <ProjectGuid>{F1442214-2394-4B17-B683-0F4865E28EEF}</ProjectGuid>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <LangVersion>13</LangVersion>
     <OutputType>Exe</OutputType>
     <NoWarn>1701;1702;1591</NoWarn>
     <Authors>Internet Sukces Piotr Stęclik</Authors>
@@ -14,7 +15,7 @@
     <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Code" Version="1.24.904.210" />
+    <PackageReference Include="iSukces.Code" Version="1.24.1201.214" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Scenarios.cs">
