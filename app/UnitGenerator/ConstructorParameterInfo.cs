@@ -8,7 +8,7 @@ namespace UnitGenerator;
 //[ImmutableObject(true)]
 public class ConstructorParameterInfo
 {
-    public ConstructorParameterInfo(string propertyName, CsType propertyType, string expression, string description,
+    public ConstructorParameterInfo(string propertyName, CsType propertyType, string? expression, string description,
         Flags1 checkingFlags = Flags1.None)
     {
         PropertyName    = propertyName;

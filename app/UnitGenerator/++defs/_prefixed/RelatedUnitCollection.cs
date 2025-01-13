@@ -20,7 +20,7 @@ public class RelatedUnitCollection
         return null;
     }
 
-    public RelatedUnitsFamily GetPowers(XUnitTypeName unitName)
+    public RelatedUnitsFamily? GetPowers(XUnitTypeName unitName)
     {
         var myInfo = FindByUnitName(unitName);
         if (myInfo is null)
@@ -56,7 +56,7 @@ public class RelatedUnitCollection
         return new RelatedUnitsFamily(myInfo, other);
     }
 
-    private RelatedUnit FindByUnitName(XUnitTypeName unitName)
+    private RelatedUnit? FindByUnitName(XUnitTypeName unitName)
     {
         RelatedUnit myInfo = null;
 

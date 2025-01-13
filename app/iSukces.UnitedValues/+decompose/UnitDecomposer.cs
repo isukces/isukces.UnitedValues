@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -78,7 +77,7 @@ public sealed class UnitDecomposer
     [ImmutableObject(true)]
     public class Key : IEquatable<Key>
     {
-        public Key([NotNull] Type unitHoldeType, [NotNull] string unitName)
+        public Key(Type unitHoldeType, string unitName)
         {
             UnitHoldeType = unitHoldeType ?? throw new ArgumentNullException(nameof(unitHoldeType));
             UnitName      = unitName ?? throw new ArgumentNullException(nameof(unitName));
@@ -101,7 +100,7 @@ public sealed class UnitDecomposer
             return UnitHoldeType == other.UnitHoldeType && UnitName == other.UnitName;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
@@ -122,10 +121,8 @@ public sealed class UnitDecomposer
             return $"UnitHoldeType={UnitHoldeType}, UnitName={UnitName}";
         }
 
-        [NotNull]
         public Type UnitHoldeType { get; }
 
-        [NotNull]
         public string UnitName { get; }
     }
 }

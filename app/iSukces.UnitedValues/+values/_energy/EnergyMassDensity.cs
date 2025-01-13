@@ -150,14 +150,18 @@ public partial struct EnergyMassDensity : IUnitedValue<EnergyMassDensityUnit>, I
         return new EnergyMassDensity(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(EnergyMassDensity left, EnergyMassDensity right)
+    public static EnergyMassDensity Parse(string value)
     {
-        return !left.Equals(right);
+        // generator : FractionValuesGenerator.Add_Parse
+        if (string.IsNullOrEmpty(value))
+            throw new ArgumentNullException(nameof(value));
+        var r = CommonParse.Parse(value, typeof(EnergyMassDensity));
+        var units = Common.SplitUnitNameBySlash(r.UnitName);
+        if (units.Length != 2)
+            throw new Exception($"{r.UnitName} is not valid EnergyMassDensity unit");
+        var counterUnit = new EnergyUnit(units[0]);
+        var denominatorUnit = new MassUnit(units[1]);
+        return new EnergyMassDensity(r.Value, counterUnit, denominatorUnit);
     }
 
     /// <summary>
@@ -287,18 +291,14 @@ public partial struct EnergyMassDensity : IUnitedValue<EnergyMassDensityUnit>, I
         return left.Equals(right);
     }
 
-    public static EnergyMassDensity Parse(string value)
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(EnergyMassDensity left, EnergyMassDensity right)
     {
-        // generator : FractionValuesGenerator.Add_Parse
-        if (string.IsNullOrEmpty(value))
-            throw new ArgumentNullException(nameof(value));
-        var r = CommonParse.Parse(value, typeof(EnergyMassDensity));
-        var units = Common.SplitUnitNameBySlash(r.UnitName);
-        if (units.Length != 2)
-            throw new Exception($"{r.UnitName} is not valid EnergyMassDensity unit");
-        var counterUnit = new EnergyUnit(units[0]);
-        var denominatorUnit = new MassUnit(units[1]);
-        return new EnergyMassDensity(r.Value, counterUnit, denominatorUnit);
+        return !left.Equals(right);
     }
 
     /// <summary>

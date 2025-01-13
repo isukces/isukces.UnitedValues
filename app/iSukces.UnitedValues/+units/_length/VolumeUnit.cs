@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -94,13 +93,12 @@ public partial class VolumeUnit : IUnit, IEquatable<VolumeUnit>, IDecomposableUn
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;VolumeUnit&gt; into VolumeUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(VolumeUnit left, VolumeUnit right)
+    /// <param name="src"></param>
+    public static implicit operator VolumeUnit(UnitDefinition<VolumeUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -114,12 +112,13 @@ public partial class VolumeUnit : IUnit, IEquatable<VolumeUnit>, IDecomposableUn
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;VolumeUnit&gt; into VolumeUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator VolumeUnit(UnitDefinition<VolumeUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(VolumeUnit left, VolumeUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

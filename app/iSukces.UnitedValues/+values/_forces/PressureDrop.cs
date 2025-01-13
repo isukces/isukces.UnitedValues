@@ -133,26 +133,6 @@ public partial struct PressureDrop : IUnitedValue<PressureDropUnit>, IEquatable<
         return new PressureDrop(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(PressureDrop left, PressureDrop right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
-    /// Equality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator ==(PressureDrop left, PressureDrop right)
-    {
-        return left.Equals(right);
-    }
-
     public static PressureDrop Parse(string value)
     {
         // generator : FractionValuesGenerator.Add_Parse
@@ -165,6 +145,26 @@ public partial struct PressureDrop : IUnitedValue<PressureDropUnit>, IEquatable<
         var counterUnit = new PressureUnit(units[0]);
         var denominatorUnit = new LengthUnit(units[1]);
         return new PressureDrop(r.Value, counterUnit, denominatorUnit);
+    }
+
+    /// <summary>
+    /// Equality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator ==(PressureDrop left, PressureDrop right)
+    {
+        return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(PressureDrop left, PressureDrop right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

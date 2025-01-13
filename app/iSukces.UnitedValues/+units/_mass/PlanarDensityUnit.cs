@@ -86,16 +86,6 @@ public sealed partial class PlanarDensityUnit : IFractionalUnit<MassUnit, AreaUn
     }
 
     /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(PlanarDensityUnit left, PlanarDensityUnit right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
     /// Equality operator
     /// </summary>
     /// <param name="left">first value to compare</param>
@@ -103,6 +93,16 @@ public sealed partial class PlanarDensityUnit : IFractionalUnit<MassUnit, AreaUn
     public static bool operator ==(PlanarDensityUnit left, PlanarDensityUnit right)
     {
         return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(PlanarDensityUnit left, PlanarDensityUnit right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

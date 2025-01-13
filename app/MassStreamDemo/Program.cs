@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using iSukces.UnitedValues;
 
 namespace MassStreamDemo;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         var stream = new MassStream(5, MassUnits.Tone, TimeUnits.Hour);
         Console.WriteLine("stream = " + stream);

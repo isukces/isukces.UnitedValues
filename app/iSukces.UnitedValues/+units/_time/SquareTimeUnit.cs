@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -86,13 +85,12 @@ public partial class SquareTimeUnit : IUnit, IEquatable<SquareTimeUnit>, IDecomp
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;SquareTimeUnit&gt; into SquareTimeUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(SquareTimeUnit left, SquareTimeUnit right)
+    /// <param name="src"></param>
+    public static implicit operator SquareTimeUnit(UnitDefinition<SquareTimeUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -106,12 +104,13 @@ public partial class SquareTimeUnit : IUnit, IEquatable<SquareTimeUnit>, IDecomp
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;SquareTimeUnit&gt; into SquareTimeUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator SquareTimeUnit(UnitDefinition<SquareTimeUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(SquareTimeUnit left, SquareTimeUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

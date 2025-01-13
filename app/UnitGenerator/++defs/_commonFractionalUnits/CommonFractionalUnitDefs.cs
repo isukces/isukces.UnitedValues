@@ -15,7 +15,7 @@ internal class CommonFractionalUnitDefs
     }
 
     private static CommonFractionalUnit Make<T>(string counterUnit, string denominatorUnit,
-        string targetPropertyName = null)
+        string? targetPropertyName = null)
     {
         if (targetPropertyName is null)
             targetPropertyName = $"{counterUnit}sPer{denominatorUnit}s";

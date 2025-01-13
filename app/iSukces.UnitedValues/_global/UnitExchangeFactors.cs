@@ -81,10 +81,10 @@ public class UnitExchangeFactors
             return _type == other._type && string.Equals(_name, other._name);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is Key && Equals((Key)obj);
+            return obj is Key key && Equals(key);
         }
 
         public override int GetHashCode()

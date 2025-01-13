@@ -76,16 +76,6 @@ public sealed partial class PressureDropUnit : IFractionalUnit<PressureUnit, Len
     }
 
     /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(PressureDropUnit left, PressureDropUnit right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
     /// Equality operator
     /// </summary>
     /// <param name="left">first value to compare</param>
@@ -93,6 +83,16 @@ public sealed partial class PressureDropUnit : IFractionalUnit<PressureUnit, Len
     public static bool operator ==(PressureDropUnit left, PressureDropUnit right)
     {
         return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(PressureDropUnit left, PressureDropUnit right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

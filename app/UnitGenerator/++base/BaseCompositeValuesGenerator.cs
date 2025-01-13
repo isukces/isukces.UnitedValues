@@ -16,7 +16,7 @@ public abstract class BaseCompositeValuesGenerator<T> : BaseValuesGenerator<T>
 
     protected abstract void Add_Parse();
 
-    protected void Add_Parse(string splitMethodName)
+    protected void Add_Parse(string? splitMethodName)
     {
         string ArrayItemCode(ref int columnIndex)
         {

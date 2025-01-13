@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace UnitGenerator;
 
@@ -9,7 +8,7 @@ public class TreeExpression : ICodeSource1, IReducable
 {
     private string _override;
 
-    public TreeExpression(ExpressionPath path, IReadOnlyList<ExpressionPath> arguments, Kind2 kind)
+    public TreeExpression(ExpressionPath path, IReadOnlyList<ExpressionPath>? arguments, Kind2 kind)
     {
         Path      = path;
         Kind      = kind;
@@ -56,8 +55,7 @@ public class TreeExpression : ICodeSource1, IReducable
         // Arguments                = Arguments.Select(dict.Reduce).ToArray();
     }
 
-    [CanBeNull]
-    private ExpressionPath FullMethods
+    private ExpressionPath? FullMethods
     {
         get
         {
@@ -86,7 +84,6 @@ public class TreeExpression : ICodeSource1, IReducable
     public ExpressionPath Path { get;  }
     public Kind2          Kind { get; }
    
-    [NotNull]
     public IReadOnlyList<ExpressionPath> Arguments { get;  }
 
     public string Code

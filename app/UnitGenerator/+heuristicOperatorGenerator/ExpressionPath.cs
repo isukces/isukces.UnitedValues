@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace UnitGenerator;
 
@@ -15,7 +14,7 @@ public class ExpressionPath : IEquatable<ExpressionPath>, IReducable
             Debug.Write("");
     }
 
-    public static ExpressionPath From(ICodeSource1 x)
+    public static ExpressionPath? From(ICodeSource1? x)
     {
         if (x is null)
             return null;
@@ -30,7 +29,7 @@ public class ExpressionPath : IEquatable<ExpressionPath>, IReducable
         return new ExpressionPath(src);
     }
 
-    public static ExpressionPath FromSplit(string x)
+    public static ExpressionPath? FromSplit(string x)
     {
         x = x?.Trim();
         if (string.IsNullOrEmpty(x))
@@ -43,14 +42,14 @@ public class ExpressionPath : IEquatable<ExpressionPath>, IReducable
     }
 
 
-    public static ExpressionPath operator +(ExpressionPath left, string right)
+    public static ExpressionPath operator +(ExpressionPath left, string? right)
     {
         if (string.IsNullOrWhiteSpace(right))
             return left;
         return left + new SimpleCodeSource(right);
     }
 
-    public static ExpressionPath operator +(ExpressionPath left, ICodeSource1 right)
+    public static ExpressionPath operator +(ExpressionPath? left, ICodeSource1 right)
     {
         if (left is null)
             return From(right);
@@ -63,17 +62,17 @@ public class ExpressionPath : IEquatable<ExpressionPath>, IReducable
         return new ExpressionPath(l.ToArray());
     }
 
-    public static bool operator ==(ExpressionPath left, ExpressionPath right)
+    public static bool operator ==(ExpressionPath? left, ExpressionPath? right)
     {
         return Equals(left, right);
     }
 
-    public static bool operator !=(ExpressionPath left, ExpressionPath right)
+    public static bool operator !=(ExpressionPath? left, ExpressionPath? right)
     {
         return !Equals(left, right);
     }
 
-    public bool Equals(ExpressionPath other)
+    public bool Equals(ExpressionPath? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -85,7 +84,7 @@ public class ExpressionPath : IEquatable<ExpressionPath>, IReducable
         return true;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
@@ -99,8 +98,7 @@ public class ExpressionPath : IEquatable<ExpressionPath>, IReducable
         return new[] {new ExpressionPath(c)};
     }
 
-    [CanBeNull]
-    public ExpressionPath GetByDotsCounts(int dotsCount)
+    public ExpressionPath? GetByDotsCounts(int dotsCount)
     {
         var partsExpected = dotsCount + 1;
         if (Parts.Length < partsExpected)
@@ -158,7 +156,6 @@ public class ExpressionPath : IEquatable<ExpressionPath>, IReducable
     }
 
 
-    [NotNull]
     public ICodeSource1[] Parts { get; set; }
 
     public string Code => string.Join(".", Parts.Select(a => a.Code));

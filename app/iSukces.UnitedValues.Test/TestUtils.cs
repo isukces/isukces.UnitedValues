@@ -6,7 +6,7 @@ namespace iSukces.UnitedValues.Test;
 
 public class TestUtils
 {
-    public static T LoadUnit<T>(string unitPath)
+    public static T? LoadUnit<T>(string unitPath)
     {
         try
         {
@@ -17,7 +17,7 @@ public class TestUtils
 
             var aa = value.GetType().GetProperty("Unit");
             value = aa.GetValue(value);
-            return (T)value;
+            return (T?)value;
         }
         catch (Exception e)
         {

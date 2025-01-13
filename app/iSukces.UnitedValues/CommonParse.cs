@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -31,17 +30,16 @@ public static class CommonParse
 
     public struct ParseResult
     {
-        public ParseResult(decimal value, string unitName)
+        public ParseResult(decimal value, string? unitName)
         {
-                Value     = value;
-                _unitName = unitName?.Trim();
-            }
+            Value     = value;
+            _unitName = unitName?.Trim();
+        }
 
         public decimal Value { get; }
 
-        [NotNull]
         public string UnitName => _unitName ?? "";
 
-        private readonly string _unitName;
+        private readonly string? _unitName;
     }
 }

@@ -12,7 +12,7 @@ public class ClrTypesResolver
         Assembly = assembly;
     }
 
-    public bool TryGetValue(string name, out Type o)
+    public bool TryGetValue(string name, out Type? o)
     {
         return Types.TryGetValue(name, out o);
     }

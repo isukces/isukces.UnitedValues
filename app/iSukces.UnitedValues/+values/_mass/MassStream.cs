@@ -125,14 +125,18 @@ public partial struct MassStream : IUnitedValue<MassStreamUnit>, IEquatable<Mass
         return new MassStream(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(MassStream left, MassStream right)
+    public static MassStream Parse(string value)
     {
-        return !left.Equals(right);
+        // generator : FractionValuesGenerator.Add_Parse
+        if (string.IsNullOrEmpty(value))
+            throw new ArgumentNullException(nameof(value));
+        var r = CommonParse.Parse(value, typeof(MassStream));
+        var units = Common.SplitUnitNameBySlash(r.UnitName);
+        if (units.Length != 2)
+            throw new Exception($"{r.UnitName} is not valid MassStream unit");
+        var counterUnit = new MassUnit(units[0]);
+        var denominatorUnit = new TimeUnit(units[1]);
+        return new MassStream(r.Value, counterUnit, denominatorUnit);
     }
 
     /// <summary>
@@ -383,18 +387,14 @@ public partial struct MassStream : IUnitedValue<MassStreamUnit>, IEquatable<Mass
         return left.Equals(right);
     }
 
-    public static MassStream Parse(string value)
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(MassStream left, MassStream right)
     {
-        // generator : FractionValuesGenerator.Add_Parse
-        if (string.IsNullOrEmpty(value))
-            throw new ArgumentNullException(nameof(value));
-        var r = CommonParse.Parse(value, typeof(MassStream));
-        var units = Common.SplitUnitNameBySlash(r.UnitName);
-        if (units.Length != 2)
-            throw new Exception($"{r.UnitName} is not valid MassStream unit");
-        var counterUnit = new MassUnit(units[0]);
-        var denominatorUnit = new TimeUnit(units[1]);
-        return new MassStream(r.Value, counterUnit, denominatorUnit);
+        return !left.Equals(right);
     }
 
     /// <summary>

@@ -106,7 +106,7 @@ public class LengthTest
         var a = Length.FromMeter(5);
         var b = Length.FromMeter(2);
         {
-            IEnumerable<Length> items = null;
+            IEnumerable<Length>? items = null;
             var                 sum   = items.Sum();
             Assert.Equal(Length.Zero, sum);
             items = new Length[0];
@@ -120,7 +120,7 @@ public class LengthTest
             Assert.Equal(Length.FromMeter(7), sum);
         }
         {
-            IEnumerable<Length?> items = null;
+            IEnumerable<Length?>? items = null;
             var                  sum   = items.Sum();
             Assert.Equal(Length.Zero, sum);
 

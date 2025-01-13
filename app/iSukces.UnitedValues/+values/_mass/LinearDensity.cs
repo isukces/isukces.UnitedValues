@@ -130,14 +130,18 @@ public partial struct LinearDensity : IUnitedValue<LinearDensityUnit>, IEquatabl
         return new LinearDensity(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(LinearDensity left, LinearDensity right)
+    public static LinearDensity Parse(string value)
     {
-        return !left.Equals(right);
+        // generator : FractionValuesGenerator.Add_Parse
+        if (string.IsNullOrEmpty(value))
+            throw new ArgumentNullException(nameof(value));
+        var r = CommonParse.Parse(value, typeof(LinearDensity));
+        var units = Common.SplitUnitNameBySlash(r.UnitName);
+        if (units.Length != 2)
+            throw new Exception($"{r.UnitName} is not valid LinearDensity unit");
+        var counterUnit = new MassUnit(units[0]);
+        var denominatorUnit = new LengthUnit(units[1]);
+        return new LinearDensity(r.Value, counterUnit, denominatorUnit);
     }
 
     /// <summary>
@@ -386,18 +390,14 @@ public partial struct LinearDensity : IUnitedValue<LinearDensityUnit>, IEquatabl
         return left.Equals(right);
     }
 
-    public static LinearDensity Parse(string value)
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(LinearDensity left, LinearDensity right)
     {
-        // generator : FractionValuesGenerator.Add_Parse
-        if (string.IsNullOrEmpty(value))
-            throw new ArgumentNullException(nameof(value));
-        var r = CommonParse.Parse(value, typeof(LinearDensity));
-        var units = Common.SplitUnitNameBySlash(r.UnitName);
-        if (units.Length != 2)
-            throw new Exception($"{r.UnitName} is not valid LinearDensity unit");
-        var counterUnit = new MassUnit(units[0]);
-        var denominatorUnit = new LengthUnit(units[1]);
-        return new LinearDensity(r.Value, counterUnit, denominatorUnit);
+        return !left.Equals(right);
     }
 
     /// <summary>

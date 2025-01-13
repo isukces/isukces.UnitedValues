@@ -11,7 +11,7 @@ public class TypesGroup : IEquatable<TypesGroup>
     /// <param name="value">Name of type that contains value and unit i.e. Length</param>
     /// <param name="unit">Name of type that represents unit i.e. LengthUnit</param>
     /// <param name="container">Name of static type that contains fields with known unit names i.e. LengthUnits</param>
-    public TypesGroup(XValueTypeName value, XUnitTypeName unit = null, XUnitContainerTypeName container = null)
+    public TypesGroup(XValueTypeName value, XUnitTypeName? unit = null, XUnitContainerTypeName? container = null)
     {
         Value = value ?? throw new ArgumentException(nameof(value));
 
@@ -26,17 +26,17 @@ public class TypesGroup : IEquatable<TypesGroup>
     }
 
 
-    public static bool operator ==(TypesGroup left, TypesGroup right)
+    public static bool operator ==(TypesGroup? left, TypesGroup? right)
     {
         return Equals(left, right);
     }
 
-    public static bool operator !=(TypesGroup left, TypesGroup right)
+    public static bool operator !=(TypesGroup? left, TypesGroup? right)
     {
         return !Equals(left, right);
     }
 
-    public bool Equals(TypesGroup other)
+    public bool Equals(TypesGroup? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -44,7 +44,7 @@ public class TypesGroup : IEquatable<TypesGroup>
                Container == other.Container;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;

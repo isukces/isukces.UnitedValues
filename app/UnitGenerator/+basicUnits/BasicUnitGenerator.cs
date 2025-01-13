@@ -127,7 +127,7 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
         }
     }
 
-    private RelatedUnit BaseUnit
+    private RelatedUnit? BaseUnit
     {
         get
         {
@@ -194,9 +194,9 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
     }
 
 
-    private Col1 GetConstructorProperties(int nr)
+    private Col1? GetConstructorProperties(int nr)
     {
-        string GetExpressionPlus()
+        string? GetExpressionPlus()
         {
             switch (Cfg.TypeName)
             {

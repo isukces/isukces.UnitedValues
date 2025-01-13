@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -112,6 +111,226 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
     }
 
     /// <summary>
+    /// creates time from value in h
+    /// </summary>
+    /// <param name="value">Time value in h</param>
+    public static Time FromHours(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Hour);
+    }
+
+    /// <summary>
+    /// creates time from value in h
+    /// </summary>
+    /// <param name="value">Time value in h</param>
+    public static Time FromHours(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time((decimal)value, TimeUnits.Hour);
+    }
+
+    /// <summary>
+    /// creates time from value in h
+    /// </summary>
+    /// <param name="value">Time value in h</param>
+    public static Time FromHours(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Hour);
+    }
+
+    /// <summary>
+    /// creates time from value in h
+    /// </summary>
+    /// <param name="value">Time value in h</param>
+    public static Time FromHours(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Hour);
+    }
+
+    /// <summary>
+    /// creates time from value in ms
+    /// </summary>
+    /// <param name="value">Time value in ms</param>
+    public static Time FromMiliSecond(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.MiliSecond);
+    }
+
+    /// <summary>
+    /// creates time from value in ms
+    /// </summary>
+    /// <param name="value">Time value in ms</param>
+    public static Time FromMiliSecond(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time((decimal)value, TimeUnits.MiliSecond);
+    }
+
+    /// <summary>
+    /// creates time from value in ms
+    /// </summary>
+    /// <param name="value">Time value in ms</param>
+    public static Time FromMiliSecond(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.MiliSecond);
+    }
+
+    /// <summary>
+    /// creates time from value in ms
+    /// </summary>
+    /// <param name="value">Time value in ms</param>
+    public static Time FromMiliSecond(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.MiliSecond);
+    }
+
+    /// <summary>
+    /// creates time from value in min
+    /// </summary>
+    /// <param name="value">Time value in min</param>
+    public static Time FromMinutes(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Minute);
+    }
+
+    /// <summary>
+    /// creates time from value in min
+    /// </summary>
+    /// <param name="value">Time value in min</param>
+    public static Time FromMinutes(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time((decimal)value, TimeUnits.Minute);
+    }
+
+    /// <summary>
+    /// creates time from value in min
+    /// </summary>
+    /// <param name="value">Time value in min</param>
+    public static Time FromMinutes(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Minute);
+    }
+
+    /// <summary>
+    /// creates time from value in min
+    /// </summary>
+    /// <param name="value">Time value in min</param>
+    public static Time FromMinutes(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Minute);
+    }
+
+    /// <summary>
+    /// creates time from value in s
+    /// </summary>
+    /// <param name="value">Time value in s</param>
+    public static Time FromSecond(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Second);
+    }
+
+    /// <summary>
+    /// creates time from value in s
+    /// </summary>
+    /// <param name="value">Time value in s</param>
+    public static Time FromSecond(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time((decimal)value, TimeUnits.Second);
+    }
+
+    /// <summary>
+    /// creates time from value in s
+    /// </summary>
+    /// <param name="value">Time value in s</param>
+    public static Time FromSecond(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Second);
+    }
+
+    /// <summary>
+    /// creates time from value in s
+    /// </summary>
+    /// <param name="value">Time value in s</param>
+    public static Time FromSecond(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Second);
+    }
+
+    /// <summary>
+    /// creates time from value in y
+    /// </summary>
+    /// <param name="value">Time value in y</param>
+    public static Time FromYears(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Year);
+    }
+
+    /// <summary>
+    /// creates time from value in y
+    /// </summary>
+    /// <param name="value">Time value in y</param>
+    public static Time FromYears(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time((decimal)value, TimeUnits.Year);
+    }
+
+    /// <summary>
+    /// creates time from value in y
+    /// </summary>
+    /// <param name="value">Time value in y</param>
+    public static Time FromYears(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Year);
+    }
+
+    /// <summary>
+    /// creates time from value in y
+    /// </summary>
+    /// <param name="value">Time value in y</param>
+    public static Time FromYears(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Time(value, TimeUnits.Year);
+    }
+
+    public static Time Parse(string value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Parse
+        var parseResult = CommonParse.Parse(value, typeof(Time));
+        if (string.IsNullOrEmpty(parseResult.UnitName))
+            return new Time(parseResult.Value, Time.BaseUnit);
+        return new Time(parseResult.Value, new TimeUnit(parseResult.UnitName));
+    }
+
+    public static Time operator +(Time left, Time right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new Time(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
     /// implements - operator
     /// </summary>
     /// <param name="value"></param>
@@ -129,11 +348,6 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
             return left;
         right = right.ConvertTo(left.Unit);
         return new Time(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(Time left, Time right)
-    {
-        return left.CompareTo(right) != 0;
     }
 
     /// <summary>
@@ -402,15 +616,14 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
         return left.Value / right.Value;
     }
 
-    public static Time operator +(Time left, Time right)
+    public static bool operator ==(Time left, Time right)
     {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new Time(left.Value + right.Value, left.Unit);
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(Time left, Time right)
+    {
+        return left.CompareTo(right) != 0;
     }
 
     public static bool operator <(Time left, Time right)
@@ -423,11 +636,6 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
         return left.CompareTo(right) <= 0;
     }
 
-    public static bool operator ==(Time left, Time right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
     public static bool operator >(Time left, Time right)
     {
         return left.CompareTo(right) > 0;
@@ -436,215 +644,6 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
     public static bool operator >=(Time left, Time right)
     {
         return left.CompareTo(right) >= 0;
-    }
-
-    /// <summary>
-    /// creates time from value in h
-    /// </summary>
-    /// <param name="value">Time value in h</param>
-    public static Time FromHours(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Hour);
-    }
-
-    /// <summary>
-    /// creates time from value in h
-    /// </summary>
-    /// <param name="value">Time value in h</param>
-    public static Time FromHours(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time((decimal)value, TimeUnits.Hour);
-    }
-
-    /// <summary>
-    /// creates time from value in h
-    /// </summary>
-    /// <param name="value">Time value in h</param>
-    public static Time FromHours(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Hour);
-    }
-
-    /// <summary>
-    /// creates time from value in h
-    /// </summary>
-    /// <param name="value">Time value in h</param>
-    public static Time FromHours(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Hour);
-    }
-
-    /// <summary>
-    /// creates time from value in ms
-    /// </summary>
-    /// <param name="value">Time value in ms</param>
-    public static Time FromMiliSecond(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.MiliSecond);
-    }
-
-    /// <summary>
-    /// creates time from value in ms
-    /// </summary>
-    /// <param name="value">Time value in ms</param>
-    public static Time FromMiliSecond(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time((decimal)value, TimeUnits.MiliSecond);
-    }
-
-    /// <summary>
-    /// creates time from value in ms
-    /// </summary>
-    /// <param name="value">Time value in ms</param>
-    public static Time FromMiliSecond(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.MiliSecond);
-    }
-
-    /// <summary>
-    /// creates time from value in ms
-    /// </summary>
-    /// <param name="value">Time value in ms</param>
-    public static Time FromMiliSecond(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.MiliSecond);
-    }
-
-    /// <summary>
-    /// creates time from value in min
-    /// </summary>
-    /// <param name="value">Time value in min</param>
-    public static Time FromMinutes(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Minute);
-    }
-
-    /// <summary>
-    /// creates time from value in min
-    /// </summary>
-    /// <param name="value">Time value in min</param>
-    public static Time FromMinutes(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time((decimal)value, TimeUnits.Minute);
-    }
-
-    /// <summary>
-    /// creates time from value in min
-    /// </summary>
-    /// <param name="value">Time value in min</param>
-    public static Time FromMinutes(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Minute);
-    }
-
-    /// <summary>
-    /// creates time from value in min
-    /// </summary>
-    /// <param name="value">Time value in min</param>
-    public static Time FromMinutes(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Minute);
-    }
-
-    /// <summary>
-    /// creates time from value in s
-    /// </summary>
-    /// <param name="value">Time value in s</param>
-    public static Time FromSecond(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Second);
-    }
-
-    /// <summary>
-    /// creates time from value in s
-    /// </summary>
-    /// <param name="value">Time value in s</param>
-    public static Time FromSecond(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time((decimal)value, TimeUnits.Second);
-    }
-
-    /// <summary>
-    /// creates time from value in s
-    /// </summary>
-    /// <param name="value">Time value in s</param>
-    public static Time FromSecond(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Second);
-    }
-
-    /// <summary>
-    /// creates time from value in s
-    /// </summary>
-    /// <param name="value">Time value in s</param>
-    public static Time FromSecond(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Second);
-    }
-
-    /// <summary>
-    /// creates time from value in y
-    /// </summary>
-    /// <param name="value">Time value in y</param>
-    public static Time FromYears(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Year);
-    }
-
-    /// <summary>
-    /// creates time from value in y
-    /// </summary>
-    /// <param name="value">Time value in y</param>
-    public static Time FromYears(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time((decimal)value, TimeUnits.Year);
-    }
-
-    /// <summary>
-    /// creates time from value in y
-    /// </summary>
-    /// <param name="value">Time value in y</param>
-    public static Time FromYears(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Year);
-    }
-
-    /// <summary>
-    /// creates time from value in y
-    /// </summary>
-    /// <param name="value">Time value in y</param>
-    public static Time FromYears(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Time(value, TimeUnits.Year);
-    }
-
-    public static Time Parse(string value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Parse
-        var parseResult = CommonParse.Parse(value, typeof(Time));
-        if (string.IsNullOrEmpty(parseResult.UnitName))
-            return new Time(parseResult.Value, Time.BaseUnit);
-        return new Time(parseResult.Value, new TimeUnit(parseResult.UnitName));
     }
 
     /// <summary>

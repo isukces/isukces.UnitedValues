@@ -125,14 +125,18 @@ public partial struct VolumeStream : IUnitedValue<VolumeStreamUnit>, IEquatable<
         return new VolumeStream(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(VolumeStream left, VolumeStream right)
+    public static VolumeStream Parse(string value)
     {
-        return !left.Equals(right);
+        // generator : FractionValuesGenerator.Add_Parse
+        if (string.IsNullOrEmpty(value))
+            throw new ArgumentNullException(nameof(value));
+        var r = CommonParse.Parse(value, typeof(VolumeStream));
+        var units = Common.SplitUnitNameBySlash(r.UnitName);
+        if (units.Length != 2)
+            throw new Exception($"{r.UnitName} is not valid VolumeStream unit");
+        var counterUnit = new VolumeUnit(units[0]);
+        var denominatorUnit = new TimeUnit(units[1]);
+        return new VolumeStream(r.Value, counterUnit, denominatorUnit);
     }
 
     /// <summary>
@@ -263,18 +267,14 @@ public partial struct VolumeStream : IUnitedValue<VolumeStreamUnit>, IEquatable<
         return left.Equals(right);
     }
 
-    public static VolumeStream Parse(string value)
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(VolumeStream left, VolumeStream right)
     {
-        // generator : FractionValuesGenerator.Add_Parse
-        if (string.IsNullOrEmpty(value))
-            throw new ArgumentNullException(nameof(value));
-        var r = CommonParse.Parse(value, typeof(VolumeStream));
-        var units = Common.SplitUnitNameBySlash(r.UnitName);
-        if (units.Length != 2)
-            throw new Exception($"{r.UnitName} is not valid VolumeStream unit");
-        var counterUnit = new VolumeUnit(units[0]);
-        var denominatorUnit = new TimeUnit(units[1]);
-        return new VolumeStream(r.Value, counterUnit, denominatorUnit);
+        return !left.Equals(right);
     }
 
     /// <summary>

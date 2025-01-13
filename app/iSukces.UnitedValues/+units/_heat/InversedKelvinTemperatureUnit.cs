@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -86,16 +85,6 @@ public partial class InversedKelvinTemperatureUnit : IUnit, IEquatable<InversedK
     }
 
     /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(InversedKelvinTemperatureUnit left, InversedKelvinTemperatureUnit right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
     /// Equality operator
     /// </summary>
     /// <param name="left">first value to compare</param>
@@ -103,6 +92,16 @@ public partial class InversedKelvinTemperatureUnit : IUnit, IEquatable<InversedK
     public static bool operator ==(InversedKelvinTemperatureUnit left, InversedKelvinTemperatureUnit right)
     {
         return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(InversedKelvinTemperatureUnit left, InversedKelvinTemperatureUnit right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

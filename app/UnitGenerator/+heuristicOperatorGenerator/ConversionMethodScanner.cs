@@ -13,7 +13,7 @@ internal class ConversionMethodScanner
         Dictionary = dictionary;
     }
 
-    static Type ExtractUnitType(Type returnType)
+    private static Type ExtractUnitType(Type returnType)
     {
         if (!returnType.IsGenericType)
             throw new Exception("Should return UnitDefinition<>");

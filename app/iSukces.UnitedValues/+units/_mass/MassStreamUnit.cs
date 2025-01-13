@@ -76,16 +76,6 @@ public sealed partial class MassStreamUnit : IFractionalUnit<MassUnit, TimeUnit>
     }
 
     /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(MassStreamUnit left, MassStreamUnit right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
     /// Equality operator
     /// </summary>
     /// <param name="left">first value to compare</param>
@@ -93,6 +83,16 @@ public sealed partial class MassStreamUnit : IFractionalUnit<MassUnit, TimeUnit>
     public static bool operator ==(MassStreamUnit left, MassStreamUnit right)
     {
         return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(MassStreamUnit left, MassStreamUnit right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

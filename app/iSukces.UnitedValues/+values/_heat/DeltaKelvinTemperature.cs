@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -105,6 +104,66 @@ public partial struct DeltaKelvinTemperature : IUnitedValue<KelvinTemperatureUni
     }
 
     /// <summary>
+    /// creates deltaKelvinTemperature from value in ----
+    /// </summary>
+    /// <param name="value">DeltaKelvinTemperature value in ----</param>
+    public static DeltaKelvinTemperature FromDegree(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new DeltaKelvinTemperature(value, KelvinTemperatureUnits.Degree);
+    }
+
+    /// <summary>
+    /// creates deltaKelvinTemperature from value in ----
+    /// </summary>
+    /// <param name="value">DeltaKelvinTemperature value in ----</param>
+    public static DeltaKelvinTemperature FromDegree(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new DeltaKelvinTemperature((decimal)value, KelvinTemperatureUnits.Degree);
+    }
+
+    /// <summary>
+    /// creates deltaKelvinTemperature from value in ----
+    /// </summary>
+    /// <param name="value">DeltaKelvinTemperature value in ----</param>
+    public static DeltaKelvinTemperature FromDegree(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new DeltaKelvinTemperature(value, KelvinTemperatureUnits.Degree);
+    }
+
+    /// <summary>
+    /// creates deltaKelvinTemperature from value in ----
+    /// </summary>
+    /// <param name="value">DeltaKelvinTemperature value in ----</param>
+    public static DeltaKelvinTemperature FromDegree(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new DeltaKelvinTemperature(value, KelvinTemperatureUnits.Degree);
+    }
+
+    public static DeltaKelvinTemperature Parse(string value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Parse
+        var parseResult = CommonParse.Parse(value, typeof(DeltaKelvinTemperature));
+        if (string.IsNullOrEmpty(parseResult.UnitName))
+            return new DeltaKelvinTemperature(parseResult.Value, DeltaKelvinTemperature.BaseUnit);
+        return new DeltaKelvinTemperature(parseResult.Value, new KelvinTemperatureUnit(parseResult.UnitName));
+    }
+
+    public static DeltaKelvinTemperature operator +(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new DeltaKelvinTemperature(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
     /// implements - operator
     /// </summary>
     /// <param name="value"></param>
@@ -122,11 +181,6 @@ public partial struct DeltaKelvinTemperature : IUnitedValue<KelvinTemperatureUni
             return left;
         right = right.ConvertTo(left.Unit);
         return new DeltaKelvinTemperature(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
-    {
-        return left.CompareTo(right) != 0;
     }
 
     /// <summary>
@@ -176,15 +230,14 @@ public partial struct DeltaKelvinTemperature : IUnitedValue<KelvinTemperatureUni
         return new InversedDeltaKelvinTemperature(number / value.Value, InversedKelvinTemperatureUnits.GetInversedKelvinTemperatureUnit(value.Unit));
     }
 
-    public static DeltaKelvinTemperature operator +(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
+    public static bool operator ==(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
     {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new DeltaKelvinTemperature(left.Value + right.Value, left.Unit);
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
+    {
+        return left.CompareTo(right) != 0;
     }
 
     public static bool operator <(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
@@ -197,11 +250,6 @@ public partial struct DeltaKelvinTemperature : IUnitedValue<KelvinTemperatureUni
         return left.CompareTo(right) <= 0;
     }
 
-    public static bool operator ==(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
     public static bool operator >(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
     {
         return left.CompareTo(right) > 0;
@@ -210,55 +258,6 @@ public partial struct DeltaKelvinTemperature : IUnitedValue<KelvinTemperatureUni
     public static bool operator >=(DeltaKelvinTemperature left, DeltaKelvinTemperature right)
     {
         return left.CompareTo(right) >= 0;
-    }
-
-    /// <summary>
-    /// creates deltaKelvinTemperature from value in ----
-    /// </summary>
-    /// <param name="value">DeltaKelvinTemperature value in ----</param>
-    public static DeltaKelvinTemperature FromDegree(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new DeltaKelvinTemperature(value, KelvinTemperatureUnits.Degree);
-    }
-
-    /// <summary>
-    /// creates deltaKelvinTemperature from value in ----
-    /// </summary>
-    /// <param name="value">DeltaKelvinTemperature value in ----</param>
-    public static DeltaKelvinTemperature FromDegree(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new DeltaKelvinTemperature((decimal)value, KelvinTemperatureUnits.Degree);
-    }
-
-    /// <summary>
-    /// creates deltaKelvinTemperature from value in ----
-    /// </summary>
-    /// <param name="value">DeltaKelvinTemperature value in ----</param>
-    public static DeltaKelvinTemperature FromDegree(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new DeltaKelvinTemperature(value, KelvinTemperatureUnits.Degree);
-    }
-
-    /// <summary>
-    /// creates deltaKelvinTemperature from value in ----
-    /// </summary>
-    /// <param name="value">DeltaKelvinTemperature value in ----</param>
-    public static DeltaKelvinTemperature FromDegree(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new DeltaKelvinTemperature(value, KelvinTemperatureUnits.Degree);
-    }
-
-    public static DeltaKelvinTemperature Parse(string value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Parse
-        var parseResult = CommonParse.Parse(value, typeof(DeltaKelvinTemperature));
-        if (string.IsNullOrEmpty(parseResult.UnitName))
-            return new DeltaKelvinTemperature(parseResult.Value, DeltaKelvinTemperature.BaseUnit);
-        return new DeltaKelvinTemperature(parseResult.Value, new KelvinTemperatureUnit(parseResult.UnitName));
     }
 
     /// <summary>

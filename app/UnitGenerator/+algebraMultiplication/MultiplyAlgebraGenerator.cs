@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using iSukces.Code;
 using iSukces.Code.Interfaces;
-using JetBrains.Annotations;
 using Self = UnitGenerator.MultiplyAlgebraGenerator;
 
 namespace UnitGenerator;
@@ -33,7 +32,7 @@ public class MultiplyAlgebraGenerator : MultipleFilesGenerator
     }
 
     private static CsCodeWriter CreateCodeForLeftFractionValue(OperatorParams p,
-        [NotNull] FractionUnit leftFraction)
+        FractionUnit leftFraction)
     {
         if (leftFraction == null) throw new ArgumentNullException(nameof(leftFraction));
 

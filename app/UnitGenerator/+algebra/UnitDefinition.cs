@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using iSukces.Code;
 
@@ -18,12 +18,12 @@ public class UnitDefinition : IEquatable<UnitDefinition>
         Unit        = unit;
     }
 
-    public static bool operator ==(UnitDefinition left, UnitDefinition right)
+    public static bool operator ==(UnitDefinition? left, UnitDefinition? right)
     {
         return Equals(left, right);
     }
 
-    public static bool operator !=(UnitDefinition left, UnitDefinition right)
+    public static bool operator !=(UnitDefinition? left, UnitDefinition? right)
     {
         return !Equals(left, right);
     }
@@ -49,14 +49,14 @@ public class UnitDefinition : IEquatable<UnitDefinition>
     }
 
 
-    public bool Equals(UnitDefinition other)
+    public bool Equals(UnitDefinition? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
         return string.Equals(ClassName, other.ClassName);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;

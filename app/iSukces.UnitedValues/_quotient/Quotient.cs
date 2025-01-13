@@ -51,10 +51,10 @@ public struct QuotientUnit<TCounter, TDenominator> : IUnit, IEquatable<QuotientU
                    EqualityComparer<TDenominator>.Default.Equals(Denominator, other.Denominator);
         }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is QuotientUnit<TCounter, TDenominator> && Equals((QuotientUnit<TCounter, TDenominator>)obj);
+            return obj is QuotientUnit<TCounter, TDenominator> unit && Equals(unit);
         }
 
     public override int GetHashCode()

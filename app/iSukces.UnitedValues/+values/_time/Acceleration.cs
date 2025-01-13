@@ -126,13 +126,57 @@ public partial struct Acceleration : IUnitedValue<AccelerationUnit>, IEquatable<
     }
 
     /// <summary>
-    /// Inequality operator
+    /// creates acceleration from value in m/s²
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(Acceleration left, Acceleration right)
+    /// <param name="value">Acceleration value in m/s²</param>
+    public static Acceleration FromMetersPerSquareSeconds(decimal value)
     {
-        return !left.Equals(right);
+        // generator : FractionValuesGenerator.Add_FromMethods
+        return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
+    }
+
+    /// <summary>
+    /// creates acceleration from value in m/s²
+    /// </summary>
+    /// <param name="value">Acceleration value in m/s²</param>
+    public static Acceleration FromMetersPerSquareSeconds(double value)
+    {
+        // generator : FractionValuesGenerator.Add_FromMethods
+        return new Acceleration((decimal)value, AccelerationUnits.MetersPerSquareSeconds);
+    }
+
+    /// <summary>
+    /// creates acceleration from value in m/s²
+    /// </summary>
+    /// <param name="value">Acceleration value in m/s²</param>
+    public static Acceleration FromMetersPerSquareSeconds(int value)
+    {
+        // generator : FractionValuesGenerator.Add_FromMethods
+        return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
+    }
+
+    /// <summary>
+    /// creates acceleration from value in m/s²
+    /// </summary>
+    /// <param name="value">Acceleration value in m/s²</param>
+    public static Acceleration FromMetersPerSquareSeconds(long value)
+    {
+        // generator : FractionValuesGenerator.Add_FromMethods
+        return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
+    }
+
+    public static Acceleration Parse(string value)
+    {
+        // generator : FractionValuesGenerator.Add_Parse
+        if (string.IsNullOrEmpty(value))
+            throw new ArgumentNullException(nameof(value));
+        var r = CommonParse.Parse(value, typeof(Acceleration));
+        var units = Common.SplitUnitNameBySlash(r.UnitName);
+        if (units.Length != 2)
+            throw new Exception($"{r.UnitName} is not valid Acceleration unit");
+        var counterUnit = new LengthUnit(units[0]);
+        var denominatorUnit = new SquareTimeUnit(units[1]);
+        return new Acceleration(r.Value, counterUnit, denominatorUnit);
     }
 
     /// <summary>
@@ -145,7 +189,7 @@ public partial struct Acceleration : IUnitedValue<AccelerationUnit>, IEquatable<
         // generator : MultiplyAlgebraGenerator.CreateOperator
         // scenario with hint
         // .Is<PlanarDensity, Acceleration, Pressure>("*")
-        // hint location HandleCreateOperatorCode, line 41
+        // hint location HandleCreateOperatorCode, line 40
         var leftConverted = planarDensity.ConvertTo(PlanarDensityUnits.KgPerSquareMeter);
         var rightConverted = acceleration.ConvertTo(AccelerationUnits.MetersPerSquareSeconds);
         var value = leftConverted.Value * rightConverted.Value;
@@ -163,7 +207,7 @@ public partial struct Acceleration : IUnitedValue<AccelerationUnit>, IEquatable<
         // generator : MultiplyAlgebraGenerator.CreateOperator
         // scenario with hint
         // .Is<Acceleration, PlanarDensity, Pressure>("*")
-        // hint location HandleCreateOperatorCode, line 48
+        // hint location HandleCreateOperatorCode, line 47
         var leftConverted = acceleration.ConvertTo(AccelerationUnits.MetersPerSquareSeconds);
         var rightConverted = planarDensity.ConvertTo(PlanarDensityUnits.KgPerSquareMeter);
         var value = leftConverted.Value * rightConverted.Value;
@@ -260,57 +304,13 @@ public partial struct Acceleration : IUnitedValue<AccelerationUnit>, IEquatable<
     }
 
     /// <summary>
-    /// creates acceleration from value in m/s²
+    /// Inequality operator
     /// </summary>
-    /// <param name="value">Acceleration value in m/s²</param>
-    public static Acceleration FromMetersPerSquareSeconds(decimal value)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(Acceleration left, Acceleration right)
     {
-        // generator : FractionValuesGenerator.Add_FromMethods
-        return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
-    }
-
-    /// <summary>
-    /// creates acceleration from value in m/s²
-    /// </summary>
-    /// <param name="value">Acceleration value in m/s²</param>
-    public static Acceleration FromMetersPerSquareSeconds(double value)
-    {
-        // generator : FractionValuesGenerator.Add_FromMethods
-        return new Acceleration((decimal)value, AccelerationUnits.MetersPerSquareSeconds);
-    }
-
-    /// <summary>
-    /// creates acceleration from value in m/s²
-    /// </summary>
-    /// <param name="value">Acceleration value in m/s²</param>
-    public static Acceleration FromMetersPerSquareSeconds(int value)
-    {
-        // generator : FractionValuesGenerator.Add_FromMethods
-        return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
-    }
-
-    /// <summary>
-    /// creates acceleration from value in m/s²
-    /// </summary>
-    /// <param name="value">Acceleration value in m/s²</param>
-    public static Acceleration FromMetersPerSquareSeconds(long value)
-    {
-        // generator : FractionValuesGenerator.Add_FromMethods
-        return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
-    }
-
-    public static Acceleration Parse(string value)
-    {
-        // generator : FractionValuesGenerator.Add_Parse
-        if (string.IsNullOrEmpty(value))
-            throw new ArgumentNullException(nameof(value));
-        var r = CommonParse.Parse(value, typeof(Acceleration));
-        var units = Common.SplitUnitNameBySlash(r.UnitName);
-        if (units.Length != 2)
-            throw new Exception($"{r.UnitName} is not valid Acceleration unit");
-        var counterUnit = new LengthUnit(units[0]);
-        var denominatorUnit = new SquareTimeUnit(units[1]);
-        return new Acceleration(r.Value, counterUnit, denominatorUnit);
+        return !left.Equals(right);
     }
 
     /// <summary>

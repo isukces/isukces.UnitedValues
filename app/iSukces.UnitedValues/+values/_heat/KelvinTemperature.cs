@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -105,115 +104,6 @@ public partial struct KelvinTemperature : IUnitedValue<KelvinTemperatureUnit>, I
     }
 
     /// <summary>
-    /// implements - operator
-    /// </summary>
-    /// <param name="value"></param>
-    public static KelvinTemperature operator -(KelvinTemperature value)
-    {
-        return new KelvinTemperature(-value.Value, value.Unit);
-    }
-
-    public static DeltaKelvinTemperature operator -(KelvinTemperature left, KelvinTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return new DeltaKelvinTemperature(-right.Value, right.Unit);
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return new DeltaKelvinTemperature(left.Value, left.Unit);
-        right = right.ConvertTo(left.Unit);
-        return new DeltaKelvinTemperature(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(KelvinTemperature left, KelvinTemperature right)
-    {
-        return left.CompareTo(right) != 0;
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static KelvinTemperature operator *(KelvinTemperature value, decimal number)
-    {
-        return new KelvinTemperature(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="number"></param>
-    /// <param name="value"></param>
-    public static KelvinTemperature operator *(decimal number, KelvinTemperature value)
-    {
-        return new KelvinTemperature(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements / operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static KelvinTemperature operator /(KelvinTemperature value, decimal number)
-    {
-        return new KelvinTemperature(value.Value / number, value.Unit);
-    }
-
-    public static decimal operator /(KelvinTemperature left, KelvinTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
-        right = right.ConvertTo(left.Unit);
-        return left.Value / right.Value;
-    }
-
-    public static KelvinTemperature operator +(KelvinTemperature left, DeltaKelvinTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return new KelvinTemperature(right.Value, left.Unit);
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new KelvinTemperature(left.Value + right.Value, left.Unit);
-    }
-
-    public static KelvinTemperature operator +(DeltaKelvinTemperature left, KelvinTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return new KelvinTemperature(left.Value, right.Unit);
-        right = right.ConvertTo(left.Unit);
-        return new KelvinTemperature(left.Value + right.Value, left.Unit);
-    }
-
-    public static bool operator <(KelvinTemperature left, KelvinTemperature right)
-    {
-        return left.CompareTo(right) < 0;
-    }
-
-    public static bool operator <=(KelvinTemperature left, KelvinTemperature right)
-    {
-        return left.CompareTo(right) <= 0;
-    }
-
-    public static bool operator ==(KelvinTemperature left, KelvinTemperature right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
-    public static bool operator >(KelvinTemperature left, KelvinTemperature right)
-    {
-        return left.CompareTo(right) > 0;
-    }
-
-    public static bool operator >=(KelvinTemperature left, KelvinTemperature right)
-    {
-        return left.CompareTo(right) >= 0;
-    }
-
-    /// <summary>
     /// creates kelvinTemperature from value in K
     /// </summary>
     /// <param name="value">KelvinTemperature value in K</param>
@@ -260,6 +150,115 @@ public partial struct KelvinTemperature : IUnitedValue<KelvinTemperatureUnit>, I
         if (string.IsNullOrEmpty(parseResult.UnitName))
             return new KelvinTemperature(parseResult.Value, KelvinTemperature.BaseUnit);
         return new KelvinTemperature(parseResult.Value, new KelvinTemperatureUnit(parseResult.UnitName));
+    }
+
+    public static KelvinTemperature operator +(KelvinTemperature left, DeltaKelvinTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return new KelvinTemperature(right.Value, left.Unit);
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new KelvinTemperature(left.Value + right.Value, left.Unit);
+    }
+
+    public static KelvinTemperature operator +(DeltaKelvinTemperature left, KelvinTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return new KelvinTemperature(left.Value, right.Unit);
+        right = right.ConvertTo(left.Unit);
+        return new KelvinTemperature(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements - operator
+    /// </summary>
+    /// <param name="value"></param>
+    public static KelvinTemperature operator -(KelvinTemperature value)
+    {
+        return new KelvinTemperature(-value.Value, value.Unit);
+    }
+
+    public static DeltaKelvinTemperature operator -(KelvinTemperature left, KelvinTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return new DeltaKelvinTemperature(-right.Value, right.Unit);
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return new DeltaKelvinTemperature(left.Value, left.Unit);
+        right = right.ConvertTo(left.Unit);
+        return new DeltaKelvinTemperature(left.Value - right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static KelvinTemperature operator *(KelvinTemperature value, decimal number)
+    {
+        return new KelvinTemperature(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="value"></param>
+    public static KelvinTemperature operator *(decimal number, KelvinTemperature value)
+    {
+        return new KelvinTemperature(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements / operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static KelvinTemperature operator /(KelvinTemperature value, decimal number)
+    {
+        return new KelvinTemperature(value.Value / number, value.Unit);
+    }
+
+    public static decimal operator /(KelvinTemperature left, KelvinTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
+        right = right.ConvertTo(left.Unit);
+        return left.Value / right.Value;
+    }
+
+    public static bool operator ==(KelvinTemperature left, KelvinTemperature right)
+    {
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(KelvinTemperature left, KelvinTemperature right)
+    {
+        return left.CompareTo(right) != 0;
+    }
+
+    public static bool operator <(KelvinTemperature left, KelvinTemperature right)
+    {
+        return left.CompareTo(right) < 0;
+    }
+
+    public static bool operator <=(KelvinTemperature left, KelvinTemperature right)
+    {
+        return left.CompareTo(right) <= 0;
+    }
+
+    public static bool operator >(KelvinTemperature left, KelvinTemperature right)
+    {
+        return left.CompareTo(right) > 0;
+    }
+
+    public static bool operator >=(KelvinTemperature left, KelvinTemperature right)
+    {
+        return left.CompareTo(right) >= 0;
     }
 
     /// <summary>

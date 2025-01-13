@@ -1,21 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2017-2024</Copyright>
     <ProjectGuid>{F1442214-2394-4B17-B683-0F4865E28EEF}</ProjectGuid>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <TargetFramework>net9.0</TargetFramework>
     <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
     <NoWarn>1701;1702;1591</NoWarn>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Code" Version="1.24.1201.214" />
+    <PackageReference Include="iSukces.Code" Version="1.25.104.219" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Scenarios.cs">

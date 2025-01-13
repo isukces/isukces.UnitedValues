@@ -77,16 +77,6 @@ public sealed partial class VolumeStreamUnit : IFractionalUnit<VolumeUnit, TimeU
     }
 
     /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(VolumeStreamUnit left, VolumeStreamUnit right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
     /// Equality operator
     /// </summary>
     /// <param name="left">first value to compare</param>
@@ -94,6 +84,16 @@ public sealed partial class VolumeStreamUnit : IFractionalUnit<VolumeUnit, TimeU
     public static bool operator ==(VolumeStreamUnit left, VolumeStreamUnit right)
     {
         return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(VolumeStreamUnit left, VolumeStreamUnit right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -50,13 +49,12 @@ public partial class CelsiusTemperatureUnit : IUnit, IEquatable<CelsiusTemperatu
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;CelsiusTemperatureUnit&gt; into CelsiusTemperatureUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(CelsiusTemperatureUnit left, CelsiusTemperatureUnit right)
+    /// <param name="src"></param>
+    public static implicit operator CelsiusTemperatureUnit(UnitDefinition<CelsiusTemperatureUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -70,12 +68,13 @@ public partial class CelsiusTemperatureUnit : IUnit, IEquatable<CelsiusTemperatu
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;CelsiusTemperatureUnit&gt; into CelsiusTemperatureUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator CelsiusTemperatureUnit(UnitDefinition<CelsiusTemperatureUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(CelsiusTemperatureUnit left, CelsiusTemperatureUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

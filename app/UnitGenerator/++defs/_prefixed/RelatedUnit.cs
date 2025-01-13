@@ -23,7 +23,7 @@ public sealed class RelatedUnit
         return y;
     }
 
-    private static string Prefix(int power)
+    private static string? Prefix(int power)
     {
         switch (power)
         {
@@ -41,8 +41,8 @@ public sealed class RelatedUnit
     public RelatedUnit AddFraction<TConstructor>(Type tCounter, string counterFieldName,
         Type tDenominator, string denominatorFieldName, bool addFromMethod)
     {
-        var energy = (IUnitDefinition)tCounter.GetField(counterFieldName).GetValue(null);
-        var mass   = (IUnitDefinition)tDenominator.GetField(denominatorFieldName).GetValue(null);
+        var energy = (IUnitDefinition?)tCounter.GetField(counterFieldName).GetValue(null);
+        var mass   = (IUnitDefinition?)tDenominator.GetField(denominatorFieldName).GetValue(null);
 
         var unitName       = energy.UnitName + "/" + mass.UnitName;
         var fieldName      = counterFieldName + "Per" + denominatorFieldName;
@@ -113,8 +113,8 @@ public sealed class RelatedUnit
     }
 
     public RelatedUnit WithPrefixedUnit(string unitShortName, string fieldName,
-        decimal multiplicator, string fromMethodNameSufix = null, TypeCodeAliases aliases = null,
-        Action<AliasedPrefixedUnitInfo> extraSettings = null)
+        decimal multiplicator, string? fromMethodNameSufix = null, TypeCodeAliases? aliases = null,
+        Action<AliasedPrefixedUnitInfo>? extraSettings = null)
     {
         if (aliases != null)
         {

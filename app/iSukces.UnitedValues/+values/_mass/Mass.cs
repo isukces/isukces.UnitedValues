@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -119,6 +118,266 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
     }
 
     /// <summary>
+    /// creates mass from value in g
+    /// </summary>
+    /// <param name="value">Mass value in g</param>
+    public static Mass FromGrams(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Gram);
+    }
+
+    /// <summary>
+    /// creates mass from value in g
+    /// </summary>
+    /// <param name="value">Mass value in g</param>
+    public static Mass FromGrams(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass((decimal)value, MassUnits.Gram);
+    }
+
+    /// <summary>
+    /// creates mass from value in g
+    /// </summary>
+    /// <param name="value">Mass value in g</param>
+    public static Mass FromGrams(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Gram);
+    }
+
+    /// <summary>
+    /// creates mass from value in g
+    /// </summary>
+    /// <param name="value">Mass value in g</param>
+    public static Mass FromGrams(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Gram);
+    }
+
+    /// <summary>
+    /// creates mass from value in kg
+    /// </summary>
+    /// <param name="value">Mass value in kg</param>
+    public static Mass FromKg(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Kg);
+    }
+
+    /// <summary>
+    /// creates mass from value in kg
+    /// </summary>
+    /// <param name="value">Mass value in kg</param>
+    public static Mass FromKg(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass((decimal)value, MassUnits.Kg);
+    }
+
+    /// <summary>
+    /// creates mass from value in kg
+    /// </summary>
+    /// <param name="value">Mass value in kg</param>
+    public static Mass FromKg(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Kg);
+    }
+
+    /// <summary>
+    /// creates mass from value in kg
+    /// </summary>
+    /// <param name="value">Mass value in kg</param>
+    public static Mass FromKg(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Kg);
+    }
+
+    /// <summary>
+    /// creates mass from value in oz
+    /// </summary>
+    /// <param name="value">Mass value in oz</param>
+    public static Mass FromOunce(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Ounce);
+    }
+
+    /// <summary>
+    /// creates mass from value in oz
+    /// </summary>
+    /// <param name="value">Mass value in oz</param>
+    public static Mass FromOunce(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass((decimal)value, MassUnits.Ounce);
+    }
+
+    /// <summary>
+    /// creates mass from value in oz
+    /// </summary>
+    /// <param name="value">Mass value in oz</param>
+    public static Mass FromOunce(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Ounce);
+    }
+
+    /// <summary>
+    /// creates mass from value in oz
+    /// </summary>
+    /// <param name="value">Mass value in oz</param>
+    public static Mass FromOunce(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Ounce);
+    }
+
+    /// <summary>
+    /// creates mass from value in lbs
+    /// </summary>
+    /// <param name="value">Mass value in lbs</param>
+    public static Mass FromPound(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Pound);
+    }
+
+    /// <summary>
+    /// creates mass from value in lbs
+    /// </summary>
+    /// <param name="value">Mass value in lbs</param>
+    public static Mass FromPound(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass((decimal)value, MassUnits.Pound);
+    }
+
+    /// <summary>
+    /// creates mass from value in lbs
+    /// </summary>
+    /// <param name="value">Mass value in lbs</param>
+    public static Mass FromPound(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Pound);
+    }
+
+    /// <summary>
+    /// creates mass from value in lbs
+    /// </summary>
+    /// <param name="value">Mass value in lbs</param>
+    public static Mass FromPound(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Pound);
+    }
+
+    /// <summary>
+    /// creates mass from value in t
+    /// </summary>
+    /// <param name="value">Mass value in t</param>
+    public static Mass FromTons(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Tone);
+    }
+
+    /// <summary>
+    /// creates mass from value in t
+    /// </summary>
+    /// <param name="value">Mass value in t</param>
+    public static Mass FromTons(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass((decimal)value, MassUnits.Tone);
+    }
+
+    /// <summary>
+    /// creates mass from value in t
+    /// </summary>
+    /// <param name="value">Mass value in t</param>
+    public static Mass FromTons(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Tone);
+    }
+
+    /// <summary>
+    /// creates mass from value in t
+    /// </summary>
+    /// <param name="value">Mass value in t</param>
+    public static Mass FromTons(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.Tone);
+    }
+
+    /// <summary>
+    /// creates mass from value in oz t
+    /// </summary>
+    /// <param name="value">Mass value in oz t</param>
+    public static Mass FromTroyOunce(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.TroyOunce);
+    }
+
+    /// <summary>
+    /// creates mass from value in oz t
+    /// </summary>
+    /// <param name="value">Mass value in oz t</param>
+    public static Mass FromTroyOunce(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass((decimal)value, MassUnits.TroyOunce);
+    }
+
+    /// <summary>
+    /// creates mass from value in oz t
+    /// </summary>
+    /// <param name="value">Mass value in oz t</param>
+    public static Mass FromTroyOunce(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.TroyOunce);
+    }
+
+    /// <summary>
+    /// creates mass from value in oz t
+    /// </summary>
+    /// <param name="value">Mass value in oz t</param>
+    public static Mass FromTroyOunce(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Mass(value, MassUnits.TroyOunce);
+    }
+
+    public static Mass Parse(string value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Parse
+        var parseResult = CommonParse.Parse(value, typeof(Mass));
+        if (string.IsNullOrEmpty(parseResult.UnitName))
+            return new Mass(parseResult.Value, Mass.BaseUnit);
+        return new Mass(parseResult.Value, new MassUnit(parseResult.UnitName));
+    }
+
+    public static Mass operator +(Mass left, Mass right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new Mass(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
     /// implements - operator
     /// </summary>
     /// <param name="value"></param>
@@ -136,11 +395,6 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
             return left;
         right = right.ConvertTo(left.Unit);
         return new Mass(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(Mass left, Mass right)
-    {
-        return left.CompareTo(right) != 0;
     }
 
     /// <summary>
@@ -513,15 +767,14 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
         return mass.Value / density.Value;
     }
 
-    public static Mass operator +(Mass left, Mass right)
+    public static bool operator ==(Mass left, Mass right)
     {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new Mass(left.Value + right.Value, left.Unit);
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(Mass left, Mass right)
+    {
+        return left.CompareTo(right) != 0;
     }
 
     public static bool operator <(Mass left, Mass right)
@@ -534,11 +787,6 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
         return left.CompareTo(right) <= 0;
     }
 
-    public static bool operator ==(Mass left, Mass right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
     public static bool operator >(Mass left, Mass right)
     {
         return left.CompareTo(right) > 0;
@@ -547,255 +795,6 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
     public static bool operator >=(Mass left, Mass right)
     {
         return left.CompareTo(right) >= 0;
-    }
-
-    /// <summary>
-    /// creates mass from value in g
-    /// </summary>
-    /// <param name="value">Mass value in g</param>
-    public static Mass FromGrams(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Gram);
-    }
-
-    /// <summary>
-    /// creates mass from value in g
-    /// </summary>
-    /// <param name="value">Mass value in g</param>
-    public static Mass FromGrams(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass((decimal)value, MassUnits.Gram);
-    }
-
-    /// <summary>
-    /// creates mass from value in g
-    /// </summary>
-    /// <param name="value">Mass value in g</param>
-    public static Mass FromGrams(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Gram);
-    }
-
-    /// <summary>
-    /// creates mass from value in g
-    /// </summary>
-    /// <param name="value">Mass value in g</param>
-    public static Mass FromGrams(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Gram);
-    }
-
-    /// <summary>
-    /// creates mass from value in kg
-    /// </summary>
-    /// <param name="value">Mass value in kg</param>
-    public static Mass FromKg(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Kg);
-    }
-
-    /// <summary>
-    /// creates mass from value in kg
-    /// </summary>
-    /// <param name="value">Mass value in kg</param>
-    public static Mass FromKg(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass((decimal)value, MassUnits.Kg);
-    }
-
-    /// <summary>
-    /// creates mass from value in kg
-    /// </summary>
-    /// <param name="value">Mass value in kg</param>
-    public static Mass FromKg(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Kg);
-    }
-
-    /// <summary>
-    /// creates mass from value in kg
-    /// </summary>
-    /// <param name="value">Mass value in kg</param>
-    public static Mass FromKg(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Kg);
-    }
-
-    /// <summary>
-    /// creates mass from value in oz
-    /// </summary>
-    /// <param name="value">Mass value in oz</param>
-    public static Mass FromOunce(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Ounce);
-    }
-
-    /// <summary>
-    /// creates mass from value in oz
-    /// </summary>
-    /// <param name="value">Mass value in oz</param>
-    public static Mass FromOunce(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass((decimal)value, MassUnits.Ounce);
-    }
-
-    /// <summary>
-    /// creates mass from value in oz
-    /// </summary>
-    /// <param name="value">Mass value in oz</param>
-    public static Mass FromOunce(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Ounce);
-    }
-
-    /// <summary>
-    /// creates mass from value in oz
-    /// </summary>
-    /// <param name="value">Mass value in oz</param>
-    public static Mass FromOunce(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Ounce);
-    }
-
-    /// <summary>
-    /// creates mass from value in lbs
-    /// </summary>
-    /// <param name="value">Mass value in lbs</param>
-    public static Mass FromPound(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Pound);
-    }
-
-    /// <summary>
-    /// creates mass from value in lbs
-    /// </summary>
-    /// <param name="value">Mass value in lbs</param>
-    public static Mass FromPound(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass((decimal)value, MassUnits.Pound);
-    }
-
-    /// <summary>
-    /// creates mass from value in lbs
-    /// </summary>
-    /// <param name="value">Mass value in lbs</param>
-    public static Mass FromPound(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Pound);
-    }
-
-    /// <summary>
-    /// creates mass from value in lbs
-    /// </summary>
-    /// <param name="value">Mass value in lbs</param>
-    public static Mass FromPound(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Pound);
-    }
-
-    /// <summary>
-    /// creates mass from value in t
-    /// </summary>
-    /// <param name="value">Mass value in t</param>
-    public static Mass FromTons(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Tone);
-    }
-
-    /// <summary>
-    /// creates mass from value in t
-    /// </summary>
-    /// <param name="value">Mass value in t</param>
-    public static Mass FromTons(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass((decimal)value, MassUnits.Tone);
-    }
-
-    /// <summary>
-    /// creates mass from value in t
-    /// </summary>
-    /// <param name="value">Mass value in t</param>
-    public static Mass FromTons(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Tone);
-    }
-
-    /// <summary>
-    /// creates mass from value in t
-    /// </summary>
-    /// <param name="value">Mass value in t</param>
-    public static Mass FromTons(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.Tone);
-    }
-
-    /// <summary>
-    /// creates mass from value in oz t
-    /// </summary>
-    /// <param name="value">Mass value in oz t</param>
-    public static Mass FromTroyOunce(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.TroyOunce);
-    }
-
-    /// <summary>
-    /// creates mass from value in oz t
-    /// </summary>
-    /// <param name="value">Mass value in oz t</param>
-    public static Mass FromTroyOunce(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass((decimal)value, MassUnits.TroyOunce);
-    }
-
-    /// <summary>
-    /// creates mass from value in oz t
-    /// </summary>
-    /// <param name="value">Mass value in oz t</param>
-    public static Mass FromTroyOunce(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.TroyOunce);
-    }
-
-    /// <summary>
-    /// creates mass from value in oz t
-    /// </summary>
-    /// <param name="value">Mass value in oz t</param>
-    public static Mass FromTroyOunce(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Mass(value, MassUnits.TroyOunce);
-    }
-
-    public static Mass Parse(string value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Parse
-        var parseResult = CommonParse.Parse(value, typeof(Mass));
-        if (string.IsNullOrEmpty(parseResult.UnitName))
-            return new Mass(parseResult.Value, Mass.BaseUnit);
-        return new Mass(parseResult.Value, new MassUnit(parseResult.UnitName));
     }
 
     /// <summary>

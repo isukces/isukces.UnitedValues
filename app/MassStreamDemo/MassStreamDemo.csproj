@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2024</Copyright>
     <ProjectGuid>{CF1C2C96-E608-40B9-9975-343A26D6D73D}</ProjectGuid>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
     <LangVersion>13</LangVersion>
+    <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />

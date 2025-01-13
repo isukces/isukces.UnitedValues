@@ -4,7 +4,7 @@ namespace UnitGenerator;
 
 public class MultiplicationAlgebra
 {
-    public MultiplicationAlgebra WithDiv<T1, T2, TDiv>(OperatorHints operatorHints = null,
+    public MultiplicationAlgebra WithDiv<T1, T2, TDiv>(OperatorHints? operatorHints = null,
         bool areRelatedUnits = false)
     {
         var x = new MultiplicationAlgebraItem(

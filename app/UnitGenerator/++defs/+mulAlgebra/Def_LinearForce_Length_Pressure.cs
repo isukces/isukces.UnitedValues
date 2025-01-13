@@ -3,7 +3,7 @@ using iSukces.UnitedValues;
 
 namespace UnitGenerator;
 
-sealed class Def_LinearForce_Length_Pressure : AlgebraDefinitionBase
+internal sealed class Def_LinearForce_Length_Pressure : AlgebraDefinitionBase
 {
     private static void HandleCreateOperatorCode(object sender, OperatorHints.CreateOperatorCodeEventArgs e)
     {
@@ -66,7 +66,7 @@ sealed class Def_LinearForce_Length_Pressure : AlgebraDefinitionBase
 
     private const string U_Pressure = "PressureUnits.Pascal";
 
-    const string U_Length = "LengthUnits.Meter";
+    private const string U_Length = "LengthUnits.Meter";
 
-    const string U_LinearForce = "new LinearForceUnit(ForceUnits.Newton, LengthUnits.Meter)";
+    private const string U_LinearForce = "new LinearForceUnit(ForceUnits.Newton, LengthUnits.Meter)";
 }

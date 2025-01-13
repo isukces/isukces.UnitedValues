@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Newtonsoft.Json;
@@ -106,7 +106,7 @@ public class WeightTest
         var a = Mass.FromKg(5);
         var b = Mass.FromKg(2);
         {
-            IEnumerable<Mass> items = null;
+            IEnumerable<Mass>? items = null;
             var               sum   = items.Sum();
             Assert.Equal(Mass.Zero, sum);
             items = new Mass[0];
@@ -120,7 +120,7 @@ public class WeightTest
             Assert.Equal(Mass.FromKg(7), sum);
         }
         {
-            IEnumerable<Mass?> items = null;
+            IEnumerable<Mass?>? items = null;
             var                sum   = items.Sum();
             Assert.Equal(Mass.Zero, sum);
 

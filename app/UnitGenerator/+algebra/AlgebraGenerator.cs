@@ -1,4 +1,4 @@
-﻿using iSukces.Code;
+using iSukces.Code;
 using iSukces.Code.Interfaces;
 
 namespace UnitGenerator;

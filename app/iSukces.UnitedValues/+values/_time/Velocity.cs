@@ -138,26 +138,6 @@ public partial struct Velocity : IUnitedValue<VelocityUnit>, IEquatable<Velocity
         return new Velocity(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(Velocity left, Velocity right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
-    /// Equality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator ==(Velocity left, Velocity right)
-    {
-        return left.Equals(right);
-    }
-
     public static Velocity Parse(string value)
     {
         // generator : FractionValuesGenerator.Add_Parse
@@ -170,6 +150,26 @@ public partial struct Velocity : IUnitedValue<VelocityUnit>, IEquatable<Velocity
         var counterUnit = new LengthUnit(units[0]);
         var denominatorUnit = new TimeUnit(units[1]);
         return new Velocity(r.Value, counterUnit, denominatorUnit);
+    }
+
+    /// <summary>
+    /// Equality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator ==(Velocity left, Velocity right)
+    {
+        return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(Velocity left, Velocity right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

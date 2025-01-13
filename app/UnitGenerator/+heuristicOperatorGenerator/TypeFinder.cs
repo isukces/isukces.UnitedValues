@@ -28,7 +28,7 @@ internal class TypeFinder
     }
 
     public IReadOnlyList<ValueOfSomeTypeExpression> FindParameters(MethodBase method,
-        Func<Type, ICodeSource> alternateConstruc, out bool dependsOnLeftArgument)
+        Func<Type, ICodeSource>? alternateConstruc, out bool dependsOnLeftArgument)
     {
         var list = new List<ValueOfSomeTypeExpression>();
         dependsOnLeftArgument = false;

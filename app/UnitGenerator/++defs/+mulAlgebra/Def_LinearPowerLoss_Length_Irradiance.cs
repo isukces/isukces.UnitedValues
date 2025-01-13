@@ -7,7 +7,7 @@ using UnitCUnit = iSukces.UnitedValues.IrradianceUnit;
 
 namespace UnitGenerator;
 
-sealed class Def_LinearPowerLoss_Length_Irradiance : AlgebraDefinitionBase
+internal sealed class Def_LinearPowerLoss_Length_Irradiance : AlgebraDefinitionBase
 {
     private static void HandleCreateOperatorCode(object sender, OperatorHints.CreateOperatorCodeEventArgs e)
     {

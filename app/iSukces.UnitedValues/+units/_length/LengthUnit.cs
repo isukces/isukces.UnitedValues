@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -67,13 +66,12 @@ public partial class LengthUnit : IUnit, IEquatable<LengthUnit>
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;LengthUnit&gt; into LengthUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(LengthUnit left, LengthUnit right)
+    /// <param name="src"></param>
+    public static implicit operator LengthUnit(UnitDefinition<LengthUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -87,12 +85,13 @@ public partial class LengthUnit : IUnit, IEquatable<LengthUnit>
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;LengthUnit&gt; into LengthUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator LengthUnit(UnitDefinition<LengthUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(LengthUnit left, LengthUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

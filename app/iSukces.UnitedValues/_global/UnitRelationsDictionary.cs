@@ -82,7 +82,7 @@ public class UnitRelationsDictionary
                        string.Equals(_name, other._name, StringComparison.Ordinal);
             }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
                 if (ReferenceEquals(null, obj)) return false;
                 return obj is Key key && Equals(key);

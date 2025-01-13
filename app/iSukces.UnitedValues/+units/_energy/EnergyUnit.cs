@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -50,13 +49,12 @@ public partial class EnergyUnit : IUnit, IEquatable<EnergyUnit>
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;EnergyUnit&gt; into EnergyUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(EnergyUnit left, EnergyUnit right)
+    /// <param name="src"></param>
+    public static implicit operator EnergyUnit(UnitDefinition<EnergyUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -70,12 +68,13 @@ public partial class EnergyUnit : IUnit, IEquatable<EnergyUnit>
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;EnergyUnit&gt; into EnergyUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator EnergyUnit(UnitDefinition<EnergyUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(EnergyUnit left, EnergyUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

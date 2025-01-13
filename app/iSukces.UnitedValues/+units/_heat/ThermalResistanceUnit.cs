@@ -31,14 +31,14 @@ public class ThermalResistanceUnit : IDecomposableUnit, IEquatable<ThermalResist
         };
     }
 
-    public bool Equals(ThermalResistanceUnit other)
+    public bool Equals(ThermalResistanceUnit? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
         return Equals(LengthUnit, other.LengthUnit) && Equals(PowerUnit, other.PowerUnit);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;

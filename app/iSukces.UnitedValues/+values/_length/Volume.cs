@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -97,296 +96,6 @@ public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume>, IFo
     public string ToString(string format, IFormatProvider provider = null)
     {
         return this.ToStringFormat(format, provider);
-    }
-
-    /// <summary>
-    /// implements - operator
-    /// </summary>
-    /// <param name="value"></param>
-    public static Volume operator -(Volume value)
-    {
-        return new Volume(-value.Value, value.Unit);
-    }
-
-    public static Volume operator -(Volume left, Volume right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return -right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new Volume(left.Value - right.Value, left.Unit);
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static Volume operator *(Volume value, decimal number)
-    {
-        return new Volume(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="number"></param>
-    /// <param name="value"></param>
-    public static Volume operator *(decimal number, Volume value)
-    {
-        return new Volume(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// Multiplication operation
-    /// </summary>
-    /// <param name="volume">left factor (multiplicand)</param>
-    /// <param name="density">rigth factor (multiplier)</param>
-    public static Mass operator *(Volume volume, Density density)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
-        // scenario B
-        var unit = new DensityUnit(density.Unit.CounterUnit, volume.Unit);
-        var densityConverted    = density.WithDenominatorUnit(volume.Unit);
-        var value = volume.Value * densityConverted.Value;
-        return new Mass(value, density.Unit.CounterUnit);
-    }
-
-    /// <summary>
-    /// Multiplication operation
-    /// </summary>
-    /// <param name="density">left factor (multiplicand)</param>
-    /// <param name="volume">rigth factor (multiplier)</param>
-    public static Mass operator *(Density density, Volume volume)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
-        // Mass operator *(Density density, Volume volume)
-        // scenario with hint
-        // .Is<Density, Volume, Mass>("*")
-        // hint location GetBasicOperatorHints, line 31
-        var densityUnit = density.Unit;
-        var volumeConverted = volume.ConvertTo(densityUnit.DenominatorUnit);
-        var value = density.Value * volumeConverted.Value;
-        return new Mass(value, densityUnit.CounterUnit);
-        // scenario D1
-    }
-
-    /// <summary>
-    /// Multiplication operation
-    /// </summary>
-    /// <param name="volume">left factor (multiplicand)</param>
-    /// <param name="density">rigth factor (multiplier)</param>
-    public static Mass? operator *(Volume? volume, Density density)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (volume is null)
-            return null;
-        return volume.Value * density;
-    }
-
-    /// <summary>
-    /// Multiplication operation
-    /// </summary>
-    /// <param name="density">left factor (multiplicand)</param>
-    /// <param name="volume">rigth factor (multiplier)</param>
-    public static Mass? operator *(Density? density, Volume volume)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (density is null)
-            return null;
-        return density.Value * volume;
-    }
-
-    /// <summary>
-    /// Multiplication operation
-    /// </summary>
-    /// <param name="volume">left factor (multiplicand)</param>
-    /// <param name="density">rigth factor (multiplier)</param>
-    public static Mass? operator *(Volume volume, Density? density)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (density is null)
-            return null;
-        return volume * density.Value;
-    }
-
-    /// <summary>
-    /// Multiplication operation
-    /// </summary>
-    /// <param name="density">left factor (multiplicand)</param>
-    /// <param name="volume">rigth factor (multiplier)</param>
-    public static Mass? operator *(Density density, Volume? volume)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (volume is null)
-            return null;
-        return density * volume.Value;
-    }
-
-    /// <summary>
-    /// Multiplication operation
-    /// </summary>
-    /// <param name="volume">left factor (multiplicand)</param>
-    /// <param name="density">rigth factor (multiplier)</param>
-    public static Mass? operator *(Volume? volume, Density? density)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (volume is null || density is null)
-            return null;
-        return volume.Value * density.Value;
-    }
-
-    /// <summary>
-    /// Multiplication operation
-    /// </summary>
-    /// <param name="density">left factor (multiplicand)</param>
-    /// <param name="volume">rigth factor (multiplier)</param>
-    public static Mass? operator *(Density? density, Volume? volume)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (density is null || volume is null)
-            return null;
-        return density.Value * volume.Value;
-    }
-
-    /// <summary>
-    /// implements / operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static Volume operator /(Volume value, decimal number)
-    {
-        return new Volume(value.Value / number, value.Unit);
-    }
-
-    public static decimal operator /(Volume left, Volume right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
-        right = right.ConvertTo(left.Unit);
-        return left.Value / right.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
-    /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Length operator /(Volume volume, Area area)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCodeForRelatedUnits
-        // scenario C
-        var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, AreaUnit>(volume.Unit);
-        var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(volume.Unit);
-        var areaConverted = area.ConvertTo(rightUnit);
-        var value = volume.Value / areaConverted.Value;
-        return new Length(value, resultUnit);
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
-    /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Area operator /(Volume volume, Length length)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCodeForRelatedUnits
-        // scenario C
-        var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(volume.Unit);
-        var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, AreaUnit>(volume.Unit);
-        var lengthConverted = length.ConvertTo(rightUnit);
-        var value = volume.Value / lengthConverted.Value;
-        return new Area(value, resultUnit);
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
-    /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Length? operator /(Volume? volume, Area area)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (volume is null)
-            return null;
-        return volume.Value / area;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
-    /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Area? operator /(Volume? volume, Length length)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (volume is null)
-            return null;
-        return volume.Value / length;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
-    /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Length? operator /(Volume volume, Area? area)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (area is null)
-            return null;
-        return volume / area.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
-    /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Area? operator /(Volume volume, Length? length)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (length is null)
-            return null;
-        return volume / length.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
-    /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Length? operator /(Volume? volume, Area? area)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (volume is null || area is null)
-            return null;
-        return volume.Value / area.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
-    /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Area? operator /(Volume? volume, Length? length)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (volume is null || length is null)
-            return null;
-        return volume.Value / length.Value;
-    }
-
-    public static Volume operator +(Volume left, Volume right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new Volume(left.Value + right.Value, left.Unit);
     }
 
     /// <summary>
@@ -876,6 +585,296 @@ public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume>, IFo
         if (string.IsNullOrEmpty(parseResult.UnitName))
             return new Volume(parseResult.Value, Volume.BaseUnit);
         return new Volume(parseResult.Value, new VolumeUnit(parseResult.UnitName));
+    }
+
+    public static Volume operator +(Volume left, Volume right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new Volume(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements - operator
+    /// </summary>
+    /// <param name="value"></param>
+    public static Volume operator -(Volume value)
+    {
+        return new Volume(-value.Value, value.Unit);
+    }
+
+    public static Volume operator -(Volume left, Volume right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return -right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new Volume(left.Value - right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static Volume operator *(Volume value, decimal number)
+    {
+        return new Volume(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="value"></param>
+    public static Volume operator *(decimal number, Volume value)
+    {
+        return new Volume(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// Multiplication operation
+    /// </summary>
+    /// <param name="volume">left factor (multiplicand)</param>
+    /// <param name="density">rigth factor (multiplier)</param>
+    public static Mass operator *(Volume volume, Density density)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+        // scenario B
+        var unit = new DensityUnit(density.Unit.CounterUnit, volume.Unit);
+        var densityConverted    = density.WithDenominatorUnit(volume.Unit);
+        var value = volume.Value * densityConverted.Value;
+        return new Mass(value, density.Unit.CounterUnit);
+    }
+
+    /// <summary>
+    /// Multiplication operation
+    /// </summary>
+    /// <param name="density">left factor (multiplicand)</param>
+    /// <param name="volume">rigth factor (multiplier)</param>
+    public static Mass operator *(Density density, Volume volume)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCodeForLeftFractionValue
+        // Mass operator *(Density density, Volume volume)
+        // scenario with hint
+        // .Is<Density, Volume, Mass>("*")
+        // hint location GetBasicOperatorHints, line 31
+        var densityUnit = density.Unit;
+        var volumeConverted = volume.ConvertTo(densityUnit.DenominatorUnit);
+        var value = density.Value * volumeConverted.Value;
+        return new Mass(value, densityUnit.CounterUnit);
+        // scenario D1
+    }
+
+    /// <summary>
+    /// Multiplication operation
+    /// </summary>
+    /// <param name="volume">left factor (multiplicand)</param>
+    /// <param name="density">rigth factor (multiplier)</param>
+    public static Mass? operator *(Volume? volume, Density density)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (volume is null)
+            return null;
+        return volume.Value * density;
+    }
+
+    /// <summary>
+    /// Multiplication operation
+    /// </summary>
+    /// <param name="density">left factor (multiplicand)</param>
+    /// <param name="volume">rigth factor (multiplier)</param>
+    public static Mass? operator *(Density? density, Volume volume)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (density is null)
+            return null;
+        return density.Value * volume;
+    }
+
+    /// <summary>
+    /// Multiplication operation
+    /// </summary>
+    /// <param name="volume">left factor (multiplicand)</param>
+    /// <param name="density">rigth factor (multiplier)</param>
+    public static Mass? operator *(Volume volume, Density? density)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (density is null)
+            return null;
+        return volume * density.Value;
+    }
+
+    /// <summary>
+    /// Multiplication operation
+    /// </summary>
+    /// <param name="density">left factor (multiplicand)</param>
+    /// <param name="volume">rigth factor (multiplier)</param>
+    public static Mass? operator *(Density density, Volume? volume)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (volume is null)
+            return null;
+        return density * volume.Value;
+    }
+
+    /// <summary>
+    /// Multiplication operation
+    /// </summary>
+    /// <param name="volume">left factor (multiplicand)</param>
+    /// <param name="density">rigth factor (multiplier)</param>
+    public static Mass? operator *(Volume? volume, Density? density)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (volume is null || density is null)
+            return null;
+        return volume.Value * density.Value;
+    }
+
+    /// <summary>
+    /// Multiplication operation
+    /// </summary>
+    /// <param name="density">left factor (multiplicand)</param>
+    /// <param name="volume">rigth factor (multiplier)</param>
+    public static Mass? operator *(Density? density, Volume? volume)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (density is null || volume is null)
+            return null;
+        return density.Value * volume.Value;
+    }
+
+    /// <summary>
+    /// implements / operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static Volume operator /(Volume value, decimal number)
+    {
+        return new Volume(value.Value / number, value.Unit);
+    }
+
+    public static decimal operator /(Volume left, Volume right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
+        right = right.ConvertTo(left.Unit);
+        return left.Value / right.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
+    /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Length operator /(Volume volume, Area area)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCodeForRelatedUnits
+        // scenario C
+        var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, AreaUnit>(volume.Unit);
+        var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(volume.Unit);
+        var areaConverted = area.ConvertTo(rightUnit);
+        var value = volume.Value / areaConverted.Value;
+        return new Length(value, resultUnit);
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
+    /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Area operator /(Volume volume, Length length)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCodeForRelatedUnits
+        // scenario C
+        var rightUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, LengthUnit>(volume.Unit);
+        var resultUnit = GlobalUnitRegistry.Relations.GetOrThrow<VolumeUnit, AreaUnit>(volume.Unit);
+        var lengthConverted = length.ConvertTo(rightUnit);
+        var value = volume.Value / lengthConverted.Value;
+        return new Area(value, resultUnit);
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
+    /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Length? operator /(Volume? volume, Area area)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (volume is null)
+            return null;
+        return volume.Value / area;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
+    /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Area? operator /(Volume? volume, Length length)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (volume is null)
+            return null;
+        return volume.Value / length;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
+    /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Length? operator /(Volume volume, Area? area)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (area is null)
+            return null;
+        return volume / area.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
+    /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Area? operator /(Volume volume, Length? length)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (length is null)
+            return null;
+        return volume / length.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
+    /// <param name="area">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Length? operator /(Volume? volume, Area? area)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (volume is null || area is null)
+            return null;
+        return volume.Value / area.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="volume">a dividend (counter) - a value that is being divided</param>
+    /// <param name="length">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Area? operator /(Volume? volume, Length? length)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (volume is null || length is null)
+            return null;
+        return volume.Value / length.Value;
     }
 
     /// <summary>

@@ -135,26 +135,6 @@ public partial struct MassDetlaKelvin : IUnitedValue<MassDetlaKelvinUnit>, IEqua
         return new MassDetlaKelvin(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(MassDetlaKelvin left, MassDetlaKelvin right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
-    /// Equality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator ==(MassDetlaKelvin left, MassDetlaKelvin right)
-    {
-        return left.Equals(right);
-    }
-
     public static MassDetlaKelvin Parse(string value)
     {
         // generator : ProductValuesGenerator.Add_Parse
@@ -167,6 +147,26 @@ public partial struct MassDetlaKelvin : IUnitedValue<MassDetlaKelvinUnit>, IEqua
         var counterUnit = new MassUnit(units[0]);
         var denominatorUnit = new KelvinTemperatureUnit(units[1]);
         return new MassDetlaKelvin(r.Value, counterUnit, denominatorUnit);
+    }
+
+    /// <summary>
+    /// Equality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator ==(MassDetlaKelvin left, MassDetlaKelvin right)
+    {
+        return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(MassDetlaKelvin left, MassDetlaKelvin right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

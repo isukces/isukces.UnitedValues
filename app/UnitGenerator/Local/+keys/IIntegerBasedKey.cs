@@ -1,3 +1,4 @@
+#nullable disable
 namespace UnitGenerator.Local;
 
 public interface IIntegerBasedKey

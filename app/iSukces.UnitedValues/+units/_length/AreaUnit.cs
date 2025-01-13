@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -94,13 +93,12 @@ public partial class AreaUnit : IUnit, IEquatable<AreaUnit>, IDecomposableUnit, 
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;AreaUnit&gt; into AreaUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(AreaUnit left, AreaUnit right)
+    /// <param name="src"></param>
+    public static implicit operator AreaUnit(UnitDefinition<AreaUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -114,12 +112,13 @@ public partial class AreaUnit : IUnit, IEquatable<AreaUnit>, IDecomposableUnit, 
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;AreaUnit&gt; into AreaUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator AreaUnit(UnitDefinition<AreaUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(AreaUnit left, AreaUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

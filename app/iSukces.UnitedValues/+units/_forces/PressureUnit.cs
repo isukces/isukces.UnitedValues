@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -50,13 +49,12 @@ public partial class PressureUnit : IUnit, IEquatable<PressureUnit>
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;PressureUnit&gt; into PressureUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(PressureUnit left, PressureUnit right)
+    /// <param name="src"></param>
+    public static implicit operator PressureUnit(UnitDefinition<PressureUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -70,12 +68,13 @@ public partial class PressureUnit : IUnit, IEquatable<PressureUnit>
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;PressureUnit&gt; into PressureUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator PressureUnit(UnitDefinition<PressureUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(PressureUnit left, PressureUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

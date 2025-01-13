@@ -66,7 +66,7 @@ public class OperatorCodeBuilderInput
     }
 
     // ReSharper disable once MemberCanBeMadeStatic.Global
-    public void SetComment([CallerLineNumberAttribute] int line = 0, [CallerMemberName] string method = null)
+    public void SetComment([CallerLineNumberAttribute] int line = 0, [CallerMemberName] string? method = null)
     {
 #if ADD_COMMENT
         Comment = "hint location " + method + ", line " + line;
@@ -75,7 +75,7 @@ public class OperatorCodeBuilderInput
         
         
 
-    public void SetThrow([CallerMemberName] string member = null)
+    public void SetThrow([CallerMemberName] string? member = null)
     {
         Throw   = true;
         Comment = "Fill method " + member;

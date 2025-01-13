@@ -7,7 +7,7 @@ using UnitC = iSukces.UnitedValues.LinearPowerLossUnit;
 
 namespace UnitGenerator;
 
-sealed class Def_Power_Length_LinearPowerLoss : AlgebraDefinitionBase
+internal sealed class Def_Power_Length_LinearPowerLoss : AlgebraDefinitionBase
 {
     private static void HandleCreateOperatorCode(object sender, OperatorHints.CreateOperatorCodeEventArgs e)
     {

@@ -6,7 +6,7 @@ using UnitC = iSukces.UnitedValues.Irradiance;
 
 namespace UnitGenerator;
 
-sealed class Def_Power_Area_Irradiance : AlgebraDefinitionBase
+internal sealed class Def_Power_Area_Irradiance : AlgebraDefinitionBase
 {
     private static void HandleCreateOperatorCode(object sender, OperatorHints.CreateOperatorCodeEventArgs e)
     {

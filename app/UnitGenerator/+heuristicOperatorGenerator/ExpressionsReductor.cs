@@ -50,7 +50,7 @@ public class ExpressionsReductor
         return null;
     }
 
-    public void AddAny(object e)
+    public void AddAny(object? e)
     {
         switch (e)
         {

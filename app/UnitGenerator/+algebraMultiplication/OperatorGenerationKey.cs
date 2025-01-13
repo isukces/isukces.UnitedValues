@@ -16,24 +16,24 @@ internal class OperatorGenerationKey : IEquatable<OperatorGenerationKey>
         Oper  = oper;
     }
 
-    public static bool operator ==(OperatorGenerationKey left, OperatorGenerationKey right)
+    public static bool operator ==(OperatorGenerationKey? left, OperatorGenerationKey? right)
     {
         return Equals(left, right);
     }
 
-    public static bool operator !=(OperatorGenerationKey left, OperatorGenerationKey right)
+    public static bool operator !=(OperatorGenerationKey? left, OperatorGenerationKey? right)
     {
         return !Equals(left, right);
     }
 
-    public bool Equals(OperatorGenerationKey other)
+    public bool Equals(OperatorGenerationKey? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
         return Left == other.Left && Right == other.Right && Oper == other.Oper;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;

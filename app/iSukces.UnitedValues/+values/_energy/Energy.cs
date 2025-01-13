@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -113,223 +112,6 @@ public partial struct Energy : IUnitedValue<EnergyUnit>, IEquatable<Energy>, ICo
     public string ToString(string format, IFormatProvider provider = null)
     {
         return this.ToStringFormat(format, provider);
-    }
-
-    /// <summary>
-    /// implements - operator
-    /// </summary>
-    /// <param name="value"></param>
-    public static Energy operator -(Energy value)
-    {
-        return new Energy(-value.Value, value.Unit);
-    }
-
-    public static Energy operator -(Energy left, Energy right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return -right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new Energy(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(Energy left, Energy right)
-    {
-        return left.CompareTo(right) != 0;
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static Energy operator *(Energy value, decimal number)
-    {
-        return new Energy(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="number"></param>
-    /// <param name="value"></param>
-    public static Energy operator *(decimal number, Energy value)
-    {
-        return new Energy(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements / operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static Energy operator /(Energy value, decimal number)
-    {
-        return new Energy(value.Value / number, value.Unit);
-    }
-
-    public static decimal operator /(Energy left, Energy right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
-        right = right.ConvertTo(left.Unit);
-        return left.Value / right.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
-    /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Power operator /(Energy energy, Time time)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateOperator
-        // scenario with hint
-        // .Is<Energy, Time, Power>("/")
-        // hint location HandleCreateOperatorCode, line 35
-        var energyUnit = energy.Unit;
-        var tmp1 = energyUnit.GetSuggestedTimeUnit();
-        var tmp2 = PowerUnit.CratePowerUnitFromEnergyAndTime(energyUnit, tmp1);
-        var resultUnit = tmp2;
-        var timeConverted = time.ConvertTo(tmp1);
-        var value = energy.Value / timeConverted.Value * tmp2.Multiplication;
-        return new Power(value, resultUnit);
-        // scenario F3
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
-    /// <param name="power">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Time operator /(Energy energy, Power power)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateOperator
-        // scenario with hint
-        // .Is<Energy, Power, Time>("/")
-        // hint location HandleCreateOperatorCode, line 25
-        var energyValue = energy.GetBaseUnitValue();
-        var powerValue = power.GetBaseUnitValue();
-        var timeSeconds = energyValue / powerValue;
-        var returnType = energy.Unit.GetSuggestedTimeUnit();
-        var time = Time.FromSecond(timeSeconds).ConvertTo(returnType);
-        return time;
-        // scenario F3
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
-    /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Power? operator /(Energy? energy, Time time)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (energy is null)
-            return null;
-        return energy.Value / time;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
-    /// <param name="power">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Time? operator /(Energy? energy, Power power)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (energy is null)
-            return null;
-        return energy.Value / power;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
-    /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Power? operator /(Energy energy, Time? time)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (time is null)
-            return null;
-        return energy / time.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
-    /// <param name="power">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Time? operator /(Energy energy, Power? power)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (power is null)
-            return null;
-        return energy / power.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
-    /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Power? operator /(Energy? energy, Time? time)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (energy is null || time is null)
-            return null;
-        return energy.Value / time.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
-    /// <param name="power">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Time? operator /(Energy? energy, Power? power)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (energy is null || power is null)
-            return null;
-        return energy.Value / power.Value;
-    }
-
-    public static Energy operator +(Energy left, Energy right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new Energy(left.Value + right.Value, left.Unit);
-    }
-
-    public static bool operator <(Energy left, Energy right)
-    {
-        return left.CompareTo(right) < 0;
-    }
-
-    public static bool operator <=(Energy left, Energy right)
-    {
-        return left.CompareTo(right) <= 0;
-    }
-
-    public static bool operator ==(Energy left, Energy right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
-    public static bool operator >(Energy left, Energy right)
-    {
-        return left.CompareTo(right) > 0;
-    }
-
-    public static bool operator >=(Energy left, Energy right)
-    {
-        return left.CompareTo(right) >= 0;
     }
 
     /// <summary>
@@ -739,6 +521,223 @@ public partial struct Energy : IUnitedValue<EnergyUnit>, IEquatable<Energy>, ICo
         if (string.IsNullOrEmpty(parseResult.UnitName))
             return new Energy(parseResult.Value, Energy.BaseUnit);
         return new Energy(parseResult.Value, new EnergyUnit(parseResult.UnitName));
+    }
+
+    public static Energy operator +(Energy left, Energy right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new Energy(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements - operator
+    /// </summary>
+    /// <param name="value"></param>
+    public static Energy operator -(Energy value)
+    {
+        return new Energy(-value.Value, value.Unit);
+    }
+
+    public static Energy operator -(Energy left, Energy right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return -right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new Energy(left.Value - right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static Energy operator *(Energy value, decimal number)
+    {
+        return new Energy(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="value"></param>
+    public static Energy operator *(decimal number, Energy value)
+    {
+        return new Energy(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements / operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static Energy operator /(Energy value, decimal number)
+    {
+        return new Energy(value.Value / number, value.Unit);
+    }
+
+    public static decimal operator /(Energy left, Energy right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
+        right = right.ConvertTo(left.Unit);
+        return left.Value / right.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
+    /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Power operator /(Energy energy, Time time)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateOperator
+        // scenario with hint
+        // .Is<Energy, Time, Power>("/")
+        // hint location HandleCreateOperatorCode, line 35
+        var energyUnit = energy.Unit;
+        var tmp1 = energyUnit.GetSuggestedTimeUnit();
+        var tmp2 = PowerUnit.CratePowerUnitFromEnergyAndTime(energyUnit, tmp1);
+        var resultUnit = tmp2;
+        var timeConverted = time.ConvertTo(tmp1);
+        var value = energy.Value / timeConverted.Value * tmp2.Multiplication;
+        return new Power(value, resultUnit);
+        // scenario F3
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
+    /// <param name="power">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Time operator /(Energy energy, Power power)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateOperator
+        // scenario with hint
+        // .Is<Energy, Power, Time>("/")
+        // hint location HandleCreateOperatorCode, line 25
+        var energyValue = energy.GetBaseUnitValue();
+        var powerValue = power.GetBaseUnitValue();
+        var timeSeconds = energyValue / powerValue;
+        var returnType = energy.Unit.GetSuggestedTimeUnit();
+        var time = Time.FromSecond(timeSeconds).ConvertTo(returnType);
+        return time;
+        // scenario F3
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
+    /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Power? operator /(Energy? energy, Time time)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (energy is null)
+            return null;
+        return energy.Value / time;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
+    /// <param name="power">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Time? operator /(Energy? energy, Power power)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (energy is null)
+            return null;
+        return energy.Value / power;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
+    /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Power? operator /(Energy energy, Time? time)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (time is null)
+            return null;
+        return energy / time.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
+    /// <param name="power">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Time? operator /(Energy energy, Power? power)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (power is null)
+            return null;
+        return energy / power.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
+    /// <param name="time">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Power? operator /(Energy? energy, Time? time)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (energy is null || time is null)
+            return null;
+        return energy.Value / time.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="energy">a dividend (counter) - a value that is being divided</param>
+    /// <param name="power">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Time? operator /(Energy? energy, Power? power)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (energy is null || power is null)
+            return null;
+        return energy.Value / power.Value;
+    }
+
+    public static bool operator ==(Energy left, Energy right)
+    {
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(Energy left, Energy right)
+    {
+        return left.CompareTo(right) != 0;
+    }
+
+    public static bool operator <(Energy left, Energy right)
+    {
+        return left.CompareTo(right) < 0;
+    }
+
+    public static bool operator <=(Energy left, Energy right)
+    {
+        return left.CompareTo(right) <= 0;
+    }
+
+    public static bool operator >(Energy left, Energy right)
+    {
+        return left.CompareTo(right) > 0;
+    }
+
+    public static bool operator >=(Energy left, Energy right)
+    {
+        return left.CompareTo(right) >= 0;
     }
 
     /// <summary>

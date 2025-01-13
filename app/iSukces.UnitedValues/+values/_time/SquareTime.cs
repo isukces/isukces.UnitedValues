@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -102,104 +101,6 @@ public partial struct SquareTime : IUnitedValue<SquareTimeUnit>, IEquatable<Squa
     public string ToString(string format, IFormatProvider provider = null)
     {
         return this.ToStringFormat(format, provider);
-    }
-
-    /// <summary>
-    /// implements - operator
-    /// </summary>
-    /// <param name="value"></param>
-    public static SquareTime operator -(SquareTime value)
-    {
-        return new SquareTime(-value.Value, value.Unit);
-    }
-
-    public static SquareTime operator -(SquareTime left, SquareTime right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return -right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new SquareTime(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(SquareTime left, SquareTime right)
-    {
-        return left.CompareTo(right) != 0;
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static SquareTime operator *(SquareTime value, decimal number)
-    {
-        return new SquareTime(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="number"></param>
-    /// <param name="value"></param>
-    public static SquareTime operator *(decimal number, SquareTime value)
-    {
-        return new SquareTime(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements / operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static SquareTime operator /(SquareTime value, decimal number)
-    {
-        return new SquareTime(value.Value / number, value.Unit);
-    }
-
-    public static decimal operator /(SquareTime left, SquareTime right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
-        right = right.ConvertTo(left.Unit);
-        return left.Value / right.Value;
-    }
-
-    public static SquareTime operator +(SquareTime left, SquareTime right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new SquareTime(left.Value + right.Value, left.Unit);
-    }
-
-    public static bool operator <(SquareTime left, SquareTime right)
-    {
-        return left.CompareTo(right) < 0;
-    }
-
-    public static bool operator <=(SquareTime left, SquareTime right)
-    {
-        return left.CompareTo(right) <= 0;
-    }
-
-    public static bool operator ==(SquareTime left, SquareTime right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
-    public static bool operator >(SquareTime left, SquareTime right)
-    {
-        return left.CompareTo(right) > 0;
-    }
-
-    public static bool operator >=(SquareTime left, SquareTime right)
-    {
-        return left.CompareTo(right) >= 0;
     }
 
     /// <summary>
@@ -409,6 +310,104 @@ public partial struct SquareTime : IUnitedValue<SquareTimeUnit>, IEquatable<Squa
         if (string.IsNullOrEmpty(parseResult.UnitName))
             return new SquareTime(parseResult.Value, SquareTime.BaseUnit);
         return new SquareTime(parseResult.Value, new SquareTimeUnit(parseResult.UnitName));
+    }
+
+    public static SquareTime operator +(SquareTime left, SquareTime right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new SquareTime(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements - operator
+    /// </summary>
+    /// <param name="value"></param>
+    public static SquareTime operator -(SquareTime value)
+    {
+        return new SquareTime(-value.Value, value.Unit);
+    }
+
+    public static SquareTime operator -(SquareTime left, SquareTime right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return -right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new SquareTime(left.Value - right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static SquareTime operator *(SquareTime value, decimal number)
+    {
+        return new SquareTime(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="value"></param>
+    public static SquareTime operator *(decimal number, SquareTime value)
+    {
+        return new SquareTime(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements / operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static SquareTime operator /(SquareTime value, decimal number)
+    {
+        return new SquareTime(value.Value / number, value.Unit);
+    }
+
+    public static decimal operator /(SquareTime left, SquareTime right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
+        right = right.ConvertTo(left.Unit);
+        return left.Value / right.Value;
+    }
+
+    public static bool operator ==(SquareTime left, SquareTime right)
+    {
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(SquareTime left, SquareTime right)
+    {
+        return left.CompareTo(right) != 0;
+    }
+
+    public static bool operator <(SquareTime left, SquareTime right)
+    {
+        return left.CompareTo(right) < 0;
+    }
+
+    public static bool operator <=(SquareTime left, SquareTime right)
+    {
+        return left.CompareTo(right) <= 0;
+    }
+
+    public static bool operator >(SquareTime left, SquareTime right)
+    {
+        return left.CompareTo(right) > 0;
+    }
+
+    public static bool operator >=(SquareTime left, SquareTime right)
+    {
+        return left.CompareTo(right) >= 0;
     }
 
     /// <summary>

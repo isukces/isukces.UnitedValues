@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -115,216 +114,6 @@ public partial struct Pressure : IUnitedValue<PressureUnit>, IEquatable<Pressure
     public string ToString(string format, IFormatProvider provider = null)
     {
         return this.ToStringFormat(format, provider);
-    }
-
-    /// <summary>
-    /// implements - operator
-    /// </summary>
-    /// <param name="value"></param>
-    public static Pressure operator -(Pressure value)
-    {
-        return new Pressure(-value.Value, value.Unit);
-    }
-
-    public static Pressure operator -(Pressure left, Pressure right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return -right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new Pressure(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(Pressure left, Pressure right)
-    {
-        return left.CompareTo(right) != 0;
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static Pressure operator *(Pressure value, decimal number)
-    {
-        return new Pressure(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="number"></param>
-    /// <param name="value"></param>
-    public static Pressure operator *(decimal number, Pressure value)
-    {
-        return new Pressure(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements / operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static Pressure operator /(Pressure value, decimal number)
-    {
-        return new Pressure(value.Value / number, value.Unit);
-    }
-
-    public static decimal operator /(Pressure left, Pressure right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
-        right = right.ConvertTo(left.Unit);
-        return left.Value / right.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
-    /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Acceleration operator /(Pressure pressure, PlanarDensity planarDensity)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
-        // scenario with hint
-        // .Is<Pressure, PlanarDensity, Acceleration>("/")
-        // hint location HandleCreateOperatorCode, line 27
-        var leftConverted = pressure.ConvertTo(PressureUnits.Pascal);
-        var rightConverted = planarDensity.ConvertTo(PlanarDensityUnits.KgPerSquareMeter);
-        var value = leftConverted.Value / rightConverted.Value;
-        return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
-    /// <param name="acceleration">a divisor (denominator) - a value which dividend is divided by</param>
-    public static PlanarDensity operator /(Pressure pressure, Acceleration acceleration)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
-        // scenario with hint
-        // .Is<Pressure, Acceleration, PlanarDensity>("/")
-        // hint location HandleCreateOperatorCode, line 34
-        var leftConverted = pressure.ConvertTo(PressureUnits.Pascal);
-        var rightConverted = acceleration.ConvertTo(AccelerationUnits.MetersPerSquareSeconds);
-        var value = leftConverted.Value / rightConverted.Value;
-        return new PlanarDensity(value, PlanarDensityUnits.KgPerSquareMeter);
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
-    /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Acceleration? operator /(Pressure? pressure, PlanarDensity planarDensity)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (pressure is null)
-            return null;
-        return pressure.Value / planarDensity;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
-    /// <param name="acceleration">a divisor (denominator) - a value which dividend is divided by</param>
-    public static PlanarDensity? operator /(Pressure? pressure, Acceleration acceleration)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (pressure is null)
-            return null;
-        return pressure.Value / acceleration;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
-    /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Acceleration? operator /(Pressure pressure, PlanarDensity? planarDensity)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (planarDensity is null)
-            return null;
-        return pressure / planarDensity.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
-    /// <param name="acceleration">a divisor (denominator) - a value which dividend is divided by</param>
-    public static PlanarDensity? operator /(Pressure pressure, Acceleration? acceleration)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (acceleration is null)
-            return null;
-        return pressure / acceleration.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
-    /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
-    public static Acceleration? operator /(Pressure? pressure, PlanarDensity? planarDensity)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (pressure is null || planarDensity is null)
-            return null;
-        return pressure.Value / planarDensity.Value;
-    }
-
-    /// <summary>
-    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
-    /// </summary>
-    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
-    /// <param name="acceleration">a divisor (denominator) - a value which dividend is divided by</param>
-    public static PlanarDensity? operator /(Pressure? pressure, Acceleration? acceleration)
-    {
-        // generator : MultiplyAlgebraGenerator.CreateCode
-        if (pressure is null || acceleration is null)
-            return null;
-        return pressure.Value / acceleration.Value;
-    }
-
-    public static Pressure operator +(Pressure left, Pressure right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new Pressure(left.Value + right.Value, left.Unit);
-    }
-
-    public static bool operator <(Pressure left, Pressure right)
-    {
-        return left.CompareTo(right) < 0;
-    }
-
-    public static bool operator <=(Pressure left, Pressure right)
-    {
-        return left.CompareTo(right) <= 0;
-    }
-
-    public static bool operator ==(Pressure left, Pressure right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
-    public static bool operator >(Pressure left, Pressure right)
-    {
-        return left.CompareTo(right) > 0;
-    }
-
-    public static bool operator >=(Pressure left, Pressure right)
-    {
-        return left.CompareTo(right) >= 0;
     }
 
     /// <summary>
@@ -534,6 +323,216 @@ public partial struct Pressure : IUnitedValue<PressureUnit>, IEquatable<Pressure
         if (string.IsNullOrEmpty(parseResult.UnitName))
             return new Pressure(parseResult.Value, Pressure.BaseUnit);
         return new Pressure(parseResult.Value, new PressureUnit(parseResult.UnitName));
+    }
+
+    public static Pressure operator +(Pressure left, Pressure right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new Pressure(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements - operator
+    /// </summary>
+    /// <param name="value"></param>
+    public static Pressure operator -(Pressure value)
+    {
+        return new Pressure(-value.Value, value.Unit);
+    }
+
+    public static Pressure operator -(Pressure left, Pressure right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return -right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new Pressure(left.Value - right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static Pressure operator *(Pressure value, decimal number)
+    {
+        return new Pressure(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="value"></param>
+    public static Pressure operator *(decimal number, Pressure value)
+    {
+        return new Pressure(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements / operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static Pressure operator /(Pressure value, decimal number)
+    {
+        return new Pressure(value.Value / number, value.Unit);
+    }
+
+    public static decimal operator /(Pressure left, Pressure right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
+        right = right.ConvertTo(left.Unit);
+        return left.Value / right.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
+    /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Acceleration operator /(Pressure pressure, PlanarDensity planarDensity)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+        // scenario with hint
+        // .Is<Pressure, PlanarDensity, Acceleration>("/")
+        // hint location HandleCreateOperatorCode, line 26
+        var leftConverted = pressure.ConvertTo(PressureUnits.Pascal);
+        var rightConverted = planarDensity.ConvertTo(PlanarDensityUnits.KgPerSquareMeter);
+        var value = leftConverted.Value / rightConverted.Value;
+        return new Acceleration(value, AccelerationUnits.MetersPerSquareSeconds);
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
+    /// <param name="acceleration">a divisor (denominator) - a value which dividend is divided by</param>
+    public static PlanarDensity operator /(Pressure pressure, Acceleration acceleration)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCodeForRightFractionValue
+        // scenario with hint
+        // .Is<Pressure, Acceleration, PlanarDensity>("/")
+        // hint location HandleCreateOperatorCode, line 33
+        var leftConverted = pressure.ConvertTo(PressureUnits.Pascal);
+        var rightConverted = acceleration.ConvertTo(AccelerationUnits.MetersPerSquareSeconds);
+        var value = leftConverted.Value / rightConverted.Value;
+        return new PlanarDensity(value, PlanarDensityUnits.KgPerSquareMeter);
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
+    /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Acceleration? operator /(Pressure? pressure, PlanarDensity planarDensity)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (pressure is null)
+            return null;
+        return pressure.Value / planarDensity;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
+    /// <param name="acceleration">a divisor (denominator) - a value which dividend is divided by</param>
+    public static PlanarDensity? operator /(Pressure? pressure, Acceleration acceleration)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (pressure is null)
+            return null;
+        return pressure.Value / acceleration;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
+    /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Acceleration? operator /(Pressure pressure, PlanarDensity? planarDensity)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (planarDensity is null)
+            return null;
+        return pressure / planarDensity.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
+    /// <param name="acceleration">a divisor (denominator) - a value which dividend is divided by</param>
+    public static PlanarDensity? operator /(Pressure pressure, Acceleration? acceleration)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (acceleration is null)
+            return null;
+        return pressure / acceleration.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
+    /// <param name="planarDensity">a divisor (denominator) - a value which dividend is divided by</param>
+    public static Acceleration? operator /(Pressure? pressure, PlanarDensity? planarDensity)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (pressure is null || planarDensity is null)
+            return null;
+        return pressure.Value / planarDensity.Value;
+    }
+
+    /// <summary>
+    /// Division operation, calculates value dividend/divisor with unit that derives from dividend unit
+    /// </summary>
+    /// <param name="pressure">a dividend (counter) - a value that is being divided</param>
+    /// <param name="acceleration">a divisor (denominator) - a value which dividend is divided by</param>
+    public static PlanarDensity? operator /(Pressure? pressure, Acceleration? acceleration)
+    {
+        // generator : MultiplyAlgebraGenerator.CreateCode
+        if (pressure is null || acceleration is null)
+            return null;
+        return pressure.Value / acceleration.Value;
+    }
+
+    public static bool operator ==(Pressure left, Pressure right)
+    {
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(Pressure left, Pressure right)
+    {
+        return left.CompareTo(right) != 0;
+    }
+
+    public static bool operator <(Pressure left, Pressure right)
+    {
+        return left.CompareTo(right) < 0;
+    }
+
+    public static bool operator <=(Pressure left, Pressure right)
+    {
+        return left.CompareTo(right) <= 0;
+    }
+
+    public static bool operator >(Pressure left, Pressure right)
+    {
+        return left.CompareTo(right) > 0;
+    }
+
+    public static bool operator >=(Pressure left, Pressure right)
+    {
+        return left.CompareTo(right) >= 0;
     }
 
     /// <summary>

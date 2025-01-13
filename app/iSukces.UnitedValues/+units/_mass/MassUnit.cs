@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -50,13 +49,12 @@ public partial class MassUnit : IUnit, IEquatable<MassUnit>
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;MassUnit&gt; into MassUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(MassUnit left, MassUnit right)
+    /// <param name="src"></param>
+    public static implicit operator MassUnit(UnitDefinition<MassUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -70,12 +68,13 @@ public partial class MassUnit : IUnit, IEquatable<MassUnit>
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;MassUnit&gt; into MassUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator MassUnit(UnitDefinition<MassUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(MassUnit left, MassUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

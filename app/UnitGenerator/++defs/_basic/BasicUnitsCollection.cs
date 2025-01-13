@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace UnitGenerator;
 
@@ -18,8 +17,7 @@ public class BasicUnitsCollection
         DistinctNames = _dict.Keys.ToArray();
     }
 
-    [CanBeNull]
-    public BasicUnit GetDeltaByUnit(XUnitTypeName unit)
+    public BasicUnit? GetDeltaByUnit(XUnitTypeName unit)
     {
         if (!_dict.TryGetValue(unit, out var item))
             return null;
@@ -39,7 +37,7 @@ internal class BasicUnitsCollectionItem
         Items = items;
     }
 
-    public BasicUnit GetDeltaByUnit()
+    public BasicUnit? GetDeltaByUnit()
     {
         return Items.FirstOrDefault(a => a.UnitTypes.ValueKind == UnitNameKind.Delta);
     }

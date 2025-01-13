@@ -136,14 +136,10 @@ public partial struct SpecificHeatCapacity : IUnitedValue<SpecificHeatCapacityUn
         return new SpecificHeatCapacity(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(SpecificHeatCapacity left, SpecificHeatCapacity right)
+    public static SpecificHeatCapacity Parse(string value)
     {
-        return !left.Equals(right);
+        // generator : FractionValuesGenerator.Add_Parse
+        throw new NotImplementedException("Not implemented due to unknown split method name.");
     }
 
     /// <summary>
@@ -270,10 +266,14 @@ public partial struct SpecificHeatCapacity : IUnitedValue<SpecificHeatCapacityUn
         return left.Equals(right);
     }
 
-    public static SpecificHeatCapacity Parse(string value)
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(SpecificHeatCapacity left, SpecificHeatCapacity right)
     {
-        // generator : FractionValuesGenerator.Add_Parse
-        throw new NotImplementedException("Not implemented due to unknown split method name.");
+        return !left.Equals(right);
     }
 
     /// <summary>

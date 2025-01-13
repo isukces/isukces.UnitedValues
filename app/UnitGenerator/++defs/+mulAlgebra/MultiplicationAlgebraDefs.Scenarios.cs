@@ -1,5 +1,4 @@
 using iSukces.Code;
-using JetBrains.Annotations;
 
 namespace UnitGenerator;
 
@@ -8,7 +7,7 @@ partial class MultiplicationAlgebraDefs
     private static void Scenario_Mul_Basic_Fract<THigh, TResult>(
         OperatorCodeBuilderInput input,
         string rightDenominator,
-        [CanBeNull] XValueTypeName resultDenominator)
+        XValueTypeName? resultDenominator)
     {
         var v1 = resultDenominator?.FirstLower() + "Unit";
         var v2 = rightDenominator.FirstLower() + "Unit";

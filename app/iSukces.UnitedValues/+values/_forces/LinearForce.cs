@@ -126,14 +126,18 @@ public partial struct LinearForce : IUnitedValue<LinearForceUnit>, IEquatable<Li
         return new LinearForce(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(LinearForce left, LinearForce right)
+    public static LinearForce Parse(string value)
     {
-        return !left.Equals(right);
+        // generator : FractionValuesGenerator.Add_Parse
+        if (string.IsNullOrEmpty(value))
+            throw new ArgumentNullException(nameof(value));
+        var r = CommonParse.Parse(value, typeof(LinearForce));
+        var units = Common.SplitUnitNameBySlash(r.UnitName);
+        if (units.Length != 2)
+            throw new Exception($"{r.UnitName} is not valid LinearForce unit");
+        var counterUnit = new ForceUnit(units[0]);
+        var denominatorUnit = new LengthUnit(units[1]);
+        return new LinearForce(r.Value, counterUnit, denominatorUnit);
     }
 
     /// <summary>
@@ -260,18 +264,14 @@ public partial struct LinearForce : IUnitedValue<LinearForceUnit>, IEquatable<Li
         return left.Equals(right);
     }
 
-    public static LinearForce Parse(string value)
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(LinearForce left, LinearForce right)
     {
-        // generator : FractionValuesGenerator.Add_Parse
-        if (string.IsNullOrEmpty(value))
-            throw new ArgumentNullException(nameof(value));
-        var r = CommonParse.Parse(value, typeof(LinearForce));
-        var units = Common.SplitUnitNameBySlash(r.UnitName);
-        if (units.Length != 2)
-            throw new Exception($"{r.UnitName} is not valid LinearForce unit");
-        var counterUnit = new ForceUnit(units[0]);
-        var denominatorUnit = new LengthUnit(units[1]);
-        return new LinearForce(r.Value, counterUnit, denominatorUnit);
+        return !left.Equals(right);
     }
 
     /// <summary>

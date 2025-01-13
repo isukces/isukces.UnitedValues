@@ -11,7 +11,7 @@ public class ProductUnitsCollection
         _d    = items.ToDictionary(a => a.UnitTypes.Value, a => a);
     }
 
-    public ProductUnit ByValueTypeName(XValueTypeName valueTypeName)
+    public ProductUnit? ByValueTypeName(XValueTypeName valueTypeName)
     {
         _d.TryGetValue(valueTypeName, out var tmp);
         return tmp;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -59,13 +58,12 @@ public partial class TimeUnit : IUnit, IEquatable<TimeUnit>
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;TimeUnit&gt; into TimeUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(TimeUnit left, TimeUnit right)
+    /// <param name="src"></param>
+    public static implicit operator TimeUnit(UnitDefinition<TimeUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -79,12 +77,13 @@ public partial class TimeUnit : IUnit, IEquatable<TimeUnit>
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;TimeUnit&gt; into TimeUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator TimeUnit(UnitDefinition<TimeUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(TimeUnit left, TimeUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

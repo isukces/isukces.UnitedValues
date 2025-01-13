@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -213,4 +213,5 @@ public class DivTests
     } // end of method
 }     // end of class
 // end of namespace
+
 

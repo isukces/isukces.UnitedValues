@@ -133,26 +133,6 @@ public partial struct Irradiance : IUnitedValue<IrradianceUnit>, IEquatable<Irra
         return new Irradiance(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(Irradiance left, Irradiance right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
-    /// Equality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator ==(Irradiance left, Irradiance right)
-    {
-        return left.Equals(right);
-    }
-
     public static Irradiance Parse(string value)
     {
         // generator : FractionValuesGenerator.Add_Parse
@@ -165,6 +145,26 @@ public partial struct Irradiance : IUnitedValue<IrradianceUnit>, IEquatable<Irra
         var counterUnit = new PowerUnit(units[0]);
         var denominatorUnit = new AreaUnit(units[1]);
         return new Irradiance(r.Value, counterUnit, denominatorUnit);
+    }
+
+    /// <summary>
+    /// Equality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator ==(Irradiance left, Irradiance right)
+    {
+        return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(Irradiance left, Irradiance right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

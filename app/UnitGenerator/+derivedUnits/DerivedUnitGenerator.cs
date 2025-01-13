@@ -14,7 +14,7 @@ public class DerivedUnitGenerator : BaseGenerator<RelatedUnit>
     {
     }
 
-    static (Type, Type) GetFractionalUnit(Type t)
+    private static (Type, Type) GetFractionalUnit(Type t)
     {
         foreach (var i in t.GetInterfaces())
         {

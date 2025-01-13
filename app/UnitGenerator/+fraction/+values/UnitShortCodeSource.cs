@@ -37,7 +37,7 @@ public class UnitShortCodeSource
     }
 
 
-    private string TryGetConstructorArgumentFromPowerOneUnit(RelatedUnitsFamily related)
+    private string? TryGetConstructorArgumentFromPowerOneUnit(RelatedUnitsFamily related)
     {
         if (_baseSource == null || _baseSourcePower < 2)
             return null;

@@ -1,20 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Company>Internet Sukces Piotr Stęclik</Company>
-    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2017-2024</Copyright>
     <Product>iSukces.UnitedValues</Product>
     <ProjectGuid>{CD06B707-1169-4E47-8097-CC8CD0947C9C}</ProjectGuid>
-    <TargetFrameworks>net48;net6.0;net8.0;net9.0;netcoreapp3.1;netstandard2.0</TargetFrameworks>
-    <AssemblyVersion>1.24.1201.35</AssemblyVersion>
-    <FileVersion>1.24.1201.35</FileVersion>
-    <Version>1.24.1201.35</Version>
+    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+    <AssemblyVersion>1.25.113.36</AssemblyVersion>
+    <FileVersion>1.25.113.36</FileVersion>
+    <Version>1.25.113.36</Version>
     <LangVersion>13</LangVersion>
     <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(SignKey)</AssemblyOriginatorKeyFile>
     <NoWarn>1701;1702;1591</NoWarn>
-    <Authors>Internet Sukces Piotr Stęclik</Authors>
     <Description>Values with units serialization and simple algebra</Description>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <PackageId>iSukces.UnitedValues</PackageId>

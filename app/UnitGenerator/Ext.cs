@@ -12,7 +12,7 @@ namespace UnitGenerator;
 
 public static class Ext
 {
-    public static CsMethod AddOperator(this CsClass cl, string operatorName, CsArguments csArgument, string resultType = null)
+    public static CsMethod AddOperator(this CsClass cl, string operatorName, CsArguments csArgument, string? resultType = null)
     {
         resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name.Declaration);
         var code = csArgument.Create(resultType);
@@ -20,7 +20,7 @@ public static class Ext
             .WithBodyFromExpression(code);
     }
 
-    public static string AddPrefix(this string txt, string prefix)
+    public static string? AddPrefix(this string? txt, string prefix)
     {
         if (string.IsNullOrWhiteSpace(txt))
             return null;
@@ -101,7 +101,7 @@ public static class Ext
         }
     }
 
-    public static string CoalesceNullOrWhiteSpace(this string a, string b)
+    public static string CoalesceNullOrWhiteSpace(this string? a, string b)
     {
         if (string.IsNullOrWhiteSpace(a))
             return b;
@@ -125,7 +125,7 @@ public static class Ext
 
 
     public static CsCodeWriter Create(Type callerType, [CallerLineNumber] int lineNumber = 0,
-        [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null
+        [CallerMemberName] string? memberName = null, [CallerFilePath] string? filePath = null
     )
     {
         var location = new SourceCodeLocation(lineNumber, memberName, filePath)
@@ -143,7 +143,7 @@ public static class Ext
     }
 
     public static CsCodeWriter Create<T>([CallerLineNumber] int lineNumber = 0,
-        [CallerMemberName] string memberName = null, [CallerFilePath] string filePath = null
+        [CallerMemberName] string? memberName = null, [CallerFilePath] string? filePath = null
     )
     {
         return Create(typeof(T), lineNumber, memberName, filePath);
@@ -159,7 +159,7 @@ public static class Ext
         return multiplicator.ToString(CultureInfo.InvariantCulture);
     }
 
-    public static string GetPowerSuffix(int power)
+    public static string? GetPowerSuffix(int power)
     {
         switch (power)
         {
@@ -180,7 +180,7 @@ public static class Ext
         var bindingFlags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
         foreach (var i in typeof(THost).GetFields(bindingFlags))
             if (i.FieldType == typeof(TValue))
-                l.Add((TValue)i.GetValue(null));
+                l.Add((TValue?)i.GetValue(null));
         return l.ToArray();
     }
 
@@ -223,7 +223,7 @@ public static class Ext
         return method;
     }
 
-    public static CsCodeWriter WithThrowNotImplementedException(this CsCodeWriter cw, string message = null)
+    public static CsCodeWriter WithThrowNotImplementedException(this CsCodeWriter cw, string? message = null)
     {
         if (string.IsNullOrEmpty(message))
             message = "Not implemented yet";

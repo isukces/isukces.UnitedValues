@@ -135,26 +135,6 @@ public partial struct Torque : IUnitedValue<TorqueUnit>, IEquatable<Torque>, IFo
         return new Torque(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(Torque left, Torque right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
-    /// Equality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator ==(Torque left, Torque right)
-    {
-        return left.Equals(right);
-    }
-
     public static Torque Parse(string value)
     {
         // generator : ProductValuesGenerator.Add_Parse
@@ -167,6 +147,26 @@ public partial struct Torque : IUnitedValue<TorqueUnit>, IEquatable<Torque>, IFo
         var counterUnit = new ForceUnit(units[0]);
         var denominatorUnit = new LengthUnit(units[1]);
         return new Torque(r.Value, counterUnit, denominatorUnit);
+    }
+
+    /// <summary>
+    /// Equality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator ==(Torque left, Torque right)
+    {
+        return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(Torque left, Torque right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

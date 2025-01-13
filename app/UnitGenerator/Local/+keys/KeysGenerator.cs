@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -117,7 +117,7 @@ public class KeysGenerator : IAssemblyAutoCodeGenerator
         var propName = def.ValuePropertyName;
         {
             var m = cl.AddMethod(nameof(Equals), CsType.Bool);
-            m.Parameters.Add(new CsMethodParameter("other", typeName));
+            m.Parameters.Add(new CsMethodParameter("other", typeName.WithReferenceNullable()));
             m.WithBodyAsExpression(ValueEquals($"other.{propName}", def));
         }
         {
@@ -126,7 +126,7 @@ public class KeysGenerator : IAssemblyAutoCodeGenerator
             var m = cl.AddMethod(nameof(Equals), CsType.Bool)
                 .WithBodyAsExpression(expression);
             m.Overriding = OverridingType.Override;
-            m.Parameters.Add(new CsMethodParameter("obj", CsType.Object));
+            m.Parameters.Add(new CsMethodParameter("obj", CsType.ObjectNullable));
             
         }
     }

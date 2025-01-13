@@ -7,7 +7,7 @@ public static class CommonFractionalUnitsExtensions
 {
     public static string GetUnitName(this CommonFractionalUnit unitParts)
     {
-        FractionUnit fractionUnit = null;
+        FractionUnit? fractionUnit = null;
         return GetUnitName(unitParts, ref fractionUnit);
     }
 
@@ -29,7 +29,7 @@ public static class CommonFractionalUnitsExtensions
             var type  = typeof(LengthUnit).Assembly.GetTypes().Single(q => q.Name == typeName.TypeName);
             var field = type.GetField(fieldName);
             var value = field.GetValue(null);
-            return ((IUnitNameContainer)value).UnitName;
+            return ((IUnitNameContainer?)value).UnitName;
         }
         catch
         {

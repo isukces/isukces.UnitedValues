@@ -17,7 +17,7 @@ public class TypeCodeAliases
         NamePlural   = namePlural;
     }
 
-    public static TypeCodeAliases Make(string nameSingular, string namePlural)
+    public static TypeCodeAliases? Make(string nameSingular, string namePlural)
     {
         nameSingular = nameSingular?.TrimToNull();
         namePlural   = namePlural.TrimToNull();

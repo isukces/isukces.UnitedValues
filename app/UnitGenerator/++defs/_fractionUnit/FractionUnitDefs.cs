@@ -4,7 +4,7 @@ namespace UnitGenerator;
 
 internal class FractionUnitDefs
 {
-    public static FractionUnit IsFraction(TypesGroup right)
+    public static FractionUnit? IsFraction(TypesGroup right)
     {
         foreach (var i in All.Items)
             if (i.UnitTypes.Value == right.Value)

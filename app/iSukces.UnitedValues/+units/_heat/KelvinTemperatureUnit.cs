@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -50,13 +49,12 @@ public partial class KelvinTemperatureUnit : IUnit, IEquatable<KelvinTemperature
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;KelvinTemperatureUnit&gt; into KelvinTemperatureUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(KelvinTemperatureUnit left, KelvinTemperatureUnit right)
+    /// <param name="src"></param>
+    public static implicit operator KelvinTemperatureUnit(UnitDefinition<KelvinTemperatureUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -70,12 +68,13 @@ public partial class KelvinTemperatureUnit : IUnit, IEquatable<KelvinTemperature
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;KelvinTemperatureUnit&gt; into KelvinTemperatureUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator KelvinTemperatureUnit(UnitDefinition<KelvinTemperatureUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(KelvinTemperatureUnit left, KelvinTemperatureUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

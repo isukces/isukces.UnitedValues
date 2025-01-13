@@ -5,7 +5,7 @@ namespace UnitGenerator;
 
 public class OperatorHints
 {
-    public OperatorCodeBuilderInput GetBuilder(OperatorParamsBase input)
+    public OperatorCodeBuilderInput? GetBuilder(OperatorParamsBase input)
     {
         var h = CreateOperatorCode;
         if (h is null)
@@ -46,7 +46,7 @@ public class OperatorHints
         }
 
 
-        public void SetHandled([CallerLineNumber] int line = 0, [CallerMemberName] string method = null)
+        public void SetHandled([CallerLineNumber] int line = 0, [CallerMemberName] string? method = null)
         {
             if (Handled)
                 throw new Exception("Already handled");

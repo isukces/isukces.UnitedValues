@@ -125,14 +125,18 @@ public partial struct Density : IUnitedValue<DensityUnit>, IEquatable<Density>, 
         return new Density(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(Density left, Density right)
+    public static Density Parse(string value)
     {
-        return !left.Equals(right);
+        // generator : FractionValuesGenerator.Add_Parse
+        if (string.IsNullOrEmpty(value))
+            throw new ArgumentNullException(nameof(value));
+        var r = CommonParse.Parse(value, typeof(Density));
+        var units = Common.SplitUnitNameBySlash(r.UnitName);
+        if (units.Length != 2)
+            throw new Exception($"{r.UnitName} is not valid Density unit");
+        var counterUnit = new MassUnit(units[0]);
+        var denominatorUnit = new VolumeUnit(units[1]);
+        return new Density(r.Value, counterUnit, denominatorUnit);
     }
 
     /// <summary>
@@ -267,18 +271,14 @@ public partial struct Density : IUnitedValue<DensityUnit>, IEquatable<Density>, 
         return left.Equals(right);
     }
 
-    public static Density Parse(string value)
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(Density left, Density right)
     {
-        // generator : FractionValuesGenerator.Add_Parse
-        if (string.IsNullOrEmpty(value))
-            throw new ArgumentNullException(nameof(value));
-        var r = CommonParse.Parse(value, typeof(Density));
-        var units = Common.SplitUnitNameBySlash(r.UnitName);
-        if (units.Length != 2)
-            throw new Exception($"{r.UnitName} is not valid Density unit");
-        var counterUnit = new MassUnit(units[0]);
-        var denominatorUnit = new VolumeUnit(units[1]);
-        return new Density(r.Value, counterUnit, denominatorUnit);
+        return !left.Equals(right);
     }
 
     /// <summary>

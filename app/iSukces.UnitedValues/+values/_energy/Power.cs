@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -105,6 +104,266 @@ public partial struct Power : IUnitedValue<PowerUnit>, IEquatable<Power>, ICompa
     }
 
     /// <summary>
+    /// creates power from value in GJ/year
+    /// </summary>
+    /// <param name="value">Power value in GJ/year</param>
+    public static Power FromGigaJoulePerYear(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.GigaJoulePerYear);
+    }
+
+    /// <summary>
+    /// creates power from value in GJ/year
+    /// </summary>
+    /// <param name="value">Power value in GJ/year</param>
+    public static Power FromGigaJoulePerYear(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power((decimal)value, PowerUnits.GigaJoulePerYear);
+    }
+
+    /// <summary>
+    /// creates power from value in GJ/year
+    /// </summary>
+    /// <param name="value">Power value in GJ/year</param>
+    public static Power FromGigaJoulePerYear(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.GigaJoulePerYear);
+    }
+
+    /// <summary>
+    /// creates power from value in GJ/year
+    /// </summary>
+    /// <param name="value">Power value in GJ/year</param>
+    public static Power FromGigaJoulePerYear(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.GigaJoulePerYear);
+    }
+
+    /// <summary>
+    /// creates power from value in GW
+    /// </summary>
+    /// <param name="value">Power value in GW</param>
+    public static Power FromGigaWatt(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.GigaWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in GW
+    /// </summary>
+    /// <param name="value">Power value in GW</param>
+    public static Power FromGigaWatt(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power((decimal)value, PowerUnits.GigaWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in GW
+    /// </summary>
+    /// <param name="value">Power value in GW</param>
+    public static Power FromGigaWatt(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.GigaWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in GW
+    /// </summary>
+    /// <param name="value">Power value in GW</param>
+    public static Power FromGigaWatt(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.GigaWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in kW
+    /// </summary>
+    /// <param name="value">Power value in kW</param>
+    public static Power FromKiloWatt(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.KiloWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in kW
+    /// </summary>
+    /// <param name="value">Power value in kW</param>
+    public static Power FromKiloWatt(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power((decimal)value, PowerUnits.KiloWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in kW
+    /// </summary>
+    /// <param name="value">Power value in kW</param>
+    public static Power FromKiloWatt(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.KiloWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in kW
+    /// </summary>
+    /// <param name="value">Power value in kW</param>
+    public static Power FromKiloWatt(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.KiloWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in MW
+    /// </summary>
+    /// <param name="value">Power value in MW</param>
+    public static Power FromMegaWatt(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.MegaWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in MW
+    /// </summary>
+    /// <param name="value">Power value in MW</param>
+    public static Power FromMegaWatt(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power((decimal)value, PowerUnits.MegaWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in MW
+    /// </summary>
+    /// <param name="value">Power value in MW</param>
+    public static Power FromMegaWatt(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.MegaWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in MW
+    /// </summary>
+    /// <param name="value">Power value in MW</param>
+    public static Power FromMegaWatt(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.MegaWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in mW
+    /// </summary>
+    /// <param name="value">Power value in mW</param>
+    public static Power FromMiliWatt(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.MiliWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in mW
+    /// </summary>
+    /// <param name="value">Power value in mW</param>
+    public static Power FromMiliWatt(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power((decimal)value, PowerUnits.MiliWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in mW
+    /// </summary>
+    /// <param name="value">Power value in mW</param>
+    public static Power FromMiliWatt(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.MiliWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in mW
+    /// </summary>
+    /// <param name="value">Power value in mW</param>
+    public static Power FromMiliWatt(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.MiliWatt);
+    }
+
+    /// <summary>
+    /// creates power from value in W
+    /// </summary>
+    /// <param name="value">Power value in W</param>
+    public static Power FromWatt(decimal value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.Watt);
+    }
+
+    /// <summary>
+    /// creates power from value in W
+    /// </summary>
+    /// <param name="value">Power value in W</param>
+    public static Power FromWatt(double value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power((decimal)value, PowerUnits.Watt);
+    }
+
+    /// <summary>
+    /// creates power from value in W
+    /// </summary>
+    /// <param name="value">Power value in W</param>
+    public static Power FromWatt(int value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.Watt);
+    }
+
+    /// <summary>
+    /// creates power from value in W
+    /// </summary>
+    /// <param name="value">Power value in W</param>
+    public static Power FromWatt(long value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_FromMethods
+        return new Power(value, PowerUnits.Watt);
+    }
+
+    public static Power Parse(string value)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Parse
+        var parseResult = CommonParse.Parse(value, typeof(Power));
+        if (string.IsNullOrEmpty(parseResult.UnitName))
+            return new Power(parseResult.Value, Power.BaseUnit);
+        return new Power(parseResult.Value, new PowerUnit(parseResult.UnitName));
+    }
+
+    public static Power operator +(Power left, Power right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new Power(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
     /// implements - operator
     /// </summary>
     /// <param name="value"></param>
@@ -122,11 +381,6 @@ public partial struct Power : IUnitedValue<PowerUnit>, IEquatable<Power>, ICompa
             return left;
         right = right.ConvertTo(left.Unit);
         return new Power(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(Power left, Power right)
-    {
-        return left.CompareTo(right) != 0;
     }
 
     /// <summary>
@@ -498,15 +752,14 @@ public partial struct Power : IUnitedValue<PowerUnit>, IEquatable<Power>, ICompa
         return power.Value / irradiance.Value;
     }
 
-    public static Power operator +(Power left, Power right)
+    public static bool operator ==(Power left, Power right)
     {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new Power(left.Value + right.Value, left.Unit);
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(Power left, Power right)
+    {
+        return left.CompareTo(right) != 0;
     }
 
     public static bool operator <(Power left, Power right)
@@ -519,11 +772,6 @@ public partial struct Power : IUnitedValue<PowerUnit>, IEquatable<Power>, ICompa
         return left.CompareTo(right) <= 0;
     }
 
-    public static bool operator ==(Power left, Power right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
     public static bool operator >(Power left, Power right)
     {
         return left.CompareTo(right) > 0;
@@ -532,255 +780,6 @@ public partial struct Power : IUnitedValue<PowerUnit>, IEquatable<Power>, ICompa
     public static bool operator >=(Power left, Power right)
     {
         return left.CompareTo(right) >= 0;
-    }
-
-    /// <summary>
-    /// creates power from value in GJ/year
-    /// </summary>
-    /// <param name="value">Power value in GJ/year</param>
-    public static Power FromGigaJoulePerYear(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.GigaJoulePerYear);
-    }
-
-    /// <summary>
-    /// creates power from value in GJ/year
-    /// </summary>
-    /// <param name="value">Power value in GJ/year</param>
-    public static Power FromGigaJoulePerYear(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power((decimal)value, PowerUnits.GigaJoulePerYear);
-    }
-
-    /// <summary>
-    /// creates power from value in GJ/year
-    /// </summary>
-    /// <param name="value">Power value in GJ/year</param>
-    public static Power FromGigaJoulePerYear(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.GigaJoulePerYear);
-    }
-
-    /// <summary>
-    /// creates power from value in GJ/year
-    /// </summary>
-    /// <param name="value">Power value in GJ/year</param>
-    public static Power FromGigaJoulePerYear(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.GigaJoulePerYear);
-    }
-
-    /// <summary>
-    /// creates power from value in GW
-    /// </summary>
-    /// <param name="value">Power value in GW</param>
-    public static Power FromGigaWatt(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.GigaWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in GW
-    /// </summary>
-    /// <param name="value">Power value in GW</param>
-    public static Power FromGigaWatt(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power((decimal)value, PowerUnits.GigaWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in GW
-    /// </summary>
-    /// <param name="value">Power value in GW</param>
-    public static Power FromGigaWatt(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.GigaWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in GW
-    /// </summary>
-    /// <param name="value">Power value in GW</param>
-    public static Power FromGigaWatt(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.GigaWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in kW
-    /// </summary>
-    /// <param name="value">Power value in kW</param>
-    public static Power FromKiloWatt(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.KiloWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in kW
-    /// </summary>
-    /// <param name="value">Power value in kW</param>
-    public static Power FromKiloWatt(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power((decimal)value, PowerUnits.KiloWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in kW
-    /// </summary>
-    /// <param name="value">Power value in kW</param>
-    public static Power FromKiloWatt(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.KiloWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in kW
-    /// </summary>
-    /// <param name="value">Power value in kW</param>
-    public static Power FromKiloWatt(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.KiloWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in MW
-    /// </summary>
-    /// <param name="value">Power value in MW</param>
-    public static Power FromMegaWatt(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.MegaWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in MW
-    /// </summary>
-    /// <param name="value">Power value in MW</param>
-    public static Power FromMegaWatt(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power((decimal)value, PowerUnits.MegaWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in MW
-    /// </summary>
-    /// <param name="value">Power value in MW</param>
-    public static Power FromMegaWatt(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.MegaWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in MW
-    /// </summary>
-    /// <param name="value">Power value in MW</param>
-    public static Power FromMegaWatt(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.MegaWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in mW
-    /// </summary>
-    /// <param name="value">Power value in mW</param>
-    public static Power FromMiliWatt(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.MiliWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in mW
-    /// </summary>
-    /// <param name="value">Power value in mW</param>
-    public static Power FromMiliWatt(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power((decimal)value, PowerUnits.MiliWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in mW
-    /// </summary>
-    /// <param name="value">Power value in mW</param>
-    public static Power FromMiliWatt(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.MiliWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in mW
-    /// </summary>
-    /// <param name="value">Power value in mW</param>
-    public static Power FromMiliWatt(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.MiliWatt);
-    }
-
-    /// <summary>
-    /// creates power from value in W
-    /// </summary>
-    /// <param name="value">Power value in W</param>
-    public static Power FromWatt(decimal value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.Watt);
-    }
-
-    /// <summary>
-    /// creates power from value in W
-    /// </summary>
-    /// <param name="value">Power value in W</param>
-    public static Power FromWatt(double value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power((decimal)value, PowerUnits.Watt);
-    }
-
-    /// <summary>
-    /// creates power from value in W
-    /// </summary>
-    /// <param name="value">Power value in W</param>
-    public static Power FromWatt(int value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.Watt);
-    }
-
-    /// <summary>
-    /// creates power from value in W
-    /// </summary>
-    /// <param name="value">Power value in W</param>
-    public static Power FromWatt(long value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_FromMethods
-        return new Power(value, PowerUnits.Watt);
-    }
-
-    public static Power Parse(string value)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Parse
-        var parseResult = CommonParse.Parse(value, typeof(Power));
-        if (string.IsNullOrEmpty(parseResult.UnitName))
-            return new Power(parseResult.Value, Power.BaseUnit);
-        return new Power(parseResult.Value, new PowerUnit(parseResult.UnitName));
     }
 
     /// <summary>

@@ -39,7 +39,7 @@ public class ThermalConductivityUnit : IDecomposableUnit, IEquatable<ThermalCond
         return Equals(LengthUnit, other.LengthUnit) && Equals(PowerUnit, other.PowerUnit);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;

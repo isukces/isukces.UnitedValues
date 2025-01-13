@@ -12,7 +12,7 @@ public class TypeAndFieldName
     {
         
     }
-    public TypeAndFieldName(CsType type, string field)
+    public TypeAndFieldName(CsType type, string? field)
     {
         Type  = type.Declaration?.TrimToEmpty();
         Field = field?.TrimToEmpty();

@@ -8,7 +8,8 @@ public interface ICodeSource1
         
 
 }
-interface ICodeSource:ICodeSource1
+
+internal interface ICodeSource:ICodeSource1
 {
    
         

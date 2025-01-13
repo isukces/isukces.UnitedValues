@@ -12,7 +12,7 @@ internal class DecomposeExpressionFinder
         _clrTypesResolver = new ClrTypesResolver(assembly);
     }
 
-    public Element[] GetCodeItems(NameAndPower[] items, string targetName)
+    public Element[]? GetCodeItems(NameAndPower[] items, string targetName)
     {
         if (!_clrTypesResolver.TryGetValue(targetName, out var reflected))
             return null;
@@ -29,7 +29,7 @@ internal class DecomposeExpressionFinder
         return elements;
     }
 
-    private Element CreateElement(Type reflected, NameAndPower item)
+    private Element? CreateElement(Type reflected, NameAndPower item)
     {
         var p  = reflected.GetProperty(item.Propertyname);
         var pt = p?.PropertyType;
@@ -45,7 +45,7 @@ internal class DecomposeExpressionFinder
         // var el = Activator.CreateInstance(pt, new[] {"fake"});
         var power = item.Power;
 
-        string PowerString(string x)
+        string PowerString(string? x)
         {
             if (string.IsNullOrEmpty(x))
                 return power.CsEncode();

@@ -23,7 +23,7 @@ public struct UnitDefinition<TUnit>: IUnitDefinition
 public class UnitEqualityComparer<TUnit> : IEqualityComparer<TUnit>
     where TUnit : IUnit
 {
-    public bool Equals(TUnit x, TUnit y)
+    public bool Equals(TUnit? x, TUnit? y)
     {
         return string.Equals(x?.UnitName, y?.UnitName, StringComparison.Ordinal);
     }

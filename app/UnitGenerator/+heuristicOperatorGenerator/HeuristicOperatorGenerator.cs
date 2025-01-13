@@ -95,7 +95,7 @@ public class HeuristicOperatorGenerator
         return MethodCallCodeSource.MakeFromConstructor(unit, list, true);
     }
 
-    private void Scan(ValueOfSomeTypeExpressionRoot root, XUnitTypeName x, Kind2 kind, ExpressionPath path = null)
+    private void Scan(ValueOfSomeTypeExpressionRoot root, XUnitTypeName x, Kind2 kind, ExpressionPath? path = null)
     {
         if (!_resolver.TryGetValue(x.GetTypename(), out var type))
             throw new NotImplementedException();
@@ -145,7 +145,7 @@ public class HeuristicOperatorGenerator
 
         var reductor = new ExpressionsReductor(n =>
         {
-            string varName = null;
+            string? varName = null;
             if (n == lu || n == ru)
                 varName = n.Replace(".", "");
             return AddVariable(n, varName);
@@ -160,7 +160,7 @@ public class HeuristicOperatorGenerator
 
         ICodeSource result = Construct(cc.Result.Unit);
 
-        Func<string> addExtraValueMultiplication = null;
+        Func<string>? addExtraValueMultiplication = null;
         ICodeSource G1()
         {
             if (!_resolver.TryGetValue(cc.Result.Unit.TypeName, out var type1))

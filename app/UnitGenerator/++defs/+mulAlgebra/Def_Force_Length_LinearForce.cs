@@ -3,7 +3,7 @@ using iSukces.UnitedValues;
 
 namespace UnitGenerator;
 
-sealed class Def_Force_Length_LinearForce : AlgebraDefinitionBase
+internal sealed class Def_Force_Length_LinearForce : AlgebraDefinitionBase
 {
     private static void HandleCreateOperatorCode(object sender, OperatorHints.CreateOperatorCodeEventArgs e)
     {

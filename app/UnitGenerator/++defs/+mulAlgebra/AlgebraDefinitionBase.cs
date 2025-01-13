@@ -1,6 +1,7 @@
+#nullable disable
 namespace UnitGenerator;
 
-class AlgebraDefinitionBase
+internal class AlgebraDefinitionBase
 {
     protected static void AddAB(OperatorCodeBuilderInput result, string aUnit, string bUnit, string resultUnit, string operator1)
     {

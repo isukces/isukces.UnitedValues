@@ -21,7 +21,7 @@ internal class CommonFractionalUnitsGenerator : MultipleFilesGenerator
             var cl = GetClass(item.Type.Container.GetTypename());
             cl.AddComment(item.ToString());
 
-            FractionUnit fuDefinition = null;
+            FractionUnit? fuDefinition = null;
 
             var description = string.Format("represents {0} unit '{1}'",
                 item.Type.Value.FirstLower(), item.GetUnitName(ref fuDefinition));

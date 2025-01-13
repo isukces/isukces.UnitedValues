@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -136,115 +135,6 @@ public partial struct CelsiusTemperature : IUnitedValue<CelsiusTemperatureUnit>,
     }
 
     /// <summary>
-    /// implements - operator
-    /// </summary>
-    /// <param name="value"></param>
-    public static CelsiusTemperature operator -(CelsiusTemperature value)
-    {
-        return new CelsiusTemperature(-value.Value, value.Unit);
-    }
-
-    public static DeltaCelsiusTemperature operator -(CelsiusTemperature left, CelsiusTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return new DeltaCelsiusTemperature(-right.Value, right.Unit);
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return new DeltaCelsiusTemperature(left.Value, left.Unit);
-        right = right.ConvertTo(left.Unit);
-        return new DeltaCelsiusTemperature(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(CelsiusTemperature left, CelsiusTemperature right)
-    {
-        return left.CompareTo(right) != 0;
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static CelsiusTemperature operator *(CelsiusTemperature value, decimal number)
-    {
-        return new CelsiusTemperature(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="number"></param>
-    /// <param name="value"></param>
-    public static CelsiusTemperature operator *(decimal number, CelsiusTemperature value)
-    {
-        return new CelsiusTemperature(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements / operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static CelsiusTemperature operator /(CelsiusTemperature value, decimal number)
-    {
-        return new CelsiusTemperature(value.Value / number, value.Unit);
-    }
-
-    public static decimal operator /(CelsiusTemperature left, CelsiusTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
-        right = right.ConvertTo(left.Unit);
-        return left.Value / right.Value;
-    }
-
-    public static CelsiusTemperature operator +(CelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return new CelsiusTemperature(right.Value, left.Unit);
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new CelsiusTemperature(left.Value + right.Value, left.Unit);
-    }
-
-    public static CelsiusTemperature operator +(DeltaCelsiusTemperature left, CelsiusTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return new CelsiusTemperature(left.Value, right.Unit);
-        right = right.ConvertTo(left.Unit);
-        return new CelsiusTemperature(left.Value + right.Value, left.Unit);
-    }
-
-    public static bool operator <(CelsiusTemperature left, CelsiusTemperature right)
-    {
-        return left.CompareTo(right) < 0;
-    }
-
-    public static bool operator <=(CelsiusTemperature left, CelsiusTemperature right)
-    {
-        return left.CompareTo(right) <= 0;
-    }
-
-    public static bool operator ==(CelsiusTemperature left, CelsiusTemperature right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
-    public static bool operator >(CelsiusTemperature left, CelsiusTemperature right)
-    {
-        return left.CompareTo(right) > 0;
-    }
-
-    public static bool operator >=(CelsiusTemperature left, CelsiusTemperature right)
-    {
-        return left.CompareTo(right) >= 0;
-    }
-
-    /// <summary>
     /// creates celsiusTemperature from value in °C
     /// </summary>
     /// <param name="value">CelsiusTemperature value in °C</param>
@@ -291,6 +181,115 @@ public partial struct CelsiusTemperature : IUnitedValue<CelsiusTemperatureUnit>,
         if (string.IsNullOrEmpty(parseResult.UnitName))
             return new CelsiusTemperature(parseResult.Value, CelsiusTemperature.BaseUnit);
         return new CelsiusTemperature(parseResult.Value, new CelsiusTemperatureUnit(parseResult.UnitName));
+    }
+
+    public static CelsiusTemperature operator +(CelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return new CelsiusTemperature(right.Value, left.Unit);
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new CelsiusTemperature(left.Value + right.Value, left.Unit);
+    }
+
+    public static CelsiusTemperature operator +(DeltaCelsiusTemperature left, CelsiusTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return new CelsiusTemperature(left.Value, right.Unit);
+        right = right.ConvertTo(left.Unit);
+        return new CelsiusTemperature(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements - operator
+    /// </summary>
+    /// <param name="value"></param>
+    public static CelsiusTemperature operator -(CelsiusTemperature value)
+    {
+        return new CelsiusTemperature(-value.Value, value.Unit);
+    }
+
+    public static DeltaCelsiusTemperature operator -(CelsiusTemperature left, CelsiusTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return new DeltaCelsiusTemperature(-right.Value, right.Unit);
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return new DeltaCelsiusTemperature(left.Value, left.Unit);
+        right = right.ConvertTo(left.Unit);
+        return new DeltaCelsiusTemperature(left.Value - right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static CelsiusTemperature operator *(CelsiusTemperature value, decimal number)
+    {
+        return new CelsiusTemperature(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="value"></param>
+    public static CelsiusTemperature operator *(decimal number, CelsiusTemperature value)
+    {
+        return new CelsiusTemperature(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements / operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static CelsiusTemperature operator /(CelsiusTemperature value, decimal number)
+    {
+        return new CelsiusTemperature(value.Value / number, value.Unit);
+    }
+
+    public static decimal operator /(CelsiusTemperature left, CelsiusTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
+        right = right.ConvertTo(left.Unit);
+        return left.Value / right.Value;
+    }
+
+    public static bool operator ==(CelsiusTemperature left, CelsiusTemperature right)
+    {
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(CelsiusTemperature left, CelsiusTemperature right)
+    {
+        return left.CompareTo(right) != 0;
+    }
+
+    public static bool operator <(CelsiusTemperature left, CelsiusTemperature right)
+    {
+        return left.CompareTo(right) < 0;
+    }
+
+    public static bool operator <=(CelsiusTemperature left, CelsiusTemperature right)
+    {
+        return left.CompareTo(right) <= 0;
+    }
+
+    public static bool operator >(CelsiusTemperature left, CelsiusTemperature right)
+    {
+        return left.CompareTo(right) > 0;
+    }
+
+    public static bool operator >=(CelsiusTemperature left, CelsiusTemperature right)
+    {
+        return left.CompareTo(right) >= 0;
     }
 
     /// <summary>

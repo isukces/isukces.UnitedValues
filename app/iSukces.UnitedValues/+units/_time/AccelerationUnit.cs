@@ -77,16 +77,6 @@ public sealed partial class AccelerationUnit : IFractionalUnit<LengthUnit, Squar
     }
 
     /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(AccelerationUnit left, AccelerationUnit right)
-    {
-        return !left.Equals(right);
-    }
-
-    /// <summary>
     /// Equality operator
     /// </summary>
     /// <param name="left">first value to compare</param>
@@ -94,6 +84,16 @@ public sealed partial class AccelerationUnit : IFractionalUnit<LengthUnit, Squar
     public static bool operator ==(AccelerationUnit left, AccelerationUnit right)
     {
         return left.Equals(right);
+    }
+
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(AccelerationUnit left, AccelerationUnit right)
+    {
+        return !left.Equals(right);
     }
 
     /// <summary>

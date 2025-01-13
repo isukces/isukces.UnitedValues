@@ -11,7 +11,7 @@ public class FractionUnitsCollection
         _d    = items.ToDictionary(a => a.UnitTypes.Value, a => a);
     }
 
-    public FractionUnit ByValueTypeName(XValueTypeName valueTypeName)
+    public FractionUnit? ByValueTypeName(XValueTypeName valueTypeName)
     {
         _d.TryGetValue(valueTypeName, out var tmp);
         return tmp;

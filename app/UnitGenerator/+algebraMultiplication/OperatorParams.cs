@@ -63,7 +63,7 @@ public class OperatorParams : OperatorParamsBase
     }
 
 
-    public OperatorCodeBuilderInput GetBuilder()
+    public OperatorCodeBuilderInput? GetBuilder()
     {
         if (OperatorHints is null)
             return null;

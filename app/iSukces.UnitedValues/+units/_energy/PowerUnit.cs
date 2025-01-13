@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace iSukces.UnitedValues;
 
@@ -76,13 +75,12 @@ public partial class PowerUnit : IUnit, IEquatable<PowerUnit>
     }
 
     /// <summary>
-    /// Inequality operator
+    /// Converts UnitDefinition&lt;PowerUnit&gt; into PowerUnit implicitly.
     /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(PowerUnit left, PowerUnit right)
+    /// <param name="src"></param>
+    public static implicit operator PowerUnit(UnitDefinition<PowerUnit> src)
     {
-        return !left.Equals(right);
+        return src.Unit;
     }
 
     /// <summary>
@@ -96,12 +94,13 @@ public partial class PowerUnit : IUnit, IEquatable<PowerUnit>
     }
 
     /// <summary>
-    /// Converts UnitDefinition&lt;PowerUnit&gt; into PowerUnit implicitly.
+    /// Inequality operator
     /// </summary>
-    /// <param name="src"></param>
-    public static implicit operator PowerUnit(UnitDefinition<PowerUnit> src)
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(PowerUnit left, PowerUnit right)
     {
-        return src.Unit;
+        return !left.Equals(right);
     }
 
     /// <summary>

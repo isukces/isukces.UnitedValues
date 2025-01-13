@@ -1,4 +1,3 @@
-
 using TMul = iSukces.UnitedValues.Pressure;
 using T1 = iSukces.UnitedValues.PlanarDensity;
 using T2 = iSukces.UnitedValues.Acceleration;

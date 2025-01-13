@@ -4,7 +4,7 @@ namespace UnitGenerator;
 
 internal class ProductUnitDefs
 {
-    public static ProductUnit IsProduct(TypesGroup right)
+    public static ProductUnit? IsProduct(TypesGroup right)
     {
         foreach (var i in All.Items)
             if (i.UnitTypes.Value == right.Value)

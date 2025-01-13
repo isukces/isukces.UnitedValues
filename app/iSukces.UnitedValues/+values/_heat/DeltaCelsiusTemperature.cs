@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace iSukces.UnitedValues;
@@ -127,104 +126,6 @@ public partial struct DeltaCelsiusTemperature : IUnitedValue<CelsiusTemperatureU
     }
 
     /// <summary>
-    /// implements - operator
-    /// </summary>
-    /// <param name="value"></param>
-    public static DeltaCelsiusTemperature operator -(DeltaCelsiusTemperature value)
-    {
-        return new DeltaCelsiusTemperature(-value.Value, value.Unit);
-    }
-
-    public static DeltaCelsiusTemperature operator -(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return -right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new DeltaCelsiusTemperature(left.Value - right.Value, left.Unit);
-    }
-
-    public static bool operator !=(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        return left.CompareTo(right) != 0;
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static DeltaCelsiusTemperature operator *(DeltaCelsiusTemperature value, decimal number)
-    {
-        return new DeltaCelsiusTemperature(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements * operator
-    /// </summary>
-    /// <param name="number"></param>
-    /// <param name="value"></param>
-    public static DeltaCelsiusTemperature operator *(decimal number, DeltaCelsiusTemperature value)
-    {
-        return new DeltaCelsiusTemperature(value.Value * number, value.Unit);
-    }
-
-    /// <summary>
-    /// implements / operator
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="number"></param>
-    public static DeltaCelsiusTemperature operator /(DeltaCelsiusTemperature value, decimal number)
-    {
-        return new DeltaCelsiusTemperature(value.Value / number, value.Unit);
-    }
-
-    public static decimal operator /(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
-        right = right.ConvertTo(left.Unit);
-        return left.Value / right.Value;
-    }
-
-    public static DeltaCelsiusTemperature operator +(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
-        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
-            return right;
-        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
-            return left;
-        right = right.ConvertTo(left.Unit);
-        return new DeltaCelsiusTemperature(left.Value + right.Value, left.Unit);
-    }
-
-    public static bool operator <(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        return left.CompareTo(right) < 0;
-    }
-
-    public static bool operator <=(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        return left.CompareTo(right) <= 0;
-    }
-
-    public static bool operator ==(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        return left.CompareTo(right) == 0;
-    }
-
-    public static bool operator >(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        return left.CompareTo(right) > 0;
-    }
-
-    public static bool operator >=(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
-    {
-        return left.CompareTo(right) >= 0;
-    }
-
-    /// <summary>
     /// creates deltaCelsiusTemperature from value in ----
     /// </summary>
     /// <param name="value">DeltaCelsiusTemperature value in ----</param>
@@ -271,6 +172,104 @@ public partial struct DeltaCelsiusTemperature : IUnitedValue<CelsiusTemperatureU
         if (string.IsNullOrEmpty(parseResult.UnitName))
             return new DeltaCelsiusTemperature(parseResult.Value, DeltaCelsiusTemperature.BaseUnit);
         return new DeltaCelsiusTemperature(parseResult.Value, new CelsiusTemperatureUnit(parseResult.UnitName));
+    }
+
+    public static DeltaCelsiusTemperature operator +(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new DeltaCelsiusTemperature(left.Value + right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements - operator
+    /// </summary>
+    /// <param name="value"></param>
+    public static DeltaCelsiusTemperature operator -(DeltaCelsiusTemperature value)
+    {
+        return new DeltaCelsiusTemperature(-value.Value, value.Unit);
+    }
+
+    public static DeltaCelsiusTemperature operator -(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_PlusMinus
+        if (left.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(left.Unit?.UnitName))
+            return -right;
+        if (right.Value.Equals(decimal.Zero) && string.IsNullOrEmpty(right.Unit?.UnitName))
+            return left;
+        right = right.ConvertTo(left.Unit);
+        return new DeltaCelsiusTemperature(left.Value - right.Value, left.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static DeltaCelsiusTemperature operator *(DeltaCelsiusTemperature value, decimal number)
+    {
+        return new DeltaCelsiusTemperature(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements * operator
+    /// </summary>
+    /// <param name="number"></param>
+    /// <param name="value"></param>
+    public static DeltaCelsiusTemperature operator *(decimal number, DeltaCelsiusTemperature value)
+    {
+        return new DeltaCelsiusTemperature(value.Value * number, value.Unit);
+    }
+
+    /// <summary>
+    /// implements / operator
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="number"></param>
+    public static DeltaCelsiusTemperature operator /(DeltaCelsiusTemperature value, decimal number)
+    {
+        return new DeltaCelsiusTemperature(value.Value / number, value.Unit);
+    }
+
+    public static decimal operator /(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        // generator : BasicUnitValuesGenerator.Add_Algebra_MulDiv
+        right = right.ConvertTo(left.Unit);
+        return left.Value / right.Value;
+    }
+
+    public static bool operator ==(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        return left.CompareTo(right) == 0;
+    }
+
+    public static bool operator !=(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        return left.CompareTo(right) != 0;
+    }
+
+    public static bool operator <(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        return left.CompareTo(right) < 0;
+    }
+
+    public static bool operator <=(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        return left.CompareTo(right) <= 0;
+    }
+
+    public static bool operator >(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        return left.CompareTo(right) > 0;
+    }
+
+    public static bool operator >=(DeltaCelsiusTemperature left, DeltaCelsiusTemperature right)
+    {
+        return left.CompareTo(right) >= 0;
     }
 
     /// <summary>

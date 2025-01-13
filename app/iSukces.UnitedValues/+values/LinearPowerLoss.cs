@@ -133,14 +133,18 @@ public partial struct LinearPowerLoss : IUnitedValue<LinearPowerLossUnit>, IEqua
         return new LinearPowerLoss(newFactor / oldFactor * Value, resultUnit);
     }
 
-    /// <summary>
-    /// Inequality operator
-    /// </summary>
-    /// <param name="left">first value to compare</param>
-    /// <param name="right">second value to compare</param>
-    public static bool operator !=(LinearPowerLoss left, LinearPowerLoss right)
+    public static LinearPowerLoss Parse(string value)
     {
-        return !left.Equals(right);
+        // generator : FractionValuesGenerator.Add_Parse
+        if (string.IsNullOrEmpty(value))
+            throw new ArgumentNullException(nameof(value));
+        var r = CommonParse.Parse(value, typeof(LinearPowerLoss));
+        var units = Common.SplitUnitNameBySlash(r.UnitName);
+        if (units.Length != 2)
+            throw new Exception($"{r.UnitName} is not valid LinearPowerLoss unit");
+        var counterUnit = new PowerUnit(units[0]);
+        var denominatorUnit = new LengthUnit(units[1]);
+        return new LinearPowerLoss(r.Value, counterUnit, denominatorUnit);
     }
 
     /// <summary>
@@ -268,18 +272,14 @@ public partial struct LinearPowerLoss : IUnitedValue<LinearPowerLossUnit>, IEqua
         return left.Equals(right);
     }
 
-    public static LinearPowerLoss Parse(string value)
+    /// <summary>
+    /// Inequality operator
+    /// </summary>
+    /// <param name="left">first value to compare</param>
+    /// <param name="right">second value to compare</param>
+    public static bool operator !=(LinearPowerLoss left, LinearPowerLoss right)
     {
-        // generator : FractionValuesGenerator.Add_Parse
-        if (string.IsNullOrEmpty(value))
-            throw new ArgumentNullException(nameof(value));
-        var r = CommonParse.Parse(value, typeof(LinearPowerLoss));
-        var units = Common.SplitUnitNameBySlash(r.UnitName);
-        if (units.Length != 2)
-            throw new Exception($"{r.UnitName} is not valid LinearPowerLoss unit");
-        var counterUnit = new PowerUnit(units[0]);
-        var denominatorUnit = new LengthUnit(units[1]);
-        return new LinearPowerLoss(r.Value, counterUnit, denominatorUnit);
+        return !left.Equals(right);
     }
 
     /// <summary>
