@@ -12,115 +12,130 @@ namespace UnitGenerator;
 
 public static class Ext
 {
-    public static CsMethod AddOperator(this CsClass cl, string operatorName, CsArguments csArgument, string? resultType = null)
+    extension(CsClass cl)
     {
-        resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name.Declaration);
-        var code = csArgument.Create(resultType);
-        return cl.AddMethod(operatorName, (CsType)resultType, "implements " + operatorName + " operator")
-            .WithBodyFromExpression(code);
-    }
-
-    public static string? AddPrefix(this string? txt, string prefix)
-    {
-        if (string.IsNullOrWhiteSpace(txt))
-            return null;
-        return prefix + txt;
-    }
-
-    public static void AddRelatedUnitSourceAttribute(this IAttributable attributable, ITypeNameResolver resolver,
-        RelatedUnitSourceUsage flag, int sortOrder)
-    {
-        var argument = resolver.GetEnumValueCode(flag);
-        var csAttribute = new CsAttribute(nameof(RelatedUnitSourceAttribute))
-            .WithArgumentCode(argument);
-        if (flag != RelatedUnitSourceUsage.DoNotUse)
-            csAttribute.WithArgument(sortOrder);
-        attributable.WithAttribute(csAttribute);
-    }
-
-    public static void CheckArgument(this CsCodeWriter code, string argName, ArgChecking flags,
-        ITypeNameResolver resolver)
-    {
-        if (flags == ArgChecking.None)
-            return;
-
-        var canBeNull     = true;
-        var argNameToRead = argName + "?";
-        if ((flags & ArgChecking.NotNull) != 0)
+        public CsMethod AddOperator(string operatorName, CsArguments csArgument, string? resultType = null)
         {
-            var throwCode = new CsArguments($"nameof({argName})")
-                .Throw<NullReferenceException>(resolver);
-            code.SingleLineIf($"{argName} is null", throwCode);
-            canBeNull     = false;
-            argNameToRead = argName;
+            resultType = resultType.CoalesceNullOrWhiteSpace(cl.Name.Declaration);
+            var code = csArgument.Create(resultType);
+            return cl.AddMethod(operatorName, (CsType)resultType, "implements " + operatorName + " operator")
+                .WithBodyFromExpression(code);
         }
+    }
 
-        if ((flags & ArgChecking.TrimValue) != 0)
+    extension(IAttributable attributable)
+    {
+        public void AddRelatedUnitSourceAttribute(ITypeNameResolver resolver,
+            RelatedUnitSourceUsage flag, int sortOrder)
         {
-            code.WriteLine("{0} = {1}.Trim();", argName, argNameToRead);
-            flags &= ~ArgChecking.TrimValue;
+            var argument = resolver.GetEnumValueCode(flag);
+            var csAttribute = new CsAttribute(nameof(RelatedUnitSourceAttribute))
+                .WithArgumentCode(argument);
+            if (flag != RelatedUnitSourceUsage.DoNotUse)
+                csAttribute.WithArgument(sortOrder);
+            attributable.WithAttribute(csAttribute);
+        }
+    }
+
+    extension(CsCodeWriter code)
+    {
+        public void CheckArgument(string argName, ArgChecking flags,
+            ITypeNameResolver resolver)
+        {
+            if (flags == ArgChecking.None)
+                return;
+
+            var canBeNull     = true;
+            var argNameToRead = argName + "?";
+            if ((flags & ArgChecking.NotNull) != 0)
+            {
+                var throwCode = new CsArguments($"nameof({argName})")
+                    .Throw<NullReferenceException>(resolver);
+                code.SingleLineIf($"{argName} is null", throwCode);
+                canBeNull     = false;
+                argNameToRead = argName;
+            }
+
+            if ((flags & ArgChecking.TrimValue) != 0)
+            {
+                code.WriteLine("{0} = {1}.Trim();", argName, argNameToRead);
+                flags &= ~ArgChecking.TrimValue;
+
+                if ((flags & ArgChecking.NotWhitespace) != 0)
+                {
+                    flags &= ~ArgChecking.NotWhitespace;
+                    flags |= ArgChecking.NotEmpty;
+                }
+            }
+
+            if ((flags & ArgChecking.NotNull) != 0 && canBeNull)
+            {
+                flags &= ~ArgChecking.NotNull;
+                //p.Attributes.Add(CsAttribute.Make<NotNullAttribute>(target));
+                var throwCode = new CsArguments($"nameof({argName})")
+                    .Throw<NullReferenceException>(resolver);
+                code.SingleLineIf($"{argName} is null", throwCode);
+            }
 
             if ((flags & ArgChecking.NotWhitespace) != 0)
             {
-                flags &= ~ArgChecking.NotWhitespace;
-                flags |= ArgChecking.NotEmpty;
+                flags &= ~(ArgChecking.NotEmpty | ArgChecking.NotWhitespace);
+                // var m = nameof(string.IsNullOrWhiteSpace);
+                var throwCode = new CsArguments($"nameof({argName})")
+                    .Throw<ArgumentException>(resolver);
+                code.SingleLineIf($"string.IsNullOrWhiteSpace({argName})", throwCode);
+
+                flags &= ~(ArgChecking.NotNullOrWhitespace | ArgChecking.NotNullOrEmpty);
+            }
+
+            if ((flags & ArgChecking.NotEmpty) != 0)
+            {
+                flags &= ~ArgChecking.NotEmpty;
+                var throwCode = new CsArguments($"nameof({argName})")
+                    .Throw<ArgumentException>(resolver);
+                var condition =
+                    canBeNull
+                        ? $"string.IsNullOrEmpty({argName})"
+                        : $"{argName}.Length == 0";
+
+                code.SingleLineIf(condition, throwCode);
             }
         }
+    }
 
-        if ((flags & ArgChecking.NotNull) != 0 && canBeNull)
+    extension(string? a)
+    {
+        public string CoalesceNullOrWhiteSpace(string b)
         {
-            flags &= ~ArgChecking.NotNull;
-            //p.Attributes.Add(CsAttribute.Make<NotNullAttribute>(target));
-            var throwCode = new CsArguments($"nameof({argName})")
-                .Throw<NullReferenceException>(resolver);
-            code.SingleLineIf($"{argName} is null", throwCode);
+            if (string.IsNullOrWhiteSpace(a))
+                return b;
+            return a;
         }
 
-        if ((flags & ArgChecking.NotWhitespace) != 0)
+        public string? AddPrefix(string prefix)
         {
-            flags &= ~(ArgChecking.NotEmpty | ArgChecking.NotWhitespace);
-            // var m = nameof(string.IsNullOrWhiteSpace);
-            var throwCode = new CsArguments($"nameof({argName})")
-                .Throw<ArgumentException>(resolver);
-            code.SingleLineIf($"string.IsNullOrWhiteSpace({argName})", throwCode);
-
-            flags &= ~(ArgChecking.NotNullOrWhitespace | ArgChecking.NotNullOrEmpty);
-        }
-
-        if ((flags & ArgChecking.NotEmpty) != 0)
-        {
-            flags &= ~ArgChecking.NotEmpty;
-            var throwCode = new CsArguments($"nameof({argName})")
-                .Throw<ArgumentException>(resolver);
-            var condition =
-                canBeNull
-                    ? $"string.IsNullOrEmpty({argName})"
-                    : $"{argName}.Length == 0";
-
-            code.SingleLineIf(condition, throwCode);
+            if (string.IsNullOrWhiteSpace(a))
+                return null;
+            return prefix + a;
         }
     }
 
-    public static string CoalesceNullOrWhiteSpace(this string? a, string b)
+    extension(Flags1 flags)
     {
-        if (string.IsNullOrWhiteSpace(a))
-            return b;
-        return a;
-    }
+        public ArgChecking ConvertToArgChecking()
+        {
+            var r = ArgChecking.None;
+            if ((flags & Flags1.NotNull) != 0)
+                r |= ArgChecking.NotNull;
+            if ((flags & Flags1.NotEmpty) != 0)
+                r |= ArgChecking.NotEmpty;
+            if ((flags & Flags1.NotWhitespace) != 0)
+                r |= ArgChecking.NotWhitespace;
+            if ((flags & Flags1.TrimValue) != 0)
+                r |= ArgChecking.TrimValue;
 
-    public static ArgChecking ConvertToArgChecking(this Flags1 flags)
-    {
-        var r = ArgChecking.None;
-        if ((flags & Flags1.NotNull) != 0)
-            r |= ArgChecking.NotNull;
-        if ((flags & Flags1.NotEmpty) != 0)
-            r |= ArgChecking.NotEmpty;
-        if ((flags & Flags1.NotWhitespace) != 0)
-            r |= ArgChecking.NotWhitespace;
-        if ((flags & Flags1.TrimValue) != 0)
-            r |= ArgChecking.TrimValue;
-
-        return r;
+            return r;
+        }
     }
 
 
@@ -190,37 +205,43 @@ public static class Ext
         return i.Any(q => q == typeof(T));
     }
 
-    public static void SingleLineIfReturn(this CsCodeWriter cs, string condition, string result)
+    extension(CsCodeWriter cs)
     {
-        cs.SingleLineIf(condition, "return " + result + ";");
+        public void SingleLineIfReturn(string condition, string result)
+        {
+            cs.SingleLineIf(condition, "return " + result + ";");
+        }
+
+        public void Throw<T>(params string[] arguments)
+        {
+            var exception = new CsArguments(arguments).Create<T>();
+            var code      = $"throw {exception};";
+            cs.WriteLine(code);
+        }
     }
 
-    public static void Throw<T>(this CsCodeWriter cs, params string[] arguments)
+    extension(CsMethod method)
     {
-        var exception = new CsArguments(arguments).Create<T>();
-        var code      = $"throw {exception};";
-        cs.WriteLine(code);
-    }
+        public CsMethod WithBodyFromAssignment(string variable, string code)
+        {
+            method.Body = $"{variable} = {code};";
+            return method;
+        }
 
-    public static CsMethod WithBodyFromAssignment(this CsMethod method, string variable, string code)
-    {
-        method.Body = $"{variable} = {code};";
-        return method;
-    }
+        public CsMethod WithBodyFromExpression(string code)
+        {
+            method.Body = $"return {code};";
+            return method;
+        }
 
-    public static CsMethod WithBodyFromExpression(this CsMethod method, string code)
-    {
-        method.Body = $"return {code};";
-        return method;
-    }
-
-    public static CsMethod WithLeftRightArguments(this CsMethod method, CsType leftType, CsType rightType,
-        string leftName = "left",
-        string rightName = "right")
-    {
-        method.AddParam(leftName, leftType);
-        method.AddParam(rightName, rightType);
-        return method;
+        public CsMethod WithLeftRightArguments(CsType leftType, CsType rightType,
+            string leftName = "left",
+            string rightName = "right")
+        {
+            method.AddParam(leftName, leftType);
+            method.AddParam(rightName, rightType);
+            return method;
+        }
     }
 
     public static CsCodeWriter WithThrowNotImplementedException(this CsCodeWriter cw, string? message = null)
@@ -233,17 +254,20 @@ public static class Ext
         return cw;
     }
 
-    public static CodeWriter WriteAssign(this CodeWriter cw, string variable, string value, bool addVar = false)
+    extension(CodeWriter cw)
     {
-        var code = (addVar ? "var " : "") + variable + " = " + value + ";";
-        cw.WriteLine(code);
-        return cw;
-    }
+        public CodeWriter WriteAssign(string variable, string value, bool addVar = false)
+        {
+            var code = (addVar ? "var " : "") + variable + " = " + value + ";";
+            cw.WriteLine(code);
+            return cw;
+        }
 
-    public static CodeWriter WriteReturn(this CodeWriter cw, string code)
-    {
-        cw.WriteLine($"return {code};");
-        return cw;
+        public CodeWriter WriteReturn(string code)
+        {
+            cw.WriteLine($"return {code};");
+            return cw;
+        }
     }
 }
 

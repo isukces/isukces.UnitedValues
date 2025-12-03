@@ -2,10 +2,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{CF1C2C96-E608-40B9-9975-343A26D6D73D}</ProjectGuid>
-    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
-    <LangVersion>13</LangVersion>
+    <TargetFrameworks>net6.0;net8.0;net9.0;net10.0</TargetFrameworks>
+    <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
+    <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />

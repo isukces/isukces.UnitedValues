@@ -2,18 +2,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{F1442214-2394-4B17-B683-0F4865E28EEF}</ProjectGuid>
-    <TargetFramework>net9.0</TargetFramework>
-    <LangVersion>13</LangVersion>
+    <TargetFrameworks>net6.0;net8.0;net9.0;net10.0</TargetFrameworks>
+    <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
     <NoWarn>1701;1702;1591</NoWarn>
     <IsPackable>false</IsPackable>
+    <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Code" Version="1.25.104.219" />
+    <PackageReference Include="iSukces.Code" Version="1.25.1203.223" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Scenarios.cs">

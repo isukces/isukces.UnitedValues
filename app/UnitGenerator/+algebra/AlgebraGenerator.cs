@@ -37,7 +37,7 @@ internal class Generator : BaseGenerator<UnitDefinition>
         Target.Description = $"Reprezentuje {Cfg.Description} w [{Cfg.Unit}]";
         {
             var p = Target.AddProperty("Value", CsType.Double);
-            p.IsPropertyReadOnly          = true;
+            p.SetterType                  = PropertySetter.None;
             p.EmitField                   = false;
             p.MakeAutoImplementIfPossible = true;
         }
