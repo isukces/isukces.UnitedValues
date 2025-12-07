@@ -35,7 +35,7 @@ public abstract class BaseCompositeUnitGenerator<T> : BaseGenerator<T>
             new ConstructorParameterInfo(_info.SecondPropertyName, (CsType)_info.Second.Unit.TypeName, null,
                 _info.SecondPropertyName.Decamelize().ToLower())
         };
-        var col1 = new Col1(pi);
+        var col1 = new Writers(pi);
         Add_Constructor(col1);
         Add_Properties(col1);
         Add_UnitNameProperty();

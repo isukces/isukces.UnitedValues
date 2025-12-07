@@ -19,7 +19,7 @@ public partial class EnergyUnit : IUnit, IEquatable<EnergyUnit>
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         UnitName = unitName;
     }
 
@@ -43,7 +43,7 @@ public partial class EnergyUnit : IUnit, IEquatable<EnergyUnit>
         return UnitName;
     }
 
-    bool IEquatable<EnergyUnit>.Equals(EnergyUnit other)
+    bool IEquatable<EnergyUnit>.Equals(EnergyUnit? other)
     {
         return Equals(other);
     }
@@ -92,14 +92,14 @@ public static partial class EnergyUnits
         factors.RegisterMany(All);
     }
 
-    public static EnergyUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+    public static EnergyUnit TryRecoverUnitFromName(string unitName)
     {
         // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
         if (unitName is null)
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         foreach (var i in All)
         {
             if (unitName == i.UnitName)

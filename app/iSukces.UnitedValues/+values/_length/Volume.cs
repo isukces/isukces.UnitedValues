@@ -93,7 +93,7 @@ public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume>, IFo
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -885,7 +885,6 @@ public partial struct Volume : IUnitedValue<VolumeUnit>, IEquatable<Volume>, IFo
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public VolumeUnit Unit => _unit ?? BaseUnit;
 
     private VolumeUnit _unit;
@@ -916,7 +915,7 @@ public static partial class VolumeExtensions
     {
         if (items is null)
             return Volume.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static Volume Sum<T>(this IEnumerable<T> items, Func<T, Volume> map)

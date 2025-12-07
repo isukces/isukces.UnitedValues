@@ -74,7 +74,7 @@ public static class UnitedValuesUtils
             return result(value, resultUnit);
         }
 
-    public static string ToStringFormat<T>(this IUnitedValue<T> value, string format, IFormatProvider provider)
+    public static string ToStringFormat<T>(this IUnitedValue<T> value, string? format, IFormatProvider? provider)
         where T : IUnit, IEquatable<T>
     {
             if (string.IsNullOrEmpty(format)) format = "G";

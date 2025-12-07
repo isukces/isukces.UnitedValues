@@ -111,7 +111,7 @@ public partial struct Pressure : IUnitedValue<PressureUnit>, IEquatable<Pressure
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -543,7 +543,6 @@ public partial struct Pressure : IUnitedValue<PressureUnit>, IEquatable<Pressure
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public PressureUnit Unit => _unit ?? BaseUnit;
 
     private PressureUnit _unit;
@@ -574,7 +573,7 @@ public static partial class PressureExtensions
     {
         if (items is null)
             return Pressure.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static Pressure Sum<T>(this IEnumerable<T> items, Func<T, Pressure> map)

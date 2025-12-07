@@ -128,15 +128,15 @@ public class LengthTest
             sum   = items.Sum();
             Assert.Equal(Length.Zero, sum);
 
-            items = new[] {(Length?)a};
+            items = [(Length?)a];
             sum   = items.Sum();
             Assert.Equal(a, sum);
 
-            items = new[] {(Length?)a, Length.Zero, null};
+            items = [(Length?)a, Length.Zero, null];
             sum   = items.Sum();
             Assert.Equal(a, sum);
 
-            items = new[] {(Length?)a, Length.Zero, null, b};
+            items = [(Length?)a, Length.Zero, null, b];
             sum   = items.Sum();
             Assert.Equal(Length.FromMeter(7), sum);
         }

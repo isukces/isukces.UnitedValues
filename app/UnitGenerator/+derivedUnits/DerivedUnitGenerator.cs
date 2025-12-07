@@ -14,7 +14,7 @@ public class DerivedUnitGenerator : BaseGenerator<RelatedUnit>
     {
     }
 
-    private static (Type, Type) GetFractionalUnit(Type t)
+    private static (Type?, Type?) GetFractionalUnit(Type t)
     {
         foreach (var i in t.GetInterfaces())
         {
@@ -136,7 +136,8 @@ public class DerivedUnitGenerator : BaseGenerator<RelatedUnit>
         // koniec body
         var m = Target.AddMethod("TryRecoverUnitFromName", resultTypeName).WithStatic().WithBody(body);
         var p = m.AddParam("unitName", CsType.String);
-        p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
+        if (CsGeneratorConfig.UseJetBrains)
+            p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
         return;
 
         string c()

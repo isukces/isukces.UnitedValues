@@ -112,7 +112,7 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -805,7 +805,6 @@ public partial struct Mass : IUnitedValue<MassUnit>, IEquatable<Mass>, IComparab
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public MassUnit Unit => _unit ?? BaseUnit;
 
     private MassUnit _unit;
@@ -836,7 +835,7 @@ public static partial class MassExtensions
     {
         if (items is null)
             return Mass.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static Mass Sum<T>(this IEnumerable<T> items, Func<T, Mass> map)

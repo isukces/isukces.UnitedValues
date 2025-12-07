@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{F1442214-2394-4B17-B683-0F4865E28EEF}</ProjectGuid>
-    <TargetFrameworks>net6.0;net8.0;net9.0;net10.0</TargetFrameworks>
+    <TargetFramework>net10.0</TargetFramework>
     <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
@@ -14,7 +14,7 @@
     <ProjectReference Include="..\iSukces.UnitedValues\iSukces.UnitedValues.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="iSukces.Code" Version="1.25.1203.223" />
+    <PackageReference Include="iSukces.Code" Version="1.25.1204.224" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="++defs\+mulAlgebra\MultiplicationAlgebraDefs.Scenarios.cs">

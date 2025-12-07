@@ -82,12 +82,11 @@ public class KeysGenerator : IAssemblyAutoCodeGenerator
         var cs       = new CsCodeWriter();
         if (def.WrappedType == WrappedTypes.String)
         {
-            var args      = new CsArguments($"nameof({argName})");
-            var exception = args.Create(csStruct.GetTypeName<NullReferenceException>());
-            cs.SingleLineIf($"{argName} is null", $"throw {exception};");
+            var throwCode = Utils.ThrowNullReferenceException(argName, csStruct);
+            cs.SingleLineIf($"{argName} is null", throwCode);
 
-            exception = args.Create(csStruct.GetTypeName<ArgumentException>());
-            cs.SingleLineIf($"{argName}.Length == 0", $"throw {exception};");
+            throwCode = Utils.ThrowArgumentException(argName, csStruct);
+            cs.SingleLineIf($"{argName}.Length == 0", throwCode);
                 
             cs.WriteAssign(propName, $"{argName}.Trim()");
         }

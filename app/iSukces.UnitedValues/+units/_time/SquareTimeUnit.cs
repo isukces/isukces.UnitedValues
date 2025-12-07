@@ -20,7 +20,7 @@ public partial class SquareTimeUnit : IUnit, IEquatable<SquareTimeUnit>, IDecomp
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         UnitName = unitName;
     }
 
@@ -28,8 +28,8 @@ public partial class SquareTimeUnit : IUnit, IEquatable<SquareTimeUnit>, IDecomp
     /// creates instance of SquareTimeUnit
     /// </summary>
     /// <param name="baseUnit">based on</param>
-    /// <param name="unitName">name of unit</param>
-    public SquareTimeUnit(TimeUnit baseUnit, string unitName = null)
+    /// <param name="unitName">Name of unit</param>
+    public SquareTimeUnit(TimeUnit baseUnit, string? unitName = null)
     {
         if (baseUnit is null)
             throw new NullReferenceException(nameof(baseUnit));
@@ -79,7 +79,7 @@ public partial class SquareTimeUnit : IUnit, IEquatable<SquareTimeUnit>, IDecomp
         return UnitName;
     }
 
-    bool IEquatable<SquareTimeUnit>.Equals(SquareTimeUnit other)
+    bool IEquatable<SquareTimeUnit>.Equals(SquareTimeUnit? other)
     {
         return Equals(other);
     }
@@ -122,7 +122,7 @@ public partial class SquareTimeUnit : IUnit, IEquatable<SquareTimeUnit>, IDecomp
     /// based on
     /// </summary>
     [RelatedUnitSource(RelatedUnitSourceUsage.DoNotUse)]
-    public TimeUnit BaseUnit { get; }
+    public TimeUnit? BaseUnit { get; }
 
 }
 
@@ -134,14 +134,14 @@ public static partial class SquareTimeUnits
         factors.RegisterMany(All);
     }
 
-    public static SquareTimeUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+    public static SquareTimeUnit TryRecoverUnitFromName(string unitName)
     {
         // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
         if (unitName is null)
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         foreach (var i in All)
         {
             if (unitName == i.UnitName)

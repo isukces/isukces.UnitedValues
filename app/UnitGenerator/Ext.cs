@@ -21,6 +21,14 @@ public static class Ext
             return cl.AddMethod(operatorName, (CsType)resultType, "implements " + operatorName + " operator")
                 .WithBodyFromExpression(code);
         }
+
+        public CsType GetReferenceNullableType()
+        {
+            var type = cl.Name;
+            if (cl.Kind is CsNamespaceMemberKind.Class or CsNamespaceMemberKind.Interface or CsNamespaceMemberKind.Record)
+                type.Nullable = NullableKind.ReferenceNullable;
+            return type;
+        }
     }
 
     extension(IAttributable attributable)
@@ -81,8 +89,7 @@ public static class Ext
             {
                 flags &= ~(ArgChecking.NotEmpty | ArgChecking.NotWhitespace);
                 // var m = nameof(string.IsNullOrWhiteSpace);
-                var throwCode = new CsArguments($"nameof({argName})")
-                    .Throw<ArgumentException>(resolver);
+                var throwCode = Utils.ThrowArgumentException(argName, resolver); 
                 code.SingleLineIf($"string.IsNullOrWhiteSpace({argName})", throwCode);
 
                 flags &= ~(ArgChecking.NotNullOrWhitespace | ArgChecking.NotNullOrEmpty);
@@ -91,8 +98,7 @@ public static class Ext
             if ((flags & ArgChecking.NotEmpty) != 0)
             {
                 flags &= ~ArgChecking.NotEmpty;
-                var throwCode = new CsArguments($"nameof({argName})")
-                    .Throw<ArgumentException>(resolver);
+                var throwCode = Utils.ThrowArgumentException(argName, resolver);
                 var condition =
                     canBeNull
                         ? $"string.IsNullOrEmpty({argName})"

@@ -13,7 +13,7 @@ internal class FractionUnitGenerator : BaseCompositeUnitGenerator<FractionUnit>
     {
         var name = new CsArguments(Cfg.CounterUnit.Unit.GetTypename(), Cfg.DenominatorUnit.Unit.GetTypename())
             .MakeGenericType(nameof(IFractionalUnit));
-        return new[] { name.Declaration };
+        return [name.Declaration];
     }
 
     protected override CompositeUnitGeneratorInfo GetInfo()
@@ -23,11 +23,10 @@ internal class FractionUnitGenerator : BaseCompositeUnitGenerator<FractionUnit>
 
     protected override Info2 GetInfo2()
     {
-        return new Info2("/", new[]
-        {
+        return new Info2("/", [
             new NameAndPower(nameof(FakeFractionalUnit.CounterUnit), 1),
             new NameAndPower(nameof(FakeFractionalUnit.DenominatorUnit), -1)
-        });
+        ]);
     }
 
 

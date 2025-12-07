@@ -60,7 +60,7 @@ public abstract class BaseValuesGenerator<TDef> : BaseGenerator<TDef>
         AddCommonValues_EqualsMethods(unitTypeName);
     }
 
-    protected abstract Col1 GetConstructorProperties();
+    protected abstract Writers GetConstructorProperties();
 
 
     private void AddCommonValues_EqualsMethods(string unitTypeName)
@@ -93,8 +93,11 @@ public abstract class BaseValuesGenerator<TDef> : BaseGenerator<TDef>
 
         var m = Target.AddMethod("ToString", CsType.String, "Returns unit name")
             .WithBodyFromExpression("this.ToStringFormat(format, provider)");
-        m.AddParam<string>("format", Target);
-        m.AddParam<IFormatProvider>("provider", Target).WithConstValue("null");
+        m.AddParam("format", CsType.StringNullable);
+        
+        var t = Target.GetTypeName<IFormatProvider>();
+        t.Nullable = NullableKind.ReferenceNullable;
+        m.AddParam("provider", t).WithConstValue("null");
     }
 
     public static CsType ValuePropertyType      = CsType.Decimal;

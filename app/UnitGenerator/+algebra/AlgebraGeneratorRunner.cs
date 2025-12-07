@@ -34,7 +34,7 @@ public class AlgebraGeneratorRunner
         AddMul(temperature, linearExpansion, UnitDefinition.Scalar);
 
         UnitDefinition[] all =
-        {
+        [
             distance,
             area,
             acceleration,
@@ -49,7 +49,7 @@ public class AlgebraGeneratorRunner
             temperature,
             linearExpansion,
             angle
-        };
+        ];
 
         var gen = new Generator(Path.Combine(basePath, "+algebra"), nameSpace);
 

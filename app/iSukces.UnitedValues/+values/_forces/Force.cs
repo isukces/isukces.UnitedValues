@@ -98,7 +98,7 @@ public partial struct Force : IUnitedValue<ForceUnit>, IEquatable<Force>, ICompa
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -601,7 +601,6 @@ public partial struct Force : IUnitedValue<ForceUnit>, IEquatable<Force>, ICompa
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public ForceUnit Unit => _unit ?? BaseUnit;
 
     private ForceUnit _unit;
@@ -632,7 +631,7 @@ public static partial class ForceExtensions
     {
         if (items is null)
             return Force.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static Force Sum<T>(this IEnumerable<T> items, Func<T, Force> map)

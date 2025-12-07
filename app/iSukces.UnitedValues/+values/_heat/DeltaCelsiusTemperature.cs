@@ -120,7 +120,7 @@ public partial struct DeltaCelsiusTemperature : IUnitedValue<CelsiusTemperatureU
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -280,7 +280,6 @@ public partial struct DeltaCelsiusTemperature : IUnitedValue<CelsiusTemperatureU
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public CelsiusTemperatureUnit Unit => _unit ?? BaseUnit;
 
     private CelsiusTemperatureUnit _unit;
@@ -311,7 +310,7 @@ public static partial class DeltaCelsiusTemperatureExtensions
     {
         if (items is null)
             return DeltaCelsiusTemperature.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static DeltaCelsiusTemperature Sum<T>(this IEnumerable<T> items, Func<T, DeltaCelsiusTemperature> map)

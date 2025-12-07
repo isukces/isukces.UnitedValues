@@ -105,7 +105,7 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -654,7 +654,6 @@ public partial struct Time : IUnitedValue<TimeUnit>, IEquatable<Time>, IComparab
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public TimeUnit Unit => _unit ?? BaseUnit;
 
     private TimeUnit _unit;
@@ -685,7 +684,7 @@ public static partial class TimeExtensions
     {
         if (items is null)
             return Time.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static Time Sum<T>(this IEnumerable<T> items, Func<T, Time> map)

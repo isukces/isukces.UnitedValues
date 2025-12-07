@@ -98,7 +98,7 @@ public partial struct SquareTime : IUnitedValue<SquareTimeUnit>, IEquatable<Squa
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -418,7 +418,6 @@ public partial struct SquareTime : IUnitedValue<SquareTimeUnit>, IEquatable<Squa
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public SquareTimeUnit Unit => _unit ?? BaseUnit;
 
     private SquareTimeUnit _unit;
@@ -449,7 +448,7 @@ public static partial class SquareTimeExtensions
     {
         if (items is null)
             return SquareTime.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static SquareTime Sum<T>(this IEnumerable<T> items, Func<T, SquareTime> map)

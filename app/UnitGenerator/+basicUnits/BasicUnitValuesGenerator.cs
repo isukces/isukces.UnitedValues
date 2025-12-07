@@ -67,10 +67,9 @@ public class BasicUnitValuesGenerator : BaseValuesGenerator<BasicUnit>
     }
 
 
-    protected override Col1 GetConstructorProperties()
+    protected override Writers GetConstructorProperties()
     {
-        return new Col1(new[]
-        {
+        return new Writers([
             new ConstructorParameterInfo(ValuePropName,
                 ValuePropertyType,
                 null,
@@ -83,7 +82,7 @@ public class BasicUnitValuesGenerator : BaseValuesGenerator<BasicUnit>
             {
                 PropertyDefaultValue = "BaseUnit"
             }
-        });
+        ]);
     }
 
     protected override string GetTypename(BasicUnit cfg)

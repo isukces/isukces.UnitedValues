@@ -11,7 +11,7 @@ namespace UnitGenerator
             if (typeName is null)
                 throw new NullReferenceException(nameof(typeName));
             if (typeName.Length == 0)
-                throw new ArgumentException(nameof(typeName));
+                throw new ArgumentException(null, nameof(typeName));
             TypeName = typeName.Trim();
         }
 
@@ -50,7 +50,7 @@ namespace UnitGenerator
             if (typeName is null)
                 throw new NullReferenceException(nameof(typeName));
             if (typeName.Length == 0)
-                throw new ArgumentException(nameof(typeName));
+                throw new ArgumentException(null, nameof(typeName));
             TypeName = typeName.Trim();
         }
 
@@ -88,7 +88,7 @@ namespace UnitGenerator
             if (valueTypeName is null)
                 throw new NullReferenceException(nameof(valueTypeName));
             if (valueTypeName.Length == 0)
-                throw new ArgumentException(nameof(valueTypeName));
+                throw new ArgumentException(null, nameof(valueTypeName));
             ValueTypeName = valueTypeName.Trim();
         }
 

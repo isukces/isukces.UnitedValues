@@ -1,4 +1,6 @@
 using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using iSukces.UnitedValues;
 
 namespace UnitGenerator;
@@ -7,12 +9,13 @@ public static class Check
 {
     public static void Run()
     {
-        var t = typeof(UMath).Assembly.GetTypes();
+        var t = typeof(UMath).Assembly.GetExportedTypes();
         foreach (var type in t)
         {
-            if (type.Namespace=="iSukces.UnitedValues")
+            if (type.Namespace == "iSukces.UnitedValues")
                 continue;
-            throw new Exception($"Type {type.FullName} in namespace {type.Namespace}");
+            if (type.GetCustomAttribute<CompilerGeneratedAttribute>() is null)
+                throw new Exception($"Type {type.FullName} in namespace {type.Namespace}");
         }
     }
 }

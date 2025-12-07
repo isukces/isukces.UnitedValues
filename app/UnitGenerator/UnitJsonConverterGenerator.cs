@@ -72,9 +72,9 @@ public class UnitJsonConverterGenerator : BaseGenerator<IUnitInfo>
     {
         var valueTypeName = Cfg.UnitTypes.Value;
         var cw            = new CsCodeWriter();
-        cw.Open("if (reader.ValueType == typeof(string))");
+        cw.OpenIf("reader.Value is string stringValue");
         cw.SingleLineIf($"objectType == typeof({valueTypeName})",
-            ReturnValue($"{valueTypeName}.Parse((string)reader.Value)"));
+            ReturnValue($"{valueTypeName}.Parse(stringValue)"));
         cw.Close();
         cw.WriteLine("throw new NotImplementedException();");
 
@@ -83,7 +83,7 @@ public class UnitJsonConverterGenerator : BaseGenerator<IUnitInfo>
             .WithBody(cw);
         m.AddParam<JsonReader>("reader", Target, "The JsonReader to read from.");
         m.AddParam<Type>("objectType", Target, "Type of the object.");
-        m.AddParam<object>("existingValue", Target, "The existing value of object being read.");
+        m.AddParam("existingValue", CsType.ObjectNullable, "The existing value of object being read.");
         m.AddParam<JsonSerializer>("serializer", Target, "The calling serializer.");
     }
 
@@ -101,7 +101,7 @@ public class UnitJsonConverterGenerator : BaseGenerator<IUnitInfo>
             .WithOverride()
             .WithBody(cw);
         m.AddParam<JsonWriter>("writer", Target);
-        m.AddParam<object>("value", Target);
+        m.AddParam("value", CsType.ObjectNullable);
         m.AddParam<JsonSerializer>("serializer", Target);
     }
 

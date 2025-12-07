@@ -98,7 +98,7 @@ public partial struct DeltaKelvinTemperature : IUnitedValue<KelvinTemperatureUni
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -268,7 +268,6 @@ public partial struct DeltaKelvinTemperature : IUnitedValue<KelvinTemperatureUni
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public KelvinTemperatureUnit Unit => _unit ?? BaseUnit;
 
     private KelvinTemperatureUnit _unit;
@@ -299,7 +298,7 @@ public static partial class DeltaKelvinTemperatureExtensions
     {
         if (items is null)
             return DeltaKelvinTemperature.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static DeltaKelvinTemperature Sum<T>(this IEnumerable<T> items, Func<T, DeltaKelvinTemperature> map)

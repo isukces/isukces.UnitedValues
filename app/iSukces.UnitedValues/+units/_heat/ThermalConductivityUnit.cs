@@ -7,8 +7,8 @@ public class ThermalConductivityUnit : IDecomposableUnit, IEquatable<ThermalCond
 {
     public ThermalConductivityUnit(LengthUnit lengthUnit, PowerUnit powerUnit)
     {
-        LengthUnit = lengthUnit;
-        PowerUnit  = powerUnit;
+        LengthUnit = lengthUnit ?? throw new ArgumentNullException(nameof(lengthUnit));
+        PowerUnit  = powerUnit ?? throw new ArgumentNullException(nameof(powerUnit));
     }
 
     public static bool operator ==(ThermalConductivityUnit left, ThermalConductivityUnit right)
@@ -24,15 +24,15 @@ public class ThermalConductivityUnit : IDecomposableUnit, IEquatable<ThermalCond
 
     public IReadOnlyList<DecomposableUnitItem> Decompose()
     {
-        return new[]
-        {
+        return
+        [
             new DecomposableUnitItem(PowerUnit, 1),
             new DecomposableUnitItem(LengthUnit, -1),
             new DecomposableUnitItem(KelvinTemperatureUnits.Degree.Unit, -1)
-        };
+        ];
     }
 
-    public bool Equals(ThermalConductivityUnit other)
+    public bool Equals(ThermalConductivityUnit? other)
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
@@ -51,8 +51,8 @@ public class ThermalConductivityUnit : IDecomposableUnit, IEquatable<ThermalCond
     {
         unchecked
         {
-            return ((LengthUnit != null ? LengthUnit.GetHashCode() : 0) * 397) ^
-                   (PowerUnit != null ? PowerUnit.GetHashCode() : 0);
+            return ((LengthUnit.GetHashCode()) * 397) ^
+                   (PowerUnit.GetHashCode());
         }
     }
 
@@ -81,7 +81,7 @@ public class ThermalConductivityUnit : IDecomposableUnit, IEquatable<ThermalCond
     }
 }
 
-public sealed class ThermalConductivityUnits
+public static class ThermalConductivityUnits
 {
     public static void RegisterUnitExchangeFactors(UnitExchangeFactors factors)
     {
@@ -96,10 +96,10 @@ public sealed class ThermalConductivityUnits
     {
         get
         {
-            return new[]
-            {
+            return
+            [
                 WattPerMeterKelvin
-            };
+            ];
         }
     }
 

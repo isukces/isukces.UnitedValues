@@ -82,7 +82,7 @@ public partial struct ThermalConductivity : IUnitedValue<ThermalConductivityUnit
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }

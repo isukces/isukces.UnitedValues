@@ -41,7 +41,7 @@ public class UnitExtensionsGenerator : BaseGenerator<BasicUnit>
 
         Add1(Cfg.UnitTypes.Value + "?", cw =>
         {
-            var c = "items.Where(a => a != null).Select(a => a.Value).Sum()";
+            var c = "items.Where(a => a != null).Select(a => a!.Value).Sum()";
             cw.WriteLine(ReturnValue(c));
         });
 

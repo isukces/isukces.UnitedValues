@@ -42,10 +42,10 @@ public class ConstructorParameterInfo
 
     public string Expression { get; }
 
-    public string             Description          { get; }
-    public Flags1             CheckingFlags        { get; }
-    public Action<CsProperty> PropertyCreated      { get; init;  }
-    public string             PropertyDefaultValue { get; init; }
+    public string              Description          { get; }
+    public Flags1              CheckingFlags        { get; }
+    public Action<CsProperty>? PropertyCreated      { get; init;  }
+    public string              PropertyDefaultValue { get; init; }
 }
 
 [Flags]
@@ -68,17 +68,16 @@ public enum Flags1 : uint
     NotNullOrEmpty = NotNull | NotEmpty,
 
     NormalizedString = NotNull | NotNullOrWhitespace | TrimValue
-        
 }
 
-public class Col1
+public class Writers
 {
-    public Col1(IReadOnlyList<ConstructorParameterInfo> items)
+    public Writers(IReadOnlyList<ConstructorParameterInfo> items)
     {
         Items = items;
     }
 
     public IReadOnlyList<ConstructorParameterInfo> Items   { get; }
-    public CsCodeWriter                            Writer1 { get; } = new CsCodeWriter();
-    public CsCodeWriter                            Writer2 { get; } = new CsCodeWriter();
+    public CsCodeWriter                            Writer1 { get; } = new();
+    public CsCodeWriter                            Writer2 { get; } = new();
 }

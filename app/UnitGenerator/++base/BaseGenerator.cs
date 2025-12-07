@@ -36,51 +36,7 @@ public abstract class BaseGenerator<TDef>
         m.Overriding = OverridingType.Override;
     }
 
-    public void Generate(IEnumerable<TDef> all)
-    {
-        foreach (var unit in all)
-        {
-            Cfg = unit;
-            if (!CanGenerate())
-                continue;
-            var name = GetTypename(unit);
-            /*var info = CsFilesManager.Instance.GetFileInfo(name, _nameSpace);
-
-            var file = info.File;
-            if (!info.IsEmbedded)
-                PrepareFile(file);
-            var ns   = file.GetOrCreateNamespace(_nameSpace);
-
-            Target           = ns.GetOrCreateClass(name);
-            Target.IsPartial = true;*/
-            Target = Get(name, out var file);
-            GenerateOne();
-            CsFilesManager.AddGeneratorName(file, GetType().Name);
-                
-        }
-    }
-
-    protected CsClass Get(string name, out CsFile file)
-    {
-        var info = CsFilesManager.Instance.GetFileInfo(name, _nameSpace);
-
-        file = info.File;
-        if (!info.IsEmbedded)
-            PrepareFile(file);
-        var ns = file.GetOrCreateNamespace(_nameSpace);
-                
-        var t = ns.GetOrCreateClass(name);
-        t = GeneratorCommon.Setup(t);
-
-        if (info.IsEmbedded) 
-            return t;
-        var filename = Path.Combine(_output, name + ".auto.cs");
-        file.SaveIfDifferent(filename);
-
-        return t;
-    }
-
-    protected void Add_Constructor(Col1 col)
+    protected void Add_Constructor(Writers col)
     {
         var target = Target;
         var code   = new CsCodeWriter();
@@ -111,12 +67,16 @@ public abstract class BaseGenerator<TDef>
 
         m.WithBody(code);
     }
-    
+
     protected void Add_EqualsUniversal(CsType compareType, bool addNullableChecking, OverridingType overridingType, string compareCode)
     {
         var cw = CsCodeWriter.Create(new SourceCodeLocation().WithGeneratorClass(GetType()));
         if (addNullableChecking)
+        {
             cw.SingleLineIf("other is null", ReturnValue("false"));
+            compareType = compareType.WithReferenceNullable();
+        }
+
         cw.WriteLine(ReturnValue(compareCode));
         var m = Target.AddMethod(nameof(Equals), CsType.Bool)
             .WithBody(cw);
@@ -144,7 +104,7 @@ public abstract class BaseGenerator<TDef>
     }
 
 
-    protected void Add_Properties(Col1 c)
+    protected void Add_Properties(Writers c)
     {
         foreach (var i in c.Items)
         {
@@ -158,7 +118,19 @@ public abstract class BaseGenerator<TDef>
             if ((i.CheckingFlags & Flags1.DoNotCreateProperty) != 0)
                 return;
 
-            var p = Add_Property(i.PropertyName, i.PropertyType, i.Description);
+            var tmp = AddNotNullAttribute(i);
+            {
+            }
+            var propertyType = i.PropertyType;
+            if (CsGeneratorConfig.UseReferenceNullable)
+            {
+                if (tmp == NotNullAttributeType.CanBeNull)
+                {
+                    propertyType.Nullable = NullableKind.ReferenceNullable;
+                }
+            }
+
+            var p = Add_Property(i.PropertyName, propertyType, i.Description);
             p.EmitField = (i.CheckingFlags & Flags1.EmitField) != 0;
             if (p.EmitField)
             {
@@ -168,19 +140,18 @@ public abstract class BaseGenerator<TDef>
             }
 
             i.PropertyCreated?.Invoke(p);
-            var tmp = AddNotNullAttribute(i);
-            switch (tmp)
-            {
-                case NotNullAttributeType.NotNull:
-                    p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
-                    break;
-                case NotNullAttributeType.CanBeNull:
-                    p.WithAttribute(CsAttribute.Make<CanBeNullAttribute>(Target));
-                    break;
-                case NotNullAttributeType.None: break;
-                default: throw new ArgumentOutOfRangeException();
-            }
-
+            if (CsGeneratorConfig.UseJetBrains)
+                switch (tmp)
+                {
+                    case NotNullAttributeType.NotNull:
+                        p.WithAttribute(CsAttribute.Make<NotNullAttribute>(Target));
+                        break;
+                    case NotNullAttributeType.CanBeNull:
+                        p.WithAttribute(CsAttribute.Make<CanBeNullAttribute>(Target));
+                        break;
+                    case NotNullAttributeType.None: break;
+                    default: throw new ArgumentOutOfRangeException();
+                }
         }
 
         NotNullAttributeType AddNotNullAttribute(ConstructorParameterInfo i)
@@ -200,7 +171,7 @@ public abstract class BaseGenerator<TDef>
             return NotNullAttributeType.None;
         }
     }
-        
+
 
     protected CsProperty Add_Property(string name, CsType type, string description)
     {
@@ -237,7 +208,51 @@ public abstract class BaseGenerator<TDef>
         return true;
     }
 
+    public void Generate(IEnumerable<TDef> all)
+    {
+        foreach (var unit in all)
+        {
+            Cfg = unit;
+            if (!CanGenerate())
+                continue;
+            var name = GetTypename(unit);
+            /*var info = CsFilesManager.Instance.GetFileInfo(name, _nameSpace);
+
+            var file = info.File;
+            if (!info.IsEmbedded)
+                PrepareFile(file);
+            var ns   = file.GetOrCreateNamespace(_nameSpace);
+
+            Target           = ns.GetOrCreateClass(name);
+            Target.IsPartial = true;*/
+            Target = Get(name, out var file);
+            GenerateOne();
+            CsFilesManager.AddGeneratorName(file, GetType().Name);
+        }
+    }
+
     protected abstract void GenerateOne();
+
+    protected CsClass Get(string name, out CsFile file)
+    {
+        var info = CsFilesManager.Instance.GetFileInfo(name, _nameSpace);
+
+        file = info.File;
+        if (!info.IsEmbedded)
+            PrepareFile(file);
+        var ns = file.GetOrCreateNamespace(_nameSpace);
+
+        var t = ns.GetOrCreateClass(name);
+        t = GeneratorCommon.Setup(t);
+
+        if (info.IsEmbedded)
+            return t;
+        var filename = Path.Combine(_output, name + ".auto.cs");
+        file.SaveIfDifferent(filename);
+
+        return t;
+    }
+
     protected abstract string GetTypename(TDef cfg);
 
     protected virtual void PrepareFile(CsFile file)
@@ -258,6 +273,7 @@ public abstract class BaseGenerator<TDef>
     protected TDef Cfg { get; private set; }
 
     protected CsClass Target { get; private set; }
+
     protected static ClrTypesResolver _resolver = new ClrTypesResolver(typeof(Length).Assembly);
 
     private readonly string _output;

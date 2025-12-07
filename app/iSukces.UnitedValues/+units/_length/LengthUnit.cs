@@ -20,7 +20,7 @@ public partial class LengthUnit : IUnit, IEquatable<LengthUnit>
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         UnitName = unitName;
     }
 
@@ -60,7 +60,7 @@ public partial class LengthUnit : IUnit, IEquatable<LengthUnit>
         return UnitName;
     }
 
-    bool IEquatable<LengthUnit>.Equals(LengthUnit other)
+    bool IEquatable<LengthUnit>.Equals(LengthUnit? other)
     {
         return Equals(other);
     }
@@ -109,14 +109,14 @@ public static partial class LengthUnits
         factors.RegisterMany(All);
     }
 
-    public static LengthUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+    public static LengthUnit TryRecoverUnitFromName(string unitName)
     {
         // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
         if (unitName is null)
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         foreach (var i in All)
         {
             if (unitName == i.UnitName)

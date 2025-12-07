@@ -128,15 +128,15 @@ public class WeightTest
             sum   = items.Sum();
             Assert.Equal(Mass.Zero, sum);
 
-            items = new[] {(Mass?)a};
+            items = [(Mass?)a];
             sum   = items.Sum();
             Assert.Equal(a, sum);
 
-            items = new[] {(Mass?)a, Mass.Zero, null};
+            items = [(Mass?)a, Mass.Zero, null];
             sum   = items.Sum();
             Assert.Equal(a, sum);
 
-            items = new[] {(Mass?)a, Mass.Zero, null, b};
+            items = [(Mass?)a, Mass.Zero, null, b];
             sum   = items.Sum();
             Assert.Equal(Mass.FromKg(7), sum);
         }

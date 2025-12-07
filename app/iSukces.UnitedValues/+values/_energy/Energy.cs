@@ -8,7 +8,7 @@ namespace iSukces.UnitedValues;
 
 partial class EnergyUnit
 {
-    [RelatedUnitSourceAttribute(RelatedUnitSourceUsage.ProvidesRelatedUnit)]
+    [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit)]
     public TimeUnit GetSuggestedTimeUnit()
     {
         if (UnitName.EndsWith("Wh", StringComparison.Ordinal))
@@ -109,7 +109,7 @@ public partial struct Energy : IUnitedValue<EnergyUnit>, IEquatable<Energy>, ICo
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -748,7 +748,6 @@ public partial struct Energy : IUnitedValue<EnergyUnit>, IEquatable<Energy>, ICo
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public EnergyUnit Unit => _unit ?? BaseUnit;
 
     private EnergyUnit _unit;
@@ -779,7 +778,7 @@ public static partial class EnergyExtensions
     {
         if (items is null)
             return Energy.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static Energy Sum<T>(this IEnumerable<T> items, Func<T, Energy> map)

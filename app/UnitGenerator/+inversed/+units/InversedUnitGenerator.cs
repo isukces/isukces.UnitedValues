@@ -60,8 +60,8 @@ internal class InversedUnitGenerator : BaseGenerator<InversedUnit>
 
     private void Add_Equals()
     {
-        const string compareCode = $"{PropName}.Equals(other.{PropName})";
-        Add_EqualsUniversal(Target.Name, false, OverridingType.None, compareCode);
+        const string compareCode = $"{PropName}.Equals(other?.{PropName})";
+        Add_EqualsUniversal(Target.GetReferenceNullableType(), false, OverridingType.None, compareCode);
         Add_EqualsUniversal(CsType.ObjectNullable, false, OverridingType.Override,
             GeneratorCommon.EqualExpression(Target.Name));
     }
@@ -81,33 +81,33 @@ internal class InversedUnitGenerator : BaseGenerator<InversedUnit>
         m.AddRelatedUnitSourceAttribute(Target, RelatedUnitSourceUsage.ProvidesRelatedUnit, 5);
     }
 
-    private Col1 GetPropertiesInfo(int nr)
+    private Writers GetPropertiesInfo(int nr)
     {
-        IReadOnlyList<ConstructorParameterInfo> items = new[]
-        {
+        IReadOnlyList<ConstructorParameterInfo> items =
+        [
             new ConstructorParameterInfo(PropName,
                 CsType.String,
                 null,
                 "name of unit",
                 Flags1.NormalizedString | Flags1.AddNotNullAttributeToPropertyIfPossible)
-        };
-        if (nr == 0) return new Col1(items);
+        ];
+        if (nr == 0) return new Writers(items);
 
-        items = new[]
-        {
+        items =
+        [
             new ConstructorParameterInfo("BaseUnit",
                 (CsType)Cfg.Source.Unit.GetTypename(),
                 null,
                 "base unit",
                 Flags1.NotNull | Flags1.PropertyCanBeNull),
             new ConstructorParameterInfo(PropName,
-                CsType.String,
+                CsType.StringNullable,
                 null,
                 "name of unit",
                 Flags1.TrimValue | Flags1.Optional | Flags1.DoNotAssignProperty | Flags1.DoNotCreateProperty)
-        };
+        ];
 
-        var a  = new Col1(items);
+        var a  = new Writers(items);
         var forceValue = new CsExpression("unitName");
         var takeFromBaseUnit = new CsExpression("1/".CsEncode()) + new CsExpression("baseUnit.UnitName");
         var c3 = new CsExpression("string.IsNullOrEmpty(unitName)").Conditional(takeFromBaseUnit, forceValue);

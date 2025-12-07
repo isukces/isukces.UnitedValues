@@ -10,7 +10,7 @@ public class RelatedUnitsFamily
         Other  = other;
     }
 
-    public RelatedUnit                  MyInfo { get; }
+    public RelatedUnit?                 MyInfo { get; }
     public Dictionary<int, RelatedUnit> Other  { get; }
             
     public bool IsPower2OrHigher => !(MyInfo is null || MyInfo.Power < 2);

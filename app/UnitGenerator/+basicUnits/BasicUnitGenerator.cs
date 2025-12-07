@@ -14,49 +14,10 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
     {
     }
 
-    protected override void GenerateOne()
-    {
-        Related = RelatedUnitGeneratorDefs.All.GetPowers(Cfg);
-
-
-        Target.Kind = CsNamespaceMemberKind.Class;
-        // cl.Description = $"Reprezentuje {unit.Description} w [{unit.Unit}]";
-        Add_Constructor();
-        Add_Property();
-        Add_ImplicitOperator();
-        AddCommon_EqualityOperators();
-        Add_Equals();
-        Add_EqualsOverride();
-        Add_GetHashCode();
-        Add_ToString(PropertyName);
-        Add_IEquatableEquals();
-
-
-        Target.ImplementedInterfaces.Add(Target.Owner.GetTypeName<IUnit>());
-        var t = MakeGenericType<IEquatable<int>>(Target.Owner, Cfg);
-        Target.ImplementedInterfaces.Add(t);
-        Target.WithAttribute(typeof(SerializableAttribute));
-
-        Add_ConvertOtherPower();
-        Add_Decompose();
-    }
-
-
-    protected override string GetTypename(XUnitTypeName cfg)
-    {
-        return cfg.GetTypename();
-    }
-
-    protected override void PrepareFile(CsFile file)
-    {
-        base.PrepareFile(file);
-        file.AddImportNamespace("System.Runtime.CompilerServices");
-    }
-
     private void Add_Constructor()
     {
-        Add_Constructor(GetConstructorProperties(0));
-        var c2 = GetConstructorProperties(1);
+        Add_Constructor(GetConstructorProperties(ConstructorVariant.JustUnitName));
+        var c2 = GetConstructorProperties(ConstructorVariant.WithBaseUnit);
         if (c2 != null)
             Add_Constructor(c2);
     }
@@ -102,10 +63,8 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
                 cs.WriteLine("decomposer.Add(this, 1);");
                 cs.WriteReturn("decomposer.Items");*/
             }
-            else
-            {
-                cs.WriteReturn("new[] { " + nameof(IDerivedDecomposableUnit.GetBasicUnit) + "() }");
-            }
+
+            cs.WriteReturn("new[] { " + nameof(IDerivedDecomposableUnit.GetBasicUnit) + "() }");
 
             var m = Target.AddMethod(nameof(IDecomposableUnit.Decompose), type);
             m.WithBody(cs);
@@ -124,19 +83,6 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
             m.WithBody(cs);
 
             Target.ImplementedInterfaces.Add(nameof(IDerivedDecomposableUnit));
-        }
-    }
-
-    private RelatedUnit? BaseUnit
-    {
-        get
-        {
-            if (Related.Other.Count == 0)
-                return null;
-            var basicUnit = Related.Other.Where(a => a.Key == 1)
-                .Select(a => a.Value)
-                .SingleOrDefault();
-            return basicUnit;
         }
     }
 
@@ -171,15 +117,17 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
 
     private void Add_IEquatableEquals()
     {
+        var type = Target.GetReferenceNullableType();
         Target.AddMethod($"IEquatable<{Target.Name.Declaration}>.Equals", CsType.Bool)
             .WithBodyFromExpression("Equals(other)")
             .WithVisibility(Visibilities.InterfaceDefault)
-            .AddParam("other", Target.Name);
+            // .WithVisibility(Visibilities.Public)
+            .AddParam("other", type);
     }
 
     private void Add_ImplicitOperator()
     {
-        var pa   = (CsType)MakeGenericType<UnitDefinition<IUnit>>(Target, Cfg);
+        var pa = (CsType)MakeGenericType<UnitDefinition<IUnit>>(Target, Cfg);
         // var expr = $"new {Cfg}(src.{PropertyName})";
         var expr = "src.Unit";
         Add_ImplicitOperator(pa, Target.Name, expr);
@@ -187,51 +135,78 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
 
     private void Add_Property()
     {
-        Add_Properties(GetConstructorProperties(0));
-        var c = GetConstructorProperties(1);
+        Add_Properties(GetConstructorProperties(ConstructorVariant.JustUnitName));
+        var c = GetConstructorProperties(ConstructorVariant.WithBaseUnit);
         if (c != null)
             Add_Properties(c);
     }
 
-
-    private Col1? GetConstructorProperties(int nr)
+    protected override void GenerateOne()
     {
-        string? GetExpressionPlus()
+        Related = RelatedUnitGeneratorDefs.All.GetPowers(Cfg);
+
+        Target.Kind = CsNamespaceMemberKind.Class;
+        // cl.Description = $"Reprezentuje {unit.Description} w [{unit.Unit}]";
+        Add_Constructor();
+        Add_Property();
+        Add_ImplicitOperator();
+        AddCommon_EqualityOperators();
+        Add_Equals();
+        Add_EqualsOverride();
+        Add_GetHashCode();
+        Add_ToString(PropertyName);
+        Add_IEquatableEquals();
+
+        Target.ImplementedInterfaces.Add(Target.Owner.GetTypeName<IUnit>());
+        var t = MakeGenericType<IEquatable<int>>(Target.Owner, Cfg);
+        Target.ImplementedInterfaces.Add(t);
+        Target.WithAttribute(typeof(SerializableAttribute));
+
+        Add_ConvertOtherPower();
+        Add_Decompose();
+    }
+
+    private Writers? GetConstructorProperties(ConstructorVariant nr)
+    {
+        string? GetExpressionPlus(bool addQuestion)
         {
             switch (Cfg.TypeName)
             {
                 case "AreaUnit":
-                    return @"?.Replace('2', '²')";
+                    return (addQuestion ? "?" : "") + @".Replace('2', '²')";
                 case "VolumeUnit":
-                    return @"?.Replace('3', '³')";
+                    return (addQuestion ? "?" : "") + @".Replace('3', '³')";
                 default:
                     return null;
             }
         }
 
-        var expr = PropertyName.FirstLower() + GetExpressionPlus();
-        if (nr == 1)
+        var expr = PropertyName.FirstLower() + GetExpressionPlus(false);
+        if (nr == ConstructorVariant.WithBaseUnit)
         {
             if (Related is null || !Related.IsPower2OrHigher)
                 return null;
             var a = new[]
             {
-                new ConstructorParameterInfo("BaseUnit", (CsType)Related.MyInfo.PowerOne.Unit.TypeName, null, "based on",
-                    Flags1.NotNull)
+                new ConstructorParameterInfo(nameof(BaseUnit),
+                    ((CsType)Related.MyInfo.PowerOne.Unit.TypeName),
+                    null, "based on",
+                    Flags1.NotNull |  Flags1.PropertyCanBeNull)
                 {
                     PropertyCreated = property =>
                     {
                         property.AddRelatedUnitSourceAttribute(Target, RelatedUnitSourceUsage.DoNotUse, 0);
                     }
                 },
-                new ConstructorParameterInfo(PropertyName, CsType.String, expr, "name of unit",
+                new ConstructorParameterInfo(PropertyName, CsType.StringNullable, expr, "Name of unit",
                     Flags1.Optional | Flags1.DoNotAssignProperty | Flags1.DoNotCreateProperty)
             };
-            var h         = new Col1(a);
+            var h         = new Writers(a);
             var powerChar = Ext.GetPowerSuffix(Related.MyInfo.Power);
             h.Writer2.WriteLine("unitName = unitName?.Trim();");
-            h.Writer2.WriteLine(PropertyName + " = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + " + powerChar.CsEncode() +
-                                " : unitName;");
+            var option1 = "baseUnit.UnitName + " + powerChar.CsEncode();
+            var option2 = "unitName" + GetExpressionPlus(false);
+            h.Writer2.WriteLine($"{PropertyName} = string.IsNullOrEmpty(unitName) ? {option1} : {option2};");
             return h;
         }
 
@@ -241,13 +216,52 @@ public class BasicUnitGenerator : BaseGenerator<XUnitTypeName>
                 new ConstructorParameterInfo(PropertyName, CsType.String, expr, "name of unit",
                     Flags1.NormalizedString)
             };
-            return new Col1(b);
+            return new Writers(b);
         }
     }
 
 
-    private RelatedUnitsFamily Related { get; set; }
+    protected override string GetTypename(XUnitTypeName cfg)
+    {
+        return cfg.GetTypename();
+    }
 
+    protected override void PrepareFile(CsFile file)
+    {
+        base.PrepareFile(file);
+        file.AddImportNamespace("System.Runtime.CompilerServices");
+    }
+
+    #region Properties
+
+    private RelatedUnit? BaseUnit
+    {
+        get
+        {
+            if (Related.Other.Count == 0)
+                return null;
+            var basicUnit = Related.Other.Where(a => a.Key == 1)
+                .Select(a => a.Value)
+                .SingleOrDefault();
+            return basicUnit;
+        }
+    }
+
+
+    private RelatedUnitsFamily? Related { get; set; }
+
+    #endregion
+
+    #region Fields
 
     private const string PropertyName = nameof(IUnitNameContainer.UnitName);
+
+    #endregion
+
+
+    private enum ConstructorVariant
+    {
+        JustUnitName,
+        WithBaseUnit
+    }
 }

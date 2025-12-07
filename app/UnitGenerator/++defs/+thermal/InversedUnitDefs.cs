@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using iSukces.UnitedValues;
 
 
@@ -12,14 +11,13 @@ public class ThermaUnitDefs
         {
             if (_all is null)
 
-                _all = new ThermaUnitsCollection(new[]
-                {
-                    new ThermalUnit(typeof(ThermalResistance),typeof(ThermalConductivity)),
-                    new ThermalUnit(typeof(ThermalConductivity),typeof(ThermalResistance)),
-                });
+                _all = new ThermaUnitsCollection([
+                    new ThermalUnit(typeof(ThermalResistance), typeof(ThermalConductivity)),
+                    new ThermalUnit(typeof(ThermalConductivity), typeof(ThermalResistance))
+                ]);
             return _all;
         }
     }
 
-    private static ThermaUnitsCollection _all;
+    private static ThermaUnitsCollection? _all;
 }

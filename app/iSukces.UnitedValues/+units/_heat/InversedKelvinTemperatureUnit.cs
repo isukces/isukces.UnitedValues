@@ -19,7 +19,7 @@ public partial class InversedKelvinTemperatureUnit : IUnit, IEquatable<InversedK
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         UnitName = unitName.TrimToNull();
     }
 
@@ -28,7 +28,7 @@ public partial class InversedKelvinTemperatureUnit : IUnit, IEquatable<InversedK
     /// </summary>
     /// <param name="baseUnit">base unit</param>
     /// <param name="unitName">name of unit</param>
-    public InversedKelvinTemperatureUnit(KelvinTemperatureUnit baseUnit, string unitName = null)
+    public InversedKelvinTemperatureUnit(KelvinTemperatureUnit baseUnit, string? unitName = null)
     {
         if (baseUnit is null)
             throw new NullReferenceException(nameof(baseUnit));
@@ -37,10 +37,10 @@ public partial class InversedKelvinTemperatureUnit : IUnit, IEquatable<InversedK
         UnitName = string.IsNullOrEmpty(unitName) ? "1/" + baseUnit.UnitName : unitName;
     }
 
-    public bool Equals(InversedKelvinTemperatureUnit other)
+    public bool Equals(InversedKelvinTemperatureUnit? other)
     {
         // generator : InversedUnitGenerator
-        return UnitName.Equals(other.UnitName);
+        return UnitName.Equals(other?.UnitName);
     }
 
     public override bool Equals(object? other)
@@ -107,14 +107,12 @@ public partial class InversedKelvinTemperatureUnit : IUnit, IEquatable<InversedK
     /// <summary>
     /// name of unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public string UnitName { get; }
 
     /// <summary>
     /// base unit
     /// </summary>
-    [JetBrains.Annotations.CanBeNull]
-    public KelvinTemperatureUnit BaseUnit { get; }
+    public KelvinTemperatureUnit? BaseUnit { get; }
 
 }
 

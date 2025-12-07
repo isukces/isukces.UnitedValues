@@ -7,8 +7,8 @@ public class ThermalResistanceUnit : IDecomposableUnit, IEquatable<ThermalResist
 {
     public ThermalResistanceUnit(LengthUnit lengthUnit, PowerUnit powerUnit)
     {
-        LengthUnit = lengthUnit;
-        PowerUnit  = powerUnit;
+        LengthUnit = lengthUnit ?? throw new ArgumentNullException(nameof(lengthUnit));
+        PowerUnit  = powerUnit ?? throw new ArgumentNullException(nameof(powerUnit));
     }
 
     public static bool operator ==(ThermalResistanceUnit left, ThermalResistanceUnit right)
@@ -23,12 +23,12 @@ public class ThermalResistanceUnit : IDecomposableUnit, IEquatable<ThermalResist
 
     public IReadOnlyList<DecomposableUnitItem> Decompose()
     {
-        return new[]
-        {
+        return
+        [
             new DecomposableUnitItem(LengthUnit, 1),
             new DecomposableUnitItem(KelvinTemperatureUnits.Degree.Unit, 1),
             new DecomposableUnitItem(PowerUnit, -1)
-        };
+        ];
     }
 
     public bool Equals(ThermalResistanceUnit? other)
@@ -51,8 +51,8 @@ public class ThermalResistanceUnit : IDecomposableUnit, IEquatable<ThermalResist
     {
         unchecked
         {
-            return ((LengthUnit != null ? LengthUnit.GetHashCode() : 0) * 397) ^
-                   (PowerUnit != null ? PowerUnit.GetHashCode() : 0);
+            return ((LengthUnit.GetHashCode()) * 397) ^
+                   (PowerUnit.GetHashCode());
         }
     }
 
@@ -85,7 +85,7 @@ public class ThermalResistanceUnit : IDecomposableUnit, IEquatable<ThermalResist
     }
 }
 
-public sealed class ThermalResistanceUnits
+public static class ThermalResistanceUnits
 {
     public static void RegisterUnitExchangeFactors(UnitExchangeFactors factors)
     {
@@ -96,24 +96,13 @@ public sealed class ThermalResistanceUnits
     /// <summary>
     ///     All known kelvinTemperature units
     /// </summary>
-    public static IReadOnlyList<UnitDefinition<ThermalResistanceUnit>> All
-    {
-        get
-        {
-            return new[]
-            {
-                MeterKelvinPerWatt
-            };
-        }
-    }
-
-    #region Fields
+    public static IReadOnlyList<UnitDefinition<ThermalResistanceUnit>> All =>
+    [
+        MeterKelvinPerWatt
+    ];
 
     internal static readonly KelvinTemperatureUnit DegreeKelvinTemperatureUnit = new("K");
 
     public static readonly UnitDefinition<ThermalResistanceUnit> MeterKelvinPerWatt
-        = new(
-            new ThermalResistanceUnit(LengthUnits.Meter, PowerUnits.Watt), 1m);
-
-    #endregion
+        = new(new ThermalResistanceUnit(LengthUnits.Meter, PowerUnits.Watt), 1m);
 }

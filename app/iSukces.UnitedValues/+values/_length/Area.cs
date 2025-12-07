@@ -127,7 +127,7 @@ public partial struct Area : IUnitedValue<AreaUnit>, IEquatable<Area>, IFormatta
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -1435,7 +1435,6 @@ public partial struct Area : IUnitedValue<AreaUnit>, IEquatable<Area>, IFormatta
     /// <summary>
     /// unit
     /// </summary>
-    [JetBrains.Annotations.NotNull]
     public AreaUnit Unit => _unit ?? BaseUnit;
 
     private AreaUnit _unit;
@@ -1466,7 +1465,7 @@ public static partial class AreaExtensions
     {
         if (items is null)
             return Area.Zero;
-        return items.Where(a => a != null).Select(a => a.Value).Sum();
+        return items.Where(a => a != null).Select(a => a!.Value).Sum();
     }
 
     public static Area Sum<T>(this IEnumerable<T> items, Func<T, Area> map)

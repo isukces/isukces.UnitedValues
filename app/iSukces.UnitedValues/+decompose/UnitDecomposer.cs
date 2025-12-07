@@ -93,7 +93,7 @@ public sealed class UnitDecomposer
             return !Equals(left, right);
         }
 
-        public bool Equals(Key other)
+        public bool Equals(Key? other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;

@@ -20,7 +20,7 @@ public partial class TimeUnit : IUnit, IEquatable<TimeUnit>
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         UnitName = unitName;
     }
 
@@ -52,7 +52,7 @@ public partial class TimeUnit : IUnit, IEquatable<TimeUnit>
         return UnitName;
     }
 
-    bool IEquatable<TimeUnit>.Equals(TimeUnit other)
+    bool IEquatable<TimeUnit>.Equals(TimeUnit? other)
     {
         return Equals(other);
     }
@@ -101,14 +101,14 @@ public static partial class TimeUnits
         factors.RegisterMany(All);
     }
 
-    public static TimeUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+    public static TimeUnit TryRecoverUnitFromName(string unitName)
     {
         // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
         if (unitName is null)
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         foreach (var i in All)
         {
             if (unitName == i.UnitName)

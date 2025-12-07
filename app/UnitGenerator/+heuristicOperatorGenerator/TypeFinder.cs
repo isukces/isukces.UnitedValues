@@ -82,7 +82,7 @@ internal class TypeFinder
     private ValueOfSomeTypeExpression[] Bla(Type type, Func<ValueOfSomeTypeExpression[]> find)
     {
         if (!underSearching.Add(type))
-            return new ValueOfSomeTypeExpression[0];
+            return [];
         try
         {
             return find();
@@ -122,7 +122,7 @@ internal class TypeFinder
                     return result;
             }
 
-        return new ValueOfSomeTypeExpression[0];
+        return [];
     }
 
     private ValueOfSomeTypeExpression[] GetInternal(Type type, bool onlyLeft)
@@ -144,24 +144,24 @@ internal class TypeFinder
                     var tmp = FindByDerivedTypes("Get" + type.Name, typeof(LengthUnit), typeof(VolumeUnit));
                     if (tmp.Any())
                         return tmp;
-                    return new ValueOfSomeTypeExpression[0];
+                    return [];
                 }
                 case nameof(VolumeUnit):
                 {
                     var tmp = FindByDerivedTypes("Get" + type.Name, typeof(LengthUnit), typeof(AreaUnit));
                     if (tmp.Any())
                         return tmp;
-                    return new ValueOfSomeTypeExpression[0];
+                    return [];
                 }
                 case nameof(LengthUnit):
                 {
                     var tmp = FindByDerivedTypes("Get" + type.Name, typeof(VolumeUnit), typeof(AreaUnit));
                     if (tmp.Any())
                         return tmp;
-                    return new ValueOfSomeTypeExpression[0];
+                    return [];
                 }
                 default:
-                    return new ValueOfSomeTypeExpression[0];
+                    return [];
             }
         });
     }
@@ -173,7 +173,7 @@ internal class TypeFinder
         return result;
     }
 
-    private readonly HashSet<Type> underSearching = new HashSet<Type>();
+    private readonly HashSet<Type> underSearching = [];
 
     private readonly Dictionary<Type, ValueOfSomeTypeExpression[]> _dict;
 }

@@ -96,7 +96,7 @@ public partial struct MassStream : IUnitedValue<MassStreamUnit>, IEquatable<Mass
     /// </summary>
     /// <param name="format"></param>
     /// <param name="provider"></param>
-    public string ToString(string format, IFormatProvider provider = null)
+    public string ToString(string? format, IFormatProvider? provider = null)
     {
         return this.ToStringFormat(format, provider);
     }
@@ -423,17 +423,17 @@ public partial class MassStreamJsonConverter : JsonConverter
     /// <param name="objectType">Type of the object.</param>
     /// <param name="existingValue">The existing value of object being read.</param>
     /// <param name="serializer">The calling serializer.</param>
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
     {
-        if (reader.ValueType == typeof(string))
+        if (reader.Value is string stringValue)
         {
             if (objectType == typeof(MassStream))
-                return MassStream.Parse((string)reader.Value);
+                return MassStream.Parse(stringValue);
         }
         throw new NotImplementedException();
     }
 
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
     {
         if (value is null)
             writer.WriteNull();

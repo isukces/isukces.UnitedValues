@@ -50,15 +50,14 @@ internal class ThermalValuesGenerator : BaseValuesGenerator<ThermalUnit>
             .WithLeftRightArguments(ValuePropertyType, Target.Name, "number", "value");
     }
 
-    protected override Col1 GetConstructorProperties()
+    protected override Writers GetConstructorProperties()
     {
-        return new Col1(new[]
-        {
+        return new Writers([
             new ConstructorParameterInfo(ValuePropName,
                 ValuePropertyType, null, "value"),
             new ConstructorParameterInfo(UnitPropName,
                 (CsType)UnitTypeName, null, "unit")
-        });
+        ]);
     }
 
     protected override string GetTypename(ThermalUnit cfg)

@@ -14,7 +14,7 @@ internal class ProductUnitGenerator : BaseCompositeUnitGenerator<ProductUnit>
     {
         var name = new CsArguments(Cfg.CounterUnit.Unit.GetTypename(), Cfg.DenominatorUnit.Unit.GetTypename())
             .MakeGenericType(nameof(IProductUnit));
-        return new[] { name.Declaration };
+        return [name.Declaration];
     }
 
     protected override CompositeUnitGeneratorInfo GetInfo()
@@ -24,11 +24,10 @@ internal class ProductUnitGenerator : BaseCompositeUnitGenerator<ProductUnit>
 
     protected override Info2 GetInfo2()
     {
-        return new Info2("", new[]
-        {
+        return new Info2("", [
             new NameAndPower(nameof(FakeProductUnit.LeftUnit), 1),
             new NameAndPower(nameof(FakeProductUnit.RightUnit), 1)
-        });
+        ]);
     }
 
     protected override string GetTypename(ProductUnit cfg)

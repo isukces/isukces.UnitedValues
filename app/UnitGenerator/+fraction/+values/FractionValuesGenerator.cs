@@ -29,17 +29,16 @@ internal class FractionValuesGenerator : BaseCompositeValuesGenerator<FractionUn
     }
 
 
-    protected override Col1 GetConstructorProperties()
+    protected override Writers GetConstructorProperties()
     {
-        return new Col1(new[]
-        {
+        return new Writers([
             new ConstructorParameterInfo(ValuePropName,
                 ValuePropertyType,
                 null,
                 "value"),
             new ConstructorParameterInfo(UnitPropName,
                 (CsType)Cfg.UnitTypes.Unit.GetTypename(), null, "unit")
-        });
+        ]);
     }
 
 

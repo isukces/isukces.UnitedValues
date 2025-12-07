@@ -95,7 +95,7 @@ public class ExpressionPath : IEquatable<ExpressionPath>, IReducable
     public IEnumerable<ExpressionPath> GetUsedExpressions()
     {
         var c = Parts.ToArray();
-        return new[] {new ExpressionPath(c)};
+        return [new ExpressionPath(c)];
     }
 
     public ExpressionPath? GetByDotsCounts(int dotsCount)
@@ -138,7 +138,7 @@ public class ExpressionPath : IEquatable<ExpressionPath>, IReducable
         if (expression.Dots == Dots)
         {
             if (Equals(expression))
-                Parts = new ICodeSource1[] {new SimpleCodeSource(varName)};
+                Parts = [new SimpleCodeSource(varName)];
             return;
         }
 

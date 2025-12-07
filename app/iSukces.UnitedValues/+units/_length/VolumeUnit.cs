@@ -20,22 +20,22 @@ public partial class VolumeUnit : IUnit, IEquatable<VolumeUnit>, IDecomposableUn
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
-        UnitName = unitName?.Replace('3', '³');
+            throw new ArgumentException(null, nameof(unitName));
+        UnitName = unitName.Replace('3', '³');
     }
 
     /// <summary>
     /// creates instance of VolumeUnit
     /// </summary>
     /// <param name="baseUnit">based on</param>
-    /// <param name="unitName">name of unit</param>
-    public VolumeUnit(LengthUnit baseUnit, string unitName = null)
+    /// <param name="unitName">Name of unit</param>
+    public VolumeUnit(LengthUnit baseUnit, string? unitName = null)
     {
         if (baseUnit is null)
             throw new NullReferenceException(nameof(baseUnit));
         BaseUnit = baseUnit;
         unitName = unitName?.Trim();
-        UnitName = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "³" : unitName;
+        UnitName = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "³" : unitName.Replace('3', '³');
     }
 
     public IReadOnlyList<DecomposableUnitItem> Decompose()
@@ -87,7 +87,7 @@ public partial class VolumeUnit : IUnit, IEquatable<VolumeUnit>, IDecomposableUn
         return UnitName;
     }
 
-    bool IEquatable<VolumeUnit>.Equals(VolumeUnit other)
+    bool IEquatable<VolumeUnit>.Equals(VolumeUnit? other)
     {
         return Equals(other);
     }
@@ -130,7 +130,7 @@ public partial class VolumeUnit : IUnit, IEquatable<VolumeUnit>, IDecomposableUn
     /// based on
     /// </summary>
     [RelatedUnitSource(RelatedUnitSourceUsage.DoNotUse)]
-    public LengthUnit BaseUnit { get; }
+    public LengthUnit? BaseUnit { get; }
 
 }
 
@@ -142,14 +142,14 @@ public static partial class VolumeUnits
         factors.RegisterMany(All);
     }
 
-    public static VolumeUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+    public static VolumeUnit TryRecoverUnitFromName(string unitName)
     {
         // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
         if (unitName is null)
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         foreach (var i in All)
         {
             if (unitName == i.UnitName)

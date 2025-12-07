@@ -6,7 +6,7 @@ namespace iSukces.UnitedValues;
 
 partial class PowerUnit
 {
-    [RelatedUnitSourceAttribute(RelatedUnitSourceUsage.ProvidesRelatedUnit)]
+    [RelatedUnitSource(RelatedUnitSourceUsage.ProvidesRelatedUnit)]
     public static UnitDefinition<PowerUnit> CratePowerUnitFromEnergyAndTime(EnergyUnit energy, TimeUnit time)
     {
         var energyFactor = GlobalUnitRegistry.Factors.GetThrow(energy);
@@ -45,7 +45,7 @@ public partial class PowerUnit : IUnit, IEquatable<PowerUnit>
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         UnitName = unitName;
     }
 
@@ -69,7 +69,7 @@ public partial class PowerUnit : IUnit, IEquatable<PowerUnit>
         return UnitName;
     }
 
-    bool IEquatable<PowerUnit>.Equals(PowerUnit other)
+    bool IEquatable<PowerUnit>.Equals(PowerUnit? other)
     {
         return Equals(other);
     }
@@ -118,14 +118,14 @@ public static partial class PowerUnits
         factors.RegisterMany(All);
     }
 
-    public static PowerUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+    public static PowerUnit TryRecoverUnitFromName(string unitName)
     {
         // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
         if (unitName is null)
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         foreach (var i in All)
         {
             if (unitName == i.UnitName)

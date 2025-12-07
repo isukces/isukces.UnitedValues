@@ -11,10 +11,9 @@ public class InversedUnitDefs
         {
             if (_all is null)
 
-                _all = new InversedUnitsCollection(new[]
-                {
+                _all = new InversedUnitsCollection([
                     new InversedUnit(typeof(DeltaKelvinTemperature))
-                });
+                ]);
             return _all;
         }
     }

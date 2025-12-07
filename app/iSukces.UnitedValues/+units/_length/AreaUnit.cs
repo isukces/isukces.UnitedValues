@@ -20,22 +20,22 @@ public partial class AreaUnit : IUnit, IEquatable<AreaUnit>, IDecomposableUnit, 
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
-        UnitName = unitName?.Replace('2', '²');
+            throw new ArgumentException(null, nameof(unitName));
+        UnitName = unitName.Replace('2', '²');
     }
 
     /// <summary>
     /// creates instance of AreaUnit
     /// </summary>
     /// <param name="baseUnit">based on</param>
-    /// <param name="unitName">name of unit</param>
-    public AreaUnit(LengthUnit baseUnit, string unitName = null)
+    /// <param name="unitName">Name of unit</param>
+    public AreaUnit(LengthUnit baseUnit, string? unitName = null)
     {
         if (baseUnit is null)
             throw new NullReferenceException(nameof(baseUnit));
         BaseUnit = baseUnit;
         unitName = unitName?.Trim();
-        UnitName = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "²" : unitName;
+        UnitName = string.IsNullOrEmpty(unitName) ? baseUnit.UnitName + "²" : unitName.Replace('2', '²');
     }
 
     public IReadOnlyList<DecomposableUnitItem> Decompose()
@@ -87,7 +87,7 @@ public partial class AreaUnit : IUnit, IEquatable<AreaUnit>, IDecomposableUnit, 
         return UnitName;
     }
 
-    bool IEquatable<AreaUnit>.Equals(AreaUnit other)
+    bool IEquatable<AreaUnit>.Equals(AreaUnit? other)
     {
         return Equals(other);
     }
@@ -130,7 +130,7 @@ public partial class AreaUnit : IUnit, IEquatable<AreaUnit>, IDecomposableUnit, 
     /// based on
     /// </summary>
     [RelatedUnitSource(RelatedUnitSourceUsage.DoNotUse)]
-    public LengthUnit BaseUnit { get; }
+    public LengthUnit? BaseUnit { get; }
 
 }
 
@@ -142,14 +142,14 @@ public static partial class AreaUnits
         factors.RegisterMany(All);
     }
 
-    public static AreaUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+    public static AreaUnit TryRecoverUnitFromName(string unitName)
     {
         // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
         if (unitName is null)
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         foreach (var i in All)
         {
             if (unitName == i.UnitName)

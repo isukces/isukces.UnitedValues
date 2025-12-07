@@ -19,7 +19,7 @@ public partial class CelsiusTemperatureUnit : IUnit, IEquatable<CelsiusTemperatu
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         UnitName = unitName;
     }
 
@@ -43,7 +43,7 @@ public partial class CelsiusTemperatureUnit : IUnit, IEquatable<CelsiusTemperatu
         return UnitName;
     }
 
-    bool IEquatable<CelsiusTemperatureUnit>.Equals(CelsiusTemperatureUnit other)
+    bool IEquatable<CelsiusTemperatureUnit>.Equals(CelsiusTemperatureUnit? other)
     {
         return Equals(other);
     }
@@ -92,14 +92,14 @@ public static partial class CelsiusTemperatureUnits
         factors.RegisterMany(All);
     }
 
-    public static CelsiusTemperatureUnit TryRecoverUnitFromName([JetBrains.Annotations.NotNull] string unitName)
+    public static CelsiusTemperatureUnit TryRecoverUnitFromName(string unitName)
     {
         // generator : DerivedUnitGenerator.Add_TryRecoverUnitFromName
         if (unitName is null)
             throw new NullReferenceException(nameof(unitName));
         unitName = unitName.Trim();
         if (unitName.Length == 0)
-            throw new ArgumentException(nameof(unitName));
+            throw new ArgumentException(null, nameof(unitName));
         foreach (var i in All)
         {
             if (unitName == i.UnitName)
