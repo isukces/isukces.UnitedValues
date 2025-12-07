@@ -4,9 +4,9 @@
     <Product>iSukces.UnitedValues</Product>
     <ProjectGuid>{CD06B707-1169-4E47-8097-CC8CD0947C9C}</ProjectGuid>
     <TargetFrameworks>net6.0;net8.0;net9.0;net10.0</TargetFrameworks>
-    <AssemblyVersion>1.25.1203.37</AssemblyVersion>
-    <FileVersion>1.25.1203.37</FileVersion>
-    <Version>1.25.1203.37</Version>
+    <AssemblyVersion>1.25.1207.38</AssemblyVersion>
+    <FileVersion>1.25.1207.38</FileVersion>
+    <Version>1.25.1207.38</Version>
     <LangVersion>14</LangVersion>
     <Nullable>enable</Nullable>
     <SignAssembly>true</SignAssembly>
